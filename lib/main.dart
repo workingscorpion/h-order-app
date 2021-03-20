@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/constants/routeNames.dart';
 import 'package:h_order/store/navigationStore.dart';
 
 void main() async {
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         navigatorKey: NavigationStore.instance.navigatorKey,
         onGenerateRoute: AppRouter.generateRoute,
+        initialRoute: RouteNames.Splash,
         // navigatorObservers: [observer],
       );
 }
