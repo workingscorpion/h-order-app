@@ -1,6 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage();
@@ -82,23 +86,17 @@ class _SplashPageState extends State<SplashPage>
     try {
       _initialized = false;
 
-      // await initializeDateFormatting('ko');
-      // Intl.defaultLocale = 'ko';
+      await initializeDateFormatting('ko');
+      Intl.defaultLocale = 'ko';
 
       WidgetsFlutterBinding.ensureInitialized();
 
-      // await Firebase.initializeApp();
-      // await FCMManger.instance.initialize();
-      // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-      // await FirebaseCrashlytics.instance
-      // .setCrashlyticsCollectionEnabled(!kDebugMode);
-
-      // FlutterDownloader.initialize();
-
-      // SystemChrome.setPreferredOrientations([
-      //   DeviceOrientation.portraitUp,
-      //   DeviceOrientation.portraitDown,
-      // ]);
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
 
       _initialized = true;
     } finally {

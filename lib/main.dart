@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:h_order/appRouter.dart';
 import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/store/navigationStore.dart';
 
 void main() async {
-  await SentryFlutter.init(
-    (options) {
-      options.dsn =
-          'https://8f3b6fd12fed41e4b1066b728f28c588@o363034.ingest.sentry.io/5581247';
-    },
-    appRunner: () => runApp(MyApp()),
-  );
+  // await SentryFlutter.init(
+  //   (options) {
+  //     options.dsn =
+  //         'https://8f3b6fd12fed41e4b1066b728f28c588@o363034.ingest.sentry.io/5581247';
+  //   },
+  //   appRunner: () => runApp(MyApp()),
+  // );
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
-
   @override
   Widget build(BuildContext context) => MaterialApp(
         title: 'H Order',
@@ -43,6 +40,6 @@ class MyApp extends StatelessWidget {
         ),
         navigatorKey: NavigationStore.instance.navigatorKey,
         onGenerateRoute: AppRouter.generateRoute,
-        navigatorObservers: [observer],
+        // navigatorObservers: [observer],
       );
 }
