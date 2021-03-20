@@ -1,7 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:h_order/components/customAppBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,7 +38,7 @@ class HomePage extends StatefulWidget {
           ),
         ),
         actions: [
-          FlatButton(
+          TextButton(
             onPressed: () async {
               final sp = await SharedPreferences.getInstance();
               sp.setString('lastPopup', DateTime.now().toString());
@@ -50,7 +52,7 @@ class HomePage extends StatefulWidget {
               ),
             ),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () async {
               Navigator.of(context).pop();
             },
@@ -93,8 +95,39 @@ class _HomePageState extends State<HomePage>
           children: [
             WillPopScope(
               onWillPop: _onWillPop,
-              child: Container(
-                child: Text('asdf'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  CarouselSlider(
+                    items: [
+                      ...[1, 2, 3, 4, 5, 6].map(
+                        (item) => Container(
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'assets/splash/splash.png',
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                    options: CarouselOptions(
+                      height: 180,
+                      viewportFraction: 0.8,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 10),
+                      autoPlayAnimationDuration: Duration(seconds: 1),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      scrollDirection: Axis.horizontal,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text('asdf'),
+                  ),
+                ],
               ),
             ),
           ],
