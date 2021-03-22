@@ -22,19 +22,35 @@ class MyApp extends StatelessWidget {
         title: 'H Order',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          accentColor: Colors.white,
+          backgroundColor: CustomColors.backgroundGrey,
           textTheme: TextTheme(
-            bodyText1: TextStyle(),
-            bodyText2: TextStyle(),
+            bodyText1: TextStyle(
+              color: CustomColors.textBlack,
+            ),
+            bodyText2: TextStyle(
+              color: CustomColors.textBlack,
+            ),
             headline1: TextStyle(
               color: CustomColors.textBlack,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
-            headline2: TextStyle(),
-            headline3: TextStyle(),
-            headline4: TextStyle(),
-            headline5: TextStyle(),
-            headline6: TextStyle(),
+            headline2: TextStyle(
+              color: CustomColors.textBlack,
+            ),
+            headline3: TextStyle(
+              color: CustomColors.textBlack,
+            ),
+            headline4: TextStyle(
+              color: CustomColors.textBlack,
+            ),
+            headline5: TextStyle(
+              color: CustomColors.textBlack,
+            ),
+            headline6: TextStyle(
+              color: CustomColors.textBlack,
+            ),
           ).apply(
             bodyColor: CustomColors.textBlack,
           ),

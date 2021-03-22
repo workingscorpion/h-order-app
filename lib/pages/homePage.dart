@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/components/customAppBar.dart';
+import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/utils/hexColor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -125,12 +127,94 @@ class _HomePageState extends State<HomePage>
                     ),
                   ),
                   Expanded(
-                    child: Text('asdf'),
+                    child: Container(
+                      padding: EdgeInsets.all(12),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: GridView.count(
+                          padding: EdgeInsets.zero,
+                          crossAxisCount: 4,
+                          children: [
+                            _serviceItem(
+                              icon: CupertinoIcons.cart,
+                              text: '주문',
+                              onTap: () {},
+                            ),
+                            _serviceItem(
+                              icon: CupertinoIcons.placemark,
+                              text: '주변정보',
+                              onTap: () {},
+                            ),
+                            _serviceItem(
+                              icon: CupertinoIcons.zzz,
+                              text: '수면모드',
+                              onTap: () {},
+                            ),
+                            _serviceItem(
+                              icon: CupertinoIcons.alarm,
+                              text: '알람',
+                              onTap: () {},
+                            ),
+                            _serviceItem(
+                              icon: CupertinoIcons.slider_horizontal_3,
+                              text: '설정',
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    child: Text(
+                      '현주오피스텔 502호',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white.withOpacity(.2),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
           ],
+        ),
+      );
+
+  _serviceItem({
+    IconData icon,
+    String text,
+    GestureTapCallback onTap,
+  }) =>
+      Material(
+        clipBehavior: Clip.antiAlias,
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 8),
+                child: Icon(
+                  icon,
+                  color: Colors.white.withOpacity(.88),
+                  size: 28,
+                ),
+              ),
+              Text(
+                text ?? '',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white.withOpacity(.88),
+                ),
+              ),
+            ],
+          ),
         ),
       );
 

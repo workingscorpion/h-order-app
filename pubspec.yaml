@@ -4,7 +4,7 @@ description: H Order application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 module:
   androidX: true
@@ -30,18 +30,18 @@ dependencies:
 
   shared_preferences: ^0.5.12+4
 
-  flutter_svg: ^0.19.3
-  flutter_inner_drawer: ^1.0.0+1
+  flutter_svg: ^0.19.1
+  flutter_inner_drawer: ^0.5.8
   animated_text_kit: ^3.1.2
   fluttertoast: ^7.1.8
   flutter_local_notifications: ^4.0.1+2
   webview_flutter: ^1.0.7
   carousel_slider: ^3.0.0
   
-  device_info: ^2.0.0
+  device_info: ^1.0.0
   package_info: ^0.4.3+4
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.0
 
 dev_dependencies:
   flutter_test:
