@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.white,
           backgroundColor: CustomColors.backgroundGrey,
           scaffoldBackgroundColor: CustomColors.backgroundGrey,
+          dialogBackgroundColor: CustomColors.backgroundGrey,
           textTheme: TextTheme(
             bodyText1: TextStyle(
               color: CustomColors.textBlack,
