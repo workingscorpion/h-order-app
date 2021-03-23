@@ -259,6 +259,7 @@ class _ShopPageState extends State<ShopPage>
         backgroundColor: Colors.blueGrey,
         child: Container(
           child: Stack(
+            overflow: Overflow.visible,
             children: [
               Container(
                 alignment: Alignment.center,
@@ -268,10 +269,18 @@ class _ShopPageState extends State<ShopPage>
               ),
               Positioned(
                 bottom: 0,
-                right: 0,
+                right: quantity < 10
+                    ? 0
+                    : quantity < 99
+                        ? -2
+                        : -6,
                 child: _cart.isNotEmpty
                     ? Container(
-                        width: 18,
+                        width: quantity < 10
+                            ? 18
+                            : quantity < 99
+                                ? 22
+                                : 28,
                         height: 18,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -281,7 +290,7 @@ class _ShopPageState extends State<ShopPage>
                           ),
                         ),
                         child: Text(
-                          '$quantity',
+                          quantity < 99 ? '$quantity' : '99+',
                           style: TextStyle(
                             fontSize: 10,
                           ),

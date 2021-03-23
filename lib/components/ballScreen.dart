@@ -36,10 +36,13 @@ class BallScreenState extends State<BallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ..._balls,
-      ],
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      child: Stack(
+        children: [
+          ..._balls,
+        ],
+      ),
     );
   }
 
