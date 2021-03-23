@@ -81,7 +81,6 @@ class _SplashPageState extends State<SplashPage>
                           textAlign: TextAlign.center,
                           textStyle: TextStyle(
                             fontSize: 40,
-                            color: Colors.white,
                           ),
                         ),
                       ],

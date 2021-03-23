@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/constants/routeNames.dart';
+import 'package:h_order/models/productModel.dart';
 import 'package:h_order/pages/homePage.dart';
 import 'package:h_order/pages/services/alarmPage.dart';
 import 'package:h_order/pages/services/boardPage.dart';
+import 'package:h_order/pages/services/productPage.dart';
 import 'package:h_order/pages/services/settingsPage.dart';
 import 'package:h_order/pages/services/shopPage.dart';
 import 'package:h_order/pages/splashPage.dart';
@@ -41,6 +43,12 @@ class AppRouter {
           builder: (BuildContext context) => SettingsPage(),
         );
 
+      case RouteNames.Product:
+        return MaterialPageRoute(
+          builder: (BuildContext context) =>
+              ProductPage(product: settings.arguments as ProductModel),
+        );
+
       default:
         return MaterialPageRoute(
           builder: (BuildContext context) => SplashPage(),
@@ -60,18 +68,25 @@ class AppRouter {
   }
 
   static toShopPage() {
-    Navigator.of(context).pushNamed(RouteNames.Shop);
+    return Navigator.of(context).pushNamed(RouteNames.Shop);
   }
 
   static toAlarmPage() {
-    Navigator.of(context).pushNamed(RouteNames.Alarm);
+    return Navigator.of(context).pushNamed(RouteNames.Alarm);
   }
 
   static toBoardPage() {
-    Navigator.of(context).pushNamed(RouteNames.Board);
+    return Navigator.of(context).pushNamed(RouteNames.Board);
   }
 
   static toSettingsPage() {
-    Navigator.of(context).pushNamed(RouteNames.Settings);
+    return Navigator.of(context).pushNamed(RouteNames.Settings);
+  }
+
+  static toProductPage({
+    ProductModel product,
+  }) {
+    return Navigator.of(context)
+        .pushNamed(RouteNames.Product, arguments: product);
   }
 }

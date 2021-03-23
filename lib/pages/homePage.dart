@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/clock.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -47,7 +48,6 @@ class HomePage extends StatefulWidget {
             child: Text(
               '그만보기',
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 14,
               ),
             ),
@@ -59,7 +59,6 @@ class HomePage extends StatefulWidget {
             child: Text(
               '닫기',
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 14,
               ),
             ),
@@ -134,7 +133,7 @@ class _HomePageState extends State<HomePage>
                           crossAxisCount: 4,
                           children: [
                             _serviceItem(
-                              icon: CupertinoIcons.cart,
+                              icon: CupertinoIcons.tag_fill,
                               text: '주문',
                               onTap: () {
                                 AppRouter.toShopPage();
@@ -168,13 +167,19 @@ class _HomePageState extends State<HomePage>
                   ),
                   Container(
                     padding: EdgeInsets.all(12),
-                    child: Text(
-                      '현주오피스텔 502호',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white.withOpacity(.2),
-                      ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Clock(),
+                        ),
+                        Text(
+                          '현주오피스텔 502호',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white24,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -203,7 +208,6 @@ class _HomePageState extends State<HomePage>
                 margin: EdgeInsets.only(bottom: 8),
                 child: Icon(
                   icon,
-                  color: Colors.white,
                   size: 28,
                 ),
               ),
@@ -211,7 +215,6 @@ class _HomePageState extends State<HomePage>
                 text ?? '',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white,
                 ),
               ),
             ],
@@ -235,7 +238,6 @@ class _HomePageState extends State<HomePage>
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 2,
-        textColor: Colors.white,
         fontSize: 14.0,
       );
 

@@ -26,35 +26,45 @@ class MyApp extends StatelessWidget {
           backgroundColor: CustomColors.backgroundGrey,
           dialogBackgroundColor: CustomColors.backgroundGrey,
           scaffoldBackgroundColor: CustomColors.backgroundGrey,
+          buttonColor: Colors.blueGrey,
+          buttonTheme: ButtonThemeData(
+            buttonColor: Colors.blueGrey,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
           textTheme: TextTheme(
             bodyText1: TextStyle(
-              color: CustomColors.textBlack,
+              color: Colors.white,
             ),
             bodyText2: TextStyle(
-              color: CustomColors.textBlack,
+              color: Colors.white,
             ),
             headline1: TextStyle(
-              color: CustomColors.textBlack,
+              color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
             headline2: TextStyle(
-              color: CustomColors.textBlack,
+              color: Colors.white,
             ),
             headline3: TextStyle(
-              color: CustomColors.textBlack,
+              color: Colors.white,
             ),
             headline4: TextStyle(
-              color: CustomColors.textBlack,
+              color: Colors.white,
             ),
             headline5: TextStyle(
-              color: CustomColors.textBlack,
+              color: Colors.white,
             ),
             headline6: TextStyle(
-              color: CustomColors.textBlack,
+              color: Colors.white,
+            ),
+            button: TextStyle(
+              color: Colors.white,
             ),
           ).apply(
-            bodyColor: CustomColors.textBlack,
+            bodyColor: Colors.white,
           ),
         ),
         navigatorKey: NavigationStore.instance.navigatorKey,
