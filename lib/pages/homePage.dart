@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/customAppBar.dart';
-import 'package:h_order/constants/customColors.dart';
-import 'package:h_order/utils/hexColor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {

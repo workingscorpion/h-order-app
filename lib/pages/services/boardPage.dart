@@ -16,6 +16,6 @@ class _BoardPageState extends State<BoardPage> {
   }
 
   _appBar() => CustomAppBar.create(
-        title: '상점',
+        title: '주변정보',
       );
 }
