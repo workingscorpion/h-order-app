@@ -150,7 +150,10 @@ class _ProductPageState extends State<ProductPage>
                   iconSize: 16,
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    _quantity = max(_quantity - 1, minQuantity);
+                    _quantity -= 1;
+                    if (_quantity < minQuantity) {
+                      _quantity = minQuantity;
+                    }
                     setState(() {});
                   },
                   icon: Icon(
@@ -264,8 +267,10 @@ class _ProductPageState extends State<ProductPage>
                                   iconSize: 16,
                                   padding: EdgeInsets.zero,
                                   onPressed: () {
-                                    _optionQuantityMap[option.index] = max(
-                                        _optionQuantityMap[option.index], 0);
+                                    _optionQuantityMap[option.index] -= 1;
+                                    if (_optionQuantityMap[option.index] < 0) {
+                                      _optionQuantityMap[option.index] = 0;
+                                    }
                                     setState(() {});
                                   },
                                   icon: Icon(
