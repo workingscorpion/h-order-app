@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/customAppBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/utils/hexColor.dart';
@@ -138,27 +139,30 @@ class _HomePageState extends State<HomePage>
                             _serviceItem(
                               icon: CupertinoIcons.cart,
                               text: '주문',
-                              onTap: () {},
+                              onTap: () {
+                                AppRouter.toShopPage();
+                              },
                             ),
                             _serviceItem(
                               icon: CupertinoIcons.placemark,
                               text: '주변정보',
-                              onTap: () {},
-                            ),
-                            _serviceItem(
-                              icon: CupertinoIcons.zzz,
-                              text: '수면모드',
-                              onTap: () {},
+                              onTap: () {
+                                AppRouter.toBoardPage();
+                              },
                             ),
                             _serviceItem(
                               icon: CupertinoIcons.alarm,
                               text: '알람',
-                              onTap: () {},
+                              onTap: () {
+                                AppRouter.toAlarmPage();
+                              },
                             ),
                             _serviceItem(
                               icon: CupertinoIcons.slider_horizontal_3,
                               text: '설정',
-                              onTap: () {},
+                              onTap: () {
+                                AppRouter.toSettingsPage();
+                              },
                             ),
                           ],
                         ),
@@ -202,7 +206,7 @@ class _HomePageState extends State<HomePage>
                 margin: EdgeInsets.only(bottom: 8),
                 child: Icon(
                   icon,
-                  color: Colors.white.withOpacity(.88),
+                  color: Colors.white,
                   size: 28,
                 ),
               ),
@@ -210,7 +214,7 @@ class _HomePageState extends State<HomePage>
                 text ?? '',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white.withOpacity(.88),
+                  color: Colors.white,
                 ),
               ),
             ],

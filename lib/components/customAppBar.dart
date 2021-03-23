@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/appRouter.dart';
 import 'package:h_order/constants/customColors.dart';
 
 class CustomAppBar extends AppBar {
@@ -62,26 +64,32 @@ class CustomAppBar extends AppBar {
     Widget bottom,
   }) =>
       CustomAppBar(
-        backgroundColor: backgroundColor ?? Colors.grey[100],
+        backgroundColor: backgroundColor ?? CustomColors.backgroundGrey,
         shadowColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         shape: Border(
           bottom: BorderSide(
-            width: 1,
-            color: backgroundColor ?? Colors.black12,
+            width: .5,
+            color: backgroundColor ?? Colors.white10,
           ),
         ),
         iconTheme: IconThemeData(
-          color: actionColor ?? Colors.black87,
+          color: actionColor ?? Colors.white,
         ),
         actions: actions,
-        leading: leading,
+        leading: leading ??
+            IconButton(
+              onPressed: () {
+                AppRouter.pop();
+              },
+              icon: Icon(CupertinoIcons.back),
+            ),
         title: Text(
           title,
           style: TextStyle(
             fontSize: 16,
-            color: titleColor ?? Colors.black87,
+            color: titleColor ?? Colors.white,
           ),
         ),
         bottom: bottom,

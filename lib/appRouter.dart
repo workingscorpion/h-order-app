@@ -50,6 +50,10 @@ class AppRouter {
 
   static get context => NavigationStore.instance.navigatorKey.currentContext;
 
+  static pop() {
+    return Navigator.of(context).pop();
+  }
+
   static toHomePage() {
     return Navigator.of(context)
         .pushNamedAndRemoveUntil(RouteNames.Home, (Route route) => false);
