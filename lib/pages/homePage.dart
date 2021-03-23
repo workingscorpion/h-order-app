@@ -130,12 +130,14 @@ class _HomePageState extends State<HomePage>
                 child: Icon(
                   icon,
                   size: 28,
+                  color: onTap != null ? Colors.white : Colors.white10,
                 ),
               ),
               Text(
                 text ?? '',
                 style: TextStyle(
                   fontSize: 14,
+                  color: onTap != null ? Colors.white : Colors.white10,
                 ),
               ),
             ],
@@ -256,14 +258,14 @@ class _HomePageState extends State<HomePage>
                     width: 6,
                   ),
                   _infoButton(
-                    onPressed: () {},
+                    // onPressed: () {},
                     text: '관리비내역',
                   ),
                   Container(
                     width: 6,
                   ),
                   _infoButton(
-                    onPressed: () {},
+                    // onPressed: () {},
                     text: '마이페이지',
                   ),
                 ],
@@ -279,14 +281,16 @@ class _HomePageState extends State<HomePage>
   }) =>
       Expanded(
         child: OutlineButton(
+          onPressed: onPressed,
+          padding: EdgeInsets.zero,
+          textColor: Colors.white,
           borderSide: BorderSide(
             width: .5,
             color: Colors.white54,
           ),
           highlightedBorderColor: Colors.blueGrey,
-          textColor: Colors.white,
-          padding: EdgeInsets.zero,
-          onPressed: onPressed,
+          disabledBorderColor: Colors.white10,
+          disabledTextColor: Colors.white10,
           child: Text(
             text,
             style: TextStyle(
@@ -336,29 +340,29 @@ class _HomePageState extends State<HomePage>
                   _serviceItem(
                     icon: CupertinoIcons.hammer,
                     text: '시설보수',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.sparkles,
                     text: '청소',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.tornado,
                     text: '세탁',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.car_detailed,
                     text: '출차',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                 ],
                 ...[
                   _serviceItem(
                     icon: CupertinoIcons.exclamationmark_bubble,
                     text: '관리실호출',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.tag,
@@ -370,34 +374,34 @@ class _HomePageState extends State<HomePage>
                   _serviceItem(
                     icon: CupertinoIcons.paw,
                     text: '팻케어',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.cube_box,
                     text: '택배',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                 ],
                 ...[
                   _serviceItem(
                     icon: CupertinoIcons.arrow_3_trianglepath,
                     text: '분리수거',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.trash,
                     text: '종량제봉투',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.paintbrush,
                     text: '인테리어',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.archivebox,
                     text: '이사',
-                    onTap: () {},
+                    // onTap: () {},
                   ),
                 ],
               ],
