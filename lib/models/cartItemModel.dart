@@ -1,10 +1,10 @@
 import 'package:h_order/models/productModel.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'cartModel.g.dart';
+part 'cartItemModel.g.dart';
 
 @JsonSerializable()
-class CartModel {
+class CartItemModel {
   final int index;
   final ProductModel product;
   final String name;
@@ -14,7 +14,7 @@ class CartModel {
   final int totalAmount;
   final Map<int, int> optionQuantity;
 
-  CartModel({
+  CartItemModel({
     this.index,
     this.product,
     this.name,
@@ -25,8 +25,8 @@ class CartModel {
     this.optionQuantity,
   });
 
-  factory CartModel.fromJson(Map<String, dynamic> json) =>
-      _$CartModelFromJson(json);
+  factory CartItemModel.fromJson(Map<String, dynamic> json) =>
+      _$CartItemModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CartModelToJson(this);
+  Map<String, dynamic> toJson() => _$CartItemModelToJson(this);
 }

@@ -7,5 +7,4 @@ class RouteNames {
   static const String Alarm = '/alarm';
   static const String Board = '/board';
   static const String Settings = '/settings';
-  static const String Product = '/product';
 }

@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cartModel.dart';
+part of 'cartItemModel.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CartModel _$CartModelFromJson(Map<String, dynamic> json) {
-  return CartModel(
+CartItemModel _$CartItemModelFromJson(Map<String, dynamic> json) {
+  return CartItemModel(
     index: json['index'] as int,
     product: json['product'] == null
         ? null
@@ -23,7 +23,8 @@ CartModel _$CartModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CartModelToJson(CartModel instance) => <String, dynamic>{
+Map<String, dynamic> _$CartItemModelToJson(CartItemModel instance) =>
+    <String, dynamic>{
       'index': instance.index,
       'product': instance.product,
       'name': instance.name,

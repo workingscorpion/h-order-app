@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage>
                           child: Clock(),
                         ),
                         Text(
-                          '현주오피스텔 502호',
+                          '진주오피스텔 A동 102호',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.white24,

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/customAppBar.dart';
+import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
@@ -19,8 +20,12 @@ class _ShopPageState extends State<ShopPage>
   TabController _tabController;
 
   List<CategoryModel> _categories;
+  List<CartItemModel> _cart;
 
-  List<ProductModel> _cart;
+  int get quantity {
+    return _cart.fold(
+        0, (previousValue, element) => previousValue + element.quantity);
+  }
 
   @override
   void initState() {
@@ -66,7 +71,7 @@ class _ShopPageState extends State<ShopPage>
                           multiple: max > 0 ? false : random.nextBool(),
                         );
                       })
-                    : List(),
+                    : [],
               );
             }),
           );
@@ -142,7 +147,7 @@ class _ShopPageState extends State<ShopPage>
                                                 margin:
                                                     EdgeInsets.only(bottom: 5),
                                                 child: Text(
-                                                  '${NumberFormat('###,###,###,###').format(product.price)} ₩',
+                                                  '${NumberFormat().format(product.price)} ₩',
                                                   textAlign: TextAlign.left,
                                                 ),
                                               ),
@@ -157,7 +162,7 @@ class _ShopPageState extends State<ShopPage>
                                   color: Colors.transparent,
                                   child: InkWell(
                                     onTap: () {
-                                      AppRouter.toProductPage(product: product);
+                                      _detail(product: product);
                                     },
                                   ),
                                 ),
@@ -185,7 +190,7 @@ class _ShopPageState extends State<ShopPage>
 
   _floatingActionButton() => FloatingActionButton(
         onPressed: () {
-          // AppRouter.toIssueWritePage();
+          AppRouter.toCartPage(_cart);
         },
         backgroundColor: Colors.blueGrey,
         child: Container(
@@ -212,7 +217,7 @@ class _ShopPageState extends State<ShopPage>
                           ),
                         ),
                         child: Text(
-                          '${_cart.length}',
+                          '$quantity',
                           style: TextStyle(
                             fontSize: 11,
                           ),
@@ -224,6 +229,19 @@ class _ShopPageState extends State<ShopPage>
           ),
         ),
       );
+
+  _detail({
+    ProductModel product,
+  }) async {
+    final CartItemModel result =
+        await AppRouter.toProductPage(product: product);
+
+    if (result == null) {
+      return;
+    }
+
+    _cart.add(result);
+  }
 
   _appBar() => CustomAppBar.create(
         title: '상점',

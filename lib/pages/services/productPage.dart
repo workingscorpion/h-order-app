@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/components/customAppBar.dart';
+import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
 import 'package:intl/intl.dart';
@@ -27,21 +28,20 @@ class _ProductPageState extends State<ProductPage>
   Map<int, ProductOptionModel> _optionMap;
   Map<int, int> _optionQuantityMap;
 
-  get totalAmount {
+  int get totalAmount {
     return _quantity * amount;
   }
 
-  get amount {
+  int get amount {
     return widget.product.price + optionAmount;
   }
 
-  get optionAmount {
-    var result = 0;
-    _optionQuantityMap.forEach((key, value) {
-      result += value * _optionMap[key]?.price;
-    });
-
-    return result;
+  int get optionAmount {
+    return _optionQuantityMap.entries.fold(
+        0,
+        (previousValue, element) =>
+            previousValue +
+            element.value * (_optionMap[element.key]?.price ?? 0));
   }
 
   @override
@@ -86,7 +86,7 @@ class _ProductPageState extends State<ProductPage>
               children: [
                 ...widget.product.options
                         ?.expand((option) => _option(option: option)) ??
-                    List(),
+                    [],
               ],
             ),
           ),
@@ -98,7 +98,7 @@ class _ProductPageState extends State<ProductPage>
                 _save();
               },
               child: Text(
-                '장바구니 담기 (${NumberFormat('###,###,###,###').format(totalAmount)} ₩)',
+                '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.white,
@@ -137,7 +137,7 @@ class _ProductPageState extends State<ProductPage>
                   alignment: Alignment.centerRight,
                   margin: EdgeInsets.only(right: 12),
                   child: Text(
-                    '${NumberFormat('###,###,###,###').format(amount)} ₩',
+                    '${NumberFormat().format(amount)} ₩',
                     style: TextStyle(
                       fontSize: 14,
                     ),
@@ -247,7 +247,7 @@ class _ProductPageState extends State<ProductPage>
                       margin: EdgeInsets.only(right: 12),
                       child: (option.options?.length ?? 0) == 0
                           ? Text(
-                              '${NumberFormat('###,###,###,###').format(option.price)} ₩',
+                              '${NumberFormat().format(option.price)} ₩',
                               style: TextStyle(
                                 fontSize: 14,
                               ),
@@ -333,12 +333,9 @@ class _ProductPageState extends State<ProductPage>
       final parent = _optionMap[option.parent];
 
       if ((parent.max ?? 0) > 0) {
-        var count = 0;
-        parent.options.forEach((sub) {
-          if (_optionQuantityMap[sub.index] == 1) {
-            count += 1;
-          }
-        });
+        final count = parent.options
+            .where((element) => _optionQuantityMap[element.index] == 1)
+            .length;
 
         if (parent.max <= count) {
           await Fluttertoast.cancel();
@@ -360,6 +357,16 @@ class _ProductPageState extends State<ProductPage>
   }
 
   _save() {
-    Navigator.of(context).pop();
+    final result = CartItemModel(
+      name: widget.product.name,
+      amount: amount,
+      optionAmount: optionAmount,
+      totalAmount: totalAmount,
+      optionQuantity: _optionQuantityMap,
+      quantity: _quantity,
+      product: widget.product,
+    );
+
+    Navigator.of(context).pop(result);
   }
 }
