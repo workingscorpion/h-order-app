@@ -70,15 +70,21 @@ class AppRouter {
   }
 
   static toCartPage(List<CartItemModel> cart) {
-    return Navigator.of(context).push(MaterialPageRoute(
-      builder: (BuildContext context) => CartPage(cart: cart),
-    ));
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => CartPage(cart: cart),
+        settings: RouteSettings(name: RouteNames.Cart),
+      ),
+    );
   }
 
   static toShoppingCompletePage(List<CartItemModel> cart) {
-    return Navigator.of(context).push(MaterialPageRoute(
-      builder: (BuildContext context) => ShoppingCompletePage(cart: cart),
-    ));
+    return Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (BuildContext context) => ShoppingCompletePage(cart: cart),
+      ),
+      (Route route) => route.settings.name == RouteNames.Shop,
+    );
   }
 
   static toProductPage({

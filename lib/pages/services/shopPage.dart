@@ -42,17 +42,8 @@ class _ShopPageState extends State<ShopPage>
     super.initState();
 
     _streamSubscription = _streamController.stream.listen((data) {
-      if (data != null && data is ProductModel) {
-        _addCartItem(
-          cartItem: CartItemModel(
-            product: data,
-            name: data.name,
-            amount: data.price,
-            quantity: 1,
-            optionAmount: 0,
-            optionQuantity: Map(),
-          ),
-        );
+      if (data != null && data is CartItemModel) {
+        _addCartItem(cartItem: data);
       }
     });
 
@@ -208,17 +199,22 @@ class _ShopPageState extends State<ShopPage>
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(bottom: 5),
                               child: Text(
                                 product.name,
                                 textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(bottom: 5),
                               child: Text(
                                 '${NumberFormat().format(product.price)} ₩',
                                 textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white38,
+                                ),
                               ),
                             ),
                           ],
@@ -236,13 +232,25 @@ class _ShopPageState extends State<ShopPage>
               Positioned(
                 bottom: 0,
                 right: 0,
+                height: 34,
                 child: IconButton(
+                  padding: EdgeInsets.zero,
                   key: _buttonKeys[product.index],
                   icon: Icon(
                     CupertinoIcons.cart_badge_plus,
+                    size: 18,
                   ),
                   onPressed: () {
-                    _addProduct(product: product);
+                    _throwBall(
+                      data: CartItemModel(
+                        product: product,
+                        name: product.name,
+                        amount: product.price,
+                        quantity: 1,
+                        optionAmount: 0,
+                        optionQuantity: Map(),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -313,7 +321,7 @@ class _ShopPageState extends State<ShopPage>
       return;
     }
 
-    _addCartItem(cartItem: result);
+    _throwBall(data: result);
   }
 
   _appBar() => CustomAppBar.create(
@@ -321,8 +329,8 @@ class _ShopPageState extends State<ShopPage>
         title: '상점',
       );
 
-  _addProduct({
-    ProductModel product,
+  _throwBall({
+    CartItemModel data,
   }) {
     final RenderBox appBarRenderBox =
         _appBarKey.currentContext.findRenderObject();
@@ -330,9 +338,9 @@ class _ShopPageState extends State<ShopPage>
     final local = Offset(0, -appBarHeight);
 
     _ballScreenKey.currentState.create(
-      data: product,
+      data: data,
       local: local,
-      from: _buttonKeys[product.index],
+      from: _buttonKeys[data.product.index],
       to: _floatingButtonKey,
     );
   }
