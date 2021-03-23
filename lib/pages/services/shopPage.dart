@@ -240,7 +240,12 @@ class _ShopPageState extends State<ShopPage>
       return;
     }
 
-    _cart.add(result);
+    final index = _cart.indexWhere((element) => element.key == result.key);
+    if (index != -1) {
+      _cart[index] += result;
+    } else {
+      _cart.add(result);
+    }
   }
 
   _appBar() => CustomAppBar.create(

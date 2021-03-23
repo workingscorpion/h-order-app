@@ -283,13 +283,14 @@ class _HomePageState extends State<HomePage>
             width: .5,
             color: Colors.white54,
           ),
+          highlightedBorderColor: Colors.blueGrey,
+          textColor: Colors.white,
           padding: EdgeInsets.zero,
           onPressed: onPressed,
           child: Text(
             text,
             style: TextStyle(
               fontSize: 11,
-              color: Colors.white,
             ),
           ),
         ),
@@ -333,17 +334,17 @@ class _HomePageState extends State<HomePage>
               children: [
                 ...[
                   _serviceItem(
-                    icon: CupertinoIcons.tag_fill,
+                    icon: CupertinoIcons.hammer,
                     text: '시설보수',
                     onTap: () {},
                   ),
                   _serviceItem(
-                    icon: CupertinoIcons.tag_fill,
+                    icon: CupertinoIcons.sparkles,
                     text: '청소',
                     onTap: () {},
                   ),
                   _serviceItem(
-                    icon: CupertinoIcons.tag_fill,
+                    icon: CupertinoIcons.tornado,
                     text: '세탁',
                     onTap: () {},
                   ),
@@ -355,19 +356,19 @@ class _HomePageState extends State<HomePage>
                 ],
                 ...[
                   _serviceItem(
-                    icon: CupertinoIcons.tag_fill,
+                    icon: CupertinoIcons.exclamationmark_bubble,
                     text: '관리실호출',
                     onTap: () {},
                   ),
                   _serviceItem(
-                    icon: CupertinoIcons.tag_fill,
+                    icon: CupertinoIcons.tag,
                     text: '딜리버리',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
                   ),
                   _serviceItem(
-                    icon: CupertinoIcons.tag_fill,
+                    icon: CupertinoIcons.paw,
                     text: '팻케어',
                     onTap: () {},
                   ),
@@ -379,22 +380,22 @@ class _HomePageState extends State<HomePage>
                 ],
                 ...[
                   _serviceItem(
-                    icon: CupertinoIcons.cube_box,
+                    icon: CupertinoIcons.arrow_3_trianglepath,
                     text: '분리수거',
                     onTap: () {},
                   ),
                   _serviceItem(
-                    icon: CupertinoIcons.cube_box,
+                    icon: CupertinoIcons.trash,
                     text: '종량제봉투',
                     onTap: () {},
                   ),
                   _serviceItem(
-                    icon: CupertinoIcons.cube_box,
+                    icon: CupertinoIcons.paintbrush,
                     text: '인테리어',
                     onTap: () {},
                   ),
                   _serviceItem(
-                    icon: CupertinoIcons.car_detailed,
+                    icon: CupertinoIcons.archivebox,
                     text: '이사',
                     onTap: () {},
                   ),

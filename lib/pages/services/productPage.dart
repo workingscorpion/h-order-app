@@ -366,7 +366,6 @@ class _ProductPageState extends State<ProductPage>
       name: widget.product.name,
       amount: amount,
       optionAmount: optionAmount,
-      totalAmount: totalAmount,
       optionQuantity: _optionQuantityMap,
       quantity: _quantity,
       product: widget.product,
