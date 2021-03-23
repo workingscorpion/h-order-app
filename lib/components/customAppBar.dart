@@ -55,6 +55,7 @@ class CustomAppBar extends AppBar {
         );
 
   factory CustomAppBar.create({
+    Key key,
     String title,
     List<Widget> actions,
     Widget leading,
@@ -64,6 +65,7 @@ class CustomAppBar extends AppBar {
     Widget bottom,
   }) =>
       CustomAppBar(
+        key: key,
         backgroundColor: backgroundColor ?? CustomColors.backgroundGrey,
         shadowColor: Colors.transparent,
         elevation: 0,

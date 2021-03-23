@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -73,11 +71,14 @@ class _ProductPageState extends State<ProductPage>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            height: MediaQuery.of(context).size.width * .5,
-            child: Image.asset(
-              widget.product.image,
-              fit: BoxFit.cover,
+          Hero(
+            tag: widget.product.index,
+            child: Container(
+              height: MediaQuery.of(context).size.width * .5,
+              child: Image.asset(
+                widget.product.image,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           _title(),

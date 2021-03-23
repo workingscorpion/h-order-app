@@ -1,23 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/customAppBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
 import 'package:intl/intl.dart';
 
-class CartPage extends StatefulWidget {
+class ShoppingCompletePage extends StatefulWidget {
   final List<CartItemModel> cart;
 
-  CartPage({
+  ShoppingCompletePage({
     this.cart,
   });
 
   @override
-  _CartPageState createState() => _CartPageState();
+  _ShoppingCompletePageState createState() => _ShoppingCompletePageState();
 }
 
-class _CartPageState extends State<CartPage>
+class _ShoppingCompletePageState extends State<ShoppingCompletePage>
     with SingleTickerProviderStateMixin {
   Map<int, ProductOptionModel> _optionMap;
 
@@ -248,11 +249,7 @@ class _CartPageState extends State<CartPage>
                           iconSize: 16,
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            if (cartItem.quantity == 1) {
-                              widget.cart.remove(cartItem);
-                            } else {
-                              cartItem.subtract(1);
-                            }
+                            cartItem.subtract(1);
                             setState(() {});
                           },
                           icon: Icon(
@@ -262,11 +259,9 @@ class _CartPageState extends State<CartPage>
                         ),
                       ),
                       Container(
-                        width: 20,
                         margin: EdgeInsets.symmetric(horizontal: 12),
                         child: Text(
                           '${cartItem.quantity}',
-                          textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -356,6 +351,14 @@ class _CartPageState extends State<CartPage>
   }
 
   _save() async {
-    AppRouter.toShoppingCompletePage(widget.cart);
+    await Fluttertoast.showToast(
+      msg: '주문이 완료되었습니다.',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 2,
+      fontSize: 14,
+    );
+
+    AppRouter.toHomePage();
   }
 }

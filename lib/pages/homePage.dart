@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage>
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 2,
-        fontSize: 14.0,
+        fontSize: 14,
       );
 
       return false;

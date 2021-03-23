@@ -8,6 +8,7 @@ import 'package:h_order/pages/services/cartPage.dart';
 import 'package:h_order/pages/services/productPage.dart';
 import 'package:h_order/pages/services/settingsPage.dart';
 import 'package:h_order/pages/services/shopPage.dart';
+import 'package:h_order/pages/services/shoppingCompletePage.dart';
 import 'package:h_order/pages/splashPage.dart';
 import 'package:h_order/store/navigationStore.dart';
 
@@ -71,6 +72,12 @@ class AppRouter {
   static toCartPage(List<CartItemModel> cart) {
     return Navigator.of(context).push(MaterialPageRoute(
       builder: (BuildContext context) => CartPage(cart: cart),
+    ));
+  }
+
+  static toShoppingCompletePage(List<CartItemModel> cart) {
+    return Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) => ShoppingCompletePage(cart: cart),
     ));
   }
 

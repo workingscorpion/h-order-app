@@ -6,6 +6,7 @@ part 'productModel.g.dart';
 @JsonSerializable()
 class ProductModel {
   final int index;
+  final int categoryIndex;
   final String image;
   final String name;
   final int price;
@@ -13,6 +14,7 @@ class ProductModel {
 
   ProductModel({
     this.index,
+    this.categoryIndex,
     this.image,
     this.name,
     this.price,
