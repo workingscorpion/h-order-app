@@ -5,68 +5,12 @@ import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/clock.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   HomePage();
 
   @override
   _HomePageState createState() => _HomePageState();
-
-  static showNotice(BuildContext context, bool checkOpen) async {
-    if (checkOpen) {
-      final sp = await SharedPreferences.getInstance();
-      final lastPopup = sp.getString('lastPopup');
-
-      if (lastPopup != null && lastPopup.isNotEmpty) {
-        final date = DateTime.parse(lastPopup);
-        if (date.isBefore(DateTime.now())) {
-          return;
-        }
-      }
-    }
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        titlePadding: EdgeInsets.zero,
-        actionsPadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        buttonPadding: EdgeInsets.zero,
-        content: Container(
-          child: Image.asset(
-            "assets/notice.png",
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              final sp = await SharedPreferences.getInstance();
-              sp.setString('lastPopup', DateTime.now().toString());
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              '그만보기',
-              style: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              '닫기',
-              style: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class _HomePageState extends State<HomePage>
@@ -121,26 +65,33 @@ class _HomePageState extends State<HomePage>
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 8),
-                child: Icon(
-                  icon,
-                  size: 28,
-                  color: onTap != null ? Colors.white : Colors.white10,
-                ),
+          child: FractionallySizedBox(
+            widthFactor: 1,
+            heightFactor: .66,
+            child: FittedBox(
+              fit: BoxFit.fitHeight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 8),
+                    child: Icon(
+                      icon,
+                      size: 28,
+                      color: onTap != null ? Colors.white : Colors.white10,
+                    ),
+                  ),
+                  Text(
+                    text ?? '',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: onTap != null ? Colors.white : Colors.white10,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                text ?? '',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: onTap != null ? Colors.white : Colors.white10,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       );
@@ -170,108 +121,140 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-  _status() => Container(
-        padding: EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Expanded(
-              child: Clock(),
-            ),
-            Text(
-              '진주오피스텔 A동 102호',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.white24,
+  _status() => Expanded(
+        flex: 1,
+        child: Container(
+          padding: EdgeInsets.all(12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Clock(),
               ),
-            ),
-          ],
+              FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  '진주오피스텔 A동 102호',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white24,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
 
-  _info() => Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: Colors.white10,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-        padding: EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 4),
-              child: Row(
-                children: [
-                  Text(
-                    '202호',
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      '2월분 납부완료',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 12,
+  _info() => Expanded(
+        flex: 3,
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 12),
+          decoration: BoxDecoration(
+            color: Colors.white10,
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          padding: EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Text(
+                        '202호',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              child: Text(
-                '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우: 12345)',
-                style: TextStyle(
-                  fontSize: 10,
+                    FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Text(
+                        '2월분 납부완료',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    width: .5,
-                    color: Colors.white10,
+              Expanded(
+                flex: 3,
+                child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우: 12345)',
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              height: 26,
-              child: Row(
-                children: [
-                  _infoButton(
-                    onPressed: () {},
-                    text: '빌라정보',
-                  ),
-                  Container(
-                    width: 6,
-                  ),
-                  _infoButton(
-                    onPressed: () {},
-                    text: '신청내역',
-                  ),
-                  Container(
-                    width: 6,
-                  ),
-                  _infoButton(
-                    // onPressed: () {},
-                    text: '관리비내역',
-                  ),
-                  Container(
-                    width: 6,
-                  ),
-                  _infoButton(
-                    // onPressed: () {},
-                    text: '마이페이지',
-                  ),
-                ],
+              Expanded(
+                flex: 1,
+                child: Container(),
               ),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: .5,
+                      color: Colors.white10,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(),
+              ),
+              Expanded(
+                flex: 4,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _infoButton(
+                      onPressed: () {},
+                      text: '빌라정보',
+                    ),
+                    Container(
+                      width: 6,
+                    ),
+                    _infoButton(
+                      onPressed: () {},
+                      text: '신청내역',
+                    ),
+                    Container(
+                      width: 6,
+                    ),
+                    _infoButton(
+                      // onPressed: () {},
+                      text: '관리비내역',
+                    ),
+                    Container(
+                      width: 6,
+                    ),
+                    _infoButton(
+                      // onPressed: () {},
+                      text: '마이페이지',
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       );
 
@@ -288,46 +271,59 @@ class _HomePageState extends State<HomePage>
             width: .5,
             color: Colors.white54,
           ),
-          highlightedBorderColor: Colors.blueGrey,
+          highlightedBorderColor: Colors.white,
           disabledBorderColor: Colors.white10,
           disabledTextColor: Colors.white10,
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 11,
+          child: FractionallySizedBox(
+            widthFactor: 1,
+            heightFactor: .6,
+            child: FittedBox(
+              fit: BoxFit.fitHeight,
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: 11,
+                ),
+              ),
             ),
           ),
         ),
       );
 
-  _carousel() => CarouselSlider(
-        items: [
-          ...[1, 2, 3, 4, 5, 6].map(
-            (item) => Container(
-              alignment: Alignment.center,
-              child: Image.asset(
-                'assets/splash/splash.png',
-                width: double.infinity,
-                fit: BoxFit.cover,
+  _carousel() => Expanded(
+        flex: 4,
+        child: LayoutBuilder(
+          builder: (context, constraint) => CarouselSlider(
+            items: [
+              ...[1, 2, 3, 4, 5, 6].map(
+                (item) => Container(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'assets/splash/splash.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
+            ],
+            options: CarouselOptions(
+              height: constraint.maxHeight,
+              viewportFraction: 0.8,
+              initialPage: 0,
+              enableInfiniteScroll: true,
+              reverse: false,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 10),
+              autoPlayAnimationDuration: Duration(seconds: 1),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              scrollDirection: Axis.horizontal,
             ),
           ),
-        ],
-        options: CarouselOptions(
-          height: 180,
-          viewportFraction: 0.8,
-          initialPage: 0,
-          enableInfiniteScroll: true,
-          reverse: false,
-          autoPlay: true,
-          autoPlayInterval: Duration(seconds: 10),
-          autoPlayAnimationDuration: Duration(seconds: 1),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          scrollDirection: Axis.horizontal,
         ),
       );
 
   _menu() => Expanded(
+        flex: 14,
         child: Container(
           padding: EdgeInsets.all(12),
           child: Material(

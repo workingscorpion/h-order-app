@@ -18,58 +18,60 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        title: 'H Order',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          accentColor: Colors.white,
-          backgroundColor: CustomColors.backgroundGrey,
-          dialogBackgroundColor: CustomColors.backgroundGrey,
-          scaffoldBackgroundColor: CustomColors.backgroundGrey,
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'H Order',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        accentColor: Colors.white,
+        backgroundColor: CustomColors.backgroundGrey,
+        dialogBackgroundColor: CustomColors.backgroundGrey,
+        scaffoldBackgroundColor: CustomColors.backgroundGrey,
+        buttonColor: Colors.blueGrey,
+        buttonTheme: ButtonThemeData(
           buttonColor: Colors.blueGrey,
-          buttonTheme: ButtonThemeData(
-            buttonColor: Colors.blueGrey,
-          ),
-          iconTheme: IconThemeData(
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
             color: Colors.white,
           ),
-          textTheme: TextTheme(
-            bodyText1: TextStyle(
-              color: Colors.white,
-            ),
-            bodyText2: TextStyle(
-              color: Colors.white,
-            ),
-            headline1: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-            headline2: TextStyle(
-              color: Colors.white,
-            ),
-            headline3: TextStyle(
-              color: Colors.white,
-            ),
-            headline4: TextStyle(
-              color: Colors.white,
-            ),
-            headline5: TextStyle(
-              color: Colors.white,
-            ),
-            headline6: TextStyle(
-              color: Colors.white,
-            ),
-            button: TextStyle(
-              color: Colors.white,
-            ),
-          ).apply(
-            bodyColor: Colors.white,
+          bodyText2: TextStyle(
+            color: Colors.white,
           ),
+          headline1: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+          headline2: TextStyle(
+            color: Colors.white,
+          ),
+          headline3: TextStyle(
+            color: Colors.white,
+          ),
+          headline4: TextStyle(
+            color: Colors.white,
+          ),
+          headline5: TextStyle(
+            color: Colors.white,
+          ),
+          headline6: TextStyle(
+            color: Colors.white,
+          ),
+          button: TextStyle(
+            color: Colors.white,
+          ),
+        ).apply(
+          bodyColor: Colors.white,
         ),
-        navigatorKey: NavigationStore.instance.navigatorKey,
-        onGenerateRoute: AppRouter.generateRoute,
-        initialRoute: RouteNames.Splash,
-        // navigatorObservers: [observer],
-      );
+      ),
+      navigatorKey: NavigationStore.instance.navigatorKey,
+      onGenerateRoute: AppRouter.generateRoute,
+      initialRoute: RouteNames.Splash,
+      // navigatorObservers: [observer],
+    );
+  }
 }
