@@ -71,18 +71,25 @@ class _ProductPageState extends State<ProductPage>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Hero(
-            tag: widget.product.index,
-            child: Container(
-              height: MediaQuery.of(context).size.width * .5,
-              child: Image.asset(
-                widget.product.image,
-                fit: BoxFit.cover,
+          Expanded(
+            flex: 8,
+            child: Hero(
+              tag: widget.product.index,
+              child: Container(
+                height: MediaQuery.of(context).size.width * .5,
+                child: Image.asset(
+                  widget.product.image,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-          _title(),
           Expanded(
+            flex: 1,
+            child: _title(),
+          ),
+          Expanded(
+            flex: 8,
             child: ListView(
               children: [
                 ...widget.product.options
@@ -91,18 +98,28 @@ class _ProductPageState extends State<ProductPage>
               ],
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: FlatButton(
-              color: Colors.blueGrey,
-              onPressed: () {
-                _save();
-              },
-              child: Text(
-                '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: FlatButton(
+                onPressed: () {
+                  _save();
+                },
+                color: Colors.blueGrey,
+                child: FractionallySizedBox(
+                  widthFactor: 1,
+                  heightFactor: .6,
+                  child: FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Text(
+                      '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -125,69 +142,97 @@ class _ProductPageState extends State<ProductPage>
               ),
             ),
           ),
-          child: Row(
-            children: [
-              Text(
-                widget.product.name,
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 12),
+          child: FractionallySizedBox(
+            heightFactor: .6,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                FittedBox(
+                  fit: BoxFit.fitHeight,
                   child: Text(
-                    '${NumberFormat().format(amount)} ₩',
+                    widget.product.name,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 18,
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: 16,
-                child: IconButton(
-                  iconSize: 16,
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    _quantity -= 1;
-                    if (_quantity < minQuantity) {
-                      _quantity = minQuantity;
-                    }
-                    setState(() {});
-                  },
-                  icon: Icon(
-                    CupertinoIcons.minus,
-                    size: 16,
+                Expanded(
+                  child: Container(),
+                ),
+                FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 12),
+                    child: Text(
+                      '${NumberFormat().format(amount)} ₩',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 12),
-                child: Text(
-                  '$_quantity',
-                  style: TextStyle(
-                    fontSize: 14,
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: IconButton(
+                    iconSize: 16,
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      _quantity -= 1;
+                      if (_quantity < minQuantity) {
+                        _quantity = minQuantity;
+                      }
+                      setState(() {});
+                    },
+                    icon: FractionallySizedBox(
+                      widthFactor: .5,
+                      heightFactor: .5,
+                      child: FittedBox(
+                        fit: BoxFit.fitHeight,
+                        child: Icon(
+                          CupertinoIcons.minus,
+                          size: 16,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                width: 16,
-                child: IconButton(
-                  iconSize: 16,
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    _quantity = _quantity + 1;
-                    setState(() {});
-                  },
-                  icon: Icon(
-                    CupertinoIcons.add,
-                    size: 16,
+                FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 5),
+                    child: Text(
+                      '$_quantity',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: IconButton(
+                    iconSize: 16,
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      _quantity = _quantity + 1;
+                      setState(() {});
+                    },
+                    icon: FractionallySizedBox(
+                      widthFactor: .5,
+                      heightFactor: .5,
+                      child: FittedBox(
+                        fit: BoxFit.fitHeight,
+                        child: Icon(
+                          CupertinoIcons.add,
+                          size: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -219,108 +264,135 @@ class _ProductPageState extends State<ProductPage>
           color: Colors.transparent,
           child: InkWell(
             child: Container(
-              height: 40,
+              height: MediaQuery.of(context).size.height / 20,
               padding: EdgeInsets.only(
-                left: 12 * depth,
+                left: 12 +
+                    MediaQuery.of(context).size.height / 20 / 3 * (depth - 1),
                 right: 12,
               ),
-              child: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 8),
-                    child: Text(
-                      option.name,
-                      style: TextStyle(
-                        fontSize: 16 - depth * 2,
+              child: FractionallySizedBox(
+                heightFactor: .6,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Container(
+                        margin: EdgeInsets.only(right: 8),
+                        child: Text(
+                          option.name,
+                          style: TextStyle(
+                            fontSize: 16 - depth * 2,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  ...((option.max ?? 0) > 0)
-                      ? [
-                          Text(
-                            '(최대${option.max}개)',
-                            style: TextStyle(
-                              fontSize: 12 - depth * 2,
-                            ),
-                          ),
-                        ]
-                      : [],
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      margin: EdgeInsets.only(right: 12),
-                      child: (option.options?.length ?? 0) == 0
-                          ? Text(
-                              '${NumberFormat().format(option.price)} ₩',
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            )
-                          : Container(),
-                    ),
-                  ),
-                  ...(option.options?.length ?? 0) == 0
-                      ? option.multiple
-                          ? [
-                              Container(
-                                width: 16,
-                                child: IconButton(
-                                  iconSize: 16,
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {
-                                    _optionQuantityMap[option.index] -= 1;
-                                    if (_optionQuantityMap[option.index] < 0) {
-                                      _optionQuantityMap[option.index] = 0;
-                                    }
-                                    setState(() {});
-                                  },
-                                  icon: Icon(
-                                    CupertinoIcons.minus,
-                                    size: 16,
-                                  ),
+                    ...((option.max ?? 0) > 0)
+                        ? [
+                            FittedBox(
+                              fit: BoxFit.fitHeight,
+                              child: Text(
+                                '(최대${option.max}개)',
+                                style: TextStyle(
+                                  fontSize: 12 - depth * 2,
+                                  color: Colors.white38,
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 12),
+                            ),
+                          ]
+                        : [],
+                    Expanded(
+                      child: Container(),
+                    ),
+                    ...(option.options?.length ?? 0) == 0
+                        ? [
+                            FittedBox(
+                              fit: BoxFit.fitHeight,
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                margin: EdgeInsets.only(right: 12),
                                 child: Text(
-                                  '${_optionQuantityMap[option.index]}',
+                                  '${NumberFormat().format(option.price)} ₩',
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: 16,
-                                child: IconButton(
-                                  iconSize: 16,
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {
-                                    _optionQuantityMap[option.index] += 1;
-                                    setState(() {});
-                                  },
-                                  icon: Icon(
-                                    CupertinoIcons.add,
-                                    size: 16,
+                            ),
+                          ]
+                        : [],
+                    ...(option.options?.length ?? 0) == 0
+                        ? option.multiple
+                            ? [
+                                Container(
+                                  width: 16,
+                                  child: IconButton(
+                                    iconSize: 16,
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      _optionQuantityMap[option.index] -= 1;
+                                      if (_optionQuantityMap[option.index] <
+                                          0) {
+                                        _optionQuantityMap[option.index] = 0;
+                                      }
+                                      setState(() {});
+                                    },
+                                    icon: Icon(
+                                      CupertinoIcons.minus,
+                                      size: 16,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ]
-                          : [
-                              Container(
-                                width: 64,
-                                alignment: Alignment.center,
-                                child: Checkbox(
-                                  activeColor: Colors.blueGrey,
-                                  checkColor: Colors.white,
-                                  value: _optionQuantityMap[option.index] == 1,
-                                  onChanged: (value) {
-                                    _changeSelect(option: option, value: value);
-                                  },
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 12),
+                                  child: Text(
+                                    '${_optionQuantityMap[option.index]}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ]
-                      : [],
-                ],
+                                Container(
+                                  width: 16,
+                                  child: IconButton(
+                                    iconSize: 16,
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      _optionQuantityMap[option.index] += 1;
+                                      setState(() {});
+                                    },
+                                    icon: Icon(
+                                      CupertinoIcons.add,
+                                      size: 16,
+                                    ),
+                                  ),
+                                ),
+                              ]
+                            : [
+                                AspectRatio(
+                                  aspectRatio: 1,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      final checked =
+                                          _optionQuantityMap[option.index] == 1;
+
+                                      _changeSelect(
+                                        option: option,
+                                        value: checked,
+                                      );
+                                    },
+                                    icon: Container(
+                                      child:
+                                          _optionQuantityMap[option.index] == 1
+                                              ? Icon(CupertinoIcons.check_mark)
+                                              : Container(),
+                                    ),
+                                  ),
+                                ),
+                              ]
+                        : [],
+                  ],
+                ),
               ),
             ),
           ),

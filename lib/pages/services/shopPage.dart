@@ -181,6 +181,7 @@ class _ShopPageState extends State<ShopPage>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
+                    flex: 8,
                     child: Hero(
                       tag: product.index,
                       child: Container(
@@ -192,35 +193,37 @@ class _ShopPageState extends State<ShopPage>
                       ),
                     ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Container(
-                              child: Text(
-                                product.name,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              child: Text(
-                                '${NumberFormat().format(product.price)} ₩',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.white38,
-                                ),
-                              ),
-                            ),
-                          ],
+                  Expanded(
+                    flex: 1,
+                    child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        child: Text(
+                          product.name,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
                       ),
-                    ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        child: Text(
+                          '${NumberFormat().format(product.price)} ₩',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -232,26 +235,33 @@ class _ShopPageState extends State<ShopPage>
               Positioned(
                 bottom: 0,
                 right: 0,
-                height: 34,
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  key: _buttonKeys[product.index],
-                  icon: Icon(
-                    CupertinoIcons.cart_badge_plus,
-                    size: 18,
-                  ),
-                  onPressed: () {
-                    _throwBall(
-                      data: CartItemModel(
-                        product: product,
-                        name: product.name,
-                        amount: product.price,
-                        quantity: 1,
-                        optionAmount: 0,
-                        optionQuantity: Map(),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .1,
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: FittedBox(
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        key: _buttonKeys[product.index],
+                        icon: Icon(
+                          CupertinoIcons.cart_badge_plus,
+                          size: 18,
+                        ),
+                        onPressed: () {
+                          _throwBall(
+                            data: CartItemModel(
+                              product: product,
+                              name: product.name,
+                              amount: product.price,
+                              quantity: 1,
+                              optionAmount: 0,
+                              optionQuantity: Map(),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -259,54 +269,59 @@ class _ShopPageState extends State<ShopPage>
         ),
       );
 
-  _floatingActionButton() => FloatingActionButton(
-        key: _floatingButtonKey,
-        onPressed: () {
-          AppRouter.toCartPage(_cart);
-        },
-        backgroundColor: Colors.blueGrey,
-        child: Container(
-          child: Stack(
-            overflow: Overflow.visible,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                child: Icon(
-                  CupertinoIcons.cart,
-                ),
+  _floatingActionButton() => Container(
+        width: MediaQuery.of(context).size.width * .1,
+        child: FittedBox(
+          child: FloatingActionButton(
+            key: _floatingButtonKey,
+            onPressed: () {
+              AppRouter.toCartPage(_cart);
+            },
+            backgroundColor: Colors.blueGrey,
+            child: Container(
+              child: Stack(
+                overflow: Overflow.visible,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    child: Icon(
+                      CupertinoIcons.cart,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: quantity < 10
+                        ? 0
+                        : quantity < 99
+                            ? -2
+                            : -6,
+                    child: _cart.isNotEmpty
+                        ? Container(
+                            width: quantity < 10
+                                ? 18
+                                : quantity < 99
+                                    ? 22
+                                    : 28,
+                            height: 18,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            child: Text(
+                              quantity < 99 ? '$quantity' : '99+',
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                          )
+                        : Container(),
+                  ),
+                ],
               ),
-              Positioned(
-                bottom: 0,
-                right: quantity < 10
-                    ? 0
-                    : quantity < 99
-                        ? -2
-                        : -6,
-                child: _cart.isNotEmpty
-                    ? Container(
-                        width: quantity < 10
-                            ? 18
-                            : quantity < 99
-                                ? 22
-                                : 28,
-                        height: 18,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          quantity < 99 ? '$quantity' : '99+',
-                          style: TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
-                      )
-                    : Container(),
-              ),
-            ],
+            ),
           ),
         ),
       );
