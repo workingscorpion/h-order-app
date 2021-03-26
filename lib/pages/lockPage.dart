@@ -20,6 +20,7 @@ class _LockPageState extends State<LockPage> {
         },
         child: Scaffold(
           body: Container(
+            alignment: Alignment.center,
             child: Text('asdf'),
           ),
         ),

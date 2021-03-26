@@ -48,7 +48,6 @@ class _ClockState extends State<Clock> {
         _text,
         style: TextStyle(
           fontSize: widget.fontSize,
-          color: Colors.white24,
         ),
       ),
     );

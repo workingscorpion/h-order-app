@@ -289,7 +289,6 @@ class _ShopPageState extends State<ShopPage>
                           height: 18,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: Colors.white,
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),
                             ),

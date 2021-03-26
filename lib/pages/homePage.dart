@@ -58,9 +58,9 @@ class _HomePageState extends State<HomePage>
     GestureTapCallback onTap,
   }) =>
       Material(
+        color: Colors.transparent,
         clipBehavior: Clip.antiAlias,
         borderRadius: BorderRadius.all(Radius.circular(5)),
-        color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
           child: Column(
@@ -72,14 +72,12 @@ class _HomePageState extends State<HomePage>
                 child: Icon(
                   icon,
                   size: 64,
-                  color: onTap != null ? Colors.white : Colors.white10,
                 ),
               ),
               Text(
                 text ?? '',
                 style: TextStyle(
                   fontSize: 22,
-                  color: onTap != null ? Colors.white : Colors.white10,
                 ),
               ),
             ],
@@ -124,7 +122,6 @@ class _HomePageState extends State<HomePage>
               '진주오피스텔 A동 102호',
               style: TextStyle(
                 fontSize: 24,
-                color: Colors.white24,
               ),
             ),
           ],
@@ -134,7 +131,6 @@ class _HomePageState extends State<HomePage>
   _info() => Container(
         margin: EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: Colors.white10,
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         padding: EdgeInsets.all(12),
@@ -165,16 +161,8 @@ class _HomePageState extends State<HomePage>
                 fontSize: 24,
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    width: .5,
-                    color: Colors.white24,
-                  ),
-                ),
-              ),
+            Divider(
+              height: 30,
             ),
             Container(
               height: 54,
@@ -213,31 +201,10 @@ class _HomePageState extends State<HomePage>
     String text,
   }) =>
       Expanded(
-        child: CupertinoButton(
+        child: FlatButton(
           onPressed: onPressed,
-          padding: EdgeInsets.zero,
           child: Text(text),
         ),
-        // child: OutlineButton(
-        //   onPressed: onPressed,
-        //   padding: EdgeInsets.zero,
-        //   textColor: Colors.white,
-        //   borderSide: BorderSide(
-        //     width: .5,
-        //     color: Colors.white54,
-        //   ),
-        //   highlightedBorderColor: Colors.white,
-        //   disabledBorderColor: Colors.white10,
-        //   disabledTextColor: Colors.white10,
-        //   child: Container(
-        //     child: Text(
-        //       text,
-        //       style: TextStyle(
-        //         fontSize: 22,
-        //       ),
-        //     ),
-        //   ),
-        // ),
       );
 
   _carousel() => Expanded(

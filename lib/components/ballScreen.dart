@@ -162,7 +162,6 @@ class _BallState extends State<_Ball> with SingleTickerProviderStateMixin {
           curve: Curves.bounceIn,
           duration: Duration(milliseconds: 100),
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),

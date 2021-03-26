@@ -17,7 +17,72 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> with WidgetsBindingObserver {
+  static const _setMainDuration = Duration(minutes: 3);
+
+  Future _future;
   StreamSubscription _setMainSubscription;
+
+  ThemeMode _themeMode = ThemeMode.dark;
+  Brightness _brightness = Brightness.dark;
+
+  final iconTheme = IconThemeData(
+    color: Colors.white,
+  );
+
+  final textTheme = TextTheme(
+    headline1: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    headline2: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    headline3: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    headline4: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    headline5: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    headline6: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    bodyText1: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    bodyText2: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    subtitle1: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    subtitle2: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    button: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    caption: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+    overline: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+    ),
+  );
 
   @override
   void initState() {
@@ -32,10 +97,24 @@ class AppState extends State<App> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  resetSetMain() {
+  setTheme(bool isDark) {
+    _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+    _brightness = isDark ? Brightness.dark : Brightness.light;
+  }
+
+  disposeSetMain() {
     _setMainSubscription?.cancel();
-    _setMainSubscription =
-        Future.delayed(Duration(seconds: 10), () {}).asStream().listen((event) {
+    _setMainSubscription = null;
+
+    _future?.timeout(Duration.zero, onTimeout: () async {});
+    _future = null;
+  }
+
+  resetSetMain() {
+    disposeSetMain();
+
+    _future = Future.delayed(_setMainDuration, () {});
+    _setMainSubscription = _future.asStream().listen((event) {
       AppRouter.toLockPage();
     });
   }
@@ -43,8 +122,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.inactive) {
-      _setMainSubscription?.cancel();
-      _setMainSubscription = null;
+      disposeSetMain();
 
       AppRouter.toLockPage();
     }
@@ -58,60 +136,108 @@ class AppState extends State<App> with WidgetsBindingObserver {
       },
       child: MaterialApp(
         title: 'H Order',
-        themeMode: ThemeMode.dark,
+        themeMode: _themeMode,
         darkTheme: ThemeData(
           materialTapTargetSize: MaterialTapTargetSize.padded,
           accentColor: Colors.white,
           backgroundColor: CustomColors.backgroundGrey,
           dialogBackgroundColor: CustomColors.backgroundGrey,
           scaffoldBackgroundColor: CustomColors.backgroundGrey,
+          splashColor: Colors.transparent,
+          textTheme: textTheme,
+          primaryTextTheme: textTheme,
+          accentTextTheme: textTheme,
+          iconTheme: iconTheme,
+          primaryIconTheme: iconTheme,
+          accentIconTheme: iconTheme,
           buttonColor: Colors.blueGrey,
-          buttonTheme: ButtonThemeData(
-            buttonColor: Colors.blueGrey,
+          colorScheme: ColorScheme(
+            primary: Colors.white,
+            primaryVariant: Colors.white,
+            secondary: Colors.white,
+            secondaryVariant: Colors.white,
+            surface: Colors.white,
+            background: Colors.white,
+            error: Colors.white,
+            onPrimary: Colors.white,
+            onSecondary: Colors.white,
+            onSurface: Colors.white,
+            onBackground: Colors.white,
+            onError: Colors.white,
+            brightness: _brightness,
           ),
-          iconTheme: IconThemeData(
-            color: Colors.white,
+          tooltipTheme: TooltipThemeData(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              color: Colors.black87,
+            ),
+            textStyle: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          dividerTheme: DividerThemeData(
+            thickness: 1,
+            color: Colors.white24,
+          ),
+          buttonTheme: ButtonThemeData(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              side: BorderSide(
+                width: 1,
+                color: Colors.white,
+              ),
+            ),
+            padding: EdgeInsets.zero,
+            splashColor: Colors.transparent,
+          ),
+          buttonBarTheme: ButtonBarThemeData(
+            buttonPadding: EdgeInsets.zero,
+            alignment: MainAxisAlignment.center,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              elevation: 0,
+              textStyle: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(
+                width: 1,
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.zero,
+              elevation: 0,
+              textStyle: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              elevation: 0,
+              textStyle: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: Colors.blueGrey,
           ),
-          primaryIconTheme: IconThemeData(),
-          accentIconTheme: IconThemeData(),
           tabBarTheme: TabBarTheme(
             labelPadding: EdgeInsets.symmetric(horizontal: 22),
             labelColor: Colors.white,
             labelStyle: TextStyle(
               fontSize: 22,
+              color: Colors.white,
             ),
             unselectedLabelColor: Colors.white,
             unselectedLabelStyle: TextStyle(
               fontSize: 22,
-            ),
-          ),
-          textTheme: TextTheme(
-            headline1: TextStyle(
-              color: Colors.white,
-            ),
-            headline2: TextStyle(),
-            headline3: TextStyle(),
-            headline4: TextStyle(),
-            headline5: TextStyle(),
-            headline6: TextStyle(),
-            bodyText1: TextStyle(
-              color: Colors.white,
-            ),
-            bodyText2: TextStyle(),
-            subtitle1: TextStyle(
-              color: Colors.white,
-            ),
-            subtitle2: TextStyle(),
-            button: TextStyle(
-              color: Colors.white,
-            ),
-            caption: TextStyle(
-              color: Colors.white,
-            ),
-            overline: TextStyle(
               color: Colors.white,
             ),
           ),
@@ -120,39 +246,10 @@ class AppState extends State<App> with WidgetsBindingObserver {
             elevation: 0,
             centerTitle: true,
             shadowColor: Colors.transparent,
-            actionsIconTheme: IconThemeData(
-              color: Colors.white,
-            ),
-            iconTheme: IconThemeData(
-              color: Colors.white,
-            ),
-            textTheme: TextTheme(
-              headline1: TextStyle(
-                fontSize: 22,
-              ),
-              headline2: TextStyle(
-                fontSize: 22,
-              ),
-              headline3: TextStyle(
-                fontSize: 22,
-              ),
-              headline4: TextStyle(
-                fontSize: 22,
-              ),
-              headline5: TextStyle(
-                fontSize: 22,
-              ),
-              headline6: TextStyle(
-                fontSize: 32,
-              ),
-              bodyText1: TextStyle(),
-              bodyText2: TextStyle(),
-              subtitle1: TextStyle(),
-              subtitle2: TextStyle(),
-              button: TextStyle(),
-              caption: TextStyle(),
-              overline: TextStyle(),
-            ),
+            textTheme: textTheme,
+            iconTheme: iconTheme,
+            actionsIconTheme: iconTheme,
+            brightness: _brightness,
           ),
         ),
         navigatorKey: NavigationStore.instance.navigatorKey,

@@ -73,7 +73,7 @@ class _CartPageState extends State<CartPage>
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
-                  width: .5,
+                  width: 1,
                   color: Colors.white10,
                 ),
               ),
@@ -98,7 +98,7 @@ class _CartPageState extends State<CartPage>
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                        width: .5,
+                        width: 1,
                         color: Colors.white10,
                       ),
                     ),
@@ -295,7 +295,7 @@ class _CartPageState extends State<CartPage>
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    width: .5,
+                    width: 1,
                     color: Colors.white10,
                   ),
                 ),

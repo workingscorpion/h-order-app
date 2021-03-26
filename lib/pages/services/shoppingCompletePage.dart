@@ -72,7 +72,6 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
                     '주문하신 매장에서 주문을 수락한 뒤에는 결제취소가 불가합니다.',
                     style: TextStyle(
                       fontSize: 10,
-                      color: Colors.white38,
                     ),
                   ),
                 ],
@@ -83,8 +82,7 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
-                  width: .5,
-                  color: Colors.white10,
+                  width: 1,
                 ),
               ),
             ),
@@ -108,8 +106,7 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                        width: .5,
-                        color: Colors.white10,
+                        width: 1,
                       ),
                     ),
                   ),
@@ -148,7 +145,6 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
                 '홈으로',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white,
                 ),
               ),
             ),
