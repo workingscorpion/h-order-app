@@ -150,7 +150,7 @@ class _ShopPageState extends State<ShopPage>
                         padding: EdgeInsets.all(5),
                         crossAxisSpacing: 5,
                         mainAxisSpacing: 5,
-                        crossAxisCount: 2,
+                        crossAxisCount: 3,
                         children: [
                           ...category.products
                               .map((product) => _product(product: product)),
