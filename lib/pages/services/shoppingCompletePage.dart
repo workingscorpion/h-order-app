@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/customAppBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
 import 'package:intl/intl.dart';
@@ -186,10 +185,6 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
             ),
           ],
         ),
-      );
-
-  _appBar() => CustomAppBar.create(
-        title: '상점',
       );
 
   _save() async {

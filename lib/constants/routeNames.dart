@@ -1,9 +1,11 @@
 class RouteNames {
   static const String Splash = '/splash';
+  static const String Lock = '/lock';
 
   static const String Home = '/';
 
   static const String Shop = '/shop';
+  static const String Product = '/product';
   static const String Alarm = '/alarm';
   static const String Board = '/board';
   static const String Settings = '/settings';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:h_order/utils/hexColor.dart';
 
 class CustomColors {
-  static final Color textBlack = HexColor('#333333');
-  static final Color backgroundGrey = HexColor('#202024');
+  static const Color aBlack = Color(0xFF000000);
+  static const Color textBlack = Color(0xFF333333);
+  static const Color backgroundGrey = Color(0xFF202024);
 }

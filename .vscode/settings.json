@@ -5,6 +5,7 @@
         "bezier",
         "cupertino",
         "lerp",
+        "mobx",
         "vsync"
     ]
 }

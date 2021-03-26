@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,23 +36,19 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Stack(
-          children: [
-            WillPopScope(
-              onWillPop: _onWillPop,
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _status(),
-                    _info(),
-                    _menu(),
-                    _carousel(),
-                  ],
-                ),
-              ),
+        body: WillPopScope(
+          onWillPop: _onWillPop,
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _status(),
+                _info(),
+                _menu(),
+                _carousel(),
+              ],
             ),
-          ],
+          ),
         ),
       );
 
@@ -65,33 +63,26 @@ class _HomePageState extends State<HomePage>
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          child: FractionallySizedBox(
-            widthFactor: 1,
-            heightFactor: .66,
-            child: FittedBox(
-              fit: BoxFit.fitHeight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 8),
-                    child: Icon(
-                      icon,
-                      size: 28,
-                      color: onTap != null ? Colors.white : Colors.white10,
-                    ),
-                  ),
-                  Text(
-                    text ?? '',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: onTap != null ? Colors.white : Colors.white10,
-                    ),
-                  ),
-                ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 12),
+                child: Icon(
+                  icon,
+                  size: 64,
+                  color: onTap != null ? Colors.white : Colors.white10,
+                ),
               ),
-            ),
+              Text(
+                text ?? '',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: onTap != null ? Colors.white : Colors.white10,
+                ),
+              ),
+            ],
           ),
         ),
       );
@@ -121,140 +112,99 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-  _status() => Expanded(
-        flex: 1,
-        child: Container(
-          padding: EdgeInsets.all(12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Clock(),
+  _status() => Container(
+        padding: EdgeInsets.all(12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Clock(
+              fontSize: 24,
+            ),
+            Text(
+              '진주오피스텔 A동 102호',
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.white24,
               ),
-              FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  '진주오피스텔 A동 102호',
+            ),
+          ],
+        ),
+      );
+
+  _info() => Container(
+        margin: EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: Colors.white10,
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        padding: EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '202호',
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 30,
+                  ),
+                ),
+                Text(
+                  '2월분 납부완료',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우: 12345)',
+              style: TextStyle(
+                fontSize: 24,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    width: .5,
                     color: Colors.white24,
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-      );
-
-  _info() => Expanded(
-        flex: 3,
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-            color: Colors.white10,
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-          ),
-          padding: EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Text(
-                        '202호',
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                    FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Text(
-                        '2월분 납부완료',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: FittedBox(
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우: 12345)',
-                    style: TextStyle(
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: .5,
-                      color: Colors.white10,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(),
-              ),
-              Expanded(
-                flex: 4,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+            ),
+            Container(
+              height: 54,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ...[
                     _infoButton(
                       onPressed: () {},
                       text: '빌라정보',
-                    ),
-                    Container(
-                      width: 6,
                     ),
                     _infoButton(
                       onPressed: () {},
                       text: '신청내역',
                     ),
-                    Container(
-                      width: 6,
-                    ),
                     _infoButton(
                       // onPressed: () {},
                       text: '관리비내역',
-                    ),
-                    Container(
-                      width: 6,
                     ),
                     _infoButton(
                       // onPressed: () {},
                       text: '마이페이지',
                     ),
-                  ],
-                ),
+                  ].asMap().entries.expand((item) => item.key != 0
+                      ? [Container(width: 12), item.value]
+                      : [item.value]),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
 
@@ -263,35 +213,35 @@ class _HomePageState extends State<HomePage>
     String text,
   }) =>
       Expanded(
-        child: OutlineButton(
+        child: CupertinoButton(
           onPressed: onPressed,
           padding: EdgeInsets.zero,
-          textColor: Colors.white,
-          borderSide: BorderSide(
-            width: .5,
-            color: Colors.white54,
-          ),
-          highlightedBorderColor: Colors.white,
-          disabledBorderColor: Colors.white10,
-          disabledTextColor: Colors.white10,
-          child: FractionallySizedBox(
-            widthFactor: 1,
-            heightFactor: .6,
-            child: FittedBox(
-              fit: BoxFit.fitHeight,
-              child: Text(
-                text,
-                style: TextStyle(
-                  fontSize: 11,
-                ),
-              ),
-            ),
-          ),
+          child: Text(text),
         ),
+        // child: OutlineButton(
+        //   onPressed: onPressed,
+        //   padding: EdgeInsets.zero,
+        //   textColor: Colors.white,
+        //   borderSide: BorderSide(
+        //     width: .5,
+        //     color: Colors.white54,
+        //   ),
+        //   highlightedBorderColor: Colors.white,
+        //   disabledBorderColor: Colors.white10,
+        //   disabledTextColor: Colors.white10,
+        //   child: Container(
+        //     child: Text(
+        //       text,
+        //       style: TextStyle(
+        //         fontSize: 22,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       );
 
   _carousel() => Expanded(
-        flex: 4,
+        flex: 1,
         child: LayoutBuilder(
           builder: (context, constraint) => CarouselSlider(
             items: [
@@ -308,7 +258,7 @@ class _HomePageState extends State<HomePage>
             ],
             options: CarouselOptions(
               height: constraint.maxHeight,
-              viewportFraction: 0.8,
+              viewportFraction: 1,
               initialPage: 0,
               enableInfiniteScroll: true,
               reverse: false,
@@ -323,7 +273,7 @@ class _HomePageState extends State<HomePage>
       );
 
   _menu() => Expanded(
-        flex: 14,
+        flex: 2,
         child: Container(
           padding: EdgeInsets.all(12),
           child: Material(

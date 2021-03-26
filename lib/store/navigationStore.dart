@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:h_order/app.dart';
 import 'package:h_order/utils/lazy.dart';
 import 'package:mobx/mobx.dart';
 
@@ -12,6 +13,7 @@ class NavigationStore extends NavigationStoreBase with _$NavigationStore {
 }
 
 abstract class NavigationStoreBase with Store {
+  final appKey = GlobalKey<AppState>();
   final navigatorKey = GlobalKey<NavigatorState>();
 
   @observable

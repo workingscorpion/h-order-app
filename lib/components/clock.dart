@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Clock extends StatefulWidget {
+  final double fontSize;
+
+  Clock({
+    this.fontSize = 24,
+  });
+
   @override
   _ClockState createState() => _ClockState();
 }
@@ -41,7 +47,7 @@ class _ClockState extends State<Clock> {
       child: Text(
         _text,
         style: TextStyle(
-          fontSize: 12,
+          fontSize: widget.fontSize,
           color: Colors.white24,
         ),
       ),

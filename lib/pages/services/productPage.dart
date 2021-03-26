@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/components/customAppBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
@@ -67,7 +66,9 @@ class _ProductPageState extends State<ProductPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
+      appBar: AppBar(
+        title: Text('상점'),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -107,18 +108,11 @@ class _ProductPageState extends State<ProductPage>
                   _save();
                 },
                 color: Colors.blueGrey,
-                child: FractionallySizedBox(
-                  widthFactor: 1,
-                  heightFactor: .6,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                      ),
-                    ),
+                child: Text(
+                  '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -147,28 +141,22 @@ class _ProductPageState extends State<ProductPage>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: Text(
-                    widget.product.name,
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
+                Text(
+                  widget.product.name,
+                  style: TextStyle(
+                    fontSize: 18,
                   ),
                 ),
                 Expanded(
                   child: Container(),
                 ),
-                FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 12),
-                    child: Text(
-                      '${NumberFormat().format(amount)} ₩',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+                Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.only(right: 12),
+                  child: Text(
+                    '${NumberFormat().format(amount)} ₩',
+                    style: TextStyle(
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -184,28 +172,18 @@ class _ProductPageState extends State<ProductPage>
                       }
                       setState(() {});
                     },
-                    icon: FractionallySizedBox(
-                      widthFactor: .5,
-                      heightFactor: .5,
-                      child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: Icon(
-                          CupertinoIcons.minus,
-                          size: 16,
-                        ),
-                      ),
+                    icon: Icon(
+                      CupertinoIcons.minus,
+                      size: 16,
                     ),
                   ),
                 ),
-                FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text(
-                      '$_quantity',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  child: Text(
+                    '$_quantity',
+                    style: TextStyle(
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -221,12 +199,9 @@ class _ProductPageState extends State<ProductPage>
                     icon: FractionallySizedBox(
                       widthFactor: .5,
                       heightFactor: .5,
-                      child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: Icon(
-                          CupertinoIcons.add,
-                          size: 16,
-                        ),
+                      child: Icon(
+                        CupertinoIcons.add,
+                        size: 16,
                       ),
                     ),
                   ),
@@ -235,10 +210,6 @@ class _ProductPageState extends State<ProductPage>
             ),
           ),
         ),
-      );
-
-  _appBar() => CustomAppBar.create(
-        title: '상점',
       );
 
   _option({
@@ -275,28 +246,22 @@ class _ProductPageState extends State<ProductPage>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Container(
-                        margin: EdgeInsets.only(right: 8),
-                        child: Text(
-                          option.name,
-                          style: TextStyle(
-                            fontSize: 16 - depth * 2,
-                          ),
+                    Container(
+                      margin: EdgeInsets.only(right: 8),
+                      child: Text(
+                        option.name,
+                        style: TextStyle(
+                          fontSize: 16 - depth * 2,
                         ),
                       ),
                     ),
                     ...((option.max ?? 0) > 0)
                         ? [
-                            FittedBox(
-                              fit: BoxFit.fitHeight,
-                              child: Text(
-                                '(최대${option.max}개)',
-                                style: TextStyle(
-                                  fontSize: 12 - depth * 2,
-                                  color: Colors.white38,
-                                ),
+                            Text(
+                              '(최대${option.max}개)',
+                              style: TextStyle(
+                                fontSize: 12 - depth * 2,
+                                color: Colors.white38,
                               ),
                             ),
                           ]
@@ -306,16 +271,13 @@ class _ProductPageState extends State<ProductPage>
                     ),
                     ...(option.options?.length ?? 0) == 0
                         ? [
-                            FittedBox(
-                              fit: BoxFit.fitHeight,
-                              child: Container(
-                                alignment: Alignment.centerRight,
-                                margin: EdgeInsets.only(right: 12),
-                                child: Text(
-                                  '${NumberFormat().format(option.price)} ₩',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              margin: EdgeInsets.only(right: 12),
+                              child: Text(
+                                '${NumberFormat().format(option.price)} ₩',
+                                style: TextStyle(
+                                  fontSize: 14,
                                 ),
                               ),
                             ),

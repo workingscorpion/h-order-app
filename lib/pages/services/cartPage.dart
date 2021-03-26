@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/customAppBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
 import 'package:intl/intl.dart';
@@ -54,7 +53,9 @@ class _CartPageState extends State<CartPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
+      appBar: AppBar(
+        title: Text('상점'),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -174,10 +175,6 @@ class _CartPageState extends State<CartPage>
             ),
           ],
         ),
-      );
-
-  _appBar() => CustomAppBar.create(
-        title: '상점',
       );
 
   _cartItem({
