@@ -7,6 +7,7 @@ import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/clock.dart';
+import 'package:h_order/store/navigationStore.dart';
 
 class HomePage extends StatefulWidget {
   HomePage();
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage>
                 _status(),
                 _info(),
                 _menu(),
+                _cards(),
                 _carousel(),
               ],
             ),
@@ -111,7 +113,10 @@ class _HomePageState extends State<HomePage>
   }
 
   _status() => Container(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 24,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -186,6 +191,13 @@ class _HomePageState extends State<HomePage>
                       // onPressed: () {},
                       text: '마이페이지',
                     ),
+                    _infoButton(
+                      onPressed: () {
+                        NavigationStore.instance.appKey.currentState
+                            .toLockPage();
+                      },
+                      text: '잠금화면',
+                    ),
                   ].asMap().entries.expand((item) => item.key != 0
                       ? [Container(width: 12), item.value]
                       : [item.value]),
@@ -240,7 +252,7 @@ class _HomePageState extends State<HomePage>
       );
 
   _menu() => Expanded(
-        flex: 2,
+        flex: 1,
         child: Container(
           padding: EdgeInsets.all(12),
           child: Material(
@@ -319,6 +331,52 @@ class _HomePageState extends State<HomePage>
                 ],
               ],
             ),
+          ),
+        ),
+      );
+
+  _cards() => Expanded(
+        flex: 1,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 24,
+                ),
+                child: Text(
+                  'asdf',
+                  style: TextStyle(
+                    fontSize: 32,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 24,
+                  ),
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    ...List.generate(
+                      10,
+                      (index) => Container(
+                        margin: EdgeInsets.only(right: 12),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: FlatButton(
+                            onPressed: () {},
+                            child: Text('Service $index'),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       );

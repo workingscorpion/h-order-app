@@ -62,7 +62,7 @@ class _ShopPageState extends State<ShopPage>
       return CategoryModel(
         index: index,
         name: 'Category $index',
-        products: List.generate(10, (_i) {
+        products: List.generate(15, (_i) {
           final _index = count++;
 
           return ProductModel(

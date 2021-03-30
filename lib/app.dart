@@ -17,7 +17,7 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> with WidgetsBindingObserver {
-  static const _setMainDuration = Duration(minutes: 3);
+  static const _setMainDuration = Duration(minutes: 5);
 
   Future _future;
   StreamSubscription _setMainSubscription;
@@ -115,16 +115,19 @@ class AppState extends State<App> with WidgetsBindingObserver {
 
     _future = Future.delayed(_setMainDuration, () {});
     _setMainSubscription = _future.asStream().listen((event) {
-      AppRouter.toLockPage();
+      toLockPage();
     });
+  }
+
+  toLockPage() {
+    disposeSetMain();
+    AppRouter.toLockPage();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.inactive) {
-      disposeSetMain();
-
-      AppRouter.toLockPage();
+      toLockPage();
     }
   }
 
