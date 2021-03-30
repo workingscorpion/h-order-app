@@ -17,8 +17,8 @@ class GradientClock extends StatefulWidget {
 class _GradientClockState extends State<GradientClock> {
   String _timeString;
   int hour;
-  String hourString;
-  String minuteString;
+  String timeString;
+  bool afterNoon;
 
   @override
   void initState() {
@@ -36,9 +36,8 @@ class _GradientClockState extends State<GradientClock> {
   }
 
   String _formatDateTime(DateTime dateTime) {
-    hourString = DateFormat('hh').format(dateTime);
-    minuteString = DateFormat('mm').format(dateTime);
-    hour = dateTime.hour;
+    timeString = DateFormat('hh:mm').format(dateTime);
+    afterNoon = dateTime.hour > 12;
     return DateFormat('yyyy년 MM월 dd일').format(dateTime);
   }
 
@@ -84,12 +83,8 @@ class _GradientClockState extends State<GradientClock> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _clockTemperature(),
-              _clockTexts(hour > 12 ? "PM" : "AM", 40, 50),
-              _clockTexts(
-                  hour > 12
-                      ? "$hourString:$minuteString"
-                      : "$hour:$minuteString",
-                  120),
+              _clockTexts(afterNoon ? "PM" : "AM", 40, 50),
+              _clockTexts("$timeString", 120),
               _clockTexts(_timeString, 30)
             ],
           ),
