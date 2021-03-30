@@ -19,6 +19,8 @@ class _LockPageState extends State<LockPage> {
   double _minuteValue = 0;
   double _secondValue = 0;
 
+  double _size = 400;
+
   @override
   void initState() {
     super.initState();
@@ -56,24 +58,83 @@ class _LockPageState extends State<LockPage> {
             children: [
               Container(
                 alignment: Alignment.center,
-                child: Stack(
-                  children: [
-                    Transform.rotate(
-                      angle: 2 * pi * (-.25 + _hourValue),
-                      alignment: Alignment.centerLeft,
-                      child: Text('HOUR'),
+                child: Container(
+                  width: _size,
+                  height: _size,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(_size / 2)),
+                    border: Border.all(
+                      color: Colors.white,
                     ),
-                    Transform.rotate(
-                      angle: 2 * pi * (-.25 + _minuteValue),
-                      alignment: Alignment.centerLeft,
-                      child: Text('MINUET'),
-                    ),
-                    Transform.rotate(
-                      angle: 2 * pi * (-.25 + _secondValue),
-                      alignment: Alignment.centerLeft,
-                      child: Text('SECOND'),
-                    ),
-                  ],
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Positioned(
+                        top: _size / 2 - 10 / 2,
+                        left: _size / 2,
+                        child: Transform.rotate(
+                          angle: 2 * pi * (-.25 + _hourValue),
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            height: 10,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: _size / 2 - 5 / 2,
+                        left: _size / 2,
+                        child: Transform.rotate(
+                          angle: 2 * pi * (-.25 + _minuteValue),
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            height: 5,
+                            width: 180,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: _size / 2 - 2 / 2,
+                        left: _size / 2,
+                        child: Transform.rotate(
+                          angle: 2 * pi * (-.25 + _secondValue),
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            height: 2,
+                            width: 180,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: _size / 2 - 12 / 2,
+                        left: _size / 2 - 12 / 2,
+                        child: Container(
+                          height: 12,
+                          width: 12,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Positioned(
