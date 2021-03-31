@@ -15,7 +15,8 @@ class Clock extends StatefulWidget {
 }
 
 class _ClockState extends State<Clock> {
-  final _dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+  final _dateFormat = DateFormat('hh:mm yyyy.MM.dd E');
+  bool _isAfterNoon;
   Timer _timer;
   String _text = '';
 
@@ -44,7 +45,7 @@ class _ClockState extends State<Clock> {
   Widget build(BuildContext context) {
     return Container(
       child: Text(
-        _text,
+        _isAfterNoon ? '오후 $_text요일' : '오전 $_text요일',
         style: TextStyle(
           fontSize: widget.fontSize,
         ),
@@ -54,7 +55,9 @@ class _ClockState extends State<Clock> {
 
   tick() {
     final now = DateTime.now();
-    _text = _dateFormat.format(now);
-    setState(() {});
+    setState(() {
+      _text = _dateFormat.format(now);
+      _isAfterNoon = now.hour > 12 ? true : false;
+    });
   }
 }
