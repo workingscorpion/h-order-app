@@ -15,29 +15,38 @@ class GradientClock extends StatefulWidget {
 }
 
 class _GradientClockState extends State<GradientClock> {
+  Timer _timer;
   String _timeString;
   int hour;
   String timeString;
-  bool afterNoon;
+  bool isAfterNoon;
 
   @override
   void initState() {
-    _timeString = _formatDateTime(DateTime.now());
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
     super.initState();
+    _timeString = _formatDateTime(DateTime.now());
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }
 
   void _getTime() {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
-    setState(() {
-      _timeString = formattedDateTime;
-    });
+    if (mounted) {
+      setState(() {
+        _timeString = formattedDateTime;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   String _formatDateTime(DateTime dateTime) {
     timeString = DateFormat('hh:mm').format(dateTime);
-    afterNoon = dateTime.hour > 12;
+    isAfterNoon = dateTime.hour > 12;
     return DateFormat('yyyy년 MM월 dd일').format(dateTime);
   }
 
@@ -83,7 +92,7 @@ class _GradientClockState extends State<GradientClock> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _clockTemperature(),
-              _clockTexts(afterNoon ? "PM" : "AM", 40, 50),
+              _clockTexts(isAfterNoon ? "PM" : "AM", 40, 50),
               _clockTexts("$timeString", 120),
               _clockTexts(_timeString, 30)
             ],
