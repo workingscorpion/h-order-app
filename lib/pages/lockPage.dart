@@ -11,6 +11,9 @@ class LockPage extends StatefulWidget {
 }
 
 class _LockPageState extends State<LockPage> {
+  static const double _radian = 2 * pi;
+  static const double _startAngle = -.25;
+
   DateFormat _dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
   Timer _timer;
   String _text = '';
@@ -74,9 +77,11 @@ class _LockPageState extends State<LockPage> {
                         top: _size / 2 - 10 / 2,
                         left: _size / 2,
                         child: Transform.rotate(
-                          angle: 2 * pi * (-.25 + _hourValue),
+                          angle: _radian * (_startAngle + _hourValue),
                           alignment: Alignment.centerLeft,
-                          child: Container(
+                          child: AnimatedContainer(
+                            duration: Duration(seconds: 1),
+                            curve: Curves.linear,
                             height: 10,
                             width: 100,
                             decoration: BoxDecoration(
@@ -91,7 +96,7 @@ class _LockPageState extends State<LockPage> {
                         top: _size / 2 - 5 / 2,
                         left: _size / 2,
                         child: Transform.rotate(
-                          angle: 2 * pi * (-.25 + _minuteValue),
+                          angle: _radian * (_startAngle + _minuteValue),
                           alignment: Alignment.centerLeft,
                           child: Container(
                             height: 5,
@@ -107,24 +112,25 @@ class _LockPageState extends State<LockPage> {
                       Positioned(
                         top: _size / 2 - 2 / 2,
                         left: _size / 2,
-                        child: Transform.rotate(
-                          angle: 2 * pi * (-.25 + _secondValue),
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            height: 2,
-                            width: 180,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                            ),
+                        child: AnimatedContainer(
+                          duration: Duration(seconds: 1),
+                          curve: Curves.linear,
+                          transform: Matrix4.rotationZ(
+                              _radian * (_startAngle + _secondValue)),
+                          height: 2,
+                          width: 180,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
                         ),
                       ),
                       Positioned(
                         top: _size / 2 - 12 / 2,
                         left: _size / 2 - 12 / 2,
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: Duration(seconds: 1),
+                          curve: Curves.linear,
                           height: 12,
                           width: 12,
                           decoration: BoxDecoration(
