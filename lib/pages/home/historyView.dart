@@ -103,7 +103,10 @@ class _HistoryViewState extends State<HistoryView> {
                         Text(
                           _statusText(item.status),
                           maxLines: 1,
-                          style: TextStyle(color: _statusColor(item.status)),
+                          style: TextStyle(
+                            color: _statusColor(item.status),
+                            fontSize: 20,
+                          ),
                         ),
                       ],
                       content: item.detail,
