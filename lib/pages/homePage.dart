@@ -53,10 +53,13 @@ class _HomePageState extends State<HomePage>
           onWillPop: _onWillPop,
           child: SafeArea(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _status(),
-                _infos(),
+                _infoHeader(),
+                _info(),
                 _body(),
               ],
             ),
@@ -74,55 +77,87 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _infos() => Container(
-        height: 200,
-        decoration: BoxDecoration(
-            border: Border.all(
-          width: 1,
-          color: Colors.red,
-        )),
-        child: Column(
+  _infoHeader() => Container(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        child: Row(
           children: [
-            _infoHeader(),
-            _info(),
+            Text('202호'),
+            Text('(김오더님)'),
+            Spacer(),
+            Text('관리비납부현황'),
+            VerticalDivider(
+              color: Colors.white,
+              thickness: 2,
+              width: 12,
+            ),
+            Text('납부완료'),
           ],
         ),
       );
 
-  _infoHeader() => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Text('202호'),
-              Text('(김오더님)'),
-            ],
-          ),
-          IntrinsicHeight(
-            child: Row(
-              children: [
-                Text('관리비납부현황'),
-                VerticalDivider(
-                  color: Colors.white,
-                  thickness: 2,
-                  width: 12,
-                ),
-                Text('납부완료')
-              ],
-            ),
-          ),
-        ],
+  _info() => Container(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        child: Flex(
+          direction: Axis.horizontal,
+          children: [
+            _infoPanel(),
+            Container(width: 24),
+            _weatherPanel(),
+          ],
+        ),
       );
 
-  _info() => Expanded(
-        child: Padding(
-          padding: EdgeInsets.all(12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _infoPanel(),
-              _weatherPanel(),
-            ],
+  _infoPanel() => Flexible(
+        child: Container(
+          color: Colors.red,
+          child: IntrinsicHeight(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                Text(
+                  '(우 12345)(우 12345)(우 12345)',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      ...[
+                        '입주민 공지',
+                        '이용내역',
+                        '관리비 내역',
+                        '마이페이지',
+                      ]
+                          .asMap()
+                          .map(
+                            (index, text) => MapEntry(
+                              index,
+                              _infoButton(
+                                onPressed: () {
+                                  _tabController.animateTo(index + 1);
+                                  setState(() {});
+                                },
+                                text: text,
+                                selected: _tabController.index == (index + 1),
+                              ),
+                            ),
+                          )
+                          .entries
+                          .expand((item) => item.key != 0
+                              ? [Container(width: 12), item.value]
+                              : [item.value]),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -148,28 +183,26 @@ class _HomePageState extends State<HomePage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('오늘, 어제보다 2℃ 높아요'),
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '38',
-                        style: TextStyle(fontSize: 80),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '38',
+                      style: TextStyle(fontSize: 80),
+                    ),
+                    Text(
+                      '℃',
+                      style: TextStyle(
+                        fontSize: 25,
                       ),
-                      Text(
-                        '℃',
-                        style: TextStyle(
-                          fontSize: 25,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text('/11℃ 약간 흐림'),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                Text('/11℃ 약간 흐림'),
+              ],
             )
           ],
         ),
@@ -191,34 +224,6 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _infoPanel() => Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
-              style: TextStyle(
-                fontSize: 15,
-              ),
-            ),
-            Text(
-              '(우 12345)(우 12345)(우 12345)',
-              style: TextStyle(
-                fontSize: 15,
-              ),
-            ),
-            // Expanded(
-            //   child: Container(
-            //     child: _infoButtons(),
-            //   ),
-            // ),
-            // Expanded(
-            //   child: _infoButton(onPressed: (){}, text: '매일 오전'),
-            //   )
-          ],
-        ),
-      );
-
   _infoButtons() => Expanded(child: Container());
 
   _infoButton({
@@ -230,7 +235,10 @@ class _HomePageState extends State<HomePage>
         child: FlatButton(
           color: selected ? Colors.white24 : Colors.white.withOpacity(0),
           onPressed: onPressed,
-          child: Text(text),
+          child: Text(
+            text,
+            maxLines: 1,
+          ),
         ),
       );
 
