@@ -28,8 +28,6 @@ class _HomePageState extends State<HomePage>
   DateTime currentBackPressTime;
   bool isOpened = false;
 
-  final _infoButtonData = ['입주민 공지', '신청내역', '관리비 내역', '마이페이지'];
-
   @override
   void initState() {
     super.initState();
@@ -52,10 +50,8 @@ class _HomePageState extends State<HomePage>
         body: WillPopScope(
           onWillPop: _onWillPop,
           child: SafeArea(
+              child: Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _status(),
                 _infoHeader(),
@@ -63,106 +59,59 @@ class _HomePageState extends State<HomePage>
                 _body(),
               ],
             ),
-          ),
+          )),
         ),
       );
 
-  _status() => Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 24,
-        ),
-        child: Clock(
-          fontSize: 24,
-        ),
-      );
-
-  _infoHeader() => Container(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: Row(
-          children: [
-            Text('202호'),
-            Text('(김오더님)'),
-            Spacer(),
-            Text('관리비납부현황'),
-            VerticalDivider(
-              color: Colors.white,
-              thickness: 2,
-              width: 12,
-            ),
-            Text('납부완료'),
-          ],
-        ),
-      );
-
-  _info() => Container(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: Flex(
-          direction: Axis.horizontal,
-          children: [
-            _infoPanel(),
-            Container(width: 24),
-            _weatherPanel(),
-          ],
-        ),
-      );
-
-  _infoPanel() => Flexible(
+  _info() => IntrinsicHeight(
         child: Container(
-          color: Colors.red,
-          child: IntrinsicHeight(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
+          padding: EdgeInsets.symmetric(
+            horizontal: 24,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    _leftPanel(),
+                  ],
                 ),
-                Text(
-                  '(우 12345)(우 12345)(우 12345)',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      ...[
-                        '입주민 공지',
-                        '이용내역',
-                        '관리비 내역',
-                        '마이페이지',
-                      ]
-                          .asMap()
-                          .map(
-                            (index, text) => MapEntry(
-                              index,
-                              _infoButton(
-                                onPressed: () {
-                                  _tabController.animateTo(index + 1);
-                                  setState(() {});
-                                },
-                                text: text,
-                                selected: _tabController.index == (index + 1),
-                              ),
-                            ),
-                          )
-                          .entries
-                          .expand((item) => item.key != 0
-                              ? [Container(width: 12), item.value]
-                              : [item.value]),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+              SizedBox(width: 24),
+              _rightPanel(),
+            ],
           ),
         ),
       );
 
-  _weatherPanel() => Expanded(
+  _leftPanel() => Expanded(
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
+                style: TextStyle(
+                  fontSize: 15,
+                ),
+              ),
+              Text(
+                '(우 12345) (우 12345) (우 12345)',
+                style: TextStyle(
+                  fontSize: 15,
+                ),
+              ),
+              _infoButtons(),
+              _infoButton(
+                onPressed: () {},
+                text: '매일 오전 7:00 알림 설정',
+              ),
+            ],
+          ),
+        ),
+      );
+
+  _rightPanel() => Expanded(
         child: Container(
           padding: EdgeInsets.all(5),
           decoration: _weatherGradient(),
@@ -224,12 +173,66 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _infoButtons() => Expanded(child: Container());
+  _infoHeader() => Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 24,
+        ),
+        child: Row(
+          children: [
+            Text('202호'),
+            Text('(김오더님)'),
+            Spacer(),
+            Text('관리비납부현황'),
+            Text(' | '),
+            Text('납부완료'),
+          ],
+        ),
+      );
+
+  _status() => Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 24,
+        ),
+        child: Clock(
+          fontSize: 24,
+        ),
+      );
+
+  _infoButtons() => Row(
+        children: [
+          ...[
+            '입주민 공지',
+            '이용내역',
+            '관리비 내역',
+            '마이페이지',
+          ]
+              .asMap()
+              .map(
+                (index, text) => MapEntry(
+                  index,
+                  _infoButton(
+                    onPressed: () {
+                      _tabController.animateTo(index + 1);
+                      setState(() {});
+                    },
+                    text: text,
+                    selected: _tabController.index == (index + 1),
+                  ),
+                ),
+              )
+              .entries
+              .expand((item) => item.key != 0
+                  ? [Container(width: 12), item.value]
+                  : [item.value]),
+        ],
+      );
 
   _infoButton({
     VoidCallback onPressed,
     String text,
-    bool selected,
+    bool selected = false,
   }) =>
       Expanded(
         child: FlatButton(
@@ -238,6 +241,7 @@ class _HomePageState extends State<HomePage>
           child: Text(
             text,
             maxLines: 1,
+            style: TextStyle(fontSize: 15),
           ),
         ),
       );
