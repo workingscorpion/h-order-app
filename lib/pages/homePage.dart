@@ -50,16 +50,17 @@ class _HomePageState extends State<HomePage>
         body: WillPopScope(
           onWillPop: _onWillPop,
           child: SafeArea(
-              child: Container(
-            child: Column(
-              children: [
-                _status(),
-                _infoHeader(),
-                _info(),
-                _body(),
-              ],
+            child: Container(
+              child: Column(
+                children: [
+                  _status(),
+                  _infoHeader(),
+                  _info(),
+                  _body(),
+                ],
+              ),
             ),
-          )),
+          ),
         ),
       );
 
@@ -70,13 +71,7 @@ class _HomePageState extends State<HomePage>
           ),
           child: Row(
             children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    _leftPanel(),
-                  ],
-                ),
-              ),
+              _leftPanel(),
               SizedBox(width: 24),
               _rightPanel(),
             ],
@@ -85,29 +80,27 @@ class _HomePageState extends State<HomePage>
       );
 
   _leftPanel() => Expanded(
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
-                style: TextStyle(
-                  fontSize: 15,
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
+              style: TextStyle(
+                fontSize: 15,
               ),
-              Text(
-                '(우 12345) (우 12345) (우 12345)',
-                style: TextStyle(
-                  fontSize: 15,
-                ),
+            ),
+            Text(
+              '(우 12345) (우 12345) (우 12345)',
+              style: TextStyle(
+                fontSize: 15,
               ),
-              _infoButtons(),
-              _infoButton(
-                onPressed: () {},
-                text: '매일 오전 7:00 알림 설정',
-              ),
-            ],
-          ),
+            ),
+            _infoButtons(),
+            _infoButton(
+              onPressed: () {},
+              text: '매일 오전 7:00 알림 설정',
+            ),
+          ],
         ),
       );
 
@@ -200,33 +193,35 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _infoButtons() => Row(
-        children: [
-          ...[
-            '입주민 공지',
-            '이용내역',
-            '관리비 내역',
-            '마이페이지',
-          ]
-              .asMap()
-              .map(
-                (index, text) => MapEntry(
-                  index,
-                  _infoButton(
-                    onPressed: () {
-                      _tabController.animateTo(index + 1);
-                      setState(() {});
-                    },
-                    text: text,
-                    selected: _tabController.index == (index + 1),
+  _infoButtons() => Expanded(
+        child: Row(
+          children: [
+            ...[
+              '입주민 공지',
+              '이용내역',
+              '관리비 내역',
+              '마이페이지',
+            ]
+                .asMap()
+                .map(
+                  (index, text) => MapEntry(
+                    index,
+                    _infoButton(
+                      onPressed: () {
+                        _tabController.animateTo(index + 1);
+                        setState(() {});
+                      },
+                      text: text,
+                      selected: _tabController.index == (index + 1),
+                    ),
                   ),
-                ),
-              )
-              .entries
-              .expand((item) => item.key != 0
-                  ? [Container(width: 12), item.value]
-                  : [item.value]),
-        ],
+                )
+                .entries
+                .expand((item) => item.key != 0
+                    ? [Container(width: 12), item.value]
+                    : [item.value]),
+          ],
+        ),
       );
 
   _infoButton({
