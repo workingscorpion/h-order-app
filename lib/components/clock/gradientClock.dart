@@ -83,7 +83,7 @@ class _GradientClockState extends State<GradientClock> {
           shape: BoxShape.circle,
           color: Colors.transparent,
           border: Border.all(
-            width: 10,
+            width: 11,
             color: Colors.white,
           ),
         ),
@@ -92,9 +92,22 @@ class _GradientClockState extends State<GradientClock> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _clockTemperature(),
-              _clockTexts(isAfterNoon ? "PM" : "AM", 40, 50),
-              _clockTexts("$timeString", 120),
-              _clockTexts(_timeString, 30)
+              _clockTexts(
+                text: isAfterNoon ? "PM" : "AM",
+                margin: EdgeInsets.only(top: 50),
+                fontSize: 36,
+              ),
+              _clockTexts(
+                text: '$timeString',
+                margin: EdgeInsets.only(top: 10),
+                fontSize: 124,
+                fontWeight: FontWeight.w100,
+              ),
+              _clockTexts(
+                text: _timeString,
+                margin: EdgeInsets.only(top: 30),
+                fontSize: 28,
+              ),
             ],
           ),
         ),
@@ -102,28 +115,40 @@ class _GradientClockState extends State<GradientClock> {
 
   _clockTemperature() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
             '서울 / 28℃',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 40,
+              fontSize: 34,
             ),
           ),
-          Icon(
-            CupertinoIcons.cloud_sun,
-            size: 56,
+          Container(
+            margin: EdgeInsets.only(left: 20),
+            child: Icon(
+              CupertinoIcons.cloud_sun,
+              size: 74,
+            ),
           ),
         ],
       );
 
-  _clockTexts(String value, double size, [double topMargin]) => Container(
-        margin: topMargin != null ? EdgeInsets.only(top: topMargin) : null,
+  _clockTexts({
+    String text,
+    double fontSize,
+    EdgeInsets margin,
+    FontWeight fontWeight,
+  }) =>
+      Container(
+        margin: margin,
         child: Text(
-          value,
+          text,
           style: TextStyle(
+            height: 1,
             color: Colors.white,
-            fontSize: size,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
           ),
         ),
       );
