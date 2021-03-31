@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/components/favoriteServices.dart';
 import 'package:intl/intl.dart';
 
 class GradientClock extends StatefulWidget {
@@ -54,7 +55,15 @@ class _GradientClockState extends State<GradientClock> {
   Widget build(BuildContext context) {
     return Container(
       decoration: _gradientDecoration(),
-      child: _circle(),
+      child: Container(
+        margin: EdgeInsets.only(bottom: 100),
+        child: Column(
+          children: [
+            _circle(),
+            FavoriteServices(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -73,29 +82,30 @@ class _GradientClockState extends State<GradientClock> {
         ),
       );
 
-  _circle() => Container(
-        margin: EdgeInsets.only(
-          left: 100,
-          right: 100,
-          bottom: 300,
-        ),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.transparent,
-          border: Border.all(
-            width: 10,
-            color: Colors.white,
+  _circle() => Expanded(
+        child: Container(
+          margin: EdgeInsets.only(
+            left: 100,
+            right: 100,
           ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _clockTemperature(),
-              _clockTexts(isAfterNoon ? "PM" : "AM", 40, 50),
-              _clockTexts("$timeString", 120),
-              _clockTexts(_timeString, 30)
-            ],
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.transparent,
+            border: Border.all(
+              width: 10,
+              color: Colors.white,
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _clockTemperature(),
+                _clockTexts(isAfterNoon ? "PM" : "AM", 40, 50),
+                _clockTexts("$timeString", 120),
+                _clockTexts(_timeString, 30)
+              ],
+            ),
           ),
         ),
       );
