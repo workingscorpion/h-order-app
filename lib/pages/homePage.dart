@@ -188,8 +188,24 @@ class _HomePageState extends State<HomePage>
           vertical: 12,
           horizontal: 24,
         ),
-        child: Clock(
-          fontSize: 24,
+        child: Row(
+          children: [
+            Clock(
+              fontSize: 24,
+            ),
+            Spacer(),
+            InkWell(
+              onTap: () {
+                AppRouter.toLockPage();
+              },
+              child: Text(
+                '잠금화면',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
         ),
       );
 
