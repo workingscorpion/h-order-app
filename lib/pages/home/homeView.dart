@@ -18,86 +18,10 @@ class _HomeViewState extends State<HomeView>
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _info(),
           _menu(),
           _cards(),
           _carousel(),
         ],
-      );
-
-  _info() => Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-        padding: EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '202호',
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-                Text(
-                  '2월분 납부완료',
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우: 12345)',
-              style: TextStyle(
-                fontSize: 24,
-              ),
-            ),
-            Divider(
-              height: 30,
-            ),
-            Container(
-              height: 54,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ...[
-                    _infoButton(
-                      onPressed: () {},
-                      text: '입주민 공지',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '이용내역',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '관리비 내역',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '마이페이지',
-                    ),
-                    _infoButton(
-                      onPressed: () {
-                        NavigationStore.instance.appKey.currentState
-                            .toLockPage();
-                      },
-                      text: '잠금화면',
-                    ),
-                  ].asMap().entries.expand((item) => item.key != 0
-                      ? [Container(width: 12), item.value]
-                      : [item.value]),
-                ],
-              ),
-            ),
-          ],
-        ),
       );
 
   _menu() => Expanded(
@@ -292,17 +216,6 @@ class _HomeViewState extends State<HomeView>
               ),
             ],
           ),
-        ),
-      );
-
-  _infoButton({
-    VoidCallback onPressed,
-    String text,
-  }) =>
-      Expanded(
-        child: FlatButton(
-          onPressed: onPressed,
-          child: Text(text),
         ),
       );
 }
