@@ -125,32 +125,29 @@ class _HomePageState extends State<HomePage>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ...[
-                    _infoButton(
-                      onPressed: () {},
-                      text: '입주민 공지',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '이용내역',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '관리비 내역',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '마이페이지',
-                    ),
-                    _infoButton(
-                      onPressed: () {
-                        NavigationStore.instance.appKey.currentState
-                            .toLockPage();
-                      },
-                      text: '잠금화면',
-                    ),
-                  ].asMap().entries.expand((item) => item.key != 0
-                      ? [Container(width: 12), item.value]
-                      : [item.value]),
+                    '입주민 공지',
+                    '이용내역',
+                    '관리비 내역',
+                    '마이페이지',
+                  ]
+                      .asMap()
+                      .map(
+                        (index, text) => MapEntry(
+                          index,
+                          _infoButton(
+                            onPressed: () {
+                              _tabController.index = (index + 1);
+                              setState(() {});
+                            },
+                            text: text,
+                            selected: _tabController.index == (index + 1),
+                          ),
+                        ),
+                      )
+                      .entries
+                      .expand((item) => item.key != 0
+                          ? [Container(width: 12), item.value]
+                          : [item.value]),
                 ],
               ),
             ),
@@ -161,9 +158,11 @@ class _HomePageState extends State<HomePage>
   _infoButton({
     VoidCallback onPressed,
     String text,
+    bool selected,
   }) =>
       Expanded(
         child: FlatButton(
+          color: selected ? Colors.white24 : Colors.white.withOpacity(0),
           onPressed: onPressed,
           child: Text(text),
         ),
@@ -174,9 +173,9 @@ class _HomePageState extends State<HomePage>
           controller: _tabController,
           children: [
             HomeView(),
-            BillView(),
-            HistoryView(),
             NoticeView(),
+            HistoryView(),
+            BillView(),
             MyView(),
           ],
         ),
@@ -184,6 +183,11 @@ class _HomePageState extends State<HomePage>
 
   Future<bool> _onWillPop() async {
     try {
+      if (_tabController.index != 0) {
+        _tabController.index = 0;
+        return false;
+      }
+
       final now = DateTime.now();
 
       if (currentBackPressTime != null &&
