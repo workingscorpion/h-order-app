@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/constants/routeNames.dart';
 import 'package:h_order/models/productModel.dart';
-import 'package:h_order/pages/home/billPage.dart';
-import 'package:h_order/pages/home/historyPage.dart';
-import 'package:h_order/pages/home/myPage.dart';
-import 'package:h_order/pages/home/noticePage.dart';
 import 'package:h_order/pages/homePage.dart';
 import 'package:h_order/pages/lockPage.dart';
 import 'package:h_order/pages/services/alarmPage.dart';
@@ -88,30 +84,6 @@ class AppRouter {
           ),
         );
 
-      case RouteNames.Bill:
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (BuildContext context) => BillPage(),
-        );
-
-      case RouteNames.History:
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (BuildContext context) => HistoryPage(),
-        );
-
-      case RouteNames.My:
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (BuildContext context) => MyPage(),
-        );
-
-      case RouteNames.Notice:
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (BuildContext context) => NoticePage(),
-        );
-
       default:
         return MaterialPageRoute(
           settings: settings,
@@ -173,21 +145,5 @@ class AppRouter {
       RouteNames.Lock,
       (route) => route.settings.name != RouteNames.Lock,
     );
-  }
-
-  static toBillPage() {
-    return Navigator.of(context).pushNamed(RouteNames.Bill);
-  }
-
-  static toHistoryPage() {
-    return Navigator.of(context).pushNamed(RouteNames.History);
-  }
-
-  static toMyPage() {
-    return Navigator.of(context).pushNamed(RouteNames.My);
-  }
-
-  static toNoticePage() {
-    return Navigator.of(context).pushNamed(RouteNames.Notice);
   }
 }

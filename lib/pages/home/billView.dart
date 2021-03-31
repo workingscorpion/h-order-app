@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class NoticePage extends StatefulWidget {
-  NoticePage();
+class BillView extends StatefulWidget {
+  BillView();
 
   @override
-  _NoticePageState createState() => _NoticePageState();
+  _BillViewState createState() => _BillViewState();
 }
 
-class _NoticePageState extends State<NoticePage> {
+class _BillViewState extends State<BillView> {
   @override
   void initState() {
     super.initState();
@@ -20,8 +20,8 @@ class _NoticePageState extends State<NoticePage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Column(
+  Widget build(BuildContext context) => Container(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [],
         ),

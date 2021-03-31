@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HistoryPage extends StatefulWidget {
-  HistoryPage();
+class MyView extends StatefulWidget {
+  MyView();
 
   @override
-  _HistoryPageState createState() => _HistoryPageState();
+  _MyViewState createState() => _MyViewState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class _MyViewState extends State<MyView> {
   @override
   void initState() {
     super.initState();
@@ -20,8 +20,8 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Column(
+  Widget build(BuildContext context) => Container(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [],
         ),
