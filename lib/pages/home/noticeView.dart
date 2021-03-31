@@ -120,7 +120,7 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
 
     final random = Random();
     list = List.generate(
-      5,
+      100,
       (index) => NoticeModel(
         index: index + 1,
         writer: names[random.nextInt(names.length)],
