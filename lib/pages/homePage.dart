@@ -28,6 +28,8 @@ class _HomePageState extends State<HomePage>
   DateTime currentBackPressTime;
   bool isOpened = false;
 
+  final _infoButtonData = ['입주민 공지', '신청내역', '관리비 내역', '마이페이지'];
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +56,7 @@ class _HomePageState extends State<HomePage>
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _status(),
-                _info(),
+                _infos(),
                 _body(),
               ],
             ),
@@ -67,96 +69,157 @@ class _HomePageState extends State<HomePage>
           vertical: 12,
           horizontal: 24,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Clock(
+          fontSize: 24,
+        ),
+      );
+
+  _infos() => Container(
+        height: 200,
+        decoration: BoxDecoration(
+            border: Border.all(
+          width: 1,
+          color: Colors.red,
+        )),
+        child: Column(
           children: [
-            Clock(
-              fontSize: 24,
-            ),
-            Text(
-              '진주오피스텔 A동 102호',
-              style: TextStyle(
-                fontSize: 24,
-              ),
-            ),
+            _infoHeader(),
+            _info(),
           ],
         ),
       );
 
-  _info() => Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-        padding: EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  _infoHeader() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Text('202호'),
+              Text('(김오더님)'),
+            ],
+          ),
+          IntrinsicHeight(
+            child: Row(
               children: [
-                Text(
-                  '202호',
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
+                Text('관리비납부현황'),
+                VerticalDivider(
+                  color: Colors.white,
+                  thickness: 2,
+                  width: 12,
                 ),
-                Text(
-                  '2월분 납부완료',
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
+                Text('납부완료')
               ],
             ),
-            Text(
-              '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우: 12345)',
-              style: TextStyle(
-                fontSize: 24,
+          ),
+        ],
+      );
+
+  _info() => Expanded(
+        child: Padding(
+          padding: EdgeInsets.all(12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _infoPanel(),
+              _weatherPanel(),
+            ],
+          ),
+        ),
+      );
+
+  _weatherPanel() => Expanded(
+        child: Container(
+          padding: EdgeInsets.all(5),
+          decoration: _weatherGradient(),
+          child: Row(
+            children: [
+              _weatherInfo(),
+              Icon(
+                CupertinoIcons.cloud_sun,
+                size: 100,
               ),
-            ),
-            Divider(
-              height: 30,
-            ),
-            Container(
-              height: 54,
+            ],
+          ),
+        ),
+      );
+
+  _weatherInfo() => Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('오늘, 어제보다 2℃ 높아요'),
+            Expanded(
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  ...[
-                    _infoButton(
-                      onPressed: () {},
-                      text: '입주민 공지',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '이용내역',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '관리비 내역',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '마이페이지',
-                    ),
-                    _infoButton(
-                      onPressed: () {
-                        NavigationStore.instance.appKey.currentState
-                            .toLockPage();
-                      },
-                      text: '잠금화면',
-                    ),
-                  ].asMap().entries.expand((item) => item.key != 0
-                      ? [Container(width: 12), item.value]
-                      : [item.value]),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '38',
+                        style: TextStyle(fontSize: 80),
+                      ),
+                      Text(
+                        '℃',
+                        style: TextStyle(
+                          fontSize: 25,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text('/11℃ 약간 흐림'),
                 ],
               ),
-            ),
+            )
           ],
         ),
       );
+
+  _weatherGradient() => BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          stops: [
+            0.1,
+            0.8,
+          ],
+          colors: [
+            Color.fromRGBO(62, 182, 223, 1),
+            Color.fromRGBO(25, 128, 255, 1)
+          ],
+        ),
+      );
+
+  _infoPanel() => Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
+              style: TextStyle(
+                fontSize: 15,
+              ),
+            ),
+            Text(
+              '(우 12345)(우 12345)(우 12345)',
+              style: TextStyle(
+                fontSize: 15,
+              ),
+            ),
+            // Expanded(
+            //   child: Container(
+            //     child: _infoButtons(),
+            //   ),
+            // ),
+            // Expanded(
+            //   child: _infoButton(onPressed: (){}, text: '매일 오전'),
+            //   )
+          ],
+        ),
+      );
+
+  _infoButtons() => Expanded(child: Container());
 
   _infoButton({
     VoidCallback onPressed,
