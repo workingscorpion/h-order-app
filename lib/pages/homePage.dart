@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage>
                           index,
                           _infoButton(
                             onPressed: () {
-                              _tabController.index = (index + 1);
+                              _tabController.animateTo(index + 1);
                               setState(() {});
                             },
                             text: text,
@@ -170,6 +170,7 @@ class _HomePageState extends State<HomePage>
 
   _body() => Expanded(
         child: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: [
             HomeView(),
@@ -184,7 +185,8 @@ class _HomePageState extends State<HomePage>
   Future<bool> _onWillPop() async {
     try {
       if (_tabController.index != 0) {
-        _tabController.index = 0;
+        _tabController.animateTo(0);
+        setState(() {});
         return false;
       }
 
