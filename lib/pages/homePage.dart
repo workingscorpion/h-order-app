@@ -97,7 +97,9 @@ class _HomePageState extends State<HomePage>
             ),
             _infoButtons(),
             _infoButton(
-              onPressed: () {},
+              onPressed: () {
+                AppRouter.toAlarmPage();
+              },
               text: '매일 오전 7:00 알림 설정',
             ),
           ],

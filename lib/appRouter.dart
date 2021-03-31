@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/constants/routeNames.dart';
 import 'package:h_order/models/productModel.dart';
+import 'package:h_order/pages/alarmPage.dart';
 import 'package:h_order/pages/homePage.dart';
 import 'package:h_order/pages/lockPage.dart';
-import 'package:h_order/pages/services/alarmPage.dart';
+import 'package:h_order/pages/services/callPage.dart';
 import 'package:h_order/pages/services/boardPage.dart';
 import 'package:h_order/pages/services/cartPage.dart';
 import 'package:h_order/pages/services/productPage.dart';
@@ -58,10 +59,10 @@ class AppRouter {
           ),
         );
 
-      case RouteNames.Alarm:
+      case RouteNames.Call:
         return MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => AlarmPage(),
+          builder: (BuildContext context) => CallPage(),
         );
 
       case RouteNames.Board:
@@ -82,6 +83,12 @@ class AppRouter {
           builder: (BuildContext context) => ShoppingCompletePage(
             cart: settings.arguments as List<CartItemModel>,
           ),
+        );
+
+      case RouteNames.Alarm:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => AlarmPage(),
         );
 
       default:
@@ -128,8 +135,8 @@ class AppRouter {
     );
   }
 
-  static toAlarmPage() {
-    return Navigator.of(context).pushNamed(RouteNames.Alarm);
+  static toCallPage() {
+    return Navigator.of(context).pushNamed(RouteNames.Call);
   }
 
   static toBoardPage() {
@@ -145,5 +152,9 @@ class AppRouter {
       RouteNames.Lock,
       (route) => route.settings.name != RouteNames.Lock,
     );
+  }
+
+  static toAlarmPage() {
+    return Navigator.of(context).pushNamed(RouteNames.Alarm);
   }
 }
