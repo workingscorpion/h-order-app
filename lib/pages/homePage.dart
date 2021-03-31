@@ -176,19 +176,27 @@ class _HomePageState extends State<HomePage>
                 children: [
                   ...[
                     _infoButton(
-                      onPressed: () {},
-                      text: '빌라정보',
+                      onPressed: () {
+                        AppRouter.toNoticePage();
+                      },
+                      text: '입주민 공지',
                     ),
                     _infoButton(
-                      onPressed: () {},
-                      text: '신청내역',
+                      onPressed: () {
+                        AppRouter.toHistoryPage();
+                      },
+                      text: '이용내역',
                     ),
                     _infoButton(
-                      // onPressed: () {},
-                      text: '관리비내역',
+                      onPressed: () {
+                        AppRouter.toBillPage();
+                      },
+                      text: '관리비 내역',
                     ),
                     _infoButton(
-                      // onPressed: () {},
+                      onPressed: () {
+                        AppRouter.toMyPage();
+                      },
                       text: '마이페이지',
                     ),
                     _infoButton(

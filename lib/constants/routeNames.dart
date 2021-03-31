@@ -10,5 +10,10 @@ class RouteNames {
   static const String Board = '/board';
   static const String Settings = '/settings';
   static const String Cart = '/cart';
-  static const String ShoppingComplete = '/ShoppingComplete';
+  static const String ShoppingComplete = '/shoppingComplete';
+
+  static const String Notice = '/notice';
+  static const String History = '/history';
+  static const String Bill = '/bill';
+  static const String My = '/my';
 }
