@@ -74,9 +74,6 @@ class _HistoryViewState extends State<HistoryView> {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 24,
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -87,17 +84,26 @@ class _HistoryViewState extends State<HistoryView> {
         ),
       );
 
-  _historiesHeader() => _row(
-        children: List.generate(
+  _historiesHeader() => Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 24,
+        ),
+        child: _row(
+          children: List.generate(
             headers.length,
             (index) => Text(
-                  headers[index],
-                  maxLines: 1,
-                )),
+              headers[index],
+              maxLines: 1,
+            ),
+          ),
+        ),
       );
 
   _historiesBody() => Expanded(
         child: ListView(
+          padding: EdgeInsets.symmetric(
+            horizontal: 24,
+          ),
           children: [
             ...list.map(
               (item) => _item(

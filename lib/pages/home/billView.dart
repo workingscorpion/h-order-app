@@ -58,9 +58,6 @@ class _BillViewState extends State<BillView> {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 24,
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -73,39 +70,57 @@ class _BillViewState extends State<BillView> {
 
   _accountInfo() => Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 48,
-          vertical: 24,
+          horizontal: 24,
         ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(8),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 48,
+            vertical: 24,
           ),
-          color: Colors.grey,
-        ),
-        child: Row(
-          children: [
-            Text(
-              '[납부계좌 안내]',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: Colors.white24,
             ),
-            Text(' $_bankName $_account, $_accountOwner'),
-          ],
+            borderRadius: BorderRadius.all(
+              Radius.circular(8),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                '[납부계좌 안내]',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text('[$_bankName] $_account $_accountOwner'),
+            ],
+          ),
         ),
       );
 
-  _historiesHeader() => _row(
-        children: List.generate(
+  _historiesHeader() => Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 24,
+        ),
+        child: _row(
+          children: List.generate(
             headers.length,
             (index) => Text(
-                  headers[index],
-                  maxLines: 1,
-                )),
+              headers[index],
+              maxLines: 1,
+            ),
+          ),
+        ),
       );
 
   _historiesBody() => Expanded(
         child: ListView(
+          padding: EdgeInsets.symmetric(
+            horizontal: 24,
+          ),
           children: [
             ...list.map(
               (item) => _item(

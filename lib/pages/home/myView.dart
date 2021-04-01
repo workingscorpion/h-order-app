@@ -21,9 +21,26 @@ class _MyViewState extends State<MyView> {
 
   @override
   Widget build(BuildContext context) => Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [],
+        child: ListView(
+          children: [
+            _item(
+              onTap: () {},
+              title: 'asdf',
+            ),
+          ],
+        ),
+      );
+
+  _item({
+    String title,
+    void Function() onTap,
+  }) =>
+      InkWell(
+        onTap: onTap,
+        child: Row(
+          children: [
+            Text(title),
+          ],
         ),
       );
 }
