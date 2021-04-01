@@ -129,9 +129,10 @@ class _HomePageState extends State<HomePage>
           child: Row(
             children: [
               _weatherInfo(),
+              Spacer(),
               Icon(
                 CupertinoIcons.cloud_sun,
-                size: 100,
+                size: 80,
               ),
             ],
           ),
@@ -142,7 +143,13 @@ class _HomePageState extends State<HomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('오늘, 어제보다 2℃ 높아요'),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Text(
+                '오늘, 어제보다 2℃ 높아요',
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -151,7 +158,7 @@ class _HomePageState extends State<HomePage>
                   children: [
                     Text(
                       '38',
-                      style: TextStyle(fontSize: 80),
+                      style: TextStyle(fontSize: 70),
                     ),
                     Text(
                       '℃',
@@ -161,7 +168,10 @@ class _HomePageState extends State<HomePage>
                     ),
                   ],
                 ),
-                Text('/11℃ 약간 흐림'),
+                Text(
+                  '/11℃ 약간 흐림',
+                  style: TextStyle(fontSize: 18),
+                ),
               ],
             )
           ],
