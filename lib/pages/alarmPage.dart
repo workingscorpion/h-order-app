@@ -14,9 +14,6 @@ class _AlarmPageState extends State<AlarmPage> {
             children: [
               Expanded(
                 child: ListWheelScrollView.useDelegate(
-                  onSelectedItemChanged: (value) {
-                    print(value);
-                  },
                   physics: FixedExtentScrollPhysics(),
                   perspective: 0.01,
                   itemExtent: 100,
@@ -66,9 +63,6 @@ class _AlarmPageState extends State<AlarmPage> {
               ),
               Expanded(
                 child: ListWheelScrollView.useDelegate(
-                  onSelectedItemChanged: (value) {
-                    print(value);
-                  },
                   physics: FixedExtentScrollPhysics(),
                   perspective: 0.01,
                   itemExtent: 100,
