@@ -16,6 +16,9 @@ class _AlarmPageState extends State<AlarmPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text('알람설정'),
+        ),
         body: SafeArea(
           child: Column(
             children: [
