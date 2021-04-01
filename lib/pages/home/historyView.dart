@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
@@ -83,57 +81,59 @@ class _HistoryViewState extends State<HistoryView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _popup(),
-            _row(
-              children: List.generate(
-                  headers.length,
-                  (index) => Text(
-                        headers[index],
-                        maxLines: 1,
-                      )),
-            ),
-            Expanded(
-              child: ListView(
+            _historiesHeader(),
+            _historiesBody(),
+          ],
+        ),
+      );
+
+  _historiesHeader() => _row(
+        children: List.generate(
+            headers.length,
+            (index) => Text(
+                  headers[index],
+                  maxLines: 1,
+                )),
+      );
+
+  _historiesBody() => Expanded(
+        child: ListView(
+          children: [
+            ...list.map(
+              (item) => _item(
                 children: [
-                  ...list.map(
-                    (item) => _item(
-                      children: [
-                        Text(
-                          '${item.index}',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          item.serviceName != null
-                              ? '${item.serviceName}'
-                              : '-',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          item.summary != null ? '${item.summary}' : '-',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          '${DateFormat('yyyy-MM-dd').format(item.createdTime)}',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          item.amount != null
-                              ? '${NumberFormat().format(item.amount)}'
-                              : '-',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          _statusText(item.status),
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: _statusColor(item.status),
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                      content: item.detail,
+                  Text(
+                    '${item.index}',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    item.serviceName != null ? '${item.serviceName}' : '-',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    item.summary != null ? '${item.summary}' : '-',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    '${DateFormat('yyyy-MM-dd').format(item.createdTime)}',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    item.amount != null
+                        ? '${NumberFormat().format(item.amount)}'
+                        : '-',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    _statusText(item.status),
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: _statusColor(item.status),
+                      fontSize: 20,
                     ),
                   ),
                 ],
+                content: item.detail,
               ),
             ),
           ],

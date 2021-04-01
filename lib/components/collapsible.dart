@@ -34,7 +34,7 @@ class _CollapsibleState extends State<Collapsible> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               widget.header,
-              collapsed ? Container() : widget.body,
+              collapsed ? Container() : widget.body ?? Container(),
             ],
           ),
         ),
