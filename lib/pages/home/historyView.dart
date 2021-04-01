@@ -35,7 +35,7 @@ class _HistoryViewState extends State<HistoryView> {
     super.initState();
 
     origin = List.generate(
-      5,
+      30,
       (index) => HistoryModel(
         index: index + 1,
         serviceName: '서비스명$index',
@@ -97,7 +97,9 @@ class _HistoryViewState extends State<HistoryView> {
                           maxLines: 1,
                         ),
                         Text(
-                          item.amount != null ? '${item.amount}' : '-',
+                          item.amount != null
+                              ? '${NumberFormat().format(item.amount)}'
+                              : '-',
                           maxLines: 1,
                         ),
                         Text(
