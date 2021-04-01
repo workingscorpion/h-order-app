@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AlarmPage extends StatefulWidget {
+class CallPage extends StatefulWidget {
   @override
-  _AlarmPageState createState() => _AlarmPageState();
+  _CallPageState createState() => _CallPageState();
 }
 
-class _AlarmPageState extends State<AlarmPage> {
+class _CallPageState extends State<CallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

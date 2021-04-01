@@ -6,7 +6,7 @@ class RouteNames {
 
   static const String Shop = '/shop';
   static const String Product = '/product';
-  static const String Alarm = '/alarm';
+  static const String Call = '/call';
   static const String Board = '/board';
   static const String Settings = '/settings';
   static const String Cart = '/cart';
@@ -16,4 +16,6 @@ class RouteNames {
   static const String History = '/history';
   static const String Bill = '/bill';
   static const String My = '/my';
+
+  static const String Alarm = '/alarm';
 }
