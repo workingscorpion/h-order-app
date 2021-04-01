@@ -29,9 +29,13 @@ class _BillDetailPageState extends State<BillDetailPage> {
                 thickness: 1,
               ),
               Expanded(
-                child: Image.asset(
-                  'assets/sample/sample2.png',
-                  fit: BoxFit.contain,
+                child: ListView(
+                  children: [
+                    Image.asset(
+                      'assets/sample/sample2.png',
+                      fit: BoxFit.contain,
+                    )
+                  ],
                 ),
               )
             ],
