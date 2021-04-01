@@ -123,10 +123,13 @@ class _HistoryViewState extends State<HistoryView> {
     switch (status) {
       case 0:
         return '신청';
+
       case 1:
         return '접수';
+
       case 2:
         return '처리완료';
+
       default:
         return '신청';
     }
@@ -136,10 +139,13 @@ class _HistoryViewState extends State<HistoryView> {
     switch (status) {
       case 0:
         return Colors.red;
+
       case 1:
         return Colors.yellow;
+
       case 2:
         return Colors.green;
+
       default:
         return Colors.red;
     }
