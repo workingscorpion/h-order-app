@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/clock.dart';
 
 class BillDetailPage extends StatefulWidget {
   BillDetailPage({Key key}) : super(key: key);
@@ -11,10 +13,30 @@ class _BillDetailPageState extends State<BillDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          _pageHeader(),
-        ],
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 24,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Clock(),
+              _pageHeader(),
+              Divider(
+                color: Colors.white,
+                height: 20,
+                thickness: 1,
+              ),
+              Expanded(
+                child: Image.asset(
+                  'assets/sample/sample2.png',
+                  fit: BoxFit.contain,
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -30,7 +52,9 @@ class _BillDetailPageState extends State<BillDetailPage> {
           ),
           Spacer(),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              AppRouter.pop();
+            },
             child: Text('목록보기 >'),
           ),
         ],
