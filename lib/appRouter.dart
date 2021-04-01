@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/constants/routeNames.dart';
 import 'package:h_order/models/productModel.dart';
-import 'package:h_order/pages/alarmPage.dart';
+import 'package:h_order/pages/alarm/alarmPage.dart';
 import 'package:h_order/pages/homePage.dart';
 import 'package:h_order/pages/lockPage.dart';
 import 'package:h_order/pages/services/callPage.dart';

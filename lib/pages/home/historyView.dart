@@ -123,10 +123,13 @@ class _HistoryViewState extends State<HistoryView> {
     switch (status) {
       case 0:
         return '신청';
+
       case 1:
         return '접수';
+
       case 2:
         return '처리완료';
+
       default:
         return '신청';
     }
@@ -136,10 +139,13 @@ class _HistoryViewState extends State<HistoryView> {
     switch (status) {
       case 0:
         return Colors.red;
+
       case 1:
         return Colors.yellow;
+
       case 2:
         return Colors.green;
+
       default:
         return Colors.red;
     }
@@ -167,7 +173,7 @@ class _HistoryViewState extends State<HistoryView> {
                       Expanded(
                         flex: ratio[index],
                         child: Container(
-                          padding: index != children.length - 1
+                          padding: index < children.length - 1
                               ? EdgeInsets.only(right: 10)
                               : EdgeInsets.zero,
                           child: item,
@@ -251,12 +257,16 @@ class _HistoryViewState extends State<HistoryView> {
     switch (selectedPopupMenu) {
       case 'all':
         return '전체';
+
       case 'apply':
         return '신청';
+
       case 'receipted':
         return '접수';
+
       case 'done':
         return '처리완료';
+
       default:
         return '전체';
     }
@@ -265,15 +275,19 @@ class _HistoryViewState extends State<HistoryView> {
   List<int> _popupIndex() {
     switch (selectedPopupMenu) {
       case 'all':
-        return List<int>.generate(3, (i) => i);
+        return [0, 1, 2];
+
       case 'apply':
-        return List<int>.of([0]);
+        return [0];
+
       case 'receipted':
-        return List<int>.of([1]);
+        return [1];
+
       case 'done':
-        return List<int>.of([2]);
+        return [2];
+
       default:
-        return List<int>.generate(3, (i) => i);
+        return [0, 1, 2];
     }
   }
 }
