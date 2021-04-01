@@ -173,7 +173,7 @@ class _HistoryViewState extends State<HistoryView> {
                       Expanded(
                         flex: ratio[index],
                         child: Container(
-                          padding: index != children.length - 1
+                          padding: index < children.length - 1
                               ? EdgeInsets.only(right: 10)
                               : EdgeInsets.zero,
                           child: item,

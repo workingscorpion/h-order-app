@@ -18,4 +18,5 @@ class RouteNames {
   static const String My = '/my';
 
   static const String Alarm = '/alarm';
+  static const String AlarmDetail = '/alarm/detail';
 }
