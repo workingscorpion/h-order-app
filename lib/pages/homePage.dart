@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,7 +7,6 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/clock.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
-import 'package:h_order/store/navigationStore.dart';
 
 import 'home/billView.dart';
 import 'home/historyView.dart';
@@ -121,14 +119,18 @@ class _HomePageState extends State<HomePage>
 
   _rightPanel() => Expanded(
         child: Container(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
           decoration: _weatherGradient(),
           child: Row(
             children: [
               _weatherInfo(),
+              Spacer(),
               Icon(
                 CupertinoIcons.cloud_sun,
-                size: 100,
+                size: 80,
               ),
             ],
           ),
@@ -139,7 +141,13 @@ class _HomePageState extends State<HomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('오늘, 어제보다 2℃ 높아요'),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Text(
+                '오늘, 어제보다 2℃ 높아요',
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -148,7 +156,7 @@ class _HomePageState extends State<HomePage>
                   children: [
                     Text(
                       '38',
-                      style: TextStyle(fontSize: 80),
+                      style: TextStyle(fontSize: 70),
                     ),
                     Text(
                       '℃',
@@ -158,7 +166,10 @@ class _HomePageState extends State<HomePage>
                     ),
                   ],
                 ),
-                Text('/11℃ 약간 흐림'),
+                Text(
+                  '/11℃ 약간 흐림',
+                  style: TextStyle(fontSize: 18),
+                ),
               ],
             )
           ],

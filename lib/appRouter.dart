@@ -4,6 +4,7 @@ import 'package:h_order/models/productModel.dart';
 import 'package:h_order/pages/alarm/alarmPage.dart';
 import 'package:h_order/pages/homePage.dart';
 import 'package:h_order/pages/lockPage.dart';
+import 'package:h_order/pages/services/billDetailPage.dart';
 import 'package:h_order/pages/services/callPage.dart';
 import 'package:h_order/pages/services/boardPage.dart';
 import 'package:h_order/pages/services/cartPage.dart';
@@ -63,6 +64,12 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) => CallPage(),
+        );
+
+      case RouteNames.BillDetail:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => BillDetailPage(),
         );
 
       case RouteNames.Board:
@@ -137,6 +144,10 @@ class AppRouter {
 
   static toCallPage() {
     return Navigator.of(context).pushNamed(RouteNames.Call);
+  }
+
+  static toBillDetailPage() {
+    return Navigator.of(context).pushNamed(RouteNames.BillDetail);
   }
 
   static toBoardPage() {

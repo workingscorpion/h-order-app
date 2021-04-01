@@ -1,3 +1,4 @@
+import 'package:h_order/models/historyDetailModel.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'historyModel.g.dart';
@@ -7,19 +8,19 @@ class HistoryModel {
   final int index;
   final String serviceName;
   final String summary;
-  final String detail;
   final int amount;
   final int status;
   final DateTime createdTime;
+  final HistoryDetailModel detail;
 
   HistoryModel({
     this.index,
     this.serviceName,
     this.summary,
-    this.detail,
     this.amount,
     this.status,
     this.createdTime,
+    this.detail,
   });
 
   factory HistoryModel.fromJson(Map<String, dynamic> json) =>

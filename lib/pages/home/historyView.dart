@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
+import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
+import 'package:h_order/models/keyValueModel.dart';
 import 'package:intl/intl.dart';
 
 class HistoryView extends StatefulWidget {
@@ -34,8 +36,23 @@ class _HistoryViewState extends State<HistoryView> {
   void initState() {
     super.initState();
 
+    final HistoryDetailModel detailMap = HistoryDetailModel(
+      title: '종량제 봉투',
+      createdTime: DateTime.now(),
+      amount: 5300,
+      paymentMethod: '국민카드',
+      paymentData: '1234',
+      detail: [
+        KeyValueModel(key: '20L', value: 1, price: 1000),
+        KeyValueModel(key: '50L', value: 1, price: 1800),
+        KeyValueModel(key: '100L', value: 1, price: 2500),
+      ],
+      reservedTime: DateTime.now(),
+      request: '문앞에 두고 벨을 눌러주세요',
+    );
+
     origin = List.generate(
-      5,
+      30,
       (index) => HistoryModel(
         index: index + 1,
         serviceName: '서비스명$index',
@@ -43,7 +60,7 @@ class _HistoryViewState extends State<HistoryView> {
         summary: '상세항목$index',
         amount: index * 1000,
         status: index % 3,
-        detail: '디테일$index',
+        detail: detailMap,
       ),
     );
 
@@ -64,55 +81,59 @@ class _HistoryViewState extends State<HistoryView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _popup(),
-            _row(
-              children: List.generate(
-                  headers.length,
-                  (index) => Text(
-                        headers[index],
-                        maxLines: 1,
-                      )),
-            ),
-            Expanded(
-              child: ListView(
+            _historiesHeader(),
+            _historiesBody(),
+          ],
+        ),
+      );
+
+  _historiesHeader() => _row(
+        children: List.generate(
+            headers.length,
+            (index) => Text(
+                  headers[index],
+                  maxLines: 1,
+                )),
+      );
+
+  _historiesBody() => Expanded(
+        child: ListView(
+          children: [
+            ...list.map(
+              (item) => _item(
                 children: [
-                  ...list.map(
-                    (item) => _item(
-                      children: [
-                        Text(
-                          '${item.index}',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          item.serviceName != null
-                              ? '${item.serviceName}'
-                              : '-',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          item.summary != null ? '${item.summary}' : '-',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          '${DateFormat('yyyy-MM-dd').format(item.createdTime)}',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          item.amount != null ? '${item.amount}' : '-',
-                          maxLines: 1,
-                        ),
-                        Text(
-                          _statusText(item.status),
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: _statusColor(item.status),
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                      content: item.detail,
+                  Text(
+                    '${item.index}',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    item.serviceName != null ? '${item.serviceName}' : '-',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    item.summary != null ? '${item.summary}' : '-',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    '${DateFormat('yyyy-MM-dd').format(item.createdTime)}',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    item.amount != null
+                        ? '${NumberFormat().format(item.amount)}'
+                        : '-',
+                    maxLines: 1,
+                  ),
+                  Text(
+                    _statusText(item.status),
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: _statusColor(item.status),
+                      fontSize: 20,
                     ),
                   ),
                 ],
+                content: item.detail,
               ),
             ),
           ],
@@ -189,7 +210,7 @@ class _HistoryViewState extends State<HistoryView> {
 
   _item({
     List<Widget> children,
-    String content,
+    HistoryDetailModel content,
   }) =>
       Collapsible(
         header: _row(
@@ -198,8 +219,8 @@ class _HistoryViewState extends State<HistoryView> {
         body: _collapsibleBody(content),
       );
 
-  _collapsibleBody(String content) => Container(
-        padding: EdgeInsets.all(26),
+  _collapsibleBody(HistoryDetailModel content) => Container(
+        padding: EdgeInsets.all(35),
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
@@ -207,9 +228,80 @@ class _HistoryViewState extends State<HistoryView> {
             ),
           ),
         ),
-        child: Text(
-          content != null ? content : '-',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 30),
+              child: Text(content.title),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 30),
+              child: Flex(
+                direction: Axis.vertical,
+                children: List.generate(
+                  content.detail.length,
+                  (index) => _detailItem(
+                    content.detail[index],
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              DateFormat('HH:mm').format(content.reservedTime),
+            ),
+            Text(content.request),
+            Divider(
+              height: 50,
+              color: Colors.grey,
+              thickness: 1,
+            ),
+            Column(
+              children: List.generate(
+                3,
+                (index) => _collapisbleFooter(index, content),
+              ),
+            )
+          ],
         ),
+      );
+
+  _collapisbleFooter(int index, HistoryDetailModel content) => Row(
+        children: [
+          Text(_footerText(index)),
+          Spacer(),
+          _footerValue(index, content),
+        ],
+      );
+
+  _footerValue(int index, HistoryDetailModel content) {
+    switch (index) {
+      case 0:
+        return Text(DateFormat('yyyy/MM/dd hh:mm').format(content.createdTime));
+      case 1:
+        return Text('${NumberFormat().format(content.amount)}원');
+      case 2:
+        return Text('${content.paymentMethod}(${content.paymentData})');
+    }
+  }
+
+  _footerText(int index) {
+    switch (index) {
+      case 0:
+        return '이용일시';
+      case 1:
+        return '결제금액';
+      case 2:
+        return '결제방법';
+    }
+  }
+
+  _detailItem(KeyValueModel item) => Row(
+        children: [
+          Text('• ${item.key} ${item.value}개'),
+          Spacer(),
+          Text('${NumberFormat().format(item.price)}원'),
+        ],
       );
 
   _popup() => Row(
