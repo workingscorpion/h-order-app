@@ -22,10 +22,23 @@ class _MyViewState extends State<MyView> {
   @override
   Widget build(BuildContext context) => Container(
         child: ListView(
+          padding: EdgeInsets.all(24),
           children: [
             _item(
+              title: '내 정보',
               onTap: () {},
-              title: 'asdf',
+            ),
+            _item(
+              title: '결제수단 관리',
+              onTap: () {},
+            ),
+            _item(
+              title: '즐겨찾기',
+              onTap: () {},
+            ),
+            _item(
+              title: '화면 설정',
+              onTap: () {},
             ),
           ],
         ),
@@ -35,12 +48,28 @@ class _MyViewState extends State<MyView> {
     String title,
     void Function() onTap,
   }) =>
-      InkWell(
-        onTap: onTap,
-        child: Row(
-          children: [
-            Text(title),
-          ],
+      Container(
+        margin: EdgeInsets.only(bottom: 12),
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 16,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              border: Border.all(
+                width: 1,
+                color: Colors.white24,
+              ),
+            ),
+            child: Row(
+              children: [
+                Text(title),
+              ],
+            ),
+          ),
         ),
       );
 }
