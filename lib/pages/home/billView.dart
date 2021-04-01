@@ -40,12 +40,8 @@ class _BillViewState extends State<BillView> {
       max,
       (index) => BillModel(
         index: max - index,
-        title: '${max - index}',
-        expiredDate: DateTime(
-          DateTime.now().year,
-          DateTime.now().month + 1 - index,
-          DateTime.now().day - 1,
-        ),
+        title: '${_calcExpiredDate(index).month}월분 고지서',
+        expiredDate: _calcExpiredDate(index),
         paymentDate: DateTime(
           DateTime.now().year,
           DateTime.now().month - index,
@@ -54,6 +50,14 @@ class _BillViewState extends State<BillView> {
         amount: (index + 10) * 1000,
         status: max - index >= max ? false : true,
       ),
+    );
+  }
+
+  _calcExpiredDate(int index) {
+    return DateTime(
+      DateTime.now().year,
+      DateTime.now().month + 1 - index,
+      DateTime.now().day - 1,
     );
   }
 
