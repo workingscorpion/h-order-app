@@ -121,7 +121,10 @@ class _HomePageState extends State<HomePage>
 
   _rightPanel() => Expanded(
         child: Container(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
           decoration: _weatherGradient(),
           child: Row(
             children: [
