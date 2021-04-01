@@ -56,11 +56,24 @@ class _HomePageState extends State<HomePage>
                   _status(),
                   _infoHeader(),
                   _info(),
+                  _infoDivider(),
                   _body(),
                 ],
               ),
             ),
           ),
+        ),
+      );
+
+  _infoDivider() => Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 24,
+        ),
+        child: Divider(
+          color: Colors.white,
+          height: 5,
+          thickness: 1,
         ),
       );
 
@@ -190,8 +203,25 @@ class _HomePageState extends State<HomePage>
           vertical: 12,
           horizontal: 24,
         ),
-        child: Clock(
-          fontSize: 24,
+        child: Row(
+          children: [
+            Clock(
+              fontSize: 24,
+            ),
+            // TODO: 잠금화면 이동 버튼 제거
+            Spacer(),
+            InkWell(
+              onTap: () {
+                AppRouter.toLockPage();
+              },
+              child: Text(
+                '잠금화면',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
         ),
       );
 
