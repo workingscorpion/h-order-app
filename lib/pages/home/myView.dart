@@ -49,6 +49,12 @@ class _MyViewState extends State<MyView> {
                 AppRouter.toScreenPage();
               },
             ),
+            _item(
+              title: '알람 설정',
+              onTap: () {
+                AppRouter.toAlarmPage();
+              },
+            ),
           ],
         ),
       );
