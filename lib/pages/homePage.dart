@@ -193,6 +193,7 @@ class _HomePageState extends State<HomePage>
       );
 
   _infoHeader() => Container(
+        margin: EdgeInsets.only(bottom: 12),
         padding: EdgeInsets.symmetric(
           horizontal: 24,
         ),
