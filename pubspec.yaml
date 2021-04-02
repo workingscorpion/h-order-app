@@ -37,7 +37,8 @@ dependencies:
   flutter_local_notifications: ^4.0.1+2
   webview_flutter: ^1.0.7
   carousel_slider: ^3.0.0
-  
+  drag_and_drop_gridview: ^1.0.8
+
   device_info: ^1.0.0
   package_info: ^0.4.3+4
 

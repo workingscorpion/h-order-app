@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -8,11 +7,6 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  int _selectedIndex;
-  List<PaymentModel> list = List();
-
-  final _listKey = GlobalKey<AnimatedListState>();
-
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(

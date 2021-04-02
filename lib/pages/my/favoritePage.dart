@@ -1,6 +1,6 @@
+import 'package:drag_and_drop_gridview/devdrag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -8,10 +8,66 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  int _selectedIndex;
-  List<FavoriteModel> list = List();
+  List<MenuModel> list;
+  List<MenuModel> favoriteList;
 
-  final _listKey = GlobalKey<AnimatedListState>();
+  @override
+  void initState() {
+    super.initState();
+
+    list = [
+      MenuModel(
+        icon: CupertinoIcons.hammer,
+        name: '시설보수',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.sparkles,
+        name: '청소',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.tornado,
+        name: '세탁',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.car_detailed,
+        name: '출차',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.exclamationmark_bubble,
+        name: '관리실호출',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.tag,
+        name: '딜리버리',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.paw,
+        name: '팻케어',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.cube_box,
+        name: '택배',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.arrow_3_trianglepath,
+        name: '분리수거',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.trash,
+        name: '종량제봉투',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.paintbrush,
+        name: '인테리어',
+      ),
+      MenuModel(
+        icon: CupertinoIcons.archivebox,
+        name: '이사',
+      ),
+    ].toList();
+
+    favoriteList = List();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -20,30 +76,74 @@ class _FavoritePageState extends State<FavoritePage> {
         ),
         body: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: _input(),
+              _title(
+                text: '전체 서비스',
               ),
               Expanded(
-                child: AnimatedList(
-                  key: _listKey,
-                  padding: EdgeInsets.all(24),
-                  initialItemCount: list.length,
-                  itemBuilder: (context, index, animation) => SlideTransition(
-                    position: animation.drive(
-                      Tween<Offset>(
-                        begin: Offset(-1, 0),
-                        end: Offset(0, 0),
-                      ),
-                    ),
-                    child: FadeTransition(
-                      opacity: animation,
-                      child: _item(
-                        index: index,
-                        item: list[index],
-                      ),
-                    ),
+                flex: 2,
+                child: DragAndDropGridView(
+                  padding: EdgeInsets.zero,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    childAspectRatio: 1,
                   ),
+                  itemCount: list.length,
+                  itemBuilder: (context, index) {
+                    return _serviceItem(
+                      icon: list[index].icon,
+                      text: list[index].name,
+                      onTap: () {
+                        final item = list[index];
+                        if (favoriteList.indexOf(item) != -1) {
+                          favoriteList.remove(item);
+                        } else {
+                          favoriteList.add(item);
+                        }
+
+                        setState(() {});
+                      },
+                    );
+                  },
+                  onWillAccept: (oldIndex, newIndex) {
+                    return true;
+                  },
+                  onReorder: (oldIndex, newIndex) {
+                    final temp = list[newIndex];
+                    list[newIndex] = list[oldIndex];
+                    list[oldIndex] = temp;
+
+                    setState(() {});
+                  },
+                ),
+              ),
+              _title(
+                text: '잠금화면 즐겨찾기',
+              ),
+              Expanded(
+                flex: 1,
+                child: DragAndDropGridView(
+                  padding: EdgeInsets.zero,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    childAspectRatio: 1,
+                  ),
+                  itemCount: favoriteList.length,
+                  itemBuilder: (context, index) => _serviceItem(
+                    icon: favoriteList[index].icon,
+                    text: favoriteList[index].name,
+                  ),
+                  onWillAccept: (oldIndex, newIndex) {
+                    return true;
+                  },
+                  onReorder: (oldIndex, newIndex) {
+                    final temp = favoriteList[newIndex];
+                    favoriteList[newIndex] = favoriteList[oldIndex];
+                    favoriteList[oldIndex] = temp;
+
+                    setState(() {});
+                  },
                 ),
               ),
             ],
@@ -51,108 +151,54 @@ class _FavoritePageState extends State<FavoritePage> {
         ),
       );
 
-  _input() => Container(
-        padding: EdgeInsets.all(24),
-      );
-
-  _item({
-    int index,
-    FavoriteModel item,
+  _title({
+    String text,
   }) =>
       Container(
-        margin: EdgeInsets.only(
-          bottom: 24,
-        ),
+        padding: EdgeInsets.all(24),
+        child: Text(text),
+      );
+
+  _serviceItem({
+    IconData icon,
+    String text,
+    GestureTapCallback onTap,
+  }) =>
+      Material(
+        color: Colors.transparent,
+        clipBehavior: Clip.antiAlias,
+        borderRadius: BorderRadius.all(Radius.circular(5)),
         child: InkWell(
-          onTap: () {
-            _selectItem(index);
-          },
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 150),
-            padding: EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: _selectedIndex == index
-                  ? Colors.white24
-                  : Colors.white.withOpacity(0),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              border: Border.all(
-                color: Colors.white24,
-                width: 1,
+          onTap: onTap,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 12),
+                child: Icon(
+                  icon,
+                  size: 64,
+                ),
               ),
-            ),
-            child: IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 24),
-                    child: Text(
-                      '${DateFormat('a hh:mm').format(item.time)}',
-                      style: TextStyle(
-                        height: 1,
-                        fontSize: 36,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    item.weekDays.join(', '),
-                    style: TextStyle(
-                      height: 1,
-                      fontSize: 22,
-                      color: Colors.white54,
-                    ),
-                  ),
-                  Spacer(flex: 1),
-                  CupertinoSwitch(
-                    value: item.enabled,
-                    onChanged: (value) {
-                      final index = list.indexOf(item);
-                      if (index != -1) {
-                        list.replaceRange(
-                          index,
-                          index + 1,
-                          [
-                            FavoriteModel(
-                              time: item.time,
-                              weekDays: item.weekDays,
-                              enabled: value,
-                            ),
-                          ],
-                        );
-                        setState(() {});
-                      }
-                    },
-                  ),
-                ],
+              Text(
+                text ?? '',
+                style: TextStyle(
+                  fontSize: 22,
+                ),
               ),
-            ),
+            ],
           ),
         ),
       );
-
-  _selectItem(
-    int index,
-  ) {
-    if (_selectedIndex != index) {
-      _selectedIndex = index;
-    } else {
-      _selectedIndex = null;
-    }
-
-    if (_selectedIndex != null) {}
-
-    setState(() {});
-  }
 }
 
-class FavoriteModel {
-  final DateTime time;
-  final List<String> weekDays;
-  final bool enabled;
+class MenuModel {
+  final IconData icon;
+  final String name;
 
-  FavoriteModel({
-    this.time,
-    this.weekDays,
-    this.enabled,
+  MenuModel({
+    this.icon,
+    this.name,
   });
 }
