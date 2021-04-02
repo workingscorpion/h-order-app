@@ -310,45 +310,55 @@ class _HistoryViewState extends State<HistoryView> {
         ],
       );
 
-  _popup() => Row(
-        children: [
-          Spacer(),
-          Container(
-            margin: EdgeInsets.only(right: 5),
-            child: Text(_popupText()),
-          ),
-          PopupMenuButton(
-            child: Icon(CupertinoIcons.ellipsis_circle),
-            padding: EdgeInsets.zero,
-            offset: Offset(-24, 0),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: "all",
-                child: Text('전체'),
+  _popup() => Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 24,
+        ),
+        child: Row(
+          children: [
+            Spacer(),
+            PopupMenuButton(
+              child: Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: 5),
+                    child: Text(_popupText()),
+                  ),
+                  Icon(CupertinoIcons.ellipsis_circle),
+                ],
               ),
-              PopupMenuItem(
-                value: "apply",
-                child: Text('신청'),
-              ),
-              PopupMenuItem(
-                value: "receipted",
-                child: Text('접수'),
-              ),
-              PopupMenuItem(
-                value: "done",
-                child: Text('처리완료'),
-              ),
-            ],
-            onSelected: (value) {
-              setState(() {
+              padding: EdgeInsets.zero,
+              offset: Offset(-24, 0),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: "all",
+                  child: Text('전체'),
+                ),
+                PopupMenuItem(
+                  value: "apply",
+                  child: Text('신청'),
+                ),
+                PopupMenuItem(
+                  value: "receipted",
+                  child: Text('접수'),
+                ),
+                PopupMenuItem(
+                  value: "done",
+                  child: Text('처리완료'),
+                ),
+              ],
+              onSelected: (value) {
                 selectedPopupMenu = value;
                 list = [...origin]
                     .where((h) => _popupIndex().contains(h.status))
                     .toList();
-              });
-            },
-          ),
-        ],
+                    
+                setState(() {});
+              },
+            ),
+          ],
+        ),
       );
 
   _popupText() {

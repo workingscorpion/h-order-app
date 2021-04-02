@@ -13,33 +13,17 @@ class _BillDetailPageState extends State<BillDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('관리비 고지서'),
+      ),
       body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 24,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Clock(),
-              _pageHeader(),
-              Divider(
-                color: Colors.white,
-                height: 20,
-                thickness: 1,
-              ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    Image.asset(
-                      'assets/sample/sample2.png',
-                      fit: BoxFit.contain,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+        child: ListView(
+          children: [
+            Image.asset(
+              'assets/sample/sample2.png',
+              fit: BoxFit.contain,
+            )
+          ],
         ),
       ),
     );

@@ -21,38 +21,47 @@ class _InfoPageState extends State<InfoPage> {
         body: SafeArea(
           child: Container(
             padding: EdgeInsets.all(24),
-            child: Table(
-              columnWidths: [
-                IntrinsicColumnWidth(),
-                FlexColumnWidth(),
-              ].asMap(),
-              children: [
-                _item(
-                  label: '이름',
-                  value: '김오더',
-                ),
-                _item(
-                  label: '연락처',
-                  value: '010-1234-5678',
-                ),
-                _item(
-                  label: '비상연락처',
-                  value: '010-1234-5678',
-                ),
-                _item(
-                  label: '입주호실 (평형/타입)',
-                  value: '남동 202호 (52.3m/D타입)',
-                ),
-                _item(
-                  label: '입주기간',
-                  value: '2020.01.01 ~ 2021.01.01 (12개월)',
-                ),
-                _item(
-                  label: '지급 물품 현황',
-                  value: ['현관 출입카드 1매​', '시스템 에어컨 리모컨 1개', '우편함 열쇠 2개​​']
-                      .join('\n'),
-                ),
-              ],
+            child: DefaultTextStyle(
+              style: TextStyle(
+                fontSize: 24,
+                height: 1.6,
+              ),
+              child: Table(
+                columnWidths: [
+                  IntrinsicColumnWidth(),
+                  FlexColumnWidth(),
+                ].asMap(),
+                children: [
+                  _item(
+                    label: '이름',
+                    value: '김오더',
+                  ),
+                  _item(
+                    label: '연락처',
+                    value: '010-1234-5678',
+                  ),
+                  _item(
+                    label: '비상연락처',
+                    value: '010-1234-5678',
+                  ),
+                  _item(
+                    label: '입주호실 (평형/타입)',
+                    value: '남동 202호 (52.3m/D타입)',
+                  ),
+                  _item(
+                    label: '입주기간',
+                    value: '2020.01.01 ~ 2021.01.01 (12개월)',
+                  ),
+                  _item(
+                    label: '지급 물품 현황',
+                    value: [
+                      '- 현관 출입카드 1매​',
+                      '- 시스템 에어컨 리모컨 1개',
+                      '- 우편함 열쇠 2개​​'
+                    ].join('\n'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -74,15 +83,15 @@ class _InfoPageState extends State<InfoPage> {
         children: [
           Container(
             padding: EdgeInsets.symmetric(
-              vertical: 12,
-              horizontal: 12,
+              vertical: 32,
+              horizontal: 24,
             ),
             child: Text(label),
           ),
           Container(
             padding: EdgeInsets.symmetric(
-              vertical: 12,
-              horizontal: 12,
+              vertical: 32,
+              horizontal: 24,
             ),
             child: Text(value),
           ),
