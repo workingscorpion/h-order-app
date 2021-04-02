@@ -59,4 +59,5 @@ flutter:
     - assets/
     - assets/sample/
     - assets/sample/payment/
+    - assets/sample/screen/
     - assets/splash/
