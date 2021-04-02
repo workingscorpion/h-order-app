@@ -18,7 +18,9 @@ class _HomeViewState extends State<HomeView>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _menu(),
+          Container(height: 24),
           _cards(),
+          Container(height: 24),
           _carousel(),
         ],
       );
@@ -118,7 +120,7 @@ class _HomeViewState extends State<HomeView>
                   horizontal: 24,
                 ),
                 child: Text(
-                  'asdf',
+                  '제휴 서비스',
                   style: TextStyle(
                     fontSize: 32,
                   ),
@@ -137,10 +139,10 @@ class _HomeViewState extends State<HomeView>
                       (index) => Container(
                         margin: EdgeInsets.only(right: 12),
                         child: AspectRatio(
-                          aspectRatio: 1,
+                          aspectRatio: 1 / 1.413,
                           child: FlatButton(
                             onPressed: () {},
-                            child: Text('Service $index'),
+                            child: Text('제휴 서비스 $index'),
                           ),
                         ),
                       ),
