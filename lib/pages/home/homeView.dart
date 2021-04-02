@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView>
             color: Colors.transparent,
             child: GridView.count(
               padding: EdgeInsets.zero,
-              crossAxisCount: 4,
+              crossAxisCount: 5,
               children: [
                 ...[
                   _serviceItem(
@@ -56,13 +56,13 @@ class _HomeViewState extends State<HomeView>
                     text: '출차',
                     // onTap: () {},
                   ),
-                ],
-                ...[
                   _serviceItem(
                     icon: CupertinoIcons.exclamationmark_bubble,
                     text: '관리실호출',
                     // onTap: () {},
                   ),
+                ],
+                ...[
                   _serviceItem(
                     icon: CupertinoIcons.tag,
                     text: '딜리버리',
@@ -80,8 +80,6 @@ class _HomeViewState extends State<HomeView>
                     text: '택배',
                     // onTap: () {},
                   ),
-                ],
-                ...[
                   _serviceItem(
                     icon: CupertinoIcons.arrow_3_trianglepath,
                     text: '분리수거',
@@ -92,6 +90,8 @@ class _HomeViewState extends State<HomeView>
                     text: '종량제봉투',
                     // onTap: () {},
                   ),
+                ],
+                ...[
                   _serviceItem(
                     icon: CupertinoIcons.paintbrush,
                     text: '인테리어',
