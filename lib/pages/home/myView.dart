@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/appRouter.dart';
 
 class MyView extends StatefulWidget {
   MyView();
@@ -26,19 +27,27 @@ class _MyViewState extends State<MyView> {
           children: [
             _item(
               title: '내 정보',
-              onTap: () {},
+              onTap: () {
+                AppRouter.toInfoPage();
+              },
             ),
             _item(
               title: '결제수단 관리',
-              onTap: () {},
+              onTap: () {
+                AppRouter.toPaymentPage();
+              },
             ),
             _item(
               title: '즐겨찾기',
-              onTap: () {},
+              onTap: () {
+                AppRouter.toFavoritePage();
+              },
             ),
             _item(
               title: '화면 설정',
-              onTap: () {},
+              onTap: () {
+                AppRouter.toScreenPage();
+              },
             ),
           ],
         ),

@@ -2,21 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class FavoritePage extends StatefulWidget {
+class ScreenPage extends StatefulWidget {
   @override
-  _FavoritePageState createState() => _FavoritePageState();
+  _ScreenPageState createState() => _ScreenPageState();
 }
 
-class _FavoritePageState extends State<FavoritePage> {
+class _ScreenPageState extends State<ScreenPage> {
   int _selectedIndex;
-  List<FavoriteModel> list = List();
+  List<ScreenModel> list = List();
 
   final _listKey = GlobalKey<AnimatedListState>();
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('즐겨찾기'),
+          title: Text('화면 설정'),
         ),
         body: SafeArea(
           child: Column(
@@ -57,7 +57,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   _item({
     int index,
-    FavoriteModel item,
+    ScreenModel item,
   }) =>
       Container(
         margin: EdgeInsets.only(
@@ -112,7 +112,7 @@ class _FavoritePageState extends State<FavoritePage> {
                           index,
                           index + 1,
                           [
-                            FavoriteModel(
+                            ScreenModel(
                               time: item.time,
                               weekDays: item.weekDays,
                               enabled: value,
@@ -145,12 +145,12 @@ class _FavoritePageState extends State<FavoritePage> {
   }
 }
 
-class FavoriteModel {
+class ScreenModel {
   final DateTime time;
   final List<String> weekDays;
   final bool enabled;
 
-  FavoriteModel({
+  ScreenModel({
     this.time,
     this.weekDays,
     this.enabled,

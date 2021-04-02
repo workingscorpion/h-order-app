@@ -1,50 +1,81 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:h_order/components/alarmInput.dart';
 import 'package:intl/intl.dart';
 
-class AlarmPage extends StatefulWidget {
+class PaymentPage extends StatefulWidget {
   @override
-  _AlarmPageState createState() => _AlarmPageState();
+  _PaymentPageState createState() => _PaymentPageState();
 }
 
-class _AlarmPageState extends State<AlarmPage> {
+class _PaymentPageState extends State<PaymentPage> {
   int _selectedIndex;
-  List<AlarmModel> list = List();
+  List<PaymentModel> list = List();
 
   final _listKey = GlobalKey<AnimatedListState>();
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('알람설정'),
+          title: Text('결제수단 관리'),
         ),
         body: SafeArea(
           child: Column(
             children: [
               Expanded(
-                child: _input(),
-              ),
-              Expanded(
-                child: AnimatedList(
-                  key: _listKey,
+                child: ListView(
                   padding: EdgeInsets.all(24),
-                  initialItemCount: list.length,
-                  itemBuilder: (context, index, animation) => SlideTransition(
-                    position: animation.drive(
-                      Tween<Offset>(
-                        begin: Offset(-1, 0),
-                        end: Offset(0, 0),
+                  children: [
+                    _title(
+                      text: '등록계좌',
+                    ),
+                    ...List.generate(
+                      2,
+                      (index) => _card(
+                        item: PaymentModel(
+                          type: 'account',
+                          image: 'assets/sample/payment/bank_kb.jpg',
+                          name: 'KB국민은행',
+                          numbers: ['****', '1234'],
+                        ),
                       ),
                     ),
-                    child: FadeTransition(
-                      opacity: animation,
-                      child: _item(
-                        index: index,
-                        item: list[index],
+                    _title(
+                      text: '등록카드',
+                    ),
+                    ...List.generate(
+                      5,
+                      (index) => _card(
+                        item: PaymentModel(
+                          type: 'type',
+                          image: 'assets/sample/payment/card_kakao.png',
+                          name: '카카오뱅크 카드',
+                          numbers: ['****', '****', '****', '1234'],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(24),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: FlatButton(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        onPressed: () {},
+                        child: Text('결제비밀번호 설정'),
+                      ),
+                    ),
+                    Container(width: 24),
+                    Expanded(
+                      child: FlatButton(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        onPressed: () {},
+                        child: Text('결제수단 추가'),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -52,120 +83,79 @@ class _AlarmPageState extends State<AlarmPage> {
         ),
       );
 
-  _input() => Container(
-        padding: EdgeInsets.all(24),
-        child: AlarmInput(
-          onAdd: (item) {
-            list.insert(0, item);
-
-            _listKey.currentState.insertItem(
-              0,
-              duration: Duration(milliseconds: 225),
-            );
-
-            setState(() {});
-          },
-        ),
-      );
-
-  _item({
-    int index,
-    AlarmModel item,
+  _title({
+    String text,
   }) =>
       Container(
-        margin: EdgeInsets.only(
-          bottom: 24,
+        margin: EdgeInsets.only(bottom: 24),
+        child: Text(text),
+      );
+
+  _card({
+    PaymentModel item,
+  }) =>
+      Container(
+        padding: EdgeInsets.all(24),
+        margin: EdgeInsets.only(bottom: 24),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: Colors.white24,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
-        child: InkWell(
-          onTap: () {
-            _selectItem(index);
-          },
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 150),
-            padding: EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: _selectedIndex == index
-                  ? Colors.white24
-                  : Colors.white.withOpacity(0),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              border: Border.all(
-                color: Colors.white24,
-                width: 1,
+        child: Row(
+          children: [
+            Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              margin: EdgeInsets.only(right: 24),
+              width: 200,
+              child: AspectRatio(
+                aspectRatio: 8.56 / 5.398,
+                child: Image.asset(
+                  item.image,
+                ),
               ),
             ),
-            child: IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+            DefaultTextStyle(
+              style: TextStyle(
+                fontSize: 24,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 24),
-                    child: Text(
-                      '${DateFormat('a hh:mm').format(item.time)}',
-                      style: TextStyle(
-                        height: 1,
-                        fontSize: 36,
-                      ),
-                    ),
+                  Text(
+                    item.name,
                   ),
                   Text(
-                    item.weekDays.join(', '),
-                    style: TextStyle(
-                      height: 1,
-                      fontSize: 22,
-                      color: Colors.white54,
-                    ),
-                  ),
-                  Spacer(flex: 1),
-                  CupertinoSwitch(
-                    value: item.enabled,
-                    onChanged: (value) {
-                      final index = list.indexOf(item);
-                      if (index != -1) {
-                        list.replaceRange(
-                          index,
-                          index + 1,
-                          [
-                            AlarmModel(
-                              time: item.time,
-                              weekDays: item.weekDays,
-                              enabled: value,
-                            ),
-                          ],
-                        );
-                        setState(() {});
-                      }
-                    },
+                    item.numbers.join('-'),
                   ),
                 ],
               ),
             ),
-          ),
+            Spacer(),
+            FlatButton(
+              onPressed: () {},
+              child: Text('삭제'),
+            ),
+          ],
         ),
       );
-
-  _selectItem(
-    int index,
-  ) {
-    if (_selectedIndex != index) {
-      _selectedIndex = index;
-    } else {
-      _selectedIndex = null;
-    }
-
-    if (_selectedIndex != null) {}
-
-    setState(() {});
-  }
 }
 
-class AlarmModel {
-  final DateTime time;
-  final List<String> weekDays;
-  final bool enabled;
+class PaymentModel {
+  final String type;
+  final String image;
+  final String name;
+  final List<String> numbers;
 
-  AlarmModel({
-    this.time,
-    this.weekDays,
-    this.enabled,
+  PaymentModel({
+    this.type,
+    this.image,
+    this.name,
+    this.numbers,
   });
 }

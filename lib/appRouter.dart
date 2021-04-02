@@ -4,6 +4,10 @@ import 'package:h_order/models/productModel.dart';
 import 'package:h_order/pages/alarm/alarmPage.dart';
 import 'package:h_order/pages/homePage.dart';
 import 'package:h_order/pages/lockPage.dart';
+import 'package:h_order/pages/my/favoritePage.dart';
+import 'package:h_order/pages/my/infoPage.dart';
+import 'package:h_order/pages/my/paymentPage.dart';
+import 'package:h_order/pages/my/screenPage.dart';
 import 'package:h_order/pages/services/billDetailPage.dart';
 import 'package:h_order/pages/services/callPage.dart';
 import 'package:h_order/pages/services/boardPage.dart';
@@ -98,6 +102,30 @@ class AppRouter {
           builder: (BuildContext context) => AlarmPage(),
         );
 
+      case RouteNames.Info:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => InfoPage(),
+        );
+
+      case RouteNames.Payment:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => PaymentPage(),
+        );
+
+      case RouteNames.Favorite:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => FavoritePage(),
+        );
+
+      case RouteNames.Screen:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => ScreenPage(),
+        );
+
       default:
         return MaterialPageRoute(
           settings: settings,
@@ -163,6 +191,22 @@ class AppRouter {
       RouteNames.Lock,
       (route) => route.settings.name != RouteNames.Lock,
     );
+  }
+
+  static toInfoPage() {
+    return Navigator.of(context).pushNamed(RouteNames.Info);
+  }
+
+  static toPaymentPage() {
+    return Navigator.of(context).pushNamed(RouteNames.Payment);
+  }
+
+  static toFavoritePage() {
+    return Navigator.of(context).pushNamed(RouteNames.Favorite);
+  }
+
+  static toScreenPage() {
+    return Navigator.of(context).pushNamed(RouteNames.Screen);
   }
 
   static toAlarmPage() {

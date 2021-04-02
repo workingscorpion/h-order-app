@@ -1,169 +1,101 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:h_order/components/alarmInput.dart';
 import 'package:intl/intl.dart';
 
-class AlarmPage extends StatefulWidget {
+class InfoPage extends StatefulWidget {
   @override
-  _AlarmPageState createState() => _AlarmPageState();
+  _InfoPageState createState() => _InfoPageState();
 }
 
-class _AlarmPageState extends State<AlarmPage> {
+class _InfoPageState extends State<InfoPage> {
   int _selectedIndex;
-  List<AlarmModel> list = List();
+  List<InfoModel> list = List();
 
   final _listKey = GlobalKey<AnimatedListState>();
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('알람설정'),
+          title: Text('내 정보'),
         ),
         body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: _input(),
-              ),
-              Expanded(
-                child: AnimatedList(
-                  key: _listKey,
-                  padding: EdgeInsets.all(24),
-                  initialItemCount: list.length,
-                  itemBuilder: (context, index, animation) => SlideTransition(
-                    position: animation.drive(
-                      Tween<Offset>(
-                        begin: Offset(-1, 0),
-                        end: Offset(0, 0),
-                      ),
-                    ),
-                    child: FadeTransition(
-                      opacity: animation,
-                      child: _item(
-                        index: index,
-                        item: list[index],
-                      ),
-                    ),
-                  ),
+          child: Container(
+            padding: EdgeInsets.all(24),
+            child: Table(
+              columnWidths: [
+                IntrinsicColumnWidth(),
+                FlexColumnWidth(),
+              ].asMap(),
+              children: [
+                _item(
+                  label: '이름',
+                  value: '김오더',
                 ),
-              ),
-            ],
+                _item(
+                  label: '연락처',
+                  value: '010-1234-5678',
+                ),
+                _item(
+                  label: '비상연락처',
+                  value: '010-1234-5678',
+                ),
+                _item(
+                  label: '입주호실 (평형/타입)',
+                  value: '남동 202호 (52.3m/D타입)',
+                ),
+                _item(
+                  label: '입주기간',
+                  value: '2020.01.01 ~ 2021.01.01 (12개월)',
+                ),
+                _item(
+                  label: '지급 물품 현황',
+                  value: ['현관 출입카드 1매​', '시스템 에어컨 리모컨 1개', '우편함 열쇠 2개​​']
+                      .join('\n'),
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-
-  _input() => Container(
-        padding: EdgeInsets.all(24),
-        child: AlarmInput(
-          onAdd: (item) {
-            list.insert(0, item);
-
-            _listKey.currentState.insertItem(
-              0,
-              duration: Duration(milliseconds: 225),
-            );
-
-            setState(() {});
-          },
         ),
       );
 
   _item({
-    int index,
-    AlarmModel item,
+    String label,
+    String value,
   }) =>
-      Container(
-        margin: EdgeInsets.only(
-          bottom: 24,
-        ),
-        child: InkWell(
-          onTap: () {
-            _selectItem(index);
-          },
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 150),
-            padding: EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: _selectedIndex == index
-                  ? Colors.white24
-                  : Colors.white.withOpacity(0),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              border: Border.all(
-                color: Colors.white24,
-                width: 1,
-              ),
-            ),
-            child: IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 24),
-                    child: Text(
-                      '${DateFormat('a hh:mm').format(item.time)}',
-                      style: TextStyle(
-                        height: 1,
-                        fontSize: 36,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    item.weekDays.join(', '),
-                    style: TextStyle(
-                      height: 1,
-                      fontSize: 22,
-                      color: Colors.white54,
-                    ),
-                  ),
-                  Spacer(flex: 1),
-                  CupertinoSwitch(
-                    value: item.enabled,
-                    onChanged: (value) {
-                      final index = list.indexOf(item);
-                      if (index != -1) {
-                        list.replaceRange(
-                          index,
-                          index + 1,
-                          [
-                            AlarmModel(
-                              time: item.time,
-                              weekDays: item.weekDays,
-                              enabled: value,
-                            ),
-                          ],
-                        );
-                        setState(() {});
-                      }
-                    },
-                  ),
-                ],
-              ),
+      TableRow(
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              width: 1,
+              color: Colors.white24,
             ),
           ),
         ),
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 12,
+              horizontal: 12,
+            ),
+            child: Text(label),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 12,
+              horizontal: 12,
+            ),
+            child: Text(value),
+          ),
+        ],
       );
-
-  _selectItem(
-    int index,
-  ) {
-    if (_selectedIndex != index) {
-      _selectedIndex = index;
-    } else {
-      _selectedIndex = null;
-    }
-
-    if (_selectedIndex != null) {}
-
-    setState(() {});
-  }
 }
 
-class AlarmModel {
+class InfoModel {
   final DateTime time;
   final List<String> weekDays;
   final bool enabled;
 
-  AlarmModel({
+  InfoModel({
     this.time,
     this.weekDays,
     this.enabled,

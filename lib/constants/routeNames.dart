@@ -16,7 +16,12 @@ class RouteNames {
   static const String Notice = '/notice';
   static const String History = '/history';
   static const String Bill = '/bill';
+
   static const String My = '/my';
+  static const String Info = '/my/info';
+  static const String Payment = '/my/payment';
+  static const String Favorite = '/my/favorite';
+  static const String Screen = '/my/screen';
 
   static const String Alarm = '/alarm';
   static const String AlarmDetail = '/alarm/detail';
