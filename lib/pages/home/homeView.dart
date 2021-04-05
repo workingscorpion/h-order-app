@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -42,7 +43,12 @@ class _HomeViewState extends State<HomeView>
                     onTap: () {
                       _alert(
                         title: '시설보수',
-                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        items: [
+                          AlertItem(
+                            type: 'text',
+                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -52,7 +58,16 @@ class _HomeViewState extends State<HomeView>
                     onTap: () {
                       _alert(
                         title: '청소',
-                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        items: [
+                          AlertItem(
+                            type: 'date',
+                            label: '예약시간 설정',
+                          ),
+                          AlertItem(
+                            type: 'time',
+                            label: '',
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -62,7 +77,16 @@ class _HomeViewState extends State<HomeView>
                     onTap: () {
                       _alert(
                         title: '세탁',
-                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        items: [
+                          AlertItem(
+                            type: 'date',
+                            label: '예약시간 설정',
+                          ),
+                          AlertItem(
+                            type: 'time',
+                            label: '',
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -72,7 +96,16 @@ class _HomeViewState extends State<HomeView>
                     onTap: () {
                       _alert(
                         title: '출차',
-                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        items: [
+                          AlertItem(
+                            type: 'date',
+                            label: '예약시간 설정',
+                          ),
+                          AlertItem(
+                            type: 'time',
+                            label: '',
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -82,7 +115,12 @@ class _HomeViewState extends State<HomeView>
                     onTap: () {
                       _alert(
                         title: '관리실 호출',
-                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        items: [
+                          AlertItem(
+                            type: 'text',
+                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -108,7 +146,12 @@ class _HomeViewState extends State<HomeView>
                     onTap: () {
                       _alert(
                         title: '택배',
-                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        items: [
+                          AlertItem(
+                            type: 'text',
+                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -118,7 +161,12 @@ class _HomeViewState extends State<HomeView>
                     onTap: () {
                       _alert(
                         title: '분리수거',
-                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        items: [
+                          AlertItem(
+                            type: 'text',
+                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -128,7 +176,30 @@ class _HomeViewState extends State<HomeView>
                     onTap: () {
                       _alert(
                         title: '종량제봉투',
-                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        items: [
+                          AlertItem(
+                            type: 'text',
+                            label: '10분내로 문 앞에 배송해드립니다.',
+                          ),
+                          AlertItem(
+                            type: 'option',
+                            label: '20L',
+                            min: 1,
+                            max: 10,
+                          ),
+                          AlertItem(
+                            type: 'option',
+                            label: '50L',
+                            min: 1,
+                            max: 10,
+                          ),
+                          AlertItem(
+                            type: 'option',
+                            label: '100L',
+                            min: 1,
+                            max: 10,
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -268,7 +339,8 @@ class _HomeViewState extends State<HomeView>
 
   _alert({
     String title,
-    String content,
+    String type,
+    List<AlertItem> items,
   }) async {
     await showDialog(
       context: context,
@@ -292,13 +364,34 @@ class _HomeViewState extends State<HomeView>
             children: [
               Divider(),
               Container(
-                padding: EdgeInsets.all(100),
-                child: Text(
-                  content,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
+                padding: EdgeInsets.symmetric(vertical: 100),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ...items.map(
+                      (item) {
+                        switch (item.type) {
+                          case 'text':
+                            return _alertTextContent(label: item.label);
+
+                          case 'date':
+                            return _alertDateContent(label: item.label);
+
+                          case 'time':
+                            return _alertTimeContent(label: item.label);
+
+                          case 'option':
+                            return _alertOptionContent(
+                              label: item.label,
+                              max: item.max,
+                              min: item.min,
+                            );
+                        }
+
+                        return Container();
+                      },
+                    ),
+                  ],
                 ),
               ),
               Divider(),
@@ -346,4 +439,156 @@ class _HomeViewState extends State<HomeView>
       ),
     );
   }
+
+  _alertTextContent({
+    String label,
+  }) =>
+      Container(
+        margin: EdgeInsets.only(bottom: 24),
+        padding: EdgeInsets.symmetric(horizontal: 100),
+        child: Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 24,
+          ),
+        ),
+      );
+
+  _alertDateContent({
+    String label,
+  }) =>
+      Container(
+        margin: EdgeInsets.only(bottom: 24),
+        padding: EdgeInsets.symmetric(horizontal: 100),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              Container(width: 100),
+              _datePicker(),
+            ],
+          ),
+        ),
+      );
+
+  _alertTimeContent({
+    String label,
+  }) =>
+      Container(
+        margin: EdgeInsets.only(bottom: 24),
+        padding: EdgeInsets.symmetric(horizontal: 100),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              Container(width: 100),
+              _timePicker(),
+            ],
+          ),
+        ),
+      );
+
+  _datePicker() => InkWell(
+        onTap: () {
+          showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add(
+              Duration(days: 100),
+            ),
+          );
+        },
+        child: Container(
+          child: Text('${DateFormat('yyyy-MM-dd').format(DateTime.now())}'),
+        ),
+      );
+
+  _timePicker() => InkWell(
+        onTap: () {
+          showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+          );
+        },
+        child: Text('${TimeOfDay.now().format(context)}'),
+      );
+
+  _alertOptionContent({
+    String label,
+    int max,
+    int min,
+  }) =>
+      Container(
+        margin: EdgeInsets.only(bottom: 24),
+        padding: EdgeInsets.symmetric(horizontal: 100),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              Container(width: 100),
+              Container(
+                height: 24,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {},
+                  iconSize: 24,
+                  icon: Icon(CupertinoIcons.minus),
+                ),
+              ),
+              Text('$min'),
+              Container(
+                height: 24,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {},
+                  iconSize: 24,
+                  icon: Icon(CupertinoIcons.add),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+}
+
+class AlertItem {
+  final String type;
+  final String label;
+  final int max;
+  final int min;
+  final List<AlertItem> children;
+
+  AlertItem({
+    this.type,
+    this.label,
+    this.max,
+    this.min,
+    this.children,
+  });
 }
