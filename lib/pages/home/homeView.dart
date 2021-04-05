@@ -39,27 +39,52 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.hammer,
                     text: '시설보수',
-                    // onTap: () {},
+                    onTap: () {
+                      _alert(
+                        title: '시설보수',
+                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      );
+                    },
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.sparkles,
                     text: '청소',
-                    // onTap: () {},
+                    onTap: () {
+                      _alert(
+                        title: '청소',
+                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      );
+                    },
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.tornado,
                     text: '세탁',
-                    // onTap: () {},
+                    onTap: () {
+                      _alert(
+                        title: '세탁',
+                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      );
+                    },
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.car_detailed,
                     text: '출차',
-                    // onTap: () {},
+                    onTap: () {
+                      _alert(
+                        title: '출차',
+                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      );
+                    },
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.exclamationmark_bubble,
-                    text: '관리실호출',
-                    // onTap: () {},
+                    text: '관리실 호출',
+                    onTap: () {
+                      _alert(
+                        title: '관리실 호출',
+                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      );
+                    },
                   ),
                 ],
                 ...[
@@ -73,34 +98,55 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.paw,
                     text: '팻케어',
-                    // onTap: () {},
+                    onTap: () {
+                      AppRouter.toShopPage();
+                    },
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.cube_box,
                     text: '택배',
-                    // onTap: () {},
+                    onTap: () {
+                      _alert(
+                        title: '택배',
+                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      );
+                    },
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.arrow_3_trianglepath,
                     text: '분리수거',
-                    // onTap: () {},
+                    onTap: () {
+                      _alert(
+                        title: '분리수거',
+                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      );
+                    },
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.trash,
                     text: '종량제봉투',
-                    // onTap: () {},
+                    onTap: () {
+                      _alert(
+                        title: '종량제봉투',
+                        content: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      );
+                    },
                   ),
                 ],
                 ...[
                   _serviceItem(
                     icon: CupertinoIcons.paintbrush,
                     text: '인테리어',
-                    // onTap: () {},
+                    onTap: () {
+                      AppRouter.toShopPage();
+                    },
                   ),
                   _serviceItem(
                     icon: CupertinoIcons.archivebox,
                     text: '이사',
-                    // onTap: () {},
+                    onTap: () {
+                      AppRouter.toShopPage();
+                    },
                   ),
                 ],
               ],
@@ -219,4 +265,85 @@ class _HomeViewState extends State<HomeView>
           ),
         ),
       );
+
+  _alert({
+    String title,
+    String content,
+  }) async {
+    await showDialog(
+      context: context,
+      child: AlertDialog(
+        titlePadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.zero,
+        buttonPadding: EdgeInsets.zero,
+        actionsPadding: EdgeInsets.zero,
+        title: Container(
+          padding: EdgeInsets.all(24),
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24,
+            ),
+          ),
+        ),
+        content: IntrinsicHeight(
+          child: Column(
+            children: [
+              Divider(),
+              Container(
+                padding: EdgeInsets.all(100),
+                child: Text(
+                  content,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              Divider(),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 24,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        '취소',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 24,
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      color: Colors.white,
+                      child: Text(
+                        '호출',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
