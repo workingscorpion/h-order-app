@@ -25,13 +25,13 @@ class _CartPageState extends State<CartPage>
     super.initState();
 
     _optionMap = Map();
-    widget.cart.forEach((element) {
+    widget.cart?.forEach((element) {
       _initOptionsQuantity(element.product.options);
     });
   }
 
   _initOptionsQuantity(List<ProductOptionModel> options) {
-    options.forEach((option) {
+    options?.forEach((option) {
       _optionMap[option.index] = option;
 
       if ((option.options?.length ?? 0) > 0) {
@@ -41,13 +41,15 @@ class _CartPageState extends State<CartPage>
   }
 
   int get totalAmount {
-    return widget.cart.fold(
-        0, (previousValue, element) => previousValue + element.totalAmount);
+    return widget.cart?.fold(0,
+            (previousValue, element) => previousValue + element.totalAmount) ??
+        0;
   }
 
   int get quantity {
-    return widget.cart
-        .fold(0, (previousValue, element) => previousValue + element.quantity);
+    return widget.cart?.fold(
+            0, (previousValue, element) => previousValue + element.quantity) ??
+        0;
   }
 
   @override
@@ -109,7 +111,6 @@ class _CartPageState extends State<CartPage>
                     Text(
                       '총 금액',
                       style: TextStyle(
-                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -117,9 +118,7 @@ class _CartPageState extends State<CartPage>
                       child: Text(
                         '${NumberFormat().format(totalAmount)} ₩',
                         textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
+                        style: TextStyle(),
                       ),
                     ),
                   ],
@@ -137,7 +136,6 @@ class _CartPageState extends State<CartPage>
               child: Text(
                 '결제하기',
                 style: TextStyle(
-                  fontSize: 16,
                   color: Colors.white,
                 ),
               ),
@@ -160,7 +158,6 @@ class _CartPageState extends State<CartPage>
             Text(
               label,
               style: TextStyle(
-                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -168,9 +165,7 @@ class _CartPageState extends State<CartPage>
               child: Text(
                 text,
                 textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontSize: 14,
-                ),
+                style: TextStyle(),
               ),
             ),
           ],
@@ -197,17 +192,13 @@ class _CartPageState extends State<CartPage>
                           children: [
                             Text(
                               '${cartItem.name}',
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
+                              style: TextStyle(),
                             ),
                             Expanded(
                               child: Text(
                                 '${NumberFormat().format(cartItem.totalAmount)} ₩',
                                 textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
+                                style: TextStyle(),
                               ),
                             ),
                           ],
@@ -264,9 +255,7 @@ class _CartPageState extends State<CartPage>
                         child: Text(
                           '${cartItem.quantity}',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
+                          style: TextStyle(),
                         ),
                       ),
                       Container(
@@ -320,7 +309,6 @@ class _CartPageState extends State<CartPage>
               name,
               style: TextStyle(
                 color: Colors.white38,
-                fontSize: 12,
               ),
             ),
             Expanded(
@@ -329,7 +317,6 @@ class _CartPageState extends State<CartPage>
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   color: Colors.white38,
-                  fontSize: 12,
                 ),
               ),
             ),

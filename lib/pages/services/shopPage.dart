@@ -224,7 +224,7 @@ class _ShopPageState extends State<ShopPage>
                 bottom: 0,
                 right: 0,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * .1,
+                  width: MediaQuery.of(context).size.width * .05,
                   child: AspectRatio(
                     aspectRatio: 1,
                     child: IconButton(
@@ -257,50 +257,32 @@ class _ShopPageState extends State<ShopPage>
 
   _floatingActionButton() => Container(
         width: MediaQuery.of(context).size.width * .1,
-        child: FloatingActionButton(
-          key: _floatingButtonKey,
-          onPressed: () {
-            AppRouter.toCartPage(_cart);
-          },
-          child: Container(
-            child: Stack(
-              overflow: Overflow.visible,
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: FloatingActionButton(
+            key: _floatingButtonKey,
+            onPressed: () {
+              AppRouter.toCartPage(_cart);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
+                  height: 22,
                   alignment: Alignment.center,
                   child: Icon(
                     CupertinoIcons.cart,
+                    size: 22,
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: quantity < 10
-                      ? 0
-                      : quantity < 99
-                          ? -2
-                          : -6,
-                  child: _cart.isNotEmpty
-                      ? Container(
-                          width: quantity < 10
-                              ? 18
-                              : quantity < 99
-                                  ? 22
-                                  : 28,
-                          height: 18,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          child: Text(
-                            quantity < 99 ? '$quantity' : '99+',
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                        )
-                      : Container(),
+                Container(width: 6),
+                Text(
+                  quantity < 99 ? '$quantity' : '99+',
+                  style: TextStyle(
+                    height: 1,
+                    fontSize: 24,
+                  ),
                 ),
               ],
             ),
@@ -311,30 +293,31 @@ class _ShopPageState extends State<ShopPage>
   _detail({
     ProductModel product,
   }) async {
-    final CartItemModel result =
-        await AppRouter.toProductPage(product: product);
+    final result = await AppRouter.toProductPage(product);
 
     if (result == null) {
       return;
     }
 
-    _throwBall(data: result);
+    _throwBall(data: result as CartItemModel);
   }
 
   _throwBall({
     CartItemModel data,
   }) {
-    final RenderBox appBarRenderBox =
-        _appBarKey.currentContext.findRenderObject();
-    final appBarHeight = appBarRenderBox.size.height;
-    final local = Offset(0, -appBarHeight);
+    // final RenderBox appBarRenderBox =
+    //     _appBarKey.currentContext.findRenderObject();
+    // final appBarHeight = appBarRenderBox.size.height;
+    // final local = Offset(0, -appBarHeight);
 
-    _ballScreenKey.currentState.create(
-      data: data,
-      local: local,
-      from: _buttonKeys[data.product.index],
-      to: _floatingButtonKey,
-    );
+    // _ballScreenKey.currentState.create(
+    //   data: data,
+    //   local: local,
+    //   from: _buttonKeys[data.product.index],
+    //   to: _floatingButtonKey,
+    // );
+
+    _addCartItem(cartItem: data);
   }
 
   _addCartItem({

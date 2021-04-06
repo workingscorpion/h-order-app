@@ -111,7 +111,6 @@ class _ProductPageState extends State<ProductPage>
                 child: Text(
                   '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
                   style: TextStyle(
-                    fontSize: 12,
                     color: Colors.white,
                   ),
                 ),
@@ -139,13 +138,11 @@ class _ProductPageState extends State<ProductPage>
           child: FractionallySizedBox(
             heightFactor: .6,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   widget.product.name,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+                  style: TextStyle(),
                 ),
                 Expanded(
                   child: Container(),
@@ -155,9 +152,7 @@ class _ProductPageState extends State<ProductPage>
                   margin: EdgeInsets.only(right: 12),
                   child: Text(
                     '${NumberFormat().format(amount)} ₩',
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(),
                   ),
                 ),
                 AspectRatio(
@@ -182,9 +177,7 @@ class _ProductPageState extends State<ProductPage>
                   margin: EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                     '$_quantity',
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(),
                   ),
                 ),
                 AspectRatio(
@@ -244,15 +237,13 @@ class _ProductPageState extends State<ProductPage>
               child: FractionallySizedBox(
                 heightFactor: .6,
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       margin: EdgeInsets.only(right: 8),
                       child: Text(
                         option.name,
-                        style: TextStyle(
-                          fontSize: 16 - depth * 2,
-                        ),
+                        style: TextStyle(),
                       ),
                     ),
                     ...((option.max ?? 0) > 0)
@@ -260,7 +251,6 @@ class _ProductPageState extends State<ProductPage>
                             Text(
                               '(최대${option.max}개)',
                               style: TextStyle(
-                                fontSize: 12 - depth * 2,
                                 color: Colors.white38,
                               ),
                             ),
@@ -276,9 +266,7 @@ class _ProductPageState extends State<ProductPage>
                               margin: EdgeInsets.only(right: 12),
                               child: Text(
                                 '${NumberFormat().format(option.price)} ₩',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
+                                style: TextStyle(),
                               ),
                             ),
                           ]
@@ -309,9 +297,7 @@ class _ProductPageState extends State<ProductPage>
                                   margin: EdgeInsets.symmetric(horizontal: 12),
                                   child: Text(
                                     '${_optionQuantityMap[option.index]}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                    ),
+                                    style: TextStyle(),
                                   ),
                                 ),
                                 Container(
@@ -384,7 +370,6 @@ class _ProductPageState extends State<ProductPage>
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 2,
-            fontSize: 14,
           );
 
           return;

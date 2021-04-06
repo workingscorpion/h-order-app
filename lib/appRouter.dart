@@ -150,7 +150,10 @@ class AppRouter {
   }
 
   static toCartPage(List<CartItemModel> cart) {
-    return Navigator.of(context).pushNamed(RouteNames.Cart);
+    return Navigator.of(context).pushNamed(
+      RouteNames.Cart,
+      arguments: cart,
+    );
   }
 
   static toShoppingCompletePage(List<CartItemModel> cart) {
@@ -161,12 +164,18 @@ class AppRouter {
     );
   }
 
-  static toProductPage({
+  static toProductPage(
     ProductModel product,
-  }) {
-    return Navigator.of(context).pushNamed(
-      RouteNames.Product,
-      arguments: product,
+  ) async {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        settings: RouteSettings(
+          name: RouteNames.Product,
+        ),
+        builder: (BuildContext context) => ProductPage(
+          product: product,
+        ),
+      ),
     );
   }
 
