@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/clock.dart';
+import 'package:h_order/components/homeFloatingButton.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
 
@@ -61,6 +63,7 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
+        floatingActionButton: HomeFloatingButton(),
       );
 
   _infoDivider() => Container(
