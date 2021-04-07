@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/alarmInput.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:intl/intl.dart';
 
 class AlarmPage extends StatefulWidget {
@@ -95,7 +96,7 @@ class _AlarmPageState extends State<AlarmPage> {
             ),
             child: IntrinsicHeight(
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     margin: EdgeInsets.only(right: 24),
@@ -136,6 +137,19 @@ class _AlarmPageState extends State<AlarmPage> {
                       }
                     },
                   ),
+                  Container(
+                    margin: EdgeInsets.only(left: 20),
+                    child: RaisedButton(
+                      color: CustomColors.backgroundGrey,
+                      onPressed: () {
+                        _deleteItem(index);
+                      },
+                      child: Text(
+                        '삭제',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -155,6 +169,18 @@ class _AlarmPageState extends State<AlarmPage> {
     if (_selectedIndex != null) {}
 
     setState(() {});
+  }
+
+  _deleteItem(int index) {
+    print(list);
+    setState(() {
+      list.removeAt(index);
+      _listKey.currentState.removeItem(
+        index,
+        (context, animation) => null,
+      );
+    });
+    print(list);
   }
 }
 
