@@ -172,7 +172,6 @@ class _AlarmPageState extends State<AlarmPage> {
   }
 
   _deleteItem(int index) {
-    print(list);
     setState(() {
       list.removeAt(index);
       _listKey.currentState.removeItem(
@@ -180,7 +179,6 @@ class _AlarmPageState extends State<AlarmPage> {
         (context, animation) => null,
       );
     });
-    print(list);
   }
 }
 
