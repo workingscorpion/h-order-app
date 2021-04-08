@@ -28,20 +28,24 @@ class _StatusBarState extends State<StatusBar> {
     _batteryStateSubscription =
         _battery.onBatteryStateChanged.listen((BatteryState event) {
       _batteryState = event;
-      setState(() {});
     });
 
+    _getBatteryLevel();
+
     Timer.periodic(new Duration(minutes: 1), (timer) {
-      _battery.batteryLevel.then((value) {
-        _batteryLevel = value.toDouble() / 100;
-        setState(() {});
-      });
+      _getBatteryLevel();
+    });
+  }
+
+  _getBatteryLevel() {
+    _battery.batteryLevel.then((value) {
+      _batteryLevel = value.toDouble() / 100;
+      setState(() {});
     });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     if (_batteryStateSubscription != null) {
       _batteryStateSubscription.cancel();
