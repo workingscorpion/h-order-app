@@ -24,7 +24,6 @@ class _ShopPageState extends State<ShopPage>
   GlobalKey _appBarKey;
   GlobalKey _floatingButtonKey;
   Map<int, GlobalKey> _buttonKeys;
-  GlobalKey<BallScreenState> _ballScreenKey;
 
   TabController _tabController;
 
@@ -49,7 +48,6 @@ class _ShopPageState extends State<ShopPage>
     _appBarKey = GlobalKey();
     _floatingButtonKey = GlobalKey();
     _buttonKeys = Map();
-    _ballScreenKey = GlobalKey<BallScreenState>();
 
     _cart = List();
 
@@ -162,10 +160,6 @@ class _ShopPageState extends State<ShopPage>
               ),
             ],
           ),
-          BallScreen(
-            key: _ballScreenKey,
-            streamController: _streamController,
-          ),
         ],
       ),
     );
@@ -235,8 +229,8 @@ class _ShopPageState extends State<ShopPage>
                         size: 18,
                       ),
                       onPressed: () {
-                        _throwBall(
-                          data: CartItemModel(
+                        _addCartItem(
+                          cartItem: CartItemModel(
                             product: product,
                             name: product.name,
                             amount: product.price,
@@ -299,25 +293,7 @@ class _ShopPageState extends State<ShopPage>
       return;
     }
 
-    _throwBall(data: result as CartItemModel);
-  }
-
-  _throwBall({
-    CartItemModel data,
-  }) {
-    // final RenderBox appBarRenderBox =
-    //     _appBarKey.currentContext.findRenderObject();
-    // final appBarHeight = appBarRenderBox.size.height;
-    // final local = Offset(0, -appBarHeight);
-
-    // _ballScreenKey.currentState.create(
-    //   data: data,
-    //   local: local,
-    //   from: _buttonKeys[data.product.index],
-    //   to: _floatingButtonKey,
-    // );
-
-    _addCartItem(cartItem: data);
+    _addCartItem(cartItem: result as CartItemModel);
   }
 
   _addCartItem({
