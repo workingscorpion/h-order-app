@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/clock.dart';
 import 'package:battery/battery.dart';
+import 'package:wifi/wifi.dart';
 
 class StatusBar extends StatefulWidget {
   StatusBar({Key key}) : super(key: key);
@@ -17,6 +18,7 @@ class _StatusBarState extends State<StatusBar> {
   final _battery = Battery();
 
   BatteryState _batteryState;
+  int _wifiLevel = 0;
   double _batteryLevel = 0;
 
   StreamSubscription<BatteryState> _batteryStateSubscription;
@@ -28,12 +30,20 @@ class _StatusBarState extends State<StatusBar> {
     _batteryStateSubscription =
         _battery.onBatteryStateChanged.listen((BatteryState event) {
       _batteryState = event;
+      setState(() {});
     });
 
     _getBatteryLevel();
+    _getWifiLevel();
 
     Timer.periodic(new Duration(minutes: 1), (timer) {
       _getBatteryLevel();
+      setState(() {});
+    });
+
+    Timer.periodic(new Duration(seconds: 30), (timer) {
+      _getWifiLevel();
+      setState(() {});
     });
   }
 
@@ -44,12 +54,17 @@ class _StatusBarState extends State<StatusBar> {
     });
   }
 
+  _getWifiLevel() {
+    Wifi.level.then((value) {
+      _wifiLevel = value;
+      setState(() {});
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
-    if (_batteryStateSubscription != null) {
-      _batteryStateSubscription.cancel();
-    }
+    _batteryStateSubscription.cancel();
   }
 
   @override
@@ -77,12 +92,21 @@ class _StatusBarState extends State<StatusBar> {
               ),
             ),
           ),
-          // TODO: wifi 추가
+          _wifiInidicator(),
           _batteryIndicator(),
         ],
       ),
     );
   }
+
+  _wifiInidicator() => Container(
+        margin: EdgeInsets.only(right: 10),
+        padding: EdgeInsets.only(bottom: 5),
+        child: Icon(
+          _wifiLevel > 0 ? CupertinoIcons.wifi : CupertinoIcons.xmark_circle,
+          size: 30,
+        ),
+      );
 
   _batteryIndicator() => Stack(
         children: [
