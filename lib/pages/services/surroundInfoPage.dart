@@ -74,17 +74,16 @@ class _SurroundInfoPageState extends State<SurroundInfoPage>
               controller: _tabController,
               children: [
                 ..._categories.map((item) => CarouselSlider(
-                      options: CarouselOptions(height: 400.0),
+                      options: CarouselOptions(height: 1500),
                       items: _images.map((i) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              decoration: BoxDecoration(color: Colors.white),
-                              child: Image.asset(i),
-                            );
-                          },
+                        // FIXME: 이미지 수정후 상황에 따라 fit 수정
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(color: Colors.white),
+                          child: Image.asset(
+                            i,
+                            fit: BoxFit.fitHeight,
+                          ),
                         );
                       }).toList(),
                     )),
