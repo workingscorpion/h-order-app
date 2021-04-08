@@ -136,7 +136,14 @@ class _ShopPageState extends State<ShopPage>
                 controller: _tabController,
                 isScrollable: true,
                 tabs: [
-                  ..._categories.map((item) => Tab(text: item.name)),
+                  ..._categories.map(
+                    (item) => Container(
+                      child: Text(
+                        item.name,
+                        style: TextStyle(fontSize: 40),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Expanded(

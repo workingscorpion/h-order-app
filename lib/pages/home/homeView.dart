@@ -219,6 +219,13 @@ class _HomeViewState extends State<HomeView>
                       AppRouter.toShopPage();
                     },
                   ),
+                  _serviceItem(
+                    icon: CupertinoIcons.info_circle,
+                    text: '정보',
+                    onTap: () {
+                      AppRouter.toSurroundInfoPage();
+                    },
+                  ),
                 ],
               ],
             ),
