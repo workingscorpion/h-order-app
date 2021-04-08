@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/clock.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
+import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
@@ -50,16 +51,14 @@ class _HomePageState extends State<HomePage>
         body: WillPopScope(
           onWillPop: _onWillPop,
           child: SafeArea(
-            child: Container(
-              child: Column(
-                children: [
-                  _status(),
-                  _infoHeader(),
-                  _info(),
-                  _infoDivider(),
-                  _body(),
-                ],
-              ),
+            child: Column(
+              children: [
+                _status(),
+                _infoHeader(),
+                _info(),
+                _infoDivider(),
+                _body(),
+              ],
             ),
           ),
         ),
@@ -212,33 +211,7 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _status() => Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 24,
-        ),
-        child: Row(
-          children: [
-            Clock(
-              fontSize: 24,
-            ),
-            // TODO: 잠금화면 이동 버튼 제거
-            Spacer(),
-            InkWell(
-              onTap: () {
-                AppRouter.toLockPage();
-              },
-              child: Text(
-                '잠금화면',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
+  _status() => StatusBar();
 
   _infoButtons() => Expanded(
         child: Row(
