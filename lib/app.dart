@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/constants/routeNames.dart';
@@ -87,6 +88,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIOverlays([]);
     WidgetsBinding.instance.addObserver(this);
     resetSetMain();
   }
