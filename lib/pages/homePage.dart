@@ -54,7 +54,6 @@ class _HomePageState extends State<HomePage>
             child: Column(
               children: [
                 _status(),
-                _infoHeader(),
                 _info(),
                 _infoDivider(),
                 _body(),
@@ -77,18 +76,27 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _info() => IntrinsicHeight(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 24,
-          ),
-          child: Row(
-            children: [
-              _leftPanel(),
-              SizedBox(width: 24),
-              _rightPanel(),
-            ],
-          ),
+  _info() => Container(
+        color: CustomColors.aWhite,
+        child: Column(
+          children: [
+            _infoHeader(),
+            IntrinsicHeight(
+              child: Container(
+                color: CustomColors.aWhite,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 24,
+                ),
+                child: Row(
+                  children: [
+                    _leftPanel(),
+                    SizedBox(width: 24),
+                    _rightPanel(),
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
       );
 
@@ -133,6 +141,7 @@ class _HomePageState extends State<HomePage>
               Icon(
                 CupertinoIcons.cloud_sun,
                 size: 80,
+                color: Colors.white,
               ),
             ],
           ),
@@ -147,7 +156,10 @@ class _HomePageState extends State<HomePage>
               margin: EdgeInsets.only(bottom: 10),
               child: Text(
                 '오늘, 어제보다 2℃ 높아요',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
               ),
             ),
             Row(
@@ -158,19 +170,26 @@ class _HomePageState extends State<HomePage>
                   children: [
                     Text(
                       '38',
-                      style: TextStyle(fontSize: 70),
+                      style: TextStyle(
+                        fontSize: 70,
+                        color: Colors.white,
+                      ),
                     ),
                     Text(
                       '℃',
                       style: TextStyle(
                         fontSize: 25,
+                        color: Colors.white,
                       ),
                     ),
                   ],
                 ),
                 Text(
                   '/11℃ 약간 흐림',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             )
@@ -195,6 +214,7 @@ class _HomePageState extends State<HomePage>
       );
 
   _infoHeader() => Container(
+        color: CustomColors.aWhite,
         margin: EdgeInsets.only(bottom: 12),
         padding: EdgeInsets.symmetric(
           horizontal: 24,
