@@ -140,7 +140,7 @@ class _AlarmPageState extends State<AlarmPage> {
                   Container(
                     margin: EdgeInsets.only(left: 20),
                     child: RaisedButton(
-                      color: CustomColors.backgroundGrey,
+                      color: CustomColors.backgroundDarkGrey,
                       onPressed: () {
                         _deleteItem(index);
                       },

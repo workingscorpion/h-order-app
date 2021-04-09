@@ -12,7 +12,7 @@ class HomeFloatingButton extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .12,
       width: MediaQuery.of(context).size.width * .12,
       child: FloatingActionButton(
-        backgroundColor: CustomColors.backgroundGrey,
+        backgroundColor: CustomColors.backgroundDarkGrey,
         onPressed: () {
           AppRouter.toHomePage();
         },

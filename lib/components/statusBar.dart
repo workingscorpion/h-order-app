@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/clock.dart';
 import 'package:battery/battery.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:wifi/wifi.dart';
 
 class StatusBar extends StatefulWidget {
@@ -70,6 +71,7 @@ class _StatusBarState extends State<StatusBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: CustomColors.aWhite,
       padding: EdgeInsets.symmetric(
         vertical: 12,
         horizontal: 24,

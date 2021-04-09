@@ -23,65 +23,91 @@ class AppState extends State<App> with WidgetsBindingObserver {
   Future _future;
   StreamSubscription _setMainSubscription;
 
-  ThemeMode _themeMode = ThemeMode.dark;
-  Brightness _brightness = Brightness.dark;
+  static ThemeMode _themeMode = ThemeMode.light;
+  static Brightness _brightness = Brightness.light;
 
   final iconTheme = IconThemeData(
-    color: Colors.white,
+    color: _themeMode == ThemeMode.light ? Colors.black : CustomColors.aWhite,
   );
 
   final textTheme = TextTheme(
     headline1: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     headline2: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     headline3: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     headline4: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     headline5: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     headline6: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     bodyText1: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     bodyText2: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     subtitle1: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     subtitle2: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     button: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     caption: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
     overline: TextStyle(
       fontSize: 22,
-      color: Colors.white,
+      color: _themeMode == ThemeMode.light
+          ? CustomColors.textBlack
+          : CustomColors.aWhite,
     ),
   );
 
