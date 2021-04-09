@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/noticeModel.dart';
 import 'package:intl/intl.dart';
 
@@ -144,77 +145,108 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
 
   @override
   Widget build(BuildContext context) => Container(
+        padding: EdgeInsets.only(
+          left: 25,
+          right: 25,
+          bottom: 30,
+          top: 10,
+        ),
         child: Column(
           children: [
-            _row(
-              flex: [1, 3, 2, 2, 1],
-              children: [
-                Text(
-                  'No.',
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                Text(
-                  '제목',
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                Text(
-                  '작성자',
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                Text(
-                  '작성일자',
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                Text(
-                  '조회수',
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-              ],
+            Container(
+              child: Text(
+                '입주민 공지',
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                color: Theme.of(context).accentColor,
+              ),
             ),
             Expanded(
-              child: ListView(
-                children: [
-                  ...list.map(
-                    (item) => _item(
+                child: IntrinsicHeight(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: CustomColors.tableOuterBorder,
+                    width: 1,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    _row(
                       flex: [1, 3, 2, 2, 1],
                       children: [
                         Text(
-                          '${item.index}',
+                          'No.',
                           maxLines: 1,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.headline1,
                         ),
                         Text(
-                          '${item.title}',
+                          '제목',
                           maxLines: 1,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.headline1,
                         ),
                         Text(
-                          '${item.writer}',
+                          '작성자',
                           maxLines: 1,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.headline1,
                         ),
                         Text(
-                          '${DateFormat('yyyy-MM-dd').format(item.createdTime)}',
+                          '작성일자',
                           maxLines: 1,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.headline1,
                         ),
                         Text(
-                          '${item.hit}',
+                          '조회수',
                           maxLines: 1,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.headline1,
                         ),
                       ],
-                      content: item.content,
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          ...list.map(
+                            (item) => _item(
+                              flex: [1, 3, 2, 2, 1],
+                              children: [
+                                Text(
+                                  '${item.index}',
+                                  maxLines: 1,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                                Text(
+                                  '${item.title}',
+                                  maxLines: 1,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                                Text(
+                                  '${item.writer}',
+                                  maxLines: 1,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                                Text(
+                                  '${DateFormat('yyyy-MM-dd').format(item.createdTime)}',
+                                  maxLines: 1,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                                Text(
+                                  '${item.hit}',
+                                  maxLines: 1,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ],
+                              content: item.content,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ))
           ],
         ),
       );

@@ -46,9 +46,6 @@ class _ClockState extends State<Clock> {
     return Container(
       child: Text(
         _isAfterNoon ? '오후 $_text요일' : '오전 $_text요일',
-        style: TextStyle(
-          fontSize: widget.fontSize,
-        ),
       ),
     );
   }
