@@ -94,6 +94,7 @@ class _HistoryViewState extends State<HistoryView> {
             (index) => Text(
               headers[index],
               maxLines: 1,
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
         ),
@@ -111,24 +112,29 @@ class _HistoryViewState extends State<HistoryView> {
                   Text(
                     '${item.index}',
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     item.serviceName != null ? '${item.serviceName}' : '-',
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     item.summary != null ? '${item.summary}' : '-',
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     '${DateFormat('yyyy-MM-dd').format(item.createdTime)}',
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     item.amount != null
                         ? '${NumberFormat().format(item.amount)}'
                         : '-',
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     _statusText(item.status),
@@ -353,7 +359,7 @@ class _HistoryViewState extends State<HistoryView> {
                 list = [...origin]
                     .where((h) => _popupIndex().contains(h.status))
                     .toList();
-                    
+
                 setState(() {});
               },
             ),

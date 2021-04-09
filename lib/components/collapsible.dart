@@ -26,8 +26,8 @@ class _CollapsibleState extends State<Collapsible> {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: Colors.white54,
-              ),
+                  // color: Colors.white54,
+                  ),
             ),
           ),
           child: Column(

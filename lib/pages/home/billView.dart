@@ -121,6 +121,7 @@ class _BillViewState extends State<BillView> {
             (index) => Text(
               headers[index],
               maxLines: 1,
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
         ),
@@ -138,24 +139,29 @@ class _BillViewState extends State<BillView> {
                   Text(
                     '${item.index}',
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     item.title,
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     '${DateFormat('yyyy-MM-dd').format(item.expiredDate)}',
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     item.status
                         ? '${DateFormat('yyyy-MM-dd').format(item.paymentDate)}'
                         : "-",
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     '${item.amount}',
                     maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     item.status ? '납부' : '미납',

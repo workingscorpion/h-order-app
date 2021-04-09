@@ -129,6 +129,7 @@ class _GradientClockState extends State<GradientClock> {
             child: Icon(
               CupertinoIcons.cloud_sun,
               size: 74,
+              color: Colors.white,
             ),
           ),
         ],
