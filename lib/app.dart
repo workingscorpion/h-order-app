@@ -51,7 +51,6 @@ class AppState extends State<App> with WidgetsBindingObserver {
     await getPrefs();
     final isLightMode = _prefs.getBool('LightMode') ?? true;
     setThemes(isLightMode);
-    setState(() {});
   }
 
   setThemes(isLightMode) {
@@ -59,6 +58,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
     _brightness = !isLightMode ? Brightness.dark : Brightness.light;
     textTheme = _textTheme(!isLightMode);
     iconTheme = _iconTheme(!isLightMode);
+    setState(() {});
   }
 
   getPrefs() async {
@@ -68,11 +68,10 @@ class AppState extends State<App> with WidgetsBindingObserver {
   setTheme(bool isDark) async {
     setThemes(!isDark);
     _prefs.setBool('LightMode', !isDark);
-    setState(() {});
   }
 
   _iconTheme(bool isDark) => IconThemeData(
-        color: !isDark ? Colors.black : CustomColors.aWhite,
+        color: !isDark ? CustomColors.aBlack : CustomColors.aWhite,
       );
 
   _textTheme(bool isDark) => TextTheme(
@@ -275,7 +274,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
           ),
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: CustomColors.backgroundDarkGrey,
         ),
         tabBarTheme: TabBarTheme(
           labelPadding: EdgeInsets.symmetric(horizontal: 22),
@@ -391,7 +390,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
           ),
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: CustomColors.backgroundLightGrey,
         ),
         tabBarTheme: TabBarTheme(
           labelPadding: EdgeInsets.symmetric(horizontal: 22),
