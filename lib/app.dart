@@ -102,7 +102,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
         ),
         bodyText1: TextStyle(
           fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+          color: isDark ? CustomColors.textBlack : CustomColors.aWhite,
         ),
         bodyText2: TextStyle(
           fontSize: 22,
