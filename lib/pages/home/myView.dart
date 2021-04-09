@@ -76,12 +76,27 @@ class _MyViewState extends State<MyView> {
               borderRadius: BorderRadius.all(Radius.circular(5)),
               border: Border.all(
                 width: 1,
-                color: Colors.white24,
+                color: Theme.of(context).textTheme.bodyText2.color,
               ),
             ),
             child: Row(
               children: [
+                Container(
+                  height: 50,
+                  width: 50,
+                  margin: EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey,
+                  ),
+                ),
                 Text(title),
+                Spacer(),
+                Icon(
+                  CupertinoIcons.chevron_right_2,
+                  size: 20,
+                  color: Theme.of(context).textTheme.bodyText2.color,
+                )
               ],
             ),
           ),
