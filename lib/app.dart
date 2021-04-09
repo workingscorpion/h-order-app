@@ -7,6 +7,7 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/constants/routeNames.dart';
 import 'package:h_order/store/navigationStore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatefulWidget {
   App({
@@ -22,6 +23,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
 
   Future _future;
   StreamSubscription _setMainSubscription;
+  SharedPreferences _prefs;
 
   static ThemeMode _themeMode = ThemeMode.light;
   static Brightness _brightness = Brightness.light;
@@ -116,6 +118,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
     super.initState();
     SystemChrome.setEnabledSystemUIOverlays([]);
     WidgetsBinding.instance.addObserver(this);
+    initTheme();
     resetSetMain();
   }
 
@@ -125,9 +128,29 @@ class AppState extends State<App> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  setTheme(bool isDark) {
+  initTheme() async {
+    await getPrefs();
+    final isLightMode = _prefs.getBool('LightMode') ?? true;
+    _themeMode = !isLightMode ? ThemeMode.dark : ThemeMode.light;
+    _brightness = !isLightMode ? Brightness.dark : Brightness.light;
+  }
+
+  getPrefs() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  setTheme(bool isDark) async {
     _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     _brightness = isDark ? Brightness.dark : Brightness.light;
+    _prefs.setBool('LightMode', !isDark);
+    setState(() {});
+  }
+
+  Future<bool> getTheme() async {
+    if (_themeMode == ThemeMode.dark) {
+      return false;
+    }
+    return true;
   }
 
   disposeSetMain() {

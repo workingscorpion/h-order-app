@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/store/navigationStore.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenPage extends StatefulWidget {
   @override
@@ -10,6 +12,22 @@ class ScreenPage extends StatefulWidget {
 class _ScreenPageState extends State<ScreenPage> {
   String _selectedLockScreen;
   String _selectedHomeScreen;
+
+  bool _isLightMode;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {
+    _isLightMode =
+        await NavigationStore.instance.appKey.currentState.getTheme() ?? true;
+    _selectedLockScreen = _isLightMode ? "라이트 모드" : "다크 모드";
+    _selectedHomeScreen = _isLightMode ? "라이트 모드" : "다크 모드";
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -59,6 +77,8 @@ class _ScreenPageState extends State<ScreenPage> {
                       image: 'assets/sample/screen/light.png',
                       onChanged: (value) {
                         _selectedHomeScreen = value;
+                        NavigationStore.instance.appKey.currentState
+                            .setTheme(false);
                         setState(() {});
                       },
                     ),
@@ -68,6 +88,8 @@ class _ScreenPageState extends State<ScreenPage> {
                       image: 'assets/sample/screen/dark.png',
                       onChanged: (value) {
                         _selectedHomeScreen = value;
+                        NavigationStore.instance.appKey.currentState
+                            .setTheme(true);
                         setState(() {});
                       },
                     ),
