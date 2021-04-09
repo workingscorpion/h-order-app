@@ -152,15 +152,28 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
           top: 10,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              child: Text(
-                '입주민 공지',
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
+            FractionallySizedBox(
+              widthFactor: .25,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Text(
+                  '입주민 공지',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).accentColor,
+                  border: Border.all(
+                    color: Theme.of(context).accentColor,
+                    width: 3,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  ),
+                ),
               ),
             ),
             Expanded(
@@ -174,35 +187,40 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
                 ),
                 child: Column(
                   children: [
-                    _row(
-                      flex: [1, 3, 2, 2, 1],
-                      children: [
-                        Text(
-                          'No.',
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        Text(
-                          '제목',
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        Text(
-                          '작성자',
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        Text(
-                          '작성일자',
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        Text(
-                          '조회수',
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                      ],
+                    Container(
+                      color: Theme.of(context).accentColor,
+                      child: _row(
+                        flex: [1, 3, 2, 2],
+                        children: [
+                          Text(
+                            'No.',
+                            maxLines: 1,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .copyWith(),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            '제목',
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.bodyText1,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            '작성자',
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.bodyText1,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            '작성일자',
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.bodyText1,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                     Expanded(
                       child: ListView(
@@ -214,27 +232,22 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
                                 Text(
                                   '${item.index}',
                                   maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
                                 Text(
                                   '${item.title}',
                                   maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
                                 Text(
                                   '${item.writer}',
                                   maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
                                 Text(
-                                  '${DateFormat('yyyy-MM-dd').format(item.createdTime)}',
+                                  '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
                                   maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                                Text(
-                                  '${item.hit}',
-                                  maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ],
                               content: item.content,
