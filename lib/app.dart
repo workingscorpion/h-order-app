@@ -28,90 +28,11 @@ class AppState extends State<App> with WidgetsBindingObserver {
   static ThemeMode _themeMode = ThemeMode.light;
   static Brightness _brightness = Brightness.light;
 
-  final iconTheme = IconThemeData(
+  IconThemeData iconTheme = IconThemeData(
     color: _themeMode == ThemeMode.light ? Colors.black : CustomColors.aWhite,
   );
 
-  final textTheme = TextTheme(
-    headline1: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    headline2: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    headline3: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    headline4: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    headline5: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    headline6: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    bodyText1: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    bodyText2: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    subtitle1: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    subtitle2: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    button: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    caption: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-    overline: TextStyle(
-      fontSize: 22,
-      color: _themeMode == ThemeMode.light
-          ? CustomColors.textBlack
-          : CustomColors.aWhite,
-    ),
-  );
+  TextTheme textTheme;
 
   @override
   void initState() {
@@ -133,6 +54,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
     final isLightMode = _prefs.getBool('LightMode') ?? true;
     _themeMode = !isLightMode ? ThemeMode.dark : ThemeMode.light;
     _brightness = !isLightMode ? Brightness.dark : Brightness.light;
+    setState(() {});
   }
 
   getPrefs() async {
@@ -142,8 +64,66 @@ class AppState extends State<App> with WidgetsBindingObserver {
   setTheme(bool isDark) async {
     _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     _brightness = isDark ? Brightness.dark : Brightness.light;
+    textTheme = _textTheme(isDark);
     _prefs.setBool('LightMode', !isDark);
     setState(() {});
+  }
+
+  _textTheme(bool isDark) {
+    TextTheme(
+      headline1: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      headline2: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      headline3: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      headline4: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      headline5: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      headline6: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      bodyText1: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      bodyText2: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      subtitle1: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      subtitle2: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      button: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      caption: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+      overline: TextStyle(
+        fontSize: 22,
+        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+      ),
+    );
   }
 
   Future<bool> getTheme() async {
