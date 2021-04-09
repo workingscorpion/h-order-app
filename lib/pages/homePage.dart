@@ -77,13 +77,11 @@ class _HomePageState extends State<HomePage>
       );
 
   _info() => Container(
-        color: CustomColors.aWhite,
         child: Column(
           children: [
             _infoHeader(),
             IntrinsicHeight(
               child: Container(
-                color: CustomColors.aWhite,
                 padding: EdgeInsets.symmetric(
                   horizontal: 24,
                 ),
@@ -214,7 +212,6 @@ class _HomePageState extends State<HomePage>
       );
 
   _infoHeader() => Container(
-        color: CustomColors.aWhite,
         margin: EdgeInsets.only(bottom: 12),
         padding: EdgeInsets.symmetric(
           horizontal: 24,

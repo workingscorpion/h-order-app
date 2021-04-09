@@ -71,7 +71,6 @@ class _StatusBarState extends State<StatusBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: CustomColors.aWhite,
       padding: EdgeInsets.symmetric(
         vertical: 12,
         horizontal: 24,
