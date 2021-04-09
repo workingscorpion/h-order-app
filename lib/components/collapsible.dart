@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:h_order/constants/customColors.dart';
 
 class Collapsible extends StatefulWidget {
   final Widget header;
@@ -26,8 +27,8 @@ class _CollapsibleState extends State<Collapsible> {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                  // color: Colors.white54,
-                  ),
+                color: CustomColors.tableBorder,
+              ),
             ),
           ),
           child: Column(
