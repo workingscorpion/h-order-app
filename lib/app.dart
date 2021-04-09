@@ -52,9 +52,14 @@ class AppState extends State<App> with WidgetsBindingObserver {
   initTheme() async {
     await getPrefs();
     final isLightMode = _prefs.getBool('LightMode') ?? true;
+    setThemes(isLightMode);
+    setState(() {});
+  }
+
+  setThemes(isLightMode) {
     _themeMode = !isLightMode ? ThemeMode.dark : ThemeMode.light;
     _brightness = !isLightMode ? Brightness.dark : Brightness.light;
-    setState(() {});
+    textTheme = _textTheme(!isLightMode);
   }
 
   getPrefs() async {
@@ -62,69 +67,65 @@ class AppState extends State<App> with WidgetsBindingObserver {
   }
 
   setTheme(bool isDark) async {
-    _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
-    _brightness = isDark ? Brightness.dark : Brightness.light;
-    textTheme = _textTheme(isDark);
+    setThemes(!isDark);
     _prefs.setBool('LightMode', !isDark);
     setState(() {});
   }
 
-  _textTheme(bool isDark) {
-    TextTheme(
-      headline1: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      headline2: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      headline3: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      headline4: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      headline5: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      headline6: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      bodyText1: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      bodyText2: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      subtitle1: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      subtitle2: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      button: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      caption: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-      overline: TextStyle(
-        fontSize: 22,
-        color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-      ),
-    );
-  }
+  _textTheme(bool isDark) => TextTheme(
+        headline1: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        headline2: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        headline3: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        headline4: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        headline5: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        headline6: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        bodyText1: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        bodyText2: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        subtitle1: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        subtitle2: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        button: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        caption: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+        overline: TextStyle(
+          fontSize: 22,
+          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+        ),
+      );
 
   Future<bool> getTheme() async {
     if (_themeMode == ThemeMode.dark) {
