@@ -28,9 +28,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
   static ThemeMode _themeMode = ThemeMode.light;
   static Brightness _brightness = Brightness.light;
 
-  IconThemeData iconTheme = IconThemeData(
-    color: _themeMode == ThemeMode.light ? Colors.black : CustomColors.aWhite,
-  );
+  IconThemeData iconTheme;
 
   TextTheme textTheme;
 
@@ -60,6 +58,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
     _themeMode = !isLightMode ? ThemeMode.dark : ThemeMode.light;
     _brightness = !isLightMode ? Brightness.dark : Brightness.light;
     textTheme = _textTheme(!isLightMode);
+    iconTheme = _iconTheme(!isLightMode);
   }
 
   getPrefs() async {
@@ -71,6 +70,10 @@ class AppState extends State<App> with WidgetsBindingObserver {
     _prefs.setBool('LightMode', !isDark);
     setState(() {});
   }
+
+  _iconTheme(bool isDark) => IconThemeData(
+        color: !isDark ? Colors.black : CustomColors.aWhite,
+      );
 
   _textTheme(bool isDark) => TextTheme(
         headline1: TextStyle(
