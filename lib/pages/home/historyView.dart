@@ -90,6 +90,7 @@ class _HistoryViewState extends State<HistoryView> {
       );
 
   _header() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             flex: 4,
@@ -98,8 +99,8 @@ class _HistoryViewState extends State<HistoryView> {
               child: ViewHeader(text: '이용내역'),
             ),
           ),
-          Spacer(),
           Expanded(
+            flex: 2,
             child: _filter(),
           ),
         ],
@@ -358,41 +359,64 @@ class _HistoryViewState extends State<HistoryView> {
       );
 
   _filter() => Container(
+        alignment: Alignment.centerRight,
         padding: EdgeInsets.symmetric(
           vertical: 12,
-          horizontal: 24,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Spacer(),
             PopupMenuButton(
-              child: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 5),
-                    child: Text(_popupText()),
+              child: Container(
+                width: 160,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Theme.of(context).accentColor,
+                      width: 1,
+                    ),
                   ),
-                  Icon(CupertinoIcons.ellipsis_circle),
-                ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 30),
+                      child: Text(_popupText()),
+                    ),
+                    Icon(CupertinoIcons.chevron_down),
+                  ],
+                ),
               ),
               padding: EdgeInsets.zero,
-              offset: Offset(-24, 0),
+              offset: Offset(0, 35),
               itemBuilder: (context) => [
                 PopupMenuItem(
                   value: "all",
-                  child: Text('전체'),
+                  child: Container(
+                    child: Text('전체'),
+                    width: 100,
+                  ),
                 ),
                 PopupMenuItem(
                   value: "apply",
-                  child: Text('신청'),
+                  child: Container(
+                    child: Text('신청'),
+                    width: 100,
+                  ),
                 ),
                 PopupMenuItem(
                   value: "receipted",
-                  child: Text('접수'),
+                  child: Container(
+                    child: Text('접수'),
+                    width: 100,
+                  ),
                 ),
                 PopupMenuItem(
                   value: "done",
-                  child: Text('처리완료'),
+                  child: Container(
+                    child: Text('처리완료'),
+                    width: 100,
+                  ),
                 ),
               ],
               onSelected: (value) {
@@ -400,7 +424,6 @@ class _HistoryViewState extends State<HistoryView> {
                 list = [...origin]
                     .where((h) => _popupIndex().contains(h.status))
                     .toList();
-
                 setState(() {});
               },
             ),
