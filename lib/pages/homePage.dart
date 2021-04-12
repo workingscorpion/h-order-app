@@ -247,7 +247,9 @@ class _HomePageState extends State<HomePage>
   _infoText({String text, bool isBold, double size, Color color}) => Text(
         text,
         style: TextStyle(
-          color: color != null ? color : Theme.of(context).accentColor,
+          color: color != null
+              ? color
+              : Theme.of(context).textTheme.bodyText2.color,
           fontSize: size,
           fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
         ),
