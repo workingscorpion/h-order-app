@@ -134,7 +134,6 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
           random.nextInt(12),
           random.nextInt(30),
         ),
-        hit: random.nextInt(100) + 10,
       ),
     )..sort((a, b) => a.createdTime.isAfter(b.createdTime) ? -1 : 1);
   }
@@ -225,59 +224,68 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
                       ),
                     ),
                     Expanded(
-                      child: ListView(
-                        children: [
-                          ...list.map(
-                            (item) => _item(
-                              flex: [1, 4, 2, 2],
-                              children: [
-                                Text(
-                                  '${item.index}',
-                                  maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                  textAlign: TextAlign.center,
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: 10),
-                                      child: item.index > 50
-                                          ? SvgPicture.asset(
-                                              'assets/icons/notice/new.svg',
-                                              width: 25,
-                                              height: 25,
-                                            )
-                                          : null,
-                                    ),
-                                    Flexible(
-                                      child: Text(
-                                        '${item.title}',
-                                        maxLines: 1,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2,
-                                        overflow: TextOverflow.ellipsis,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          color: CustomColors.tableInnerBorder,
+                        )),
+                        child: ListView(
+                          children: [
+                            ...list.map(
+                              (item) => _item(
+                                flex: [1, 4, 2, 2],
+                                children: [
+                                  Text(
+                                    '${item.index}',
+                                    maxLines: 1,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(right: 10),
+                                        child: item.index > 50
+                                            ? SvgPicture.asset(
+                                                'assets/icons/notice/new.svg',
+                                                width: 25,
+                                                height: 25,
+                                              )
+                                            : null,
                                       ),
-                                    )
-                                  ],
-                                ),
-                                Text(
-                                  '${item.writer}',
-                                  maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
-                                  maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                              content: item.content,
+                                      Flexible(
+                                        child: Text(
+                                          '${item.title}',
+                                          maxLines: 1,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    '${item.writer}',
+                                    maxLines: 1,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
+                                    maxLines: 1,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                                content: item.content,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
