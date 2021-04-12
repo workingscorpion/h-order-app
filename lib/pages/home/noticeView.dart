@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/noticeModel.dart';
@@ -190,7 +191,7 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
                     Container(
                       color: Theme.of(context).accentColor,
                       child: _row(
-                        flex: [1, 3, 2, 2],
+                        flex: [1, 4, 2, 2],
                         children: [
                           Text(
                             'No.',
@@ -228,27 +229,47 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
                         children: [
                           ...list.map(
                             (item) => _item(
-                              flex: [1, 3, 2, 2, 1],
+                              flex: [1, 4, 2, 2],
                               children: [
                                 Text(
                                   '${item.index}',
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.bodyText2,
+                                  textAlign: TextAlign.center,
                                 ),
-                                Text(
-                                  '${item.title}',
-                                  maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      child: SvgPicture.asset(
+                                        'assets/icons/notice/new.svg',
+                                        width: 25,
+                                        height: 25,
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        '${item.title}',
+                                        maxLines: 1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    )
+                                  ],
                                 ),
                                 Text(
                                   '${item.writer}',
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.bodyText2,
+                                  textAlign: TextAlign.center,
                                 ),
                                 Text(
                                   '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.bodyText2,
+                                  textAlign: TextAlign.center,
                                 ),
                               ],
                               content: item.content,
