@@ -64,6 +64,8 @@ class _HomePageState extends State<HomePage>
       );
 
   _info() => Container(
+        color: Theme.of(context).primaryColor,
+        padding: EdgeInsets.symmetric(vertical: 30),
         child: Column(
           children: [
             _infoHeader(),
@@ -106,7 +108,9 @@ class _HomePageState extends State<HomePage>
               onPressed: () {
                 AppRouter.toAlarmPage();
               },
-              text: '매일 오전 7:00 알림 설정',
+              text: '알림 설정',
+              color: Theme.of(context).accentColor,
+              textColor: Theme.of(context).primaryColor,
             ),
           ],
         ),
@@ -206,7 +210,7 @@ class _HomePageState extends State<HomePage>
         child: Row(
           children: [
             Text('202호'),
-            Text('(김오더님)'),
+            Text('(김오더 님)'),
             Spacer(),
             Text('관리비납부현황'),
             Text(' | '),
@@ -237,6 +241,8 @@ class _HomePageState extends State<HomePage>
                       },
                       text: text,
                       selected: _tabController.index == (index + 1),
+                      color: Theme.of(context).primaryColor,
+                      textColor: Theme.of(context).accentColor,
                     ),
                   ),
                 )
@@ -252,15 +258,20 @@ class _HomePageState extends State<HomePage>
     VoidCallback onPressed,
     String text,
     bool selected = false,
+    Color color,
+    Color textColor,
   }) =>
       Expanded(
         child: FlatButton(
-          color: selected ? Colors.white24 : Colors.white.withOpacity(0),
+          color: color,
           onPressed: onPressed,
           child: Text(
             text,
             maxLines: 1,
-            style: TextStyle(fontSize: 15),
+            style: TextStyle(
+              fontSize: 15,
+              color: textColor,
+            ),
           ),
         ),
       );
