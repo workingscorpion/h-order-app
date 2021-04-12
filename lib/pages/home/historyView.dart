@@ -368,6 +368,7 @@ class _HistoryViewState extends State<HistoryView> {
           children: [
             PopupMenuButton(
               child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 width: 160,
                 decoration: BoxDecoration(
                   border: Border(
@@ -383,6 +384,7 @@ class _HistoryViewState extends State<HistoryView> {
                       margin: EdgeInsets.only(right: 30),
                       child: Text(_popupText()),
                     ),
+                    Spacer(),
                     Icon(CupertinoIcons.chevron_down),
                   ],
                 ),
