@@ -65,25 +65,18 @@ class _HomePageState extends State<HomePage>
 
   _info() => Container(
         color: Theme.of(context).primaryColor,
-        padding: EdgeInsets.symmetric(vertical: 30),
-        child: Column(
-          children: [
-            _infoHeader(),
-            IntrinsicHeight(
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24,
-                ),
-                child: Row(
-                  children: [
-                    _leftPanel(),
-                    SizedBox(width: 24),
-                    _rightPanel(),
-                  ],
-                ),
-              ),
-            )
-          ],
+        padding: EdgeInsets.symmetric(
+          vertical: 30,
+          horizontal: 24,
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              _leftPanel(),
+              SizedBox(width: 24),
+              _rightPanel(),
+            ],
+          ),
         ),
       );
 
@@ -91,16 +84,23 @@ class _HomePageState extends State<HomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                _infoText(text: '202호', isBold: true, size: 50),
+                _infoText(text: '(김오더 님)', isBold: false, size: 25),
+              ],
+            ),
             Text(
               '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 16,
               ),
             ),
             Text(
               '(우 12345) (우 12345) (우 12345)',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 16,
               ),
             ),
             _infoButtons(),
@@ -125,23 +125,45 @@ class _HomePageState extends State<HomePage>
       );
 
   _rightPanel() => Expanded(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 10,
-          ),
-          decoration: _weatherGradient(),
-          child: Row(
-            children: [
-              _weatherInfo(),
-              Spacer(),
-              Icon(
-                CupertinoIcons.cloud_sun,
-                size: 80,
-                color: Colors.white,
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  _infoText(text: '관리비납부현황', isBold: false, size: 15),
+                  _verticalDevider(height: 15),
+                  _infoText(
+                    text: '납부완료',
+                    isBold: true,
+                    size: 20,
+                    color: Color.fromRGBO(33, 208, 33, 1),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 30,
+                ),
+                decoration: _weatherGradient(),
+                child: Row(
+                  children: [
+                    _weatherInfo(),
+                    Spacer(),
+                    Icon(
+                      CupertinoIcons.cloud_sun,
+                      size: 80,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       );
 
@@ -210,20 +232,24 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _infoHeader() => Container(
-        margin: EdgeInsets.only(bottom: 12),
-        padding: EdgeInsets.symmetric(
-          horizontal: 24,
+  _verticalDevider({
+    double height,
+  }) =>
+      Container(
+        height: height != null ? height : 20,
+        child: VerticalDivider(
+          color: Theme.of(context).accentColor,
+          thickness: 1,
+          width: 20,
         ),
-        child: Row(
-          children: [
-            Text('202호'),
-            Text('(김오더 님)'),
-            Spacer(),
-            Text('관리비납부현황'),
-            Text(' | '),
-            Text('납부완료'),
-          ],
+      );
+
+  _infoText({String text, bool isBold, double size, Color color}) => Text(
+        text,
+        style: TextStyle(
+          color: color != null ? color : Theme.of(context).accentColor,
+          fontSize: size,
+          fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
         ),
       );
 
@@ -254,17 +280,7 @@ class _HomePageState extends State<HomePage>
                 )
                 .entries
                 .expand((item) => item.key != 0
-                    ? [
-                        Container(
-                          height: 20,
-                          child: VerticalDivider(
-                            color: Theme.of(context).accentColor,
-                            thickness: 1,
-                            width: 20,
-                          ),
-                        ),
-                        item.value
-                      ]
+                    ? [_verticalDevider(), item.value]
                     : [item.value]),
           ],
         ),
