@@ -146,11 +146,9 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.only(
-          left: 25,
-          right: 25,
-          bottom: 30,
-          top: 10,
+        padding: EdgeInsets.symmetric(
+          horizontal: 25,
+          vertical: 30,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
