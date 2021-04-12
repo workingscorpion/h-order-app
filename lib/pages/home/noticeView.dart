@@ -220,6 +220,7 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
                             textAlign: TextAlign.center,
                           ),
                         ],
+                        color: Theme.of(context).accentColor,
                       ),
                     ),
                     Expanded(
@@ -267,12 +268,14 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
   _row({
     List<int> flex,
     List<Widget> children,
+    Color color,
   }) =>
       DefaultTextStyle(
         style: TextStyle(
           fontSize: 24,
         ),
         child: Container(
+          color: color,
           padding: EdgeInsets.symmetric(
             vertical: 10,
             horizontal: 26,
@@ -310,13 +313,15 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
         header: _row(
           flex: flex,
           children: children,
+          color: Theme.of(context).primaryColor,
         ),
         body: Container(
           padding: EdgeInsets.all(26),
           decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
             border: Border(
               top: BorderSide(
-                color: Colors.white12,
+                color: CustomColors.tableInnerBorder,
               ),
             ),
           ),
