@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/components/collapsible.dart';
+import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/noticeModel.dart';
 import 'package:intl/intl.dart';
@@ -154,144 +155,124 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FractionallySizedBox(
-              widthFactor: .25,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Text(
-                  '입주민 공지',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor,
-                  border: Border.all(
-                    color: Theme.of(context).accentColor,
-                    width: 3,
+            ViewHeader(text: '입주민 공지'),
+            Expanded(
+              child: IntrinsicHeight(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: CustomColors.tableOuterBorder,
+                      width: 1,
+                    ),
                   ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
+                  child: Column(
+                    children: [
+                      Container(
+                        color: Theme.of(context).accentColor,
+                        child: _row(
+                          flex: [1, 4, 2, 2],
+                          children: [
+                            Text(
+                              'No.',
+                              maxLines: 1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .copyWith(),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              '제목',
+                              maxLines: 1,
+                              style: Theme.of(context).textTheme.bodyText1,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              '작성자',
+                              maxLines: 1,
+                              style: Theme.of(context).textTheme.bodyText1,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              '작성일자',
+                              maxLines: 1,
+                              style: Theme.of(context).textTheme.bodyText1,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                          color: Theme.of(context).accentColor,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            color: CustomColors.tableInnerBorder,
+                          )),
+                          child: ListView(
+                            children: [
+                              ...list.map(
+                                (item) => _item(
+                                  flex: [1, 4, 2, 2],
+                                  children: [
+                                    Text(
+                                      '${item.index}',
+                                      maxLines: 1,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(right: 10),
+                                          child: item.index > 50
+                                              ? SvgPicture.asset(
+                                                  'assets/icons/notice/new.svg',
+                                                  width: 25,
+                                                  height: 25,
+                                                )
+                                              : null,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            '${item.title}',
+                                            maxLines: 1,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Text(
+                                      '${item.writer}',
+                                      maxLines: 1,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
+                                      maxLines: 1,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                  content: item.content,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            Expanded(
-                child: IntrinsicHeight(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: CustomColors.tableOuterBorder,
-                    width: 1,
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      color: Theme.of(context).accentColor,
-                      child: _row(
-                        flex: [1, 4, 2, 2],
-                        children: [
-                          Text(
-                            'No.',
-                            maxLines: 1,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                .copyWith(),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            '제목',
-                            maxLines: 1,
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            '작성자',
-                            maxLines: 1,
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            '작성일자',
-                            maxLines: 1,
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          color: CustomColors.tableInnerBorder,
-                        )),
-                        child: ListView(
-                          children: [
-                            ...list.map(
-                              (item) => _item(
-                                flex: [1, 4, 2, 2],
-                                children: [
-                                  Text(
-                                    '${item.index}',
-                                    maxLines: 1,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(right: 10),
-                                        child: item.index > 50
-                                            ? SvgPicture.asset(
-                                                'assets/icons/notice/new.svg',
-                                                width: 25,
-                                                height: 25,
-                                              )
-                                            : null,
-                                      ),
-                                      Flexible(
-                                        child: Text(
-                                          '${item.title}',
-                                          maxLines: 1,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Text(
-                                    '${item.writer}',
-                                    maxLines: 1,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Text(
-                                    '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
-                                    maxLines: 1,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                                content: item.content,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ))
           ],
         ),
       );
