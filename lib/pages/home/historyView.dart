@@ -126,13 +126,14 @@ class _HistoryViewState extends State<HistoryView> {
       );
 
   _historiesHeader() => Container(
+        color: Theme.of(context).accentColor,
         child: _row(
           children: List.generate(
             headers.length,
             (index) => Text(
               headers[index],
               maxLines: 1,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.bodyText1,
               textAlign: TextAlign.center,
             ),
           ),
