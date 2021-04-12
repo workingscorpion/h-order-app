@@ -104,13 +104,21 @@ class _HomePageState extends State<HomePage>
               ),
             ),
             _infoButtons(),
-            _infoButton(
-              onPressed: () {
-                AppRouter.toAlarmPage();
-              },
-              text: '알림 설정',
-              color: Theme.of(context).accentColor,
-              textColor: Theme.of(context).primaryColor,
+            Expanded(
+              child: FlatButton(
+                color: Theme.of(context).accentColor,
+                onPressed: () {
+                  AppRouter.toAlarmPage();
+                },
+                child: Text(
+                  '알림 설정',
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -234,43 +242,48 @@ class _HomePageState extends State<HomePage>
                 .map(
                   (index, text) => MapEntry(
                     index,
-                    _infoButton(
+                    _infoTextButton(
                       onPressed: () {
                         _tabController.animateTo(index + 1);
                         setState(() {});
                       },
                       text: text,
                       selected: _tabController.index == (index + 1),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Theme.of(context).accentColor,
                     ),
                   ),
                 )
                 .entries
                 .expand((item) => item.key != 0
-                    ? [Container(width: 12), item.value]
+                    ? [
+                        Container(
+                          height: 20,
+                          child: VerticalDivider(
+                            color: Theme.of(context).accentColor,
+                            thickness: 1,
+                            width: 20,
+                          ),
+                        ),
+                        item.value
+                      ]
                     : [item.value]),
           ],
         ),
       );
 
-  _infoButton({
+  _infoTextButton({
     VoidCallback onPressed,
     String text,
     bool selected = false,
-    Color color,
-    Color textColor,
   }) =>
       Expanded(
-        child: FlatButton(
-          color: color,
+        child: TextButton(
           onPressed: onPressed,
           child: Text(
             text,
             maxLines: 1,
             style: TextStyle(
               fontSize: 15,
-              color: textColor,
+              color: Theme.of(context).accentColor,
             ),
           ),
         ),

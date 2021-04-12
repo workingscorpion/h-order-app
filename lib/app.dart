@@ -267,7 +267,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            backgroundColor: CustomColors.aBlack,
+            backgroundColor: Colors.transparent,
             padding: EdgeInsets.zero,
             elevation: 0,
             textStyle: TextStyle(
