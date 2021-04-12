@@ -277,6 +277,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: CustomColors.backgroundDarkGrey,
+          foregroundColor: CustomColors.aWhite,
         ),
         tabBarTheme: TabBarTheme(
           labelPadding: EdgeInsets.symmetric(horizontal: 22),
@@ -395,6 +396,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: CustomColors.backgroundLightGrey,
+          foregroundColor: CustomColors.aBlack,
         ),
         tabBarTheme: TabBarTheme(
           labelPadding: EdgeInsets.symmetric(horizontal: 22),

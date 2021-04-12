@@ -17,7 +17,6 @@ class HomeFloatingButton extends StatelessWidget {
         child: Icon(
           CupertinoIcons.house,
           size: 50,
-          color: Theme.of(context).textTheme.bodyText1.color,
         ),
       ),
     );
