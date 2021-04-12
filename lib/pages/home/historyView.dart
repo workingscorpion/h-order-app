@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
+import 'package:h_order/components/viewHeader.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
 import 'package:h_order/models/keyValueModel.dart';
@@ -21,7 +23,7 @@ class _HistoryViewState extends State<HistoryView> {
 
   List<HistoryModel> list;
 
-  List<int> ratio = [1, 2, 2, 2, 1, 1];
+  List<int> ratio = [1, 2, 2, 2, 2, 1];
 
   List<String> headers = [
     'No.',
@@ -74,20 +76,55 @@ class _HistoryViewState extends State<HistoryView> {
 
   @override
   Widget build(BuildContext context) => Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 25,
+          vertical: 30,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _popup(),
-            _historiesHeader(),
-            _historiesBody(),
+            _header(),
+            _histories(),
           ],
         ),
       );
 
-  _historiesHeader() => Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 24,
+  _header() => Row(
+        children: [
+          Expanded(
+            flex: 4,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: ViewHeader(text: '이용내역'),
+            ),
+          ),
+          Spacer(),
+          Expanded(
+            child: _filter(),
+          ),
+        ],
+      );
+
+  _histories() => Expanded(
+        child: IntrinsicHeight(
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: CustomColors.tableOuterBorder,
+                width: 1,
+              ),
+            ),
+            child: Column(
+              children: [
+                _historiesHeader(),
+                _historiesBody(),
+              ],
+            ),
+          ),
         ),
+      );
+
+  _historiesHeader() => Container(
         child: _row(
           children: List.generate(
             headers.length,
@@ -95,6 +132,7 @@ class _HistoryViewState extends State<HistoryView> {
               headers[index],
               maxLines: 1,
               style: Theme.of(context).textTheme.headline1,
+              textAlign: TextAlign.center,
             ),
           ),
         ),
@@ -102,9 +140,6 @@ class _HistoryViewState extends State<HistoryView> {
 
   _historiesBody() => Expanded(
         child: ListView(
-          padding: EdgeInsets.symmetric(
-            horizontal: 24,
-          ),
           children: [
             ...list.map(
               (item) => _item(
@@ -112,29 +147,34 @@ class _HistoryViewState extends State<HistoryView> {
                   Text(
                     '${item.index}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     item.serviceName != null ? '${item.serviceName}' : '-',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     item.summary != null ? '${item.summary}' : '-',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
-                    '${DateFormat('yyyy-MM-dd').format(item.createdTime)}',
+                    '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     item.amount != null
-                        ? '${NumberFormat().format(item.amount)}'
+                        ? '${NumberFormat().format(item.amount)}원'
                         : '-',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     _statusText(item.status),
@@ -143,6 +183,7 @@ class _HistoryViewState extends State<HistoryView> {
                       color: _statusColor(item.status),
                       fontSize: 20,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
                 content: item.detail,
@@ -316,7 +357,7 @@ class _HistoryViewState extends State<HistoryView> {
         ],
       );
 
-  _popup() => Container(
+  _filter() => Container(
         padding: EdgeInsets.symmetric(
           vertical: 12,
           horizontal: 24,
