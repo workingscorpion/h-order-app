@@ -25,7 +25,7 @@ class _ClockState extends State<Clock> {
     super.initState();
 
     _timer = Timer.periodic(
-      Duration(milliseconds: (1000 / 12).round()),
+      Duration(milliseconds: (1000 / 1).round()),
       (timer) {
         tick();
       },
