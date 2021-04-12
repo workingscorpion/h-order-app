@@ -241,11 +241,13 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(right: 10),
-                                      child: SvgPicture.asset(
-                                        'assets/icons/notice/new.svg',
-                                        width: 25,
-                                        height: 25,
-                                      ),
+                                      child: item.index > 50
+                                          ? SvgPicture.asset(
+                                              'assets/icons/notice/new.svg',
+                                              width: 25,
+                                              height: 25,
+                                            )
+                                          : null,
                                     ),
                                     Flexible(
                                       child: Text(
