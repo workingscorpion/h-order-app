@@ -96,27 +96,21 @@ class _HomePageState extends State<HomePage>
               style: TextStyle(
                 fontSize: 16,
               ),
-            ),
-            Text(
-              '(우 12345) (우 12345) (우 12345)',
-              style: TextStyle(
-                fontSize: 16,
-              ),
+              softWrap: true,
             ),
             _infoButtons(),
-            Expanded(
-              child: FlatButton(
-                color: Theme.of(context).accentColor,
-                onPressed: () {
-                  AppRouter.toAlarmPage();
-                },
-                child: Text(
-                  '알림 설정',
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Theme.of(context).primaryColor,
-                  ),
+            FlatButton(
+              height: 50,
+              color: Theme.of(context).accentColor,
+              onPressed: () {
+                AppRouter.toAlarmPage();
+              },
+              child: Text(
+                '알림 설정',
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
