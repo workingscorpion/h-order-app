@@ -76,6 +76,7 @@ class _StatusBarState extends State<StatusBar> {
         horizontal: 24,
       ),
       decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).bottomAppBarColor,
@@ -108,7 +109,7 @@ class _StatusBarState extends State<StatusBar> {
   }
 
   _wifiInidicator() => Container(
-        margin: EdgeInsets.only(right: 10),
+        margin: EdgeInsets.symmetric(horizontal: 10),
         padding: EdgeInsets.only(bottom: 5),
         child: Icon(
           _wifiLevel > 0 ? CupertinoIcons.wifi : CupertinoIcons.xmark_circle,
