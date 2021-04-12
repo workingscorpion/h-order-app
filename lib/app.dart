@@ -186,6 +186,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
   lightTheme() => ThemeData(
         materialTapTargetSize: MaterialTapTargetSize.padded,
         accentColor: Colors.black,
+        primaryColor: Colors.white,
         backgroundColor: CustomColors.backgroundLightGrey,
         dialogBackgroundColor: CustomColors.backgroundLightGrey,
         scaffoldBackgroundColor: CustomColors.backgroundLightGrey,
@@ -195,6 +196,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
         accentTextTheme: textTheme,
         iconTheme: iconTheme,
         primaryIconTheme: iconTheme,
+        bottomAppBarColor: CustomColors.tableInnerBorder,
         accentIconTheme: iconTheme,
         buttonColor: Colors.blueGrey,
         colorScheme: ColorScheme(
@@ -304,6 +306,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
   darkTheme() => ThemeData(
         materialTapTargetSize: MaterialTapTargetSize.padded,
         accentColor: CustomColors.aWhite,
+        primaryColor: Colors.black,
         backgroundColor: CustomColors.backgroundDarkGrey,
         dialogBackgroundColor: CustomColors.backgroundDarkGrey,
         scaffoldBackgroundColor: CustomColors.backgroundDarkGrey,
@@ -314,6 +317,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
         iconTheme: iconTheme,
         primaryIconTheme: iconTheme,
         accentIconTheme: iconTheme,
+        bottomAppBarColor: CustomColors.tableInnerBorder,
         buttonColor: Colors.blueGrey,
         colorScheme: ColorScheme(
           primary: CustomColors.aWhite,
