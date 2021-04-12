@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/collapsible.dart';
+import 'package:h_order/components/viewHeader.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/billModel.dart';
 import 'package:intl/intl.dart';
 
@@ -13,7 +15,7 @@ class BillView extends StatefulWidget {
 }
 
 class _BillViewState extends State<BillView> {
-  List<int> ratio = [1, 2, 2, 2, 1, 1, 1];
+  List<int> ratio = [1, 2, 2, 2, 2, 1, 1];
 
   List<String> headers = [
     'No.',
@@ -68,12 +70,12 @@ class _BillViewState extends State<BillView> {
 
   @override
   Widget build(BuildContext context) => Container(
+        padding: EdgeInsets.symmetric(vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _accountInfo(),
-            _historiesHeader(),
-            _historiesBody(),
+            _histories(),
           ],
         ),
       );
@@ -95,6 +97,7 @@ class _BillViewState extends State<BillView> {
             borderRadius: BorderRadius.all(
               Radius.circular(8),
             ),
+            color: Theme.of(context).accentColor,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,26 +105,65 @@ class _BillViewState extends State<BillView> {
               Text(
                 '[납부계좌 안내]',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor),
+              ),
+              Text(
+                '[$_bankName] $_account $_accountOwner',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
-              Text('[$_bankName] $_account $_accountOwner'),
             ],
           ),
         ),
       );
 
-  _historiesHeader() => Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 24,
+  _histories() => Expanded(
+        child: Container(
+          margin: EdgeInsets.symmetric(
+            vertical: 20,
+            horizontal: 25,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ViewHeader(text: '관리비 내역'),
+              _histroies(),
+            ],
+          ),
         ),
+      );
+
+  _histroies() => Expanded(
+        child: IntrinsicHeight(
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: CustomColors.tableOuterBorder,
+                width: 1,
+              ),
+            ),
+            child: Column(
+              children: [
+                _historiesHeader(),
+                _historiesBody(),
+              ],
+            ),
+          ),
+        ),
+      );
+
+  _historiesHeader() => Container(
+        color: Theme.of(context).accentColor,
         child: _row(
           children: List.generate(
             headers.length,
             (index) => Text(
               headers[index],
               maxLines: 1,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.bodyText1,
+              textAlign: TextAlign.center,
             ),
           ),
         ),
@@ -129,9 +171,6 @@ class _BillViewState extends State<BillView> {
 
   _historiesBody() => Expanded(
         child: ListView(
-          padding: EdgeInsets.symmetric(
-            horizontal: 24,
-          ),
           children: [
             ...list.map(
               (item) => _item(
@@ -139,29 +178,34 @@ class _BillViewState extends State<BillView> {
                   Text(
                     '${item.index}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     item.title,
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     '${DateFormat('yyyy-MM-dd').format(item.expiredDate)}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     item.status
                         ? '${DateFormat('yyyy-MM-dd').format(item.paymentDate)}'
                         : "-",
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     '${item.amount}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     item.status ? '납부' : '미납',
@@ -170,12 +214,17 @@ class _BillViewState extends State<BillView> {
                       color: item.status ? Colors.green : Colors.red,
                       fontSize: 20,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   FlatButton(
+                    color: Theme.of(context).accentColor,
                     onPressed: () {
                       AppRouter.toBillDetailPage();
                     },
-                    child: Text('고지서'),
+                    child: Text(
+                      '고지서',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ),
                 ],
               ),
