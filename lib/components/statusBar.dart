@@ -75,6 +75,13 @@ class _StatusBarState extends State<StatusBar> {
         vertical: 12,
         horizontal: 24,
       ),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Theme.of(context).bottomAppBarColor,
+          ),
+        ),
+      ),
       child: Row(
         children: [
           Clock(
