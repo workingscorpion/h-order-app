@@ -55,25 +55,12 @@ class _HomePageState extends State<HomePage>
               children: [
                 _status(),
                 _info(),
-                _infoDivider(),
                 _body(),
               ],
             ),
           ),
         ),
         floatingActionButton: HomeFloatingButton(),
-      );
-
-  _infoDivider() => Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 24,
-        ),
-        child: Divider(
-          color: Colors.white,
-          height: 5,
-          thickness: 1,
-        ),
       );
 
   _info() => Container(
