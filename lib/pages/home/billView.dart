@@ -129,13 +129,13 @@ class _BillViewState extends State<BillView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ViewHeader(text: '관리비 내역'),
-              _histroies(),
+              _bill(),
             ],
           ),
         ),
       );
 
-  _histroies() => Expanded(
+  _bill() => Expanded(
         child: IntrinsicHeight(
           child: Container(
             decoration: BoxDecoration(
@@ -146,15 +146,15 @@ class _BillViewState extends State<BillView> {
             ),
             child: Column(
               children: [
-                _historiesHeader(),
-                _historiesBody(),
+                _billHeader(),
+                _billBody(),
               ],
             ),
           ),
         ),
       );
 
-  _historiesHeader() => Container(
+  _billHeader() => Container(
         color: Theme.of(context).accentColor,
         child: _row(
           children: List.generate(
@@ -169,7 +169,7 @@ class _BillViewState extends State<BillView> {
         ),
       );
 
-  _historiesBody() => Expanded(
+  _billBody() => Expanded(
         child: ListView(
           children: [
             ...list.map(
@@ -202,7 +202,7 @@ class _BillViewState extends State<BillView> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    '${item.amount}',
+                    '${NumberFormat().format(item.amount)}원',
                     maxLines: 1,
                     style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
