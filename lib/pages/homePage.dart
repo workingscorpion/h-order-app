@@ -60,7 +60,12 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
-        floatingActionButton: HomeFloatingButton(),
+        floatingActionButton: HomeFloatingButton(
+          callback: (ViewType val) {
+            _tabController.animateTo(_pageToNumber(type: val));
+            setState(() {});
+          },
+        ),
       );
 
   _info() => Container(

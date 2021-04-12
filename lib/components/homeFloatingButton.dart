@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:h_order/appRouter.dart';
+import 'package:h_order/constants/viewEnum.dart';
+
+typedef void EnumCallback(ViewType val);
 
 class HomeFloatingButton extends StatelessWidget {
-  const HomeFloatingButton({Key key}) : super(key: key);
+  HomeFloatingButton({this.callback});
+
+  final EnumCallback callback;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +16,7 @@ class HomeFloatingButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width * .12,
       child: FloatingActionButton(
         onPressed: () {
-          AppRouter.toHomePage();
+          return callback(ViewType.HomeView);
         },
         child: Icon(
           CupertinoIcons.house,
