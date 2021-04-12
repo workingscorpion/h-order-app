@@ -88,7 +88,10 @@ class _HomePageState extends State<HomePage>
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 _infoText(text: '202호', isBold: true, size: 50),
-                _infoText(text: '(김오더 님)', isBold: false, size: 25),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: _infoText(text: '(김오더 님)', isBold: false, size: 25),
+                ),
               ],
             ),
             Text(
