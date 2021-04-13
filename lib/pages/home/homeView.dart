@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/serviceItem.dart';
 import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
@@ -37,191 +38,139 @@ class _HomeViewState extends State<HomeView>
               crossAxisCount: 5,
               children: [
                 ...[
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.hammer,
-                    text: '시설보수',
-                    onTap: () {
-                      _alert(
-                        title: '시설보수',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '시설보수',
+                    items: [
+                      ServiceItem(
+                        type: 'text',
+                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.sparkles,
-                    text: '청소',
-                    onTap: () {
-                      _alert(
-                        title: '청소',
-                        items: [
-                          AlertItem(
-                            type: 'date',
-                            label: '예약시간 설정',
-                          ),
-                          AlertItem(
-                            type: 'time',
-                            label: '',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '청소',
+                    items: [
+                      ServiceItem(
+                        type: 'dateTime',
+                        label: '',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.tornado,
-                    text: '세탁',
-                    onTap: () {
-                      _alert(
-                        title: '세탁',
-                        items: [
-                          AlertItem(
-                            type: 'date',
-                            label: '예약시간 설정',
-                          ),
-                          AlertItem(
-                            type: 'time',
-                            label: '',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '세탁',
+                    items: [
+                      ServiceItem(
+                        type: 'dateTime',
+                        label: '',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.car_detailed,
-                    text: '출차',
-                    onTap: () {
-                      _alert(
-                        title: '출차',
-                        items: [
-                          AlertItem(
-                            type: 'date',
-                            label: '예약시간 설정',
-                          ),
-                          AlertItem(
-                            type: 'time',
-                            label: '',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '출차',
+                    items: [
+                      ServiceItem(
+                        type: 'dateTime',
+                        label: '',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.exclamationmark_bubble,
-                    text: '관리실 호출',
-                    onTap: () {
-                      _alert(
-                        title: '관리실 호출',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '관리실 호출',
+                    items: [
+                      ServiceItem(
+                        type: 'text',
+                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      ),
+                    ],
                   ),
                 ],
                 ...[
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.tag,
-                    text: '딜리버리',
+                    label: '딜리버리',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.paw,
-                    text: '팻케어',
+                    label: '팻케어',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.cube_box,
-                    text: '택배',
-                    onTap: () {
-                      _alert(
-                        title: '택배',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '택배',
+                    items: [
+                      ServiceItem(
+                        type: 'label',
+                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.arrow_3_trianglepath,
-                    text: '분리수거',
-                    onTap: () {
-                      _alert(
-                        title: '분리수거',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '분리수거',
+                    items: [
+                      ServiceItem(
+                        type: 'label',
+                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.trash,
-                    text: '종량제봉투',
-                    onTap: () {
-                      _alert(
-                        title: '종량제봉투',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '10분내로 문 앞에 배송해드립니다.',
-                          ),
-                          AlertItem(
-                            type: 'option',
-                            label: '20L',
-                            min: 1,
-                            max: 10,
-                          ),
-                          AlertItem(
-                            type: 'option',
-                            label: '50L',
-                            min: 1,
-                            max: 10,
-                          ),
-                          AlertItem(
-                            type: 'option',
-                            label: '100L',
-                            min: 1,
-                            max: 10,
-                          ),
-                        ],
-                      );
-                    },
+                    label: '종량제봉투',
+                    items: [
+                      ServiceItem(
+                        type: 'label',
+                        label: '10분내로 문 앞에 배송해드립니다.',
+                      ),
+                      ServiceItem(
+                        type: 'option',
+                        label: '20L',
+                        min: 1,
+                        max: 10,
+                      ),
+                      ServiceItem(
+                        type: 'option',
+                        label: '50L',
+                        min: 1,
+                        max: 10,
+                      ),
+                      ServiceItem(
+                        type: 'option',
+                        label: '100L',
+                        min: 1,
+                        max: 10,
+                      ),
+                    ],
                   ),
                 ],
                 ...[
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.paintbrush,
-                    text: '인테리어',
+                    label: '인테리어',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.archivebox,
-                    text: '이사',
+                    label: '이사',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.info_circle,
-                    text: '정보',
+                    label: '정보',
                     onTap: () {
                       AppRouter.toSurroundInfoPage();
                     },
@@ -310,397 +259,4 @@ class _HomeViewState extends State<HomeView>
           ),
         ),
       );
-
-  _serviceItem({
-    IconData icon,
-    String text,
-    GestureTapCallback onTap,
-  }) =>
-      Material(
-        color: Colors.transparent,
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 12),
-                child: Icon(
-                  icon,
-                  size: 64,
-                ),
-              ),
-              Text(
-                text ?? '',
-                style: TextStyle(
-                  fontSize: 22,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  _alert({
-    String title,
-    String type,
-    List<AlertItem> items,
-  }) async {
-    final children = items.map((item) => _alertContent(item: item)).toList();
-
-    await showDialog(
-      barrierColor: Colors.black.withOpacity(.85),
-      context: context,
-      child: AlertDialog(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-        clipBehavior: Clip.antiAlias,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        buttonPadding: EdgeInsets.zero,
-        actionsPadding: EdgeInsets.zero,
-        title: Container(
-          decoration: BoxDecoration(
-            color: Color(0xf0f9f9f9),
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Color(0x22000000),
-              ),
-            ),
-          ),
-          padding: EdgeInsets.all(24),
-          child: Stack(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                ],
-              ),
-              Positioned(
-                right: 8,
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(CupertinoIcons.xmark),
-                    iconSize: 24,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        content: Container(
-          width: 560,
-          color: Colors.white,
-          child: IntrinsicHeight(
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 40),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ...List.generate(children.length * 2 - 1, (index) {
-                        final i = (index / 2).floor();
-                        if (index % 2 == 1) {
-                          if (i + 1 < children.length) {
-                            if (items[i].type != items[i + 1].type) {
-                              return Container(
-                                height: 40,
-                              );
-                            } else {
-                              return Divider(
-                                color: Color(0xffe5e5e5),
-                                height: 30,
-                                thickness: 1,
-                                indent: 100,
-                                endIndent: 100,
-                              );
-                            }
-                          }
-
-                          return Container();
-                        }
-
-                        return children[i];
-                      }),
-                    ],
-                  ),
-                ),
-                Divider(),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 40,
-                    horizontal: 100,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FlatButton(
-                        minWidth: 140,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          '취소',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 24,
-                      ),
-                      FlatButton(
-                        minWidth: 140,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        color: Colors.black,
-                        child: Text(
-                          '신청',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  _alertContent({
-    AlertItem item,
-  }) {
-    switch (item.type) {
-      case 'text':
-        return _alertTextContent(label: item.label);
-
-      case 'date':
-        return _alertDateContent(label: item.label);
-
-      case 'time':
-        return _alertTimeContent(label: item.label);
-
-      case 'option':
-        return _alertOptionContent(
-          label: item.label,
-          max: item.max,
-          min: item.min,
-        );
-    }
-
-    return Container();
-  }
-
-  _alertTextContent({
-    String label,
-  }) =>
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 80),
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 22,
-          ),
-        ),
-      );
-
-  _alertDateContent({
-    String label,
-  }) =>
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 80),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-              Container(width: 80),
-              _datePicker(),
-            ],
-          ),
-        ),
-      );
-
-  _alertTimeContent({
-    String label,
-  }) =>
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 80),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-              Container(width: 100),
-              _timePicker(),
-            ],
-          ),
-        ),
-      );
-
-  _datePicker() => InkWell(
-        onTap: () {
-          showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(
-              Duration(days: 100),
-            ),
-          );
-        },
-        child: Container(
-          child: Text('${DateFormat('yyyy-MM-dd').format(DateTime.now())}'),
-        ),
-      );
-
-  _timePicker() => InkWell(
-        onTap: () {
-          showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.now(),
-          );
-        },
-        child: Text('${TimeOfDay.now().format(context)}'),
-      );
-
-  _alertOptionContent({
-    String label,
-    int max,
-    int min,
-  }) =>
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 100),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-              Container(width: 100),
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.black,
-                  ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(7),
-                    bottomLeft: Radius.circular(7),
-                  ),
-                ),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  iconSize: 24,
-                  icon: Icon(
-                    CupertinoIcons.minus,
-                    size: 14,
-                  ),
-                ),
-              ),
-              Container(
-                width: 52,
-                child: Text(
-                  '$min',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.black,
-                  ),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(7),
-                    bottomRight: Radius.circular(7),
-                  ),
-                ),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  iconSize: 24,
-                  icon: Icon(
-                    CupertinoIcons.add,
-                    size: 14,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-}
-
-class AlertItem {
-  final String type;
-  final String label;
-  final int max;
-  final int min;
-  final List<AlertItem> children;
-
-  AlertItem({
-    this.type,
-    this.label,
-    this.max,
-    this.min,
-    this.children,
-  });
 }
