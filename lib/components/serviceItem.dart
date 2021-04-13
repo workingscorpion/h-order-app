@@ -78,48 +78,6 @@ class _ServiceButtonState extends State<ServiceButton> {
         contentPadding: EdgeInsets.zero,
         buttonPadding: EdgeInsets.zero,
         actionsPadding: EdgeInsets.zero,
-        title: Container(
-          decoration: BoxDecoration(
-            color: Color(0xf0f9f9f9),
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Color(0x22000000),
-              ),
-            ),
-          ),
-          padding: EdgeInsets.all(24),
-          child: Stack(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                ],
-              ),
-              Positioned(
-                right: 8,
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(CupertinoIcons.xmark),
-                    iconSize: 24,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
         content: AlertService(
           icon: widget.icon,
           label: widget.label,

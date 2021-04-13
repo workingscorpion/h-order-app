@@ -54,6 +54,11 @@ class _HomeViewState extends State<HomeView>
                     items: [
                       ServiceItem(
                         objectId: '1',
+                        type: 'text',
+                        label: '요청하신 시간에 관리실 직원이 방문할 예정입니다.',
+                      ),
+                      ServiceItem(
+                        objectId: '2',
                         type: 'dateTime',
                         label: '',
                       ),
@@ -65,6 +70,11 @@ class _HomeViewState extends State<HomeView>
                     items: [
                       ServiceItem(
                         objectId: '1',
+                        type: 'text',
+                        label: '요청하신 시간에 관리실 직원이 방문할 예정입니다.',
+                      ),
+                      ServiceItem(
+                        objectId: '2',
                         type: 'dateTime',
                         label: '',
                       ),
@@ -76,6 +86,11 @@ class _HomeViewState extends State<HomeView>
                     items: [
                       ServiceItem(
                         objectId: '1',
+                        type: 'text',
+                        label: '요청하신 시간에 관리실 직원이 방문할 예정입니다.',
+                      ),
+                      ServiceItem(
+                        objectId: '2',
                         type: 'dateTime',
                         label: '',
                       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/components/dateTimeInput.dart';
 import 'package:h_order/components/serviceItem.dart';
 import 'package:intl/intl.dart';
 
@@ -53,6 +54,53 @@ class _AlertServiceState extends State<AlertService> {
       child: IntrinsicHeight(
         child: Column(
           children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xf0f9f9f9),
+                border: Border(
+                  bottom: BorderSide(
+                    width: 1,
+                    color: Color(0x22000000),
+                  ),
+                ),
+              ),
+              child: Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(24),
+                        child: Text(
+                          widget.label,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    top: 0,
+                    bottom: 0,
+                    right: 0,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Container(
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: Icon(CupertinoIcons.xmark),
+                          iconSize: 24,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Container(
               padding: EdgeInsets.only(top: 40),
               child: Column(
@@ -139,11 +187,8 @@ class _AlertServiceState extends State<AlertService> {
       case 'text':
         return _alertTextContent(item: item);
 
-      case 'date':
-        return _alertDateContent(item: item);
-
-      case 'time':
-        return _alertTimeContent(item: item);
+      case 'dateTime':
+        return _alertDateTimeContent(item: item);
 
       case 'count':
         return _alertCountContent(item: item);
@@ -166,68 +211,12 @@ class _AlertServiceState extends State<AlertService> {
         ),
       );
 
-  _alertDateContent({
+  _alertDateTimeContent({
     ServiceItem item,
   }) =>
       Container(
         padding: EdgeInsets.symmetric(horizontal: 80),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                  item.label,
-                  style: TextStyle(
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-              Container(width: 80),
-              _datePicker(),
-            ],
-          ),
-        ),
-      );
-
-  _alertTimeContent({
-    ServiceItem item,
-  }) =>
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 80),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Text(
-                  item.label,
-                  style: TextStyle(
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-              Container(width: 100),
-              _timePicker(),
-            ],
-          ),
-        ),
-      );
-
-  _datePicker() => InkWell(
-        onTap: () {
-          showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(
-              Duration(days: 100),
-            ),
-          );
-        },
-        child: Container(
-          child: Text('${DateFormat('yyyy-MM-dd').format(DateTime.now())}'),
-        ),
+        child: DateTimeInput(),
       );
 
   _timePicker() => InkWell(
