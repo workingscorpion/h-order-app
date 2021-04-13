@@ -67,44 +67,80 @@ class _HomePageState extends State<HomePage>
       );
 
   _info() => Container(
-        color: Theme.of(context).primaryColor,
-        padding: EdgeInsets.symmetric(
-          vertical: 30,
-          horizontal: 24,
-        ),
-        child: IntrinsicHeight(
-          child: Row(
-            children: [
-              _leftPanel(),
-              SizedBox(width: 24),
-              _rightPanel(),
-            ],
+      color: Theme.of(context).primaryColor,
+      padding: EdgeInsets.symmetric(
+        vertical: 30,
+        horizontal: 24,
+      ),
+      child: Column(
+        children: [
+          _infoHeader(),
+          IntrinsicHeight(
+            child: Row(
+              children: [
+                _leftPanel(),
+                SizedBox(width: 24),
+                _rightPanel(),
+              ],
+            ),
           ),
-        ),
+        ],
+      ));
+
+  _infoHeader() => Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            '202호',
+            style: Theme.of(context)
+                .textTheme
+                .headline1
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: Text(
+              '김오더 님',
+              style:
+                  Theme.of(context).textTheme.headline2.copyWith(fontSize: 32),
+            ),
+          ),
+          Spacer(),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  '관리비납부현황',
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                _verticalDevider(height: 15),
+                Text(
+                  '납부완료',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                    color: Color.fromRGBO(33, 208, 33, 1),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       );
 
   _leftPanel() => Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                _infoText(text: '202호', isBold: true, size: 50),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: _infoText(text: '김오더 님', isBold: false, size: 25),
-                ),
-              ],
-            ),
-            Text(
-              '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
-              style: TextStyle(
-                fontSize: 16,
+            Expanded(
+              child: Text(
+                '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
+                softWrap: true,
+                textScaleFactor: .8,
               ),
-              softWrap: true,
             ),
-            _infoButtons(),
             FlatButton(
               height: 50,
               color: Theme.of(context).accentColor,
@@ -115,11 +151,12 @@ class _HomePageState extends State<HomePage>
                 '알림 설정',
                 maxLines: 1,
                 style: TextStyle(
-                  fontSize: 15,
                   color: Theme.of(context).primaryColor,
                 ),
+                textScaleFactor: .8,
               ),
             ),
+            _infoButtons(),
           ],
         ),
       );
@@ -127,22 +164,6 @@ class _HomePageState extends State<HomePage>
   _rightPanel() => Expanded(
         child: Column(
           children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  _infoText(text: '관리비납부현황', isBold: false, size: 15),
-                  _verticalDevider(height: 15),
-                  _infoText(
-                    text: '납부완료',
-                    isBold: true,
-                    size: 20,
-                    color: Color.fromRGBO(33, 208, 33, 1),
-                  ),
-                ],
-              ),
-            ),
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(
@@ -244,20 +265,10 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _infoText({String text, bool isBold, double size, Color color}) => Text(
-        text,
-        style: TextStyle(
-          color: color != null
-              ? color
-              : Theme.of(context).textTheme.bodyText2.color,
-          fontSize: size,
-          fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-        ),
-      );
-
   _status() => StatusBar();
 
-  _infoButtons() => Expanded(
+  _infoButtons() => Container(
+        margin: EdgeInsets.only(top: 20),
         child: Row(
           children: [
             ...[
@@ -294,15 +305,17 @@ class _HomePageState extends State<HomePage>
     bool selected = false,
   }) =>
       Expanded(
-        child: TextButton(
-          onPressed: onPressed,
+        child: InkWell(
+          onTap: onPressed,
           child: Text(
             text,
             maxLines: 1,
-            style: TextStyle(
-              fontSize: 15,
-              color: Theme.of(context).accentColor,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .headline2
+                .copyWith(fontWeight: FontWeight.bold),
+            textScaleFactor: .7,
+            textAlign: TextAlign.center,
           ),
         ),
       );
