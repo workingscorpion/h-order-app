@@ -64,9 +64,11 @@ class AppState extends State<App> with WidgetsBindingObserver {
     return _themeMode == ThemeMode.light;
   }
 
-  _iconTheme(bool isLightMode) => IconThemeData(
-        color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
-      );
+  _iconTheme(bool isLightMode) {
+    final iconColor = isLightMode ? CustomColors.aBlack : CustomColors.aWhite;
+
+    return IconThemeData(color: iconColor);
+  }
 
   _textTheme(bool isLightMode) {
     final textColor = isLightMode ? CustomColors.aBlack : CustomColors.aWhite;
