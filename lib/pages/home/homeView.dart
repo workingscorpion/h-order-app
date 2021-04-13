@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/constants/serviceStatus.dart';
 import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
@@ -56,6 +58,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.sparkles,
                     text: '청소',
+                    asset: '/assets/icons/service/cleaning.svg',
                     onTap: () {
                       _alert(
                         title: '청소',
@@ -75,6 +78,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.tornado,
                     text: '세탁',
+                    asset: '/assets/icons/service/laundry.svg',
                     onTap: () {
                       _alert(
                         title: '세탁',
@@ -94,6 +98,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.car_detailed,
                     text: '출차',
+                    asset: '/assets/icons/service/exit.svg',
                     onTap: () {
                       _alert(
                         title: '출차',
@@ -113,6 +118,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.exclamationmark_bubble,
                     text: '관리실 호출',
+                    asset: '/assets/icons/service/call.svg',
                     onTap: () {
                       _alert(
                         title: '관리실 호출',
@@ -124,6 +130,7 @@ class _HomeViewState extends State<HomeView>
                         ],
                       );
                     },
+                    status: ServiceStatus.Call,
                   ),
                 ],
                 ...[
@@ -144,6 +151,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.cube_box,
                     text: '택배',
+                    asset: '/assets/icons/service/delivery.svg',
                     onTap: () {
                       _alert(
                         title: '택배',
@@ -314,8 +322,10 @@ class _HomeViewState extends State<HomeView>
 
   _serviceItem({
     IconData icon,
+    String asset,
     String text,
     GestureTapCallback onTap,
+    ServiceStatus status,
   }) =>
       Container(
         color: Colors.transparent,
@@ -330,10 +340,15 @@ class _HomeViewState extends State<HomeView>
                     shape: BoxShape.circle,
                     color: Colors.white,
                   ),
-                  child: Icon(
-                    icon,
-                    size: 50,
-                  ),
+                  child: asset != null
+                      ? SvgPicture.asset(
+                          asset,
+                          height: 50,
+                        )
+                      : Icon(
+                          icon,
+                          size: 50,
+                        ),
                 ),
                 Text(
                   text ?? '',
@@ -341,16 +356,31 @@ class _HomeViewState extends State<HomeView>
                     fontSize: 22,
                   ),
                 ),
-                Text(
-                  '호출중',
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.red,
-                  ),
+                Container(
+                  child: status != null
+                      ? Text(
+                          _serviceStatusText(status),
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.red,
+                          ),
+                        )
+                      : null,
                 ),
               ],
             )),
       );
+
+  _serviceStatusText(ServiceStatus status) {
+    switch (status) {
+      case ServiceStatus.Call:
+        return '호출중';
+      case ServiceStatus.Doing:
+        return '처리중';
+      default:
+        return '기타';
+    }
+  }
 
   _alert({
     String title,
