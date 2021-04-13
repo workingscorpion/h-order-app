@@ -44,7 +44,7 @@ class _ProductPageState extends State<ProductPage>
             options.singleWhere((element) => element.index == key).price;
       }
     });
-    return _quantity * amount + optionPrice;
+    return (amount + optionPrice) * _quantity;
   }
 
   int get amount {
