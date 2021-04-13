@@ -252,8 +252,6 @@ class _HomeViewState extends State<HomeView>
         children: [
           ViewHeader(text: '우리동네 둘러보기'),
           Spacer(),
-          Text('더보기'),
-          Icon(CupertinoIcons.right_chevron),
         ],
       );
 
