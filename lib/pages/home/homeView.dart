@@ -58,7 +58,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.sparkles,
                     text: '청소',
-                    asset: '/assets/icons/service/cleaning.svg',
+                    asset: 'assets/icons/service/cleaning.svg',
                     onTap: () {
                       _alert(
                         title: '청소',
@@ -78,7 +78,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.tornado,
                     text: '세탁',
-                    asset: '/assets/icons/service/laundry.svg',
+                    asset: 'assets/icons/service/laundry.svg',
                     onTap: () {
                       _alert(
                         title: '세탁',
@@ -98,7 +98,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.car_detailed,
                     text: '출차',
-                    asset: '/assets/icons/service/exit.svg',
+                    asset: 'assets/icons/service/exit.svg',
                     onTap: () {
                       _alert(
                         title: '출차',
@@ -118,7 +118,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.exclamationmark_bubble,
                     text: '관리실 호출',
-                    asset: '/assets/icons/service/call.svg',
+                    asset: 'assets/icons/service/call.svg',
                     onTap: () {
                       _alert(
                         title: '관리실 호출',
@@ -151,7 +151,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.cube_box,
                     text: '택배',
-                    asset: '/assets/icons/service/delivery.svg',
+                    asset: 'assets/icons/service/delivery.svg',
                     onTap: () {
                       _alert(
                         title: '택배',
@@ -336,14 +336,15 @@ class _HomeViewState extends State<HomeView>
                 Container(
                   height: 100,
                   width: 100,
+                  padding: EdgeInsets.all(20),
+                  margin: EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
                   ),
                   child: asset != null
-                      ? SvgPicture.asset(
-                          asset,
-                          height: 50,
+                      ? Container(
+                          child: SvgPicture.asset(asset),
                         )
                       : Icon(
                           icon,
@@ -353,7 +354,7 @@ class _HomeViewState extends State<HomeView>
                 Text(
                   text ?? '',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                   ),
                 ),
                 Container(
@@ -361,7 +362,7 @@ class _HomeViewState extends State<HomeView>
                       ? Text(
                           _serviceStatusText(status),
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 20,
                             color: Colors.red,
                           ),
                         )
