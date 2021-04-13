@@ -10,13 +10,16 @@ class ViewHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 190,
       padding: EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
+        horizontal: 46,
+        vertical: 16,
       ),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyText1.copyWith(
+              fontSize: 20,
+            ),
       ),
       alignment: Alignment.center,
       decoration: BoxDecoration(

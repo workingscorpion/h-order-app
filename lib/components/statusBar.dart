@@ -100,39 +100,38 @@ class _StatusBarState extends State<StatusBar> {
         padding: EdgeInsets.only(bottom: 5),
         child: Icon(
           _wifiLevel > 0 ? CupertinoIcons.wifi : CupertinoIcons.xmark_circle,
-          size: 30,
+          size: 24,
         ),
       );
 
   _batteryIndicator() => Stack(
+        alignment: Alignment.center,
         children: [
           Container(
-            width: 50,
-            height: 25,
+            width: 40,
+            height: 20,
+            padding: EdgeInsets.all(2),
             decoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(
-                width: 3,
-                color: Colors.white,
-              ),
+              color: Colors.grey[300],
               borderRadius: BorderRadius.all(Radius.circular(3)),
             ),
             alignment: Alignment.centerLeft,
             child: FractionallySizedBox(
               widthFactor: _batteryLevel,
               child: Container(
-                color: Colors.green,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.all(Radius.circular(2)),
+                ),
               ),
             ),
           ),
           Positioned(
-            left: 15,
-            top: 2,
             child: _batteryState == BatteryState.charging
                 ? Icon(
                     CupertinoIcons.bolt_fill,
                     color: Colors.white,
-                    size: 20,
+                    size: 13,
                   )
                 : Container(),
           )

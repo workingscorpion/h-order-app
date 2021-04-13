@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/viewHeader.dart';
-import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
 import 'package:h_order/models/keyValueModel.dart';
@@ -23,7 +22,7 @@ class _HistoryViewState extends State<HistoryView> {
 
   List<HistoryModel> list;
 
-  List<int> ratio = [1, 2, 2, 2, 2, 1];
+  List<int> ratio = [1, 2, 2, 2, 2, 2];
 
   List<String> headers = [
     'No.',
@@ -76,16 +75,23 @@ class _HistoryViewState extends State<HistoryView> {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 25,
-          vertical: 30,
+        padding: EdgeInsets.only(
+          top: 30,
+          left: 25,
+          right: 25,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _header(),
-            _histories(),
-          ],
+        child: DefaultTextStyle(
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 17,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _header(),
+              _histories(),
+            ],
+          ),
         ),
       );
 
@@ -103,15 +109,16 @@ class _HistoryViewState extends State<HistoryView> {
   _histories() => Expanded(
         child: IntrinsicHeight(
           child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: CustomColors.tableOuterBorder,
-                width: 1,
-              ),
-            ),
+            decoration: BoxDecoration(),
             child: Column(
               children: [
-                _historiesHeader(),
+                DefaultTextStyle(
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                  ),
+                  child: _historiesHeader(),
+                ),
                 _historiesBody(),
               ],
             ),
@@ -122,12 +129,12 @@ class _HistoryViewState extends State<HistoryView> {
   _historiesHeader() => Container(
         color: Theme.of(context).accentColor,
         child: _row(
+          color: Colors.black,
           children: List.generate(
             headers.length,
             (index) => Text(
               headers[index],
               maxLines: 1,
-              style: Theme.of(context).textTheme.bodyText1,
               textAlign: TextAlign.center,
             ),
           ),
@@ -143,25 +150,21 @@ class _HistoryViewState extends State<HistoryView> {
                   Text(
                     '${item.index}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     item.serviceName != null ? '${item.serviceName}' : '-',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     item.summary != null ? '${item.summary}' : '-',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
@@ -169,7 +172,6 @@ class _HistoryViewState extends State<HistoryView> {
                         ? '${NumberFormat().format(item.amount)}원'
                         : '-',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
@@ -177,7 +179,6 @@ class _HistoryViewState extends State<HistoryView> {
                     maxLines: 1,
                     style: TextStyle(
                       color: _statusColor(item.status),
-                      fontSize: 20,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -222,38 +223,35 @@ class _HistoryViewState extends State<HistoryView> {
   }
 
   _row({
+    Color color,
     List<Widget> children,
   }) =>
-      DefaultTextStyle(
-        style: TextStyle(
-          fontSize: 24,
+      Container(
+        color: color ?? Colors.transparent,
+        padding: EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 26,
         ),
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 26,
-          ),
-          child: Row(
-            children: [
-              ...children
-                  .asMap()
-                  .map(
-                    (index, item) => MapEntry(
-                      index,
-                      Expanded(
-                        flex: ratio[index],
-                        child: Container(
-                          padding: index < children.length - 1
-                              ? EdgeInsets.only(right: 10)
-                              : EdgeInsets.zero,
-                          child: item,
-                        ),
+        child: Row(
+          children: [
+            ...children
+                .asMap()
+                .map(
+                  (index, item) => MapEntry(
+                    index,
+                    Expanded(
+                      flex: ratio[index],
+                      child: Container(
+                        padding: index < children.length - 1
+                            ? EdgeInsets.only(right: 10)
+                            : EdgeInsets.zero,
+                        child: item,
                       ),
                     ),
-                  )
-                  .values,
-            ],
-          ),
+                  ),
+                )
+                .values,
+          ],
         ),
       );
 
@@ -271,21 +269,22 @@ class _HistoryViewState extends State<HistoryView> {
   _collapsibleBody(HistoryDetailModel content) => Container(
         padding: EdgeInsets.all(35),
         decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: Colors.white12,
-            ),
-          ),
+          color: Colors.transparent,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 30),
-              child: Text(content.title),
+              margin: EdgeInsets.only(bottom: 20),
+              child: Text(
+                content.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 30),
+              margin: EdgeInsets.only(bottom: 20),
               child: Flex(
                 direction: Axis.vertical,
                 children: List.generate(
@@ -315,12 +314,20 @@ class _HistoryViewState extends State<HistoryView> {
         ),
       );
 
-  _collapisbleFooter(int index, HistoryDetailModel content) => Row(
-        children: [
-          Text(_footerText(index)),
-          Spacer(),
-          _footerValue(index, content),
-        ],
+  _collapisbleFooter(int index, HistoryDetailModel content) => Container(
+        margin: EdgeInsets.only(bottom: 4),
+        child: Row(
+          children: [
+            Text(
+              _footerText(index),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Spacer(),
+            _footerValue(index, content),
+          ],
+        ),
       );
 
   _footerValue(int index, HistoryDetailModel content) {
@@ -345,12 +352,15 @@ class _HistoryViewState extends State<HistoryView> {
     }
   }
 
-  _detailItem(KeyValueModel item) => Row(
-        children: [
-          Text('• ${item.key} ${item.value}개'),
-          Spacer(),
-          Text('${NumberFormat().format(item.price)}원'),
-        ],
+  _detailItem(KeyValueModel item) => Container(
+        margin: EdgeInsets.only(bottom: 4),
+        child: Row(
+          children: [
+            Text('• ${item.key} ${item.value}개'),
+            Spacer(),
+            Text('${NumberFormat().format(item.price)}원'),
+          ],
+        ),
       );
 
   _filter() => Container(
@@ -365,14 +375,7 @@ class _HistoryViewState extends State<HistoryView> {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 width: 160,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Theme.of(context).accentColor,
-                      width: 1,
-                    ),
-                  ),
-                ),
+                decoration: BoxDecoration(),
                 child: Row(
                   children: [
                     Container(

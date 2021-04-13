@@ -46,12 +46,12 @@ class _ServiceButtonState extends State<ServiceButton> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 100,
-              width: 100,
+              height: 92,
+              width: 92,
               margin: EdgeInsets.only(bottom: 10),
               child: Icon(
                 widget.icon,
-                size: 64,
+                size: 34,
               ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -61,7 +61,7 @@ class _ServiceButtonState extends State<ServiceButton> {
             Text(
               widget.label ?? '',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 18,
               ),
             ),
             widget.status != null

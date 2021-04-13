@@ -45,7 +45,10 @@ class _ClockState extends State<Clock> {
   Widget build(BuildContext context) {
     return Container(
       child: Text(
-        _isAfterNoon ? '$_text pm' : '$_text am',
+        _isAfterNoon ? '$_text PM' : '$_text AM',
+        style: TextStyle(
+          fontSize: 18,
+        ),
       ),
     );
   }
