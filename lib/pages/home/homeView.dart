@@ -145,6 +145,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.paw,
                     text: '팻케어',
+                    asset: 'assets/icons/service/pet.svg',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
@@ -168,6 +169,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.arrow_3_trianglepath,
                     text: '분리수거',
+                    asset: 'assets/icons/service/recycle.svg',
                     onTap: () {
                       _alert(
                         title: '분리수거',
@@ -183,6 +185,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.trash,
                     text: '종량제봉투',
+                    asset: 'assets/icons/service/trashbag.svg',
                     onTap: () {
                       _alert(
                         title: '종량제봉투',
@@ -218,6 +221,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.paintbrush,
                     text: '인테리어',
+                    asset: 'assets/icons/service/interior.svg',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
@@ -225,6 +229,7 @@ class _HomeViewState extends State<HomeView>
                   _serviceItem(
                     icon: CupertinoIcons.archivebox,
                     text: '이사',
+                    asset: 'assets/icons/service/move.svg',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
