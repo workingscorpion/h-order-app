@@ -123,6 +123,64 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
     super.initState();
 
     final random = Random();
+
+    final asdf = [
+      NoticeModel(
+        writer: names[random.nextInt(names.length)],
+        title: titles[random.nextInt(titles.length)],
+        content: contents[random.nextInt(contents.length)],
+        createdTime: DateTime(2021, 2, 27),
+      ),
+      NoticeModel(
+        writer: names[random.nextInt(names.length)],
+        title: titles[random.nextInt(titles.length)],
+        content: contents[random.nextInt(contents.length)],
+        createdTime: DateTime(2021, 3, 15),
+      ),
+      NoticeModel(
+        writer: names[random.nextInt(names.length)],
+        title: titles[random.nextInt(titles.length)],
+        content: contents[random.nextInt(contents.length)],
+        createdTime: DateTime(2021, 3, 21),
+      ),
+      NoticeModel(
+        writer: names[random.nextInt(names.length)],
+        title: titles[random.nextInt(titles.length)],
+        content: contents[random.nextInt(contents.length)],
+        createdTime: DateTime(2021, 4, 1),
+      ),
+      NoticeModel(
+        writer: names[random.nextInt(names.length)],
+        title: titles[random.nextInt(titles.length)],
+        content: contents[random.nextInt(contents.length)],
+        createdTime: DateTime(2021, 4, 9),
+      ),
+      NoticeModel(
+        writer: names[random.nextInt(names.length)],
+        title: titles[random.nextInt(titles.length)],
+        content: contents[random.nextInt(contents.length)],
+        createdTime: DateTime(2021, 4, 17),
+      ),
+      NoticeModel(
+        writer: names[random.nextInt(names.length)],
+        title: titles[random.nextInt(titles.length)],
+        content: contents[random.nextInt(contents.length)],
+        createdTime: DateTime(2021, 4, 19),
+      ),
+    ]
+        .asMap()
+        .map(
+          (index, item) => NoticeModel(
+            index: index,
+            writer: item.writer,
+            title: item.title,
+            content: item.content,
+            createdTime: item.createdTime,
+          ),
+        )
+        .values
+        .toList();
+
     list = List.generate(
       100,
       (index) => NoticeModel(
