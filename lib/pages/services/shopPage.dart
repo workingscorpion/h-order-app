@@ -133,7 +133,10 @@ class _ShopPageState extends State<ShopPage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _shopHeader(),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: _shopHeader(),
+                      ),
                       TabBar(
                         controller: _tabController,
                         isScrollable: true,
