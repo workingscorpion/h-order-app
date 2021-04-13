@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage>
   _info() => Container(
       color: Theme.of(context).primaryColor,
       padding: EdgeInsets.symmetric(
-        vertical: 30,
+        vertical: 20,
         horizontal: 24,
       ),
       child: Column(
