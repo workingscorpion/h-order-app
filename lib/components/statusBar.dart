@@ -96,9 +96,6 @@ class _StatusBarState extends State<StatusBar> {
             },
             child: Text(
               '잠금화면',
-              style: TextStyle(
-                color: Colors.black,
-              ),
             ),
           ),
           _wifiInidicator(),

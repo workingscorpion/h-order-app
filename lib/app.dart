@@ -76,16 +76,16 @@ class AppState extends State<App> with WidgetsBindingObserver {
 
   _textTheme(bool isDark) => TextTheme(
         headline1: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+          fontSize: 60,
+          color: isDark ? CustomColors.aWhite : CustomColors.aBlack,
         ),
         headline2: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+          fontSize: 24,
+          color: isDark ? CustomColors.aWhite : CustomColors.subTextBlack,
         ),
         headline3: TextStyle(
           fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
+          color: isDark ? CustomColors.subTextBlack : CustomColors.aWhite,
         ),
         headline4: TextStyle(
           fontSize: 22,
@@ -100,11 +100,11 @@ class AppState extends State<App> with WidgetsBindingObserver {
           color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
         ),
         bodyText1: TextStyle(
-          fontSize: 22,
+          fontSize: 24,
           color: isDark ? CustomColors.textBlack : CustomColors.aWhite,
         ),
         bodyText2: TextStyle(
-          fontSize: 22,
+          fontSize: 24,
           color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
         ),
         subtitle1: TextStyle(
