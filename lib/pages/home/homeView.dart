@@ -349,15 +349,17 @@ class _HomeViewState extends State<HomeView>
     String type,
     List<AlertItem> items,
   }) async {
+    final children = items.map((item) => _alertContent(item: item)).toList();
+
     await showDialog(
       barrierColor: Colors.black.withOpacity(.85),
       context: context,
       child: AlertDialog(
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         clipBehavior: Clip.antiAlias,
-        insetPadding: EdgeInsets.symmetric(horizontal: 76),
         titlePadding: EdgeInsets.zero,
         contentPadding: EdgeInsets.zero,
         buttonPadding: EdgeInsets.zero,
@@ -405,16 +407,40 @@ class _HomeViewState extends State<HomeView>
           ),
         ),
         content: Container(
+          width: 560,
           color: Colors.white,
           child: IntrinsicHeight(
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 40),
+                  padding: EdgeInsets.only(top: 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ...items.map((item) => _alertContent(item: item)),
+                      ...List.generate(children.length * 2 - 1, (index) {
+                        final i = (index / 2).floor();
+                        if (index % 2 == 1) {
+                          if (i + 1 < children.length) {
+                            if (items[i].type != items[i + 1].type) {
+                              return Container(
+                                height: 40,
+                              );
+                            } else {
+                              return Divider(
+                                color: Color(0xffe5e5e5),
+                                height: 30,
+                                thickness: 1,
+                                indent: 100,
+                                endIndent: 100,
+                              );
+                            }
+                          }
+
+                          return Container();
+                        }
+
+                        return children[i];
+                      }),
                     ],
                   ),
                 ),
@@ -495,13 +521,12 @@ class _HomeViewState extends State<HomeView>
     String label,
   }) =>
       Container(
-        margin: EdgeInsets.only(bottom: 24),
-        padding: EdgeInsets.symmetric(horizontal: 100),
+        padding: EdgeInsets.symmetric(horizontal: 80),
         child: Text(
           label,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 22,
           ),
         ),
       );
@@ -510,8 +535,7 @@ class _HomeViewState extends State<HomeView>
     String label,
   }) =>
       Container(
-        margin: EdgeInsets.only(bottom: 24),
-        padding: EdgeInsets.symmetric(horizontal: 100),
+        padding: EdgeInsets.symmetric(horizontal: 80),
         child: IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -520,11 +544,11 @@ class _HomeViewState extends State<HomeView>
                 child: Text(
                   label,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 22,
                   ),
                 ),
               ),
-              Container(width: 100),
+              Container(width: 80),
               _datePicker(),
             ],
           ),
@@ -535,8 +559,7 @@ class _HomeViewState extends State<HomeView>
     String label,
   }) =>
       Container(
-        margin: EdgeInsets.only(bottom: 24),
-        padding: EdgeInsets.symmetric(horizontal: 100),
+        padding: EdgeInsets.symmetric(horizontal: 80),
         child: IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -545,7 +568,7 @@ class _HomeViewState extends State<HomeView>
                 child: Text(
                   label,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 22,
                   ),
                 ),
               ),
@@ -588,7 +611,6 @@ class _HomeViewState extends State<HomeView>
     int min,
   }) =>
       Container(
-        margin: EdgeInsets.only(bottom: 24),
         padding: EdgeInsets.symmetric(horizontal: 100),
         child: IntrinsicHeight(
           child: Row(
@@ -598,7 +620,7 @@ class _HomeViewState extends State<HomeView>
                 child: Text(
                   label,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 22,
                   ),
                 ),
               ),
@@ -631,7 +653,9 @@ class _HomeViewState extends State<HomeView>
                 width: 52,
                 child: Text(
                   '$min',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
