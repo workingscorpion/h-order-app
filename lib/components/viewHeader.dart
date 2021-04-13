@@ -10,12 +10,13 @@ class ViewHeader extends StatelessWidget {
     return FractionallySizedBox(
       widthFactor: .25,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        alignment: Alignment.bottomCenter,
         child: Text(
           text,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 18),
+          textAlign: TextAlign.center,
         ),
-        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Theme.of(context).accentColor,
           border: Border.all(
