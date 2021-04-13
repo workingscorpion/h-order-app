@@ -90,19 +90,13 @@ class _HistoryViewState extends State<HistoryView> {
       );
 
   _header() => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            flex: 4,
-            child: Container(
-              alignment: Alignment.centerLeft,
-              child: ViewHeader(text: '이용내역'),
-            ),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: ViewHeader(text: '이용내역'),
           ),
-          Expanded(
-            flex: 2,
-            child: _filter(),
-          ),
+          Spacer(),
+          _filter(),
         ],
       );
 

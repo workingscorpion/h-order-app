@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/store/navigationStore.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenPage extends StatefulWidget {
   @override
@@ -23,7 +22,7 @@ class _ScreenPageState extends State<ScreenPage> {
 
   init() async {
     _isLightMode =
-        await NavigationStore.instance.appKey.currentState.getTheme() ?? true;
+        await NavigationStore.instance.appKey.currentState.isLightMode();
     _selectedLockScreen = _isLightMode ? "라이트 모드" : "다크 모드";
     _selectedHomeScreen = _isLightMode ? "라이트 모드" : "다크 모드";
     setState(() {});
@@ -78,7 +77,7 @@ class _ScreenPageState extends State<ScreenPage> {
                       onChanged: (value) {
                         _selectedHomeScreen = value;
                         NavigationStore.instance.appKey.currentState
-                            .setTheme(false);
+                            .setTheme(true);
                         setState(() {});
                       },
                     ),
@@ -89,7 +88,7 @@ class _ScreenPageState extends State<ScreenPage> {
                       onChanged: (value) {
                         _selectedHomeScreen = value;
                         NavigationStore.instance.appKey.currentState
-                            .setTheme(true);
+                            .setTheme(false);
                         setState(() {});
                       },
                     ),

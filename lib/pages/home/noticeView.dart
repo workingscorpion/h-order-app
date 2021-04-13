@@ -153,7 +153,12 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ViewHeader(text: '입주민 공지'),
+            Row(
+              children: [
+                ViewHeader(text: '입주민 공지'),
+                Spacer(),
+              ],
+            ),
             Expanded(
               child: IntrinsicHeight(
                 child: Container(
