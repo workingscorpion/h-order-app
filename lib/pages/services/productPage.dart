@@ -70,7 +70,6 @@ class _ProductPageState extends State<ProductPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        // color: themeThemem,
         child: Column(
           children: [
             StatusBar(),
@@ -86,11 +85,15 @@ class _ProductPageState extends State<ProductPage>
                     ),
                     _productSlider(),
                     Expanded(
-                      flex: 1,
                       child: _title(),
                     ),
+                    Divider(
+                      color: Theme.of(context).accentColor,
+                      height: 5,
+                      thickness: 1,
+                    ),
                     _productOptions(),
-                    _selectButton(),
+                    _saveButton(),
                   ],
                 ),
               ),
@@ -101,22 +104,30 @@ class _ProductPageState extends State<ProductPage>
     );
   }
 
-  _selectButton() => Expanded(
+  _saveButton() => Expanded(
         flex: 1,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12),
           child: FlatButton(
-            onPressed: () {
-              _save();
-            },
-            color: Colors.blueGrey,
-            child: Text(
-              '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              onPressed: () {
+                _save();
+              },
+              color: Theme.of(context).accentColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(),
+                  Text(
+                    '장바구니 담기',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Text(
+                    '${NumberFormat().format(totalAmount)}원',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ],
+              )),
         ),
       );
 
@@ -132,21 +143,34 @@ class _ProductPageState extends State<ProductPage>
       );
 
   _productSlider() => Expanded(
-        flex: 8,
+      flex: 5,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 20),
         child: CarouselSlider(
-          items: _productImages([widget.product.image]),
+          items: _productImages([
+            widget.product.image,
+            widget.product.image,
+            widget.product.image
+          ]),
           options: CarouselOptions(
             enableInfiniteScroll: true,
             enlargeCenterPage: true,
+            viewportFraction: 0.6,
           ),
         ),
-      );
+      ));
 
   _productImages(List<String> images) => List.generate(
         images.length,
-        (index) => ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset(widget.product.image),
+        (index) => AspectRatio(
+          aspectRatio: 1,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Image.asset(
+              widget.product.image,
+              fit: BoxFit.fill,
+            ),
+          ),
         ),
       );
 
@@ -195,6 +219,7 @@ class _ProductPageState extends State<ProductPage>
                 color: Colors.white10,
               ),
             ),
+            color: Theme.of(context).primaryColor,
           ),
           child: FractionallySizedBox(
             heightFactor: .6,
@@ -205,61 +230,58 @@ class _ProductPageState extends State<ProductPage>
                   widget.product.name,
                   style: TextStyle(),
                 ),
-                Expanded(
-                  child: Container(),
-                ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 12),
-                  child: Text(
-                    '${NumberFormat().format(amount)} ₩',
-                    style: TextStyle(),
-                  ),
-                ),
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: IconButton(
-                    iconSize: 16,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      _quantity -= 1;
-                      if (_quantity < minQuantity) {
-                        _quantity = minQuantity;
-                      }
-                      setState(() {});
-                    },
-                    icon: Icon(
-                      CupertinoIcons.minus,
-                      size: 16,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  child: Text(
-                    '$_quantity',
-                    style: TextStyle(),
-                  ),
-                ),
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: IconButton(
-                    iconSize: 16,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      _quantity = _quantity + 1;
-                      setState(() {});
-                    },
-                    icon: FractionallySizedBox(
-                      widthFactor: .5,
-                      heightFactor: .5,
-                      child: Icon(
-                        CupertinoIcons.add,
-                        size: 16,
-                      ),
-                    ),
-                  ),
-                ),
+                // Container(
+                //   alignment: Alignment.centerRight,
+                //   margin: EdgeInsets.only(right: 12),
+                //   child: Text(
+                //     '${NumberFormat().format(amount)} ₩',
+                //     style: TextStyle(),
+                //   ),
+                // ),
+                // AspectRatio(
+                //   aspectRatio: 1,
+                //   child: IconButton(
+                //     iconSize: 16,
+                //     padding: EdgeInsets.zero,
+                //     onPressed: () {
+                //       _quantity -= 1;
+                //       if (_quantity < minQuantity) {
+                //         _quantity = minQuantity;
+                //       }
+                //       setState(() {});
+                //     },
+                //     icon: Icon(
+                //       CupertinoIcons.minus,
+                //       size: 16,
+                //     ),
+                //   ),
+                // ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 5),
+                //   child: Text(
+                //     '$_quantity',
+                //     style: TextStyle(),
+                //   ),
+                // ),
+                // AspectRatio(
+                //   aspectRatio: 1,
+                //   child: IconButton(
+                //     iconSize: 16,
+                //     padding: EdgeInsets.zero,
+                //     onPressed: () {
+                //       _quantity = _quantity + 1;
+                //       setState(() {});
+                //     },
+                //     icon: FractionallySizedBox(
+                //       widthFactor: .5,
+                //       heightFactor: .5,
+                //       child: Icon(
+                //         CupertinoIcons.add,
+                //         size: 16,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -295,6 +317,7 @@ class _ProductPageState extends State<ProductPage>
                     MediaQuery.of(context).size.height / 20 / 3 * (depth - 1),
                 right: 12,
               ),
+              color: Theme.of(context).primaryColor,
               child: FractionallySizedBox(
                 heightFactor: .6,
                 child: Row(
