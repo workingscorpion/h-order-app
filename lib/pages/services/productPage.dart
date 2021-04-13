@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -69,22 +70,29 @@ class _ProductPageState extends State<ProductPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        // color: themeThemem,
         child: Column(
           children: [
             StatusBar(),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _productHeader(),
-                  _productImages(),
-                  Expanded(
-                    flex: 1,
-                    child: _title(),
-                  ),
-                  _productOptions(),
-                  _selectButton(),
-                ],
+              child: Container(
+                padding: EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: _productHeader(),
+                    ),
+                    _productSlider(),
+                    Expanded(
+                      flex: 1,
+                      child: _title(),
+                    ),
+                    _productOptions(),
+                    _selectButton(),
+                  ],
+                ),
               ),
             ),
           ],
@@ -123,17 +131,22 @@ class _ProductPageState extends State<ProductPage>
         ),
       );
 
-  _productImages() => Expanded(
+  _productSlider() => Expanded(
         flex: 8,
-        child: Hero(
-          tag: widget.product.index,
-          child: Container(
-            height: MediaQuery.of(context).size.width * .5,
-            child: Image.asset(
-              widget.product.image,
-              fit: BoxFit.cover,
-            ),
+        child: CarouselSlider(
+          items: _productImages([widget.product.image]),
+          options: CarouselOptions(
+            enableInfiniteScroll: true,
+            enlargeCenterPage: true,
           ),
+        ),
+      );
+
+  _productImages(List<String> images) => List.generate(
+        images.length,
+        (index) => ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset(widget.product.image),
         ),
       );
 
