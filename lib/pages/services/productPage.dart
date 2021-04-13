@@ -213,7 +213,6 @@ class _ProductPageState extends State<ProductPage>
   _saveButton() => Expanded(
         flex: 1,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 12),
           margin: EdgeInsets.only(top: 20),
           child: FlatButton(
               padding: EdgeInsets.symmetric(horizontal: 20),
