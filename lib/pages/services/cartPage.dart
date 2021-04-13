@@ -63,10 +63,7 @@ class _CartPageState extends State<CartPage>
             StatusBar(),
             Expanded(
               child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 24,
-                ),
+                padding: EdgeInsets.all(24),
                 color: CustomColors.backgroundLightGrey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
