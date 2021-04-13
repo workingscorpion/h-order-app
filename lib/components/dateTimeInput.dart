@@ -4,13 +4,11 @@ import 'package:intl/intl.dart';
 
 class DateTimeInput extends StatefulWidget {
   final DateTime selectedTime;
-  final DateTime selectedWeekDays;
-  final void Function(AlarmModel) onAdd;
+  final void Function(DateTime) onAdd;
 
   DateTimeInput({
     Key key,
     this.selectedTime,
-    this.selectedWeekDays,
     this.onAdd,
   }) : super(key: key);
 
@@ -47,9 +45,13 @@ class DateTimeInputState extends State<DateTimeInput> {
 
     _dates = List.generate(
         100, (index) => DateTime.now().add(Duration(days: 50 - index)));
+    final selectedDate =
+        DateFormat('yyyy-MM-dd').format(widget.selectedTime ?? DateTime.now());
+    final dateIndex = _dates.indexWhere(
+        (element) => DateFormat('yyyy-MM-dd').format(element) == selectedDate);
 
     _dateListViewController = FixedExtentScrollController(
-      initialItem: (hour + 11) % 12,
+      initialItem: dateIndex,
     );
     _hourListViewController = FixedExtentScrollController(
       initialItem: (hour + 11) % 12,
@@ -70,33 +72,7 @@ class DateTimeInputState extends State<DateTimeInput> {
 
   _add() {
     if (widget.onAdd != null) {
-      // widget.onAdd(AlarmModel(
-      //   time: _selectedTime,
-      //   enabled: true,
-      // ));
-
-      _selectedTime = DateTime.now();
-
-      final duration = Duration(seconds: 1);
-      final curve = Curves.ease;
-
-      _hourListViewController.animateTo(
-        (_selectedTime.hour + 11) % 12 * _itemExtent,
-        duration: duration,
-        curve: curve,
-      );
-
-      _minuteListViewController.animateTo(
-        (_selectedTime.minute / _minuteStep).round() * _itemExtent,
-        duration: duration,
-        curve: curve,
-      );
-
-      _noonListViewController.animateTo(
-        (_selectedTime.hour / 12).floor() * _itemExtent,
-        duration: duration,
-        curve: curve,
-      );
+      widget.onAdd(_selectedTime);
     }
   }
 
@@ -146,7 +122,7 @@ class DateTimeInputState extends State<DateTimeInput> {
             _divider(),
             Expanded(
               child: _listWheelScrollView(
-                controller: _hourListViewController,
+                controller: _dateListViewController,
                 onSelectedItemChanged: (value) {
                   _selectTime(date: _dates[value]);
                 },

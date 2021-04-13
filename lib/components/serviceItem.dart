@@ -94,6 +94,7 @@ class ServiceItem {
   final String objectId;
   final String type;
   final String label;
+  final int min;
   final int max;
   final List<ServiceItem> children;
 
@@ -101,6 +102,7 @@ class ServiceItem {
     this.objectId,
     this.type,
     this.label,
+    this.min,
     this.max,
     this.children,
   });
