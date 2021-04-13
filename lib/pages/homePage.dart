@@ -61,8 +61,8 @@ class _HomePageState extends State<HomePage>
           ),
         ),
         floatingActionButton: HomeFloatingButton(
-          callback: (ViewType val) {
-            _tabController.animateTo(_pageToNumber(type: val));
+          callback: () {
+            _tabController.animateTo(0);
             setState(() {});
           },
         ),
