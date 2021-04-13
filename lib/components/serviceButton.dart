@@ -52,11 +52,11 @@ class _ServiceButtonState extends State<ServiceButton> {
               child: Icon(
                 widget.icon,
                 size: 64,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).accentColor,
               ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             Text(
