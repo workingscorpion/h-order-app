@@ -60,6 +60,7 @@ flutter:
   assets:
     - assets/
     - assets/icons/notice/
+    - assets/icons/service/
     - assets/sample/
     - assets/sample/payment/
     - assets/sample/screen/

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/clock.dart';
 import 'package:battery/battery.dart';
-import 'package:h_order/constants/customColors.dart';
 import 'package:wifi/wifi.dart';
 
 class StatusBar extends StatefulWidget {

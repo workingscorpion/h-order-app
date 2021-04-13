@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/ballScreen.dart';
+import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/productModel.dart';
@@ -122,55 +122,89 @@ class _ShopPageState extends State<ShopPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        key: _appBarKey,
-        title: Text('상점'),
-      ),
-      floatingActionButton: _floatingActionButton(),
-      body: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+        floatingActionButton: _floatingActionButton(),
+        body: Container(
+          child: Column(
             children: [
-              TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                tabs: [
-                  ..._categories.map(
-                    (item) => Container(
-                      child: Text(
-                        item.name,
-                        style: TextStyle(fontSize: 40),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              StatusBar(),
               Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    ..._categories.map(
-                      (category) => GridView.count(
-                        padding: EdgeInsets.all(5),
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5,
-                        crossAxisCount: 3,
-                        children: [
-                          ...category.products
-                              .map((product) => _product(product: product)),
+                child: Container(
+                  padding: EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _shopHeader(),
+                      TabBar(
+                        controller: _tabController,
+                        isScrollable: true,
+                        tabs: [
+                          ..._categories.map(
+                            (item) => Container(
+                              child: Text(
+                                item.name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(fontSize: 40),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            ..._categories.map(
+                              (category) => GridView.count(
+                                padding: EdgeInsets.all(5),
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 5,
+                                crossAxisCount: 3,
+                                children: [
+                                  ...category.products.map(
+                                      (product) => _product(product: product)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-        ],
-      ),
-    );
+        ));
   }
+
+  _shopHeader() => Row(
+        children: [
+          Text(
+            '본보야지',
+            style: Theme.of(context).textTheme.headline1.copyWith(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          Spacer(),
+          TextButton(
+            onPressed: () {
+              AppRouter.pop();
+            },
+            child: Row(
+              children: [
+                Text('홈화면', style: Theme.of(context).textTheme.bodyText2),
+                Icon(
+                  CupertinoIcons.chevron_right_2,
+                  color: Theme.of(context).textTheme.bodyText2.color,
+                ),
+              ],
+            ),
+          )
+        ],
+      );
 
   _product({
     ProductModel product,
@@ -178,80 +212,46 @@ class _ShopPageState extends State<ShopPage>
       Material(
         color: Colors.transparent,
         child: Container(
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    flex: 8,
-                    child: Hero(
-                      tag: product.index,
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: Image.asset(
-                          product.image,
-                          fit: BoxFit.cover,
-                        ),
+          child: InkWell(
+            onTap: () {
+              _detail(product: product);
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: Hero(
+                    tag: product.index,
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 5),
+                      child: Image.asset(
+                        product.image,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      product.name,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      '${NumberFormat().format(product.price)} ₩',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: () {
-                  _detail(product: product);
-                },
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .05,
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      key: _buttonKeys[product.index],
-                      icon: Icon(
-                        CupertinoIcons.cart_badge_plus,
-                        size: 18,
-                      ),
-                      onPressed: () {
-                        _addCartItem(
-                          cartItem: CartItemModel(
-                            product: product,
-                            name: product.name,
-                            amount: product.price,
-                            quantity: 1,
-                            optionAmount: 0,
-                            optionQuantity: Map(),
-                          ),
-                        );
-                      },
                     ),
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  child: Text(
+                    product.name,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    '${NumberFormat().format(product.price)} ₩',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );

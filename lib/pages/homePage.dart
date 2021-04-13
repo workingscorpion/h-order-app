@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage>
   _info() => Container(
       color: Theme.of(context).primaryColor,
       padding: EdgeInsets.symmetric(
-        vertical: 30,
+        vertical: 20,
         horizontal: 24,
       ),
       child: Column(
@@ -114,6 +114,7 @@ class _HomePageState extends State<HomePage>
                 Text(
                   '관리비납부현황',
                   style: Theme.of(context).textTheme.bodyText2,
+                  textScaleFactor: .7,
                 ),
                 _verticalDevider(),
                 Text(
@@ -123,6 +124,7 @@ class _HomePageState extends State<HomePage>
                     fontSize: 28,
                     color: Color.fromRGBO(33, 208, 33, 1),
                   ),
+                  textScaleFactor: .8,
                 ),
               ],
             ),

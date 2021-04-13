@@ -122,8 +122,7 @@ class AlarmInputState extends State<AlarmInput> {
   _add() {
     if (widget.onAdd != null) {
       _selectedWeekDays
-        ..sort((a, b) =>
-            _weekDays.indexOf(a) > _weekDays.indexOf(b) ? 1 : -1);
+        ..sort((a, b) => _weekDays.indexOf(a) > _weekDays.indexOf(b) ? 1 : -1);
 
       widget.onAdd(AlarmModel(
         time: _selectedTime,
@@ -178,11 +177,11 @@ class AlarmInputState extends State<AlarmInput> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: _selectedWeekDays.contains(value)
-                    ? Colors.white24
-                    : Colors.white24.withOpacity(0),
+                    ? Theme.of(context).accentColor
+                    : Theme.of(context).accentColor.withOpacity(0),
                 borderRadius: BorderRadius.all(Radius.circular(5)),
                 border: Border.all(
-                  color: Colors.white24,
+                  color: Theme.of(context).accentColor,
                   width: 1,
                 ),
               ),
@@ -285,7 +284,7 @@ class AlarmInputState extends State<AlarmInput> {
         width: 8,
         height: 8,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
       );
