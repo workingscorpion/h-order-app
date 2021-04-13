@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/clock.dart';
 
 class BillDetailPage extends StatefulWidget {
   BillDetailPage({Key key}) : super(key: key);
