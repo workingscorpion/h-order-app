@@ -34,7 +34,17 @@ class _ProductPageState extends State<ProductPage>
   List<ProductOptionModel> _optional;
 
   int get totalAmount {
-    return _quantity * amount;
+    var optionPrice = 0;
+    final options = [...widget.product.options];
+    options.addAll([...widget.product.options].expand((e) => e.options));
+
+    _selectedOption.forEach((key, value) {
+      if (value) {
+        optionPrice +=
+            options.singleWhere((element) => element.index == key).price;
+      }
+    });
+    return _quantity * amount + optionPrice;
   }
 
   int get amount {
@@ -383,14 +393,18 @@ class _ProductPageState extends State<ProductPage>
                           children: depth > 1 ||
                                   (option.options?.length ?? -1) == 0
                               ? [
-                                  Radio(
-                                    value: true,
-                                    groupValue: _selectedOption[option.index],
-                                    toggleable: true,
-                                    onChanged: (val) {
-                                      _selectedOption[option.index] = val;
-                                      setState(() {});
-                                    },
+                                  Container(
+                                    width: 20,
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: Radio(
+                                      value: true,
+                                      groupValue: _selectedOption[option.index],
+                                      toggleable: true,
+                                      onChanged: (val) {
+                                        _selectedOption[option.index] = val;
+                                        setState(() {});
+                                      },
+                                    ),
                                   ),
                                   Text(
                                     option.name,
