@@ -34,6 +34,7 @@ class _HomeViewState extends State<HomeView>
             color: Colors.transparent,
             child: GridView.count(
               padding: EdgeInsets.zero,
+              mainAxisSpacing: 20,
               crossAxisCount: 5,
               children: [
                 ...[
@@ -316,32 +317,39 @@ class _HomeViewState extends State<HomeView>
     String text,
     GestureTapCallback onTap,
   }) =>
-      Material(
+      Container(
         color: Colors.transparent,
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.all(Radius.circular(5)),
         child: InkWell(
-          onTap: onTap,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 12),
-                child: Icon(
-                  icon,
-                  size: 64,
+            onTap: onTap,
+            child: Column(
+              children: [
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 50,
+                  ),
                 ),
-              ),
-              Text(
-                text ?? '',
-                style: TextStyle(
-                  fontSize: 22,
+                Text(
+                  text ?? '',
+                  style: TextStyle(
+                    fontSize: 22,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
+                Text(
+                  '호출중',
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.red,
+                  ),
+                ),
+              ],
+            )),
       );
 
   _alert({
