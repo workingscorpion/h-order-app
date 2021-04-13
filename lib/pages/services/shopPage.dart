@@ -177,80 +177,46 @@ class _ShopPageState extends State<ShopPage>
       Material(
         color: Colors.transparent,
         child: Container(
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    flex: 8,
-                    child: Hero(
-                      tag: product.index,
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: Image.asset(
-                          product.image,
-                          fit: BoxFit.cover,
-                        ),
+          child: InkWell(
+            onTap: () {
+              _detail(product: product);
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: Hero(
+                    tag: product.index,
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 5),
+                      child: Image.asset(
+                        product.image,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      product.name,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      '${NumberFormat().format(product.price)} ₩',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: () {
-                  _detail(product: product);
-                },
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .05,
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      key: _buttonKeys[product.index],
-                      icon: Icon(
-                        CupertinoIcons.cart_badge_plus,
-                        size: 18,
-                      ),
-                      onPressed: () {
-                        _addCartItem(
-                          cartItem: CartItemModel(
-                            product: product,
-                            name: product.name,
-                            amount: product.price,
-                            quantity: 1,
-                            optionAmount: 0,
-                            optionQuantity: Map(),
-                          ),
-                        );
-                      },
                     ),
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  child: Text(
+                    product.name,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    '${NumberFormat().format(product.price)} ₩',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
