@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/constants/serviceStatus.dart';
 import 'package:intl/intl.dart';
 
@@ -252,12 +253,7 @@ class _HomeViewState extends State<HomeView>
                 padding: EdgeInsets.symmetric(
                   horizontal: 24,
                 ),
-                child: Text(
-                  '제휴 서비스',
-                  style: TextStyle(
-                    fontSize: 32,
-                  ),
-                ),
+                child: _cardHeader(),
               ),
               Expanded(
                 child: ListView(
@@ -286,6 +282,21 @@ class _HomeViewState extends State<HomeView>
             ],
           ),
         ),
+      );
+
+  _cardHeader() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 5,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: ViewHeader(text: '우리동네 둘러보기'),
+            ),
+          ),
+          Text('더보기'),
+          Icon(CupertinoIcons.right_chevron),
+        ],
       );
 
   _carousel() => Expanded(
