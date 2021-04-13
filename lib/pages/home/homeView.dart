@@ -129,7 +129,7 @@ class _HomeViewState extends State<HomeView>
                     items: [
                       ServiceItem(
                         objectId: '1',
-                        type: 'label',
+                        type: 'text',
                         label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
                       ),
                     ],
@@ -140,7 +140,7 @@ class _HomeViewState extends State<HomeView>
                     items: [
                       ServiceItem(
                         objectId: '1',
-                        type: 'label',
+                        type: 'text',
                         label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
                       ),
                     ],
