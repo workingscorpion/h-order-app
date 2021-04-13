@@ -25,6 +25,7 @@ class _CollapsibleState extends State<Collapsible> {
         },
         child: Container(
           decoration: BoxDecoration(
+            color: Colors.white,
             border: Border(
               bottom: BorderSide(
                 color: CustomColors.tableInnerBorder,
@@ -34,7 +35,10 @@ class _CollapsibleState extends State<Collapsible> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              widget.header,
+              Container(
+                color: collapsed ? Colors.white : Colors.black.withOpacity(.05),
+                child: widget.header,
+              ),
               collapsed ? Container() : widget.body ?? Container(),
             ],
           ),

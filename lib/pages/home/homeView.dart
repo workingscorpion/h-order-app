@@ -20,9 +20,10 @@ class _HomeViewState extends State<HomeView>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _menu(),
-          Container(height: 24),
+          Container(
+            height: 20,
+          ),
           _cards(),
-          Container(height: 24),
           _carousel(),
         ],
       );
@@ -30,11 +31,15 @@ class _HomeViewState extends State<HomeView>
   _menu() => Expanded(
         flex: 1,
         child: Container(
-          padding: EdgeInsets.all(12),
           child: Material(
             color: Colors.transparent,
             child: GridView.count(
-              padding: EdgeInsets.zero,
+              padding: EdgeInsets.only(
+                top: 40,
+                bottom: 40,
+                left: 50,
+                right: 60,
+              ),
               mainAxisSpacing: 20,
               crossAxisCount: 5,
               children: [
@@ -220,21 +225,30 @@ class _HomeViewState extends State<HomeView>
               ),
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 24,
+                  padding: EdgeInsets.only(
+                    bottom: 24,
+                    left: 24,
+                    right: 24,
                   ),
                   scrollDirection: Axis.horizontal,
                   children: [
                     ...List.generate(
                       10,
                       (index) => Container(
-                        margin: EdgeInsets.only(right: 12),
+                        margin: EdgeInsets.only(right: 8),
                         child: AspectRatio(
-                          aspectRatio: 1 / 1.413,
-                          child: FlatButton(
-                            onPressed: () {},
-                            child: Text('제휴 서비스 $index'),
+                          aspectRatio: 1.413 / 1,
+                          child: InkWell(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              child: Text('제휴 서비스 $index'),
+                            ),
                           ),
                         ),
                       ),
@@ -255,8 +269,8 @@ class _HomeViewState extends State<HomeView>
         ],
       );
 
-  _carousel() => Expanded(
-        flex: 1,
+  _carousel() => AspectRatio(
+        aspectRatio: 16 / 7,
         child: LayoutBuilder(
           builder: (context, constraint) => CarouselSlider(
             items: [

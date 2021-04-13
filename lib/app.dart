@@ -81,51 +81,51 @@ class AppState extends State<App> with WidgetsBindingObserver {
         color: textColor,
       ),
       headline2: TextStyle(
-        fontSize: 24,
+        fontSize: 20,
         color: subTextColor1,
       ),
       headline3: TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         color: isLightMode ? CustomColors.aWhite : CustomColors.subTextBlack,
       ),
       headline4: TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         color: subTextColor2,
       ),
       headline5: TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         color: subTextColor2,
       ),
       headline6: TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         color: subTextColor2,
       ),
       bodyText1: TextStyle(
-        fontSize: 24,
+        fontSize: 20,
         color: isLightMode ? CustomColors.aWhite : CustomColors.aBlack,
       ),
       bodyText2: TextStyle(
-        fontSize: 24,
+        fontSize: 20,
         color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
       ),
       subtitle1: TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         color: subTextColor2,
       ),
       subtitle2: TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         color: subTextColor2,
       ),
       button: TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         color: subTextColor2,
       ),
       caption: TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         color: subTextColor2,
       ),
       overline: TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         color: subTextColor2,
       ),
     );
@@ -275,15 +275,15 @@ class AppState extends State<App> with WidgetsBindingObserver {
           foregroundColor: CustomColors.aWhite,
         ),
         tabBarTheme: TabBarTheme(
-          labelPadding: EdgeInsets.symmetric(horizontal: 22),
+          labelPadding: EdgeInsets.symmetric(horizontal: 20),
           labelColor: CustomColors.aWhite,
           labelStyle: TextStyle(
-            fontSize: 22,
+            fontSize: 20,
             color: CustomColors.aBlack,
           ),
           unselectedLabelColor: CustomColors.aWhite,
           unselectedLabelStyle: TextStyle(
-            fontSize: 22,
+            fontSize: 20,
             color: CustomColors.aBlack,
           ),
         ),
@@ -394,15 +394,15 @@ class AppState extends State<App> with WidgetsBindingObserver {
           foregroundColor: CustomColors.aBlack,
         ),
         tabBarTheme: TabBarTheme(
-          labelPadding: EdgeInsets.symmetric(horizontal: 22),
+          labelPadding: EdgeInsets.symmetric(horizontal: 20),
           labelColor: CustomColors.aWhite,
           labelStyle: TextStyle(
-            fontSize: 22,
+            fontSize: 20,
             color: CustomColors.aWhite,
           ),
           unselectedLabelColor: CustomColors.aWhite,
           unselectedLabelStyle: TextStyle(
-            fontSize: 22,
+            fontSize: 20,
             color: CustomColors.aWhite,
           ),
         ),

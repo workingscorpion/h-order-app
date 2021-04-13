@@ -69,12 +69,11 @@ class _HomePageState extends State<HomePage>
   _info() => Container(
       color: Theme.of(context).primaryColor,
       padding: EdgeInsets.symmetric(
-        vertical: 20,
+        vertical: 10,
         horizontal: 24,
       ),
       child: Column(
         children: [
-          _infoHeader(),
           IntrinsicHeight(
             child: Row(
               children: [
@@ -90,21 +89,6 @@ class _HomePageState extends State<HomePage>
   _infoHeader() => Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(
-            '202호',
-            style: Theme.of(context)
-                .textTheme
-                .headline1
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Text(
-              '김오더 님',
-              style:
-                  Theme.of(context).textTheme.headline2.copyWith(fontSize: 32),
-            ),
-          ),
           Spacer(),
           Container(
             margin: EdgeInsets.only(bottom: 10),
@@ -113,18 +97,18 @@ class _HomePageState extends State<HomePage>
               children: [
                 Text(
                   '관리비납부현황',
-                  style: Theme.of(context).textTheme.bodyText2,
-                  textScaleFactor: .7,
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontSize: 20,
+                      ),
                 ),
                 _verticalDevider(),
                 Text(
                   '납부완료',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 28,
+                    fontSize: 20,
                     color: Color.fromRGBO(33, 208, 33, 1),
                   ),
-                  textScaleFactor: .8,
                 ),
               ],
             ),
@@ -136,15 +120,37 @@ class _HomePageState extends State<HomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: Text(
-                '서울특별시 구로구 경인로 67길 67 신도림081 (우: 08208)',
-                softWrap: true,
-                textScaleFactor: .8,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '202호',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    '김오더 님',
+                    style: Theme.of(context).textTheme.headline2.copyWith(
+                          fontSize: 32,
+                        ),
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              '서울특별시 구로구 경인로 67길 67 신도림081 (우: 08208)',
+              softWrap: true,
+              style: TextStyle(
+                fontSize: 20,
               ),
             ),
+            Container(height: 20),
             FlatButton(
-              height: 50,
+              height: 44,
               color: Theme.of(context).accentColor,
               onPressed: () {
                 AppRouter.toAlarmPage();
@@ -153,9 +159,9 @@ class _HomePageState extends State<HomePage>
                 '알림 설정',
                 maxLines: 1,
                 style: TextStyle(
+                  fontSize: 20,
                   color: Theme.of(context).primaryColor,
                 ),
-                textScaleFactor: .8,
               ),
             ),
             _infoButtons(),
@@ -166,75 +172,67 @@ class _HomePageState extends State<HomePage>
   _rightPanel() => Expanded(
         child: Column(
           children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 30,
-                  vertical: 30,
-                ),
-                decoration: _weatherGradient(),
-                child: Row(
-                  children: [
-                    _weatherInfo(),
-                    Spacer(),
-                    Icon(
-                      CupertinoIcons.cloud_sun,
-                      size: 80,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-
-  _weatherInfo() => Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+            Spacer(),
+            _infoHeader(),
+            Spacer(),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Text(
-                '오늘, 어제보다 2℃ 높아요',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
+              padding: EdgeInsets.all(24),
+              decoration: _weatherGradient(),
+              child: Row(
+                children: [
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Container(
+                  //       child: Text(
+                  //         '오늘, 어제보다 2℃ 높아요',
+                  //         style: TextStyle(
+                  //           fontSize: 18,
+                  //           color: Colors.white,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Row(
+                  //       crossAxisAlignment: CrossAxisAlignment.baseline,
+                  //       children: [
+                  //         Text(
+                  //           '38',
+                  //           style: TextStyle(
+                  //             fontSize: 70,
+                  //             color: Colors.white,
+                  //           ),
+                  //         ),
+                  //         Container(
+                  //           child: Stack(
+                  //             children: [
+                  //               Positioned(
+                  //                 top: 0,
+                  //                 left: 0,
+                  //                 child: Text(
+                  //                   '℃',
+                  //                   style: TextStyle(
+                  //                     fontSize: 25,
+                  //                     color: Colors.white,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //         Text(
+                  //           '/ 11℃ 약간 흐림',
+                  //           style: TextStyle(
+                  //             fontSize: 18,
+                  //             color: Colors.white,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     )
+                  //   ],
+                  // ),
+                ],
               ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '38',
-                      style: TextStyle(
-                        fontSize: 70,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      '℃',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  '/11℃ 약간 흐림',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       );
@@ -249,8 +247,8 @@ class _HomePageState extends State<HomePage>
             0.8,
           ],
           colors: [
-            Color.fromRGBO(62, 182, 223, 1),
-            Color.fromRGBO(25, 128, 255, 1)
+            Color(0xff197fff),
+            Color(0xff3fb6de),
           ],
         ),
       );
@@ -267,7 +265,7 @@ class _HomePageState extends State<HomePage>
   _status() => StatusBar();
 
   _infoButtons() => Container(
-        margin: EdgeInsets.only(top: 20),
+        height: 44,
         child: Row(
           children: [
             ...[
@@ -312,8 +310,11 @@ class _HomePageState extends State<HomePage>
             style: Theme.of(context)
                 .textTheme
                 .headline2
-                .copyWith(fontWeight: FontWeight.bold),
-            textScaleFactor: .7,
+                .copyWith(fontWeight: FontWeight.bold)
+                .copyWith(
+                  letterSpacing: -1,
+                  fontSize: 16,
+                ),
             textAlign: TextAlign.center,
           ),
         ),
