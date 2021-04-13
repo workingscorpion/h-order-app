@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/dateTimeInput.dart';
-import 'package:h_order/components/serviceItem.dart';
-import 'package:intl/intl.dart';
+import 'package:h_order/components/serviceButton.dart';
 
 class AlertService extends StatefulWidget {
   final IconData icon;

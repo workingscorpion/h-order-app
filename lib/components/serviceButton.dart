@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/alertService.dart';
+import 'package:h_order/constants/serviceStatus.dart';
 import 'package:intl/intl.dart';
 
 class ServiceButton extends StatefulWidget {
@@ -8,12 +9,14 @@ class ServiceButton extends StatefulWidget {
   final String label;
   final List<ServiceItem> items;
   final GestureTapCallback onTap;
+  final ServiceStatus status;
 
   ServiceButton({
     this.icon,
     this.label,
     this.items,
     this.onTap,
+    this.status,
   });
 
   @override
@@ -43,10 +46,16 @@ class _ServiceButtonState extends State<ServiceButton> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 12),
+              height: 100,
+              width: 100,
+              margin: EdgeInsets.only(bottom: 10),
               child: Icon(
                 widget.icon,
                 size: 64,
+              ),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
               ),
             ),
             Text(
@@ -55,10 +64,32 @@ class _ServiceButtonState extends State<ServiceButton> {
                 fontSize: 22,
               ),
             ),
+            widget.status != null
+                ? Text(
+                    _serviceStatusText(),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.red,
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
     );
+  }
+
+  _serviceStatusText() {
+    switch (widget.status) {
+      case ServiceStatus.Call:
+        return '호출중';
+
+      case ServiceStatus.Doing:
+        return '처리중';
+
+      default:
+        return '기타';
+    }
   }
 
   _alert({
