@@ -68,60 +68,68 @@ class AppState extends State<App> with WidgetsBindingObserver {
         color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
       );
 
-  _textTheme(bool isLightMode) => TextTheme(
-        headline1: TextStyle(
-          fontSize: 60,
-          color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
-        ),
-        headline2: TextStyle(
-          fontSize: 24,
-          color: isLightMode ? CustomColors.subTextBlack : CustomColors.aWhite,
-        ),
-        headline3: TextStyle(
-          fontSize: 22,
-          color: isLightMode ? CustomColors.aWhite : CustomColors.subTextBlack,
-        ),
-        headline4: TextStyle(
-          fontSize: 22,
-          color: isLightMode ? CustomColors.textBlack : CustomColors.aWhite,
-        ),
-        headline5: TextStyle(
-          fontSize: 22,
-          color: isLightMode ? CustomColors.textBlack : CustomColors.aWhite,
-        ),
-        headline6: TextStyle(
-          fontSize: 22,
-          color: isLightMode ? CustomColors.textBlack : CustomColors.aWhite,
-        ),
-        bodyText1: TextStyle(
-          fontSize: 24,
-          color: isLightMode ? CustomColors.aWhite : CustomColors.aBlack,
-        ),
-        bodyText2: TextStyle(
-          fontSize: 24,
-          color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
-        ),
-        subtitle1: TextStyle(
-          fontSize: 22,
-          color: isLightMode ? CustomColors.textBlack : CustomColors.aWhite,
-        ),
-        subtitle2: TextStyle(
-          fontSize: 22,
-          color: isLightMode ? CustomColors.textBlack : CustomColors.aWhite,
-        ),
-        button: TextStyle(
-          fontSize: 22,
-          color: isLightMode ? CustomColors.textBlack : CustomColors.aWhite,
-        ),
-        caption: TextStyle(
-          fontSize: 22,
-          color: isLightMode ? CustomColors.textBlack : CustomColors.aWhite,
-        ),
-        overline: TextStyle(
-          fontSize: 22,
-          color: isLightMode ? CustomColors.textBlack : CustomColors.aWhite,
-        ),
-      );
+  _textTheme(bool isLightMode) {
+    final textColor = isLightMode ? CustomColors.aBlack : CustomColors.aWhite;
+    final subTextColor1 =
+        isLightMode ? CustomColors.subTextBlack : CustomColors.aWhite;
+    final subTextColor2 =
+        isLightMode ? CustomColors.textBlack : CustomColors.aWhite;
+
+    return TextTheme(
+      headline1: TextStyle(
+        fontSize: 60,
+        color: textColor,
+      ),
+      headline2: TextStyle(
+        fontSize: 24,
+        color: subTextColor1,
+      ),
+      headline3: TextStyle(
+        fontSize: 22,
+        color: isLightMode ? CustomColors.aWhite : CustomColors.subTextBlack,
+      ),
+      headline4: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      headline5: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      headline6: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      bodyText1: TextStyle(
+        fontSize: 24,
+        color: isLightMode ? CustomColors.aWhite : CustomColors.aBlack,
+      ),
+      bodyText2: TextStyle(
+        fontSize: 24,
+        color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
+      ),
+      subtitle1: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      subtitle2: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      button: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      caption: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      overline: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+    );
+  }
 
   disposeSetMain() {
     _setMainSubscription?.cancel();
