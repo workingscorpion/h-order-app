@@ -20,7 +20,92 @@ class _PaymentPageState extends State<PaymentPage> {
                   padding: EdgeInsets.all(24),
                   children: [
                     _title(
-                      text: '등록계좌',
+                      text: '주 계좌',
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(32),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: DefaultTextStyle(
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                        ),
+                        child: Row(
+                          children: [
+                            Text('김오더 계좌'),
+                            Text('kb국민은행'),
+                            Text('123456*****1235'),
+                            Spacer(),
+                            _button(text: '수정'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(height: 12),
+                    Row(
+                      children: [
+                        Spacer(),
+                        Container(
+                          child: Material(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: Colors.white,
+                            child: InkWell(
+                              onTap: () {},
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.black,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
+                                ),
+                                alignment: Alignment.center,
+                                width: 200,
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                                child: Text(
+                                  '결제비밀번호 설정',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(width: 24),
+                        Container(
+                          child: Material(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: Colors.white,
+                            child: InkWell(
+                              onTap: () {},
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.black,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
+                                ),
+                                alignment: Alignment.center,
+                                width: 200,
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                                child: Text(
+                                  '결제수단 추가',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(height: 32),
+                    _title(
+                      text: '등록 계좌',
                     ),
                     ...List.generate(
                       2,
@@ -33,8 +118,9 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                       ),
                     ),
+                    Container(height: 30),
                     _title(
-                      text: '등록카드',
+                      text: '등록 카드',
                     ),
                     ...List.generate(
                       5,
@@ -50,29 +136,39 @@ class _PaymentPageState extends State<PaymentPage> {
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: FlatButton(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        onPressed: () {},
-                        child: Text('결제비밀번호 설정'),
-                      ),
-                    ),
-                    Container(width: 24),
-                    Expanded(
-                      child: FlatButton(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        onPressed: () {},
-                        child: Text('결제수단 추가'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
+          ),
+        ),
+      );
+
+  _button({
+    String text,
+  }) =>
+      Material(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {},
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1,
+                color: Colors.white,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+            ),
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(
+              vertical: 8,
+              horizontal: 16,
+            ),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
       );
@@ -81,7 +177,8 @@ class _PaymentPageState extends State<PaymentPage> {
     String text,
   }) =>
       Container(
-        margin: EdgeInsets.only(bottom: 24),
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        margin: EdgeInsets.only(bottom: 12),
         child: Text(text),
       );
 
@@ -92,10 +189,7 @@ class _PaymentPageState extends State<PaymentPage> {
         padding: EdgeInsets.all(24),
         margin: EdgeInsets.only(bottom: 24),
         decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: Colors.white24,
-          ),
+          color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
         child: Row(
@@ -117,23 +211,48 @@ class _PaymentPageState extends State<PaymentPage> {
             DefaultTextStyle(
               style: TextStyle(
                 fontSize: 24,
+                color: Colors.black,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     item.name,
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black,
+                    ),
                   ),
                   Text(
                     item.numbers.join('-'),
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.black,
+                    ),
                   ),
                 ],
               ),
             ),
             Spacer(),
-            FlatButton(
-              onPressed: () {},
-              child: Text('삭제'),
+            Material(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              color: Color(0xff606162),
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16,
+                  ),
+                  child: Text(
+                    '삭제',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

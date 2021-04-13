@@ -125,7 +125,7 @@ class _HomeViewState extends State<HomeView>
                   ),
                   ServiceButton(
                     icon: CupertinoIcons.paw,
-                    label: '팻케어',
+                    label: '펫케어',
                     onTap: () {
                       AppRouter.toShopPage();
                     },

@@ -1,6 +1,7 @@
 import 'package:drag_and_drop_gridview/devdrag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/components/serviceButton.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -42,7 +43,7 @@ class _FavoritePageState extends State<FavoritePage> {
       ),
       MenuModel(
         icon: CupertinoIcons.paw,
-        name: '팻케어',
+        name: '펫케어',
       ),
       MenuModel(
         icon: CupertinoIcons.cube_box,
@@ -91,9 +92,12 @@ class _FavoritePageState extends State<FavoritePage> {
                   ),
                   itemCount: list.length,
                   itemBuilder: (context, index) {
-                    return _serviceItem(
+                    return ServiceButton(
                       icon: list[index].icon,
-                      text: list[index].name,
+                      label: list[index].name,
+                      color: favoriteList.indexOf(list[index]) != -1
+                          ? Color(0xfff7b500)
+                          : Colors.black,
                       onTap: () {
                         final item = list[index];
                         if (favoriteList.indexOf(item) != -1) {
@@ -130,9 +134,10 @@ class _FavoritePageState extends State<FavoritePage> {
                     childAspectRatio: 1,
                   ),
                   itemCount: favoriteList.length,
-                  itemBuilder: (context, index) => _serviceItem(
+                  itemBuilder: (context, index) => ServiceButton(
                     icon: favoriteList[index].icon,
-                    text: favoriteList[index].name,
+                    label: favoriteList[index].name,
+                    onTap: () {},
                   ),
                   onWillAccept: (oldIndex, newIndex) {
                     return true;

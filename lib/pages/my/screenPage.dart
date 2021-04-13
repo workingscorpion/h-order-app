@@ -76,8 +76,8 @@ class _ScreenPageState extends State<ScreenPage> {
                       image: 'assets/sample/screen/light.png',
                       onChanged: (value) {
                         _selectedHomeScreen = value;
-                        NavigationStore.instance.appKey.currentState
-                            .setTheme(true);
+                        // NavigationStore.instance.appKey.currentState
+                        //     .setTheme(true);
                         setState(() {});
                       },
                     ),
@@ -87,8 +87,8 @@ class _ScreenPageState extends State<ScreenPage> {
                       image: 'assets/sample/screen/dark.png',
                       onChanged: (value) {
                         _selectedHomeScreen = value;
-                        NavigationStore.instance.appKey.currentState
-                            .setTheme(false);
+                        // NavigationStore.instance.appKey.currentState
+                        //     .setTheme(false);
                         setState(() {});
                       },
                     ),
