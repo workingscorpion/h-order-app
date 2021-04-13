@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
@@ -66,58 +67,64 @@ class _ProductPageState extends State<ProductPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('상점'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            flex: 8,
-            child: Hero(
-              tag: widget.product.index,
-              child: Container(
-                height: MediaQuery.of(context).size.width * .5,
-                child: Image.asset(
-                  widget.product.image,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: _title(),
-          ),
-          Expanded(
-            flex: 8,
-            child: ListView(
-              children: [
-                ...widget.product.options
-                        ?.expand((option) => _option(option: option)) ??
-                    [],
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: FlatButton(
-                onPressed: () {
-                  _save();
-                },
-                color: Colors.blueGrey,
-                child: Text(
-                  '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
-                  style: TextStyle(
-                    color: Colors.white,
+      body: Container(
+        child: Column(
+          children: [
+            StatusBar(),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    flex: 8,
+                    child: Hero(
+                      tag: widget.product.index,
+                      child: Container(
+                        height: MediaQuery.of(context).size.width * .5,
+                        child: Image.asset(
+                          widget.product.image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                    flex: 1,
+                    child: _title(),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: ListView(
+                      children: [
+                        ...widget.product.options
+                                ?.expand((option) => _option(option: option)) ??
+                            [],
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: FlatButton(
+                        onPressed: () {
+                          _save();
+                        },
+                        color: Colors.blueGrey,
+                        child: Text(
+                          '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
