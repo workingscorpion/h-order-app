@@ -75,7 +75,13 @@ class _BillViewState extends State<BillView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _accountInfo(),
-            _histories(),
+            DefaultTextStyle(
+              style: TextStyle(
+                fontSize: 17,
+                color: Colors.black,
+              ),
+              child: _histories(),
+            ),
           ],
         ),
       );
@@ -90,10 +96,6 @@ class _BillViewState extends State<BillView> {
             vertical: 24,
           ),
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: Colors.white24,
-            ),
             borderRadius: BorderRadius.all(
               Radius.circular(8),
             ),
@@ -105,8 +107,9 @@ class _BillViewState extends State<BillView> {
               Text(
                 '[납부계좌 안내]',
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
               Text(
                 '[$_bankName] $_account $_accountOwner',
@@ -143,12 +146,6 @@ class _BillViewState extends State<BillView> {
   _bill() => Expanded(
         child: IntrinsicHeight(
           child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: CustomColors.tableOuterBorder,
-                width: 1,
-              ),
-            ),
             child: Column(
               children: [
                 _billHeader(),
@@ -159,16 +156,21 @@ class _BillViewState extends State<BillView> {
         ),
       );
 
-  _billHeader() => Container(
-        color: Theme.of(context).accentColor,
-        child: _row(
-          children: List.generate(
-            headers.length,
-            (index) => Text(
-              headers[index],
-              maxLines: 1,
-              style: Theme.of(context).textTheme.bodyText1,
-              textAlign: TextAlign.center,
+  _billHeader() => DefaultTextStyle(
+        style: TextStyle(
+          fontSize: 17,
+          color: Colors.white,
+        ),
+        child: Container(
+          color: Theme.of(context).accentColor,
+          child: _row(
+            children: List.generate(
+              headers.length,
+              (index) => Text(
+                headers[index],
+                maxLines: 1,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -183,19 +185,16 @@ class _BillViewState extends State<BillView> {
                   Text(
                     '${item.index}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     item.title,
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     '${DateFormat('yyyy-MM-dd').format(item.expiredDate)}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
@@ -203,32 +202,32 @@ class _BillViewState extends State<BillView> {
                         ? '${DateFormat('yyyy-MM-dd').format(item.paymentDate)}'
                         : "-",
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     '${NumberFormat().format(item.amount)}원',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     item.status ? '납부' : '미납',
                     maxLines: 1,
-                    style: TextStyle(
-                      color: item.status ? Colors.green : Colors.red,
-                      fontSize: 20,
-                    ),
                     textAlign: TextAlign.center,
                   ),
-                  FlatButton(
-                    color: Theme.of(context).accentColor,
-                    onPressed: () {
-                      AppRouter.toBillDetailPage();
-                    },
-                    child: Text(
-                      '고지서',
-                      style: Theme.of(context).textTheme.bodyText1,
+                  Container(
+                    height: 24,
+                    child: FlatButton(
+                      color: Theme.of(context).accentColor,
+                      onPressed: () {
+                        AppRouter.toBillDetailPage();
+                      },
+                      child: Text(
+                        '고지서',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -241,36 +240,31 @@ class _BillViewState extends State<BillView> {
   _row({
     List<Widget> children,
   }) =>
-      DefaultTextStyle(
-        style: TextStyle(
-          fontSize: 24,
+      Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 26,
         ),
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 26,
-          ),
-          child: Row(
-            children: [
-              ...children
-                  .asMap()
-                  .map(
-                    (index, item) => MapEntry(
-                      index,
-                      Expanded(
-                        flex: ratio[index],
-                        child: Container(
-                          padding: index != children.length - 1
-                              ? EdgeInsets.only(right: 10)
-                              : EdgeInsets.zero,
-                          child: item,
-                        ),
+        child: Row(
+          children: [
+            ...children
+                .asMap()
+                .map(
+                  (index, item) => MapEntry(
+                    index,
+                    Expanded(
+                      flex: ratio[index],
+                      child: Container(
+                        padding: index != children.length - 1
+                            ? EdgeInsets.only(right: 10)
+                            : EdgeInsets.zero,
+                        child: item,
                       ),
                     ),
-                  )
-                  .values,
-            ],
-          ),
+                  ),
+                )
+                .values,
+          ],
         ),
       );
 

@@ -10,7 +10,7 @@ class ViewHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 190,
+      width: 240,
       padding: EdgeInsets.symmetric(
         horizontal: 46,
         vertical: 16,

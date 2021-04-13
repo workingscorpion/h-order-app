@@ -55,7 +55,7 @@ class _ServiceButtonState extends State<ServiceButton> {
               ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Theme.of(context).primaryColor,
+                color: Colors.white,
               ),
             ),
             Text(

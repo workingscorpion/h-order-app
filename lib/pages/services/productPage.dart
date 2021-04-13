@@ -1,9 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
@@ -69,143 +66,61 @@ class _ProductPageState extends State<ProductPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            StatusBar(),
-            Expanded(
+      appBar: AppBar(
+        title: Text('상점'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 8,
+            child: Hero(
+              tag: widget.product.index,
               child: Container(
-                padding: EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: _productHeader(),
-                    ),
-                    _productSlider(),
-                    Expanded(
-                      child: _title(),
-                    ),
-                    Divider(
-                      color: Theme.of(context).accentColor,
-                      height: 5,
-                      thickness: 1,
-                    ),
-                    _productOptions(),
-                    _saveButton(),
-                  ],
+                height: MediaQuery.of(context).size.width * .5,
+                child: Image.asset(
+                  widget.product.image,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            flex: 1,
+            child: _title(),
+          ),
+          Expanded(
+            flex: 8,
+            child: ListView(
+              children: [
+                ...widget.product.options
+                        ?.expand((option) => _option(option: option)) ??
+                    [],
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: FlatButton(
+                onPressed: () {
+                  _save();
+                },
+                color: Colors.blueGrey,
+                child: Text(
+                  '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
-
-  _saveButton() => Expanded(
-        flex: 1,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: FlatButton(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              onPressed: () {
-                _save();
-              },
-              color: Theme.of(context).accentColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(),
-                  Text(
-                    '장바구니 담기',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Text(
-                    '${NumberFormat().format(totalAmount)}원',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ],
-              )),
-        ),
-      );
-
-  _productOptions() => Expanded(
-        flex: 8,
-        child: ListView(
-          children: [
-            ...widget.product.options
-                    ?.expand((option) => _option(option: option)) ??
-                [],
-          ],
-        ),
-      );
-
-  _productSlider() => Expanded(
-      flex: 5,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 20),
-        child: CarouselSlider(
-          items: _productImages([
-            widget.product.image,
-            widget.product.image,
-            widget.product.image
-          ]),
-          options: CarouselOptions(
-            enableInfiniteScroll: true,
-            enlargeCenterPage: true,
-            viewportFraction: 0.6,
-          ),
-        ),
-      ));
-
-  _productImages(List<String> images) => List.generate(
-        images.length,
-        (index) => AspectRatio(
-          aspectRatio: 1,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Image.asset(
-              widget.product.image,
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-      );
-
-  _productHeader() => Row(
-        children: [
-          Text(
-            '본보야지',
-            style: Theme.of(context).textTheme.headline1.copyWith(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          Spacer(),
-          TextButton(
-            onPressed: () {
-              AppRouter.pop();
-            },
-            child: Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text(
-                    '목록보기',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ),
-                Icon(
-                  CupertinoIcons.chevron_right_2,
-                  color: Theme.of(context).textTheme.bodyText2.color,
-                ),
-              ],
-            ),
-          )
-        ],
-      );
 
   _title() => Material(
         color: Colors.transparent,
@@ -219,7 +134,6 @@ class _ProductPageState extends State<ProductPage>
                 color: Colors.white10,
               ),
             ),
-            color: Theme.of(context).primaryColor,
           ),
           child: FractionallySizedBox(
             heightFactor: .6,
@@ -230,58 +144,61 @@ class _ProductPageState extends State<ProductPage>
                   widget.product.name,
                   style: TextStyle(),
                 ),
-                // Container(
-                //   alignment: Alignment.centerRight,
-                //   margin: EdgeInsets.only(right: 12),
-                //   child: Text(
-                //     '${NumberFormat().format(amount)} ₩',
-                //     style: TextStyle(),
-                //   ),
-                // ),
-                // AspectRatio(
-                //   aspectRatio: 1,
-                //   child: IconButton(
-                //     iconSize: 16,
-                //     padding: EdgeInsets.zero,
-                //     onPressed: () {
-                //       _quantity -= 1;
-                //       if (_quantity < minQuantity) {
-                //         _quantity = minQuantity;
-                //       }
-                //       setState(() {});
-                //     },
-                //     icon: Icon(
-                //       CupertinoIcons.minus,
-                //       size: 16,
-                //     ),
-                //   ),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 5),
-                //   child: Text(
-                //     '$_quantity',
-                //     style: TextStyle(),
-                //   ),
-                // ),
-                // AspectRatio(
-                //   aspectRatio: 1,
-                //   child: IconButton(
-                //     iconSize: 16,
-                //     padding: EdgeInsets.zero,
-                //     onPressed: () {
-                //       _quantity = _quantity + 1;
-                //       setState(() {});
-                //     },
-                //     icon: FractionallySizedBox(
-                //       widthFactor: .5,
-                //       heightFactor: .5,
-                //       child: Icon(
-                //         CupertinoIcons.add,
-                //         size: 16,
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                Expanded(
+                  child: Container(),
+                ),
+                Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.only(right: 12),
+                  child: Text(
+                    '${NumberFormat().format(amount)} ₩',
+                    style: TextStyle(),
+                  ),
+                ),
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: IconButton(
+                    iconSize: 16,
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      _quantity -= 1;
+                      if (_quantity < minQuantity) {
+                        _quantity = minQuantity;
+                      }
+                      setState(() {});
+                    },
+                    icon: Icon(
+                      CupertinoIcons.minus,
+                      size: 16,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  child: Text(
+                    '$_quantity',
+                    style: TextStyle(),
+                  ),
+                ),
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: IconButton(
+                    iconSize: 16,
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      _quantity = _quantity + 1;
+                      setState(() {});
+                    },
+                    icon: FractionallySizedBox(
+                      widthFactor: .5,
+                      heightFactor: .5,
+                      child: Icon(
+                        CupertinoIcons.add,
+                        size: 16,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -317,7 +234,6 @@ class _ProductPageState extends State<ProductPage>
                     MediaQuery.of(context).size.height / 20 / 3 * (depth - 1),
                 right: 12,
               ),
-              color: Theme.of(context).primaryColor,
               child: FractionallySizedBox(
                 heightFactor: .6,
                 child: Row(
