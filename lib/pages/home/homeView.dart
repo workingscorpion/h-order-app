@@ -194,7 +194,7 @@ class _HomeViewState extends State<HomeView>
                     icon: CupertinoIcons.info_circle,
                     label: '정보',
                     onTap: () {
-                      AppRouter.toSurroundInfoPage();
+                      AppRouter.toInformationPage();
                     },
                   ),
                 ],

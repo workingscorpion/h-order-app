@@ -2,14 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:flutter/material.dart';
 
-class SurroundInfoPage extends StatefulWidget {
-  SurroundInfoPage({Key key}) : super(key: key);
+class InformationPage extends StatefulWidget {
+  InformationPage({Key key}) : super(key: key);
 
   @override
-  _SurroundInfoPageState createState() => _SurroundInfoPageState();
+  _InformationPageState createState() => _InformationPageState();
 }
 
-class _SurroundInfoPageState extends State<SurroundInfoPage>
+class _InformationPageState extends State<InformationPage>
     with SingleTickerProviderStateMixin {
   GlobalKey _appBarKey;
   TabController _tabController;
