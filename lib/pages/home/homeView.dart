@@ -393,7 +393,9 @@ class _HomeViewState extends State<HomeView>
                   width: 24,
                   height: 24,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                     icon: Icon(CupertinoIcons.xmark),
                     iconSize: 24,
                   ),
@@ -590,7 +592,7 @@ class _HomeViewState extends State<HomeView>
         padding: EdgeInsets.symmetric(horizontal: 100),
         child: IntrinsicHeight(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Text(
@@ -602,22 +604,59 @@ class _HomeViewState extends State<HomeView>
               ),
               Container(width: 100),
               Container(
-                height: 24,
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    width: 1,
+                    color: Colors.black,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(7),
+                    bottomLeft: Radius.circular(7),
+                  ),
+                ),
                 child: IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {},
                   iconSize: 24,
-                  icon: Icon(CupertinoIcons.minus),
+                  icon: Icon(
+                    CupertinoIcons.minus,
+                    size: 14,
+                  ),
                 ),
               ),
-              Text('$min'),
               Container(
-                height: 24,
+                width: 52,
+                child: Text(
+                  '$min',
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    width: 1,
+                    color: Colors.black,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(7),
+                    bottomRight: Radius.circular(7),
+                  ),
+                ),
                 child: IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {},
                   iconSize: 24,
-                  icon: Icon(CupertinoIcons.add),
+                  icon: Icon(
+                    CupertinoIcons.add,
+                    size: 14,
+                  ),
                 ),
               ),
             ],
