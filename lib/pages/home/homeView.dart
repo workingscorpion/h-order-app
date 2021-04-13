@@ -350,101 +350,143 @@ class _HomeViewState extends State<HomeView>
     List<AlertItem> items,
   }) async {
     await showDialog(
+      barrierColor: Colors.black.withOpacity(.85),
       context: context,
       child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        clipBehavior: Clip.antiAlias,
+        insetPadding: EdgeInsets.symmetric(horizontal: 76),
         titlePadding: EdgeInsets.zero,
         contentPadding: EdgeInsets.zero,
         buttonPadding: EdgeInsets.zero,
         actionsPadding: EdgeInsets.zero,
         title: Container(
-          padding: EdgeInsets.all(24),
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
+          decoration: BoxDecoration(
+            color: Color(0xf0f9f9f9),
+            border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Color(0x22000000),
+              ),
             ),
           ),
-        ),
-        content: IntrinsicHeight(
-          child: Column(
+          padding: EdgeInsets.all(24),
+          child: Stack(
             children: [
-              Divider(),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 100),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ...items.map(
-                      (item) {
-                        switch (item.type) {
-                          case 'text':
-                            return _alertTextContent(label: item.label);
-
-                          case 'date':
-                            return _alertDateContent(label: item.label);
-
-                          case 'time':
-                            return _alertTimeContent(label: item.label);
-
-                          case 'option':
-                            return _alertOptionContent(
-                              label: item.label,
-                              max: item.max,
-                              min: item.min,
-                            );
-                        }
-
-                        return Container();
-                      },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Divider(),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 24,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        '취소',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 24,
-                    ),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      color: Colors.white,
-                      child: Text(
-                        '호출',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ],
+              Positioned(
+                right: 8,
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(CupertinoIcons.xmark),
+                    iconSize: 24,
+                  ),
                 ),
               ),
             ],
           ),
         ),
+        content: Container(
+          color: Colors.white,
+          child: IntrinsicHeight(
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ...items.map((item) => _alertContent(item: item)),
+                    ],
+                  ),
+                ),
+                Divider(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 40,
+                    horizontal: 100,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlatButton(
+                        minWidth: 140,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          '취소',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 24,
+                      ),
+                      FlatButton(
+                        minWidth: 140,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        color: Colors.black,
+                        child: Text(
+                          '신청',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
+  }
+
+  _alertContent({
+    AlertItem item,
+  }) {
+    switch (item.type) {
+      case 'text':
+        return _alertTextContent(label: item.label);
+
+      case 'date':
+        return _alertDateContent(label: item.label);
+
+      case 'time':
+        return _alertTimeContent(label: item.label);
+
+      case 'option':
+        return _alertOptionContent(
+          label: item.label,
+          max: item.max,
+          min: item.min,
+        );
+    }
+
+    return Container();
   }
 
   _alertTextContent({
