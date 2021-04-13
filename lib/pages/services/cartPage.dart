@@ -169,7 +169,7 @@ class _CartPageState extends State<CartPage>
                 ),
                 Expanded(
                   child: Text(
-                    '${NumberFormat().format(totalAmount)} ₩',
+                    '${NumberFormat().format(totalAmount)}원',
                     textAlign: TextAlign.right,
                     style: TextStyle(),
                   ),
@@ -183,13 +183,34 @@ class _CartPageState extends State<CartPage>
   _payButton() => Container(
         padding: EdgeInsets.symmetric(horizontal: 12),
         child: FlatButton(
-          color: Colors.blueGrey,
+          height: 80,
+          color: Theme.of(context).accentColor,
           onPressed: () {
             _save();
           },
-          child: Text(
-            '결제하기',
-            style: Theme.of(context).textTheme.bodyText1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 20),
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(247, 181, 0, 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '${widget.cart.length}건',
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
+              ),
+              Text(
+                '${NumberFormat().format(totalAmount)}원 결제하기',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
           ),
         ),
       );
@@ -250,13 +271,6 @@ class _CartPageState extends State<CartPage>
                                     '${cartItem.name}',
                                     style: TextStyle(color: Colors.black),
                                   ),
-                                  // Expanded(
-                                  //   child: Text(
-                                  //     '${NumberFormat().format(cartItem.totalAmount)} ₩',
-                                  //     textAlign: TextAlign.right,
-                                  //     style: TextStyle(color: Colors.black),
-                                  //   ),
-                                  // ),
                                 ],
                               ),
                             ),
@@ -387,15 +401,10 @@ class _CartPageState extends State<CartPage>
           children: [
             Text('총 주문금액'),
             Spacer(),
-            Text('${NumberFormat().format(_amountCalc())}원'),
-            // Text('123'),
+            Text('${NumberFormat().format(totalAmount)}원'),
           ],
         ),
       );
-
-  _amountCalc() {
-    return widget.cart.map((e) => e.totalAmount).fold(0, (p, c) => p + c);
-  }
 
   _option({
     double depth = 0,
