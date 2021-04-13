@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage>
           children: [
             Expanded(
               child: Text(
-                '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우 12345)',
+                '서울특별시 구로구 경인로 67길 67 신도림081 (우: 08208)',
                 softWrap: true,
                 textScaleFactor: .8,
               ),
