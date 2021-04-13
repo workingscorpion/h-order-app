@@ -4,10 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/clock.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
 import 'package:h_order/components/statusBar.dart';
-import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
 
@@ -95,7 +93,7 @@ class _HomePageState extends State<HomePage>
                 _infoText(text: '202호', isBold: true, size: 50),
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
-                  child: _infoText(text: '(김오더 님)', isBold: false, size: 25),
+                  child: _infoText(text: '김오더 님', isBold: false, size: 25),
                 ),
               ],
             ),
