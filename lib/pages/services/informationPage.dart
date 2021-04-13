@@ -2,14 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:flutter/material.dart';
 
-class SurroundInfoPage extends StatefulWidget {
-  SurroundInfoPage({Key key}) : super(key: key);
+class InformationPage extends StatefulWidget {
+  InformationPage({Key key}) : super(key: key);
 
   @override
-  _SurroundInfoPageState createState() => _SurroundInfoPageState();
+  _InformationPageState createState() => _InformationPageState();
 }
 
-class _SurroundInfoPageState extends State<SurroundInfoPage>
+class _InformationPageState extends State<InformationPage>
     with SingleTickerProviderStateMixin {
   GlobalKey _appBarKey;
   TabController _tabController;
@@ -50,7 +50,7 @@ class _SurroundInfoPageState extends State<SurroundInfoPage>
     return Scaffold(
       appBar: AppBar(
         key: _appBarKey,
-        title: Text('주변 정보'),
+        title: Text('정보'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,20 +73,29 @@ class _SurroundInfoPageState extends State<SurroundInfoPage>
             child: TabBarView(
               controller: _tabController,
               children: [
-                ..._categories.map((item) => CarouselSlider(
-                      options: CarouselOptions(height: 1500),
-                      items: _images.map((i) {
-                        // FIXME: 이미지 수정후 상황에 따라 fit 수정
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(color: Colors.white),
-                          child: Image.asset(
-                            i,
-                            fit: BoxFit.fitHeight,
-                          ),
-                        );
-                      }).toList(),
-                    )),
+                ..._categories.map(
+                  (item) => LayoutBuilder(
+                    builder: (context, constraint) => CarouselSlider(
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        height: constraint.maxHeight,
+                      ),
+                      items: _images
+                          .map(
+                            (item) => Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Image.asset(
+                                item,
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

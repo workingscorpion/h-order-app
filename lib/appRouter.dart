@@ -16,7 +16,7 @@ import 'package:h_order/pages/services/productPage.dart';
 import 'package:h_order/pages/services/settingsPage.dart';
 import 'package:h_order/pages/services/shopPage.dart';
 import 'package:h_order/pages/services/shoppingCompletePage.dart';
-import 'package:h_order/pages/services/surroundInfoPage.dart';
+import 'package:h_order/pages/services/informationPage.dart';
 import 'package:h_order/pages/splashPage.dart';
 import 'package:h_order/store/navigationStore.dart';
 
@@ -83,10 +83,10 @@ class AppRouter {
           builder: (BuildContext context) => BoardPage(),
         );
 
-      case RouteNames.SurroundInfo:
+      case RouteNames.Information:
         return MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => SurroundInfoPage(),
+          builder: (BuildContext context) => InformationPage(),
         );
 
       case RouteNames.Settings:
@@ -198,8 +198,8 @@ class AppRouter {
     return Navigator.of(context).pushNamed(RouteNames.Board);
   }
 
-  static toSurroundInfoPage() {
-    return Navigator.of(context).pushNamed(RouteNames.SurroundInfo);
+  static toInformationPage() {
+    return Navigator.of(context).pushNamed(RouteNames.Information);
   }
 
   static toSettingsPage() {

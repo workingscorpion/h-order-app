@@ -23,14 +23,9 @@ class AppState extends State<App> with WidgetsBindingObserver {
 
   Future _future;
   StreamSubscription _setMainSubscription;
-  SharedPreferences _prefs;
 
-  static ThemeMode _themeMode = ThemeMode.light;
-  static Brightness _brightness = Brightness.light;
-
-  IconThemeData iconTheme;
-
-  TextTheme textTheme;
+  ThemeMode _themeMode = ThemeMode.light;
+  Brightness _brightness = Brightness.light;
 
   @override
   void initState() {
@@ -48,92 +43,92 @@ class AppState extends State<App> with WidgetsBindingObserver {
   }
 
   initTheme() async {
-    await getPrefs();
-    final isLightMode = _prefs.getBool('LightMode') ?? true;
+    final prefs = await SharedPreferences.getInstance();
+    final isLightMode = prefs.getBool('LightMode') ?? true;
     setThemes(isLightMode);
   }
 
-  setThemes(isLightMode) {
-    _themeMode = !isLightMode ? ThemeMode.dark : ThemeMode.light;
-    _brightness = !isLightMode ? Brightness.dark : Brightness.light;
-    textTheme = _textTheme(!isLightMode);
-    iconTheme = _iconTheme(!isLightMode);
+  setThemes(bool isLightMode) {
+    _themeMode = isLightMode ? ThemeMode.light : ThemeMode.dark;
+    _brightness = isLightMode ? Brightness.light : Brightness.dark;
     setState(() {});
   }
 
-  getPrefs() async {
-    _prefs = await SharedPreferences.getInstance();
+  setTheme(bool isLightMode) async {
+    final prefs = await SharedPreferences.getInstance();
+    setThemes(isLightMode);
+    prefs.setBool('LightMode', isLightMode);
   }
 
-  setTheme(bool isDark) async {
-    setThemes(!isDark);
-    _prefs.setBool('LightMode', !isDark);
+  Future<bool> isLightMode() async {
+    return _themeMode == ThemeMode.light;
   }
 
-  _iconTheme(bool isDark) => IconThemeData(
-        color: !isDark ? CustomColors.aBlack : CustomColors.aWhite,
+  _iconTheme(bool isLightMode) => IconThemeData(
+        color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
       );
 
-  _textTheme(bool isDark) => TextTheme(
-        headline1: TextStyle(
-          fontSize: 60,
-          color: isDark ? CustomColors.aWhite : CustomColors.aBlack,
-        ),
-        headline2: TextStyle(
-          fontSize: 24,
-          color: isDark ? CustomColors.aWhite : CustomColors.subTextBlack,
-        ),
-        headline3: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.subTextBlack : CustomColors.aWhite,
-        ),
-        headline4: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-        ),
-        headline5: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-        ),
-        headline6: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-        ),
-        bodyText1: TextStyle(
-          fontSize: 24,
-          color: isDark ? CustomColors.aBlack : CustomColors.aWhite,
-        ),
-        bodyText2: TextStyle(
-          fontSize: 24,
-          color: isDark ? CustomColors.aWhite : CustomColors.aBlack,
-        ),
-        subtitle1: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-        ),
-        subtitle2: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-        ),
-        button: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-        ),
-        caption: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-        ),
-        overline: TextStyle(
-          fontSize: 22,
-          color: isDark ? CustomColors.aWhite : CustomColors.textBlack,
-        ),
-      );
+  _textTheme(bool isLightMode) {
+    final textColor = isLightMode ? CustomColors.aBlack : CustomColors.aWhite;
+    final subTextColor1 =
+        isLightMode ? CustomColors.subTextBlack : CustomColors.aWhite;
+    final subTextColor2 =
+        isLightMode ? CustomColors.textBlack : CustomColors.aWhite;
 
-  Future<bool> getTheme() async {
-    if (_themeMode == ThemeMode.dark) {
-      return false;
-    }
-    return true;
+    return TextTheme(
+      headline1: TextStyle(
+        fontSize: 60,
+        color: textColor,
+      ),
+      headline2: TextStyle(
+        fontSize: 24,
+        color: subTextColor1,
+      ),
+      headline3: TextStyle(
+        fontSize: 22,
+        color: isLightMode ? CustomColors.aWhite : CustomColors.subTextBlack,
+      ),
+      headline4: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      headline5: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      headline6: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      bodyText1: TextStyle(
+        fontSize: 24,
+        color: isLightMode ? CustomColors.aWhite : CustomColors.aBlack,
+      ),
+      bodyText2: TextStyle(
+        fontSize: 24,
+        color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
+      ),
+      subtitle1: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      subtitle2: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      button: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      caption: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+      overline: TextStyle(
+        fontSize: 22,
+        color: subTextColor2,
+      ),
+    );
   }
 
   disposeSetMain() {
@@ -174,8 +169,8 @@ class AppState extends State<App> with WidgetsBindingObserver {
       child: MaterialApp(
         title: 'H Order',
         themeMode: _themeMode,
-        theme: lightTheme(),
-        darkTheme: darkTheme(),
+        theme: _lightTheme(),
+        darkTheme: _darkTheme(),
         navigatorKey: NavigationStore.instance.navigatorKey,
         onGenerateRoute: AppRouter.generateRoute,
         initialRoute: RouteNames.Splash,
@@ -183,7 +178,7 @@ class AppState extends State<App> with WidgetsBindingObserver {
     );
   }
 
-  lightTheme() => ThemeData(
+  _lightTheme() => ThemeData(
         materialTapTargetSize: MaterialTapTargetSize.padded,
         accentColor: Colors.black,
         primaryColor: Colors.white,
@@ -191,13 +186,13 @@ class AppState extends State<App> with WidgetsBindingObserver {
         dialogBackgroundColor: CustomColors.backgroundLightGrey,
         scaffoldBackgroundColor: CustomColors.backgroundLightGrey,
         splashColor: Colors.transparent,
-        textTheme: textTheme,
-        primaryTextTheme: textTheme,
-        accentTextTheme: textTheme,
-        iconTheme: iconTheme,
-        primaryIconTheme: iconTheme,
+        textTheme: _textTheme(true),
+        primaryTextTheme: _textTheme(true),
+        accentTextTheme: _textTheme(true),
+        iconTheme: _iconTheme(true),
+        primaryIconTheme: _iconTheme(true),
         bottomAppBarColor: CustomColors.tableInnerBorder,
-        accentIconTheme: iconTheme,
+        accentIconTheme: _iconTheme(true),
         buttonColor: Colors.blueGrey,
         colorScheme: ColorScheme(
           primary: CustomColors.aWhite,
@@ -297,14 +292,14 @@ class AppState extends State<App> with WidgetsBindingObserver {
           elevation: 0,
           centerTitle: true,
           shadowColor: Colors.transparent,
-          textTheme: textTheme,
-          iconTheme: iconTheme,
-          actionsIconTheme: iconTheme,
+          textTheme: _textTheme(true),
+          iconTheme: _iconTheme(true),
+          actionsIconTheme: _iconTheme(true),
           brightness: _brightness,
         ),
       );
 
-  darkTheme() => ThemeData(
+  _darkTheme() => ThemeData(
         materialTapTargetSize: MaterialTapTargetSize.padded,
         accentColor: CustomColors.aWhite,
         primaryColor: Colors.black,
@@ -312,12 +307,12 @@ class AppState extends State<App> with WidgetsBindingObserver {
         dialogBackgroundColor: CustomColors.backgroundDarkGrey,
         scaffoldBackgroundColor: CustomColors.backgroundDarkGrey,
         splashColor: Colors.transparent,
-        textTheme: textTheme,
-        primaryTextTheme: textTheme,
-        accentTextTheme: textTheme,
-        iconTheme: iconTheme,
-        primaryIconTheme: iconTheme,
-        accentIconTheme: iconTheme,
+        textTheme: _textTheme(false),
+        primaryTextTheme: _textTheme(false),
+        accentTextTheme: _textTheme(false),
+        iconTheme: _iconTheme(false),
+        primaryIconTheme: _iconTheme(false),
+        accentIconTheme: _iconTheme(false),
         bottomAppBarColor: CustomColors.tableInnerBorder,
         buttonColor: Colors.blueGrey,
         colorScheme: ColorScheme(
@@ -416,9 +411,9 @@ class AppState extends State<App> with WidgetsBindingObserver {
           elevation: 0,
           centerTitle: true,
           shadowColor: Colors.transparent,
-          textTheme: textTheme,
-          iconTheme: iconTheme,
-          actionsIconTheme: iconTheme,
+          textTheme: _textTheme(false),
+          iconTheme: _iconTheme(false),
+          actionsIconTheme: _iconTheme(false),
           brightness: _brightness,
         ),
       );

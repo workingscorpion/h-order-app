@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:intl/intl.dart';
+import 'package:h_order/components/serviceItem.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -37,193 +37,164 @@ class _HomeViewState extends State<HomeView>
               crossAxisCount: 5,
               children: [
                 ...[
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.hammer,
-                    text: '시설보수',
-                    onTap: () {
-                      _alert(
-                        title: '시설보수',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '시설보수',
+                    items: [
+                      ServiceItem(
+                        objectId: '1',
+                        type: 'text',
+                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.sparkles,
-                    text: '청소',
-                    onTap: () {
-                      _alert(
-                        title: '청소',
-                        items: [
-                          AlertItem(
-                            type: 'date',
-                            label: '예약시간 설정',
-                          ),
-                          AlertItem(
-                            type: 'time',
-                            label: '',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '청소',
+                    items: [
+                      ServiceItem(
+                        objectId: '1',
+                        type: 'text',
+                        label: '요청하신 시간에 관리실 직원이 방문할 예정입니다.',
+                      ),
+                      ServiceItem(
+                        objectId: '2',
+                        type: 'dateTime',
+                        label: '',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.tornado,
-                    text: '세탁',
-                    onTap: () {
-                      _alert(
-                        title: '세탁',
-                        items: [
-                          AlertItem(
-                            type: 'date',
-                            label: '예약시간 설정',
-                          ),
-                          AlertItem(
-                            type: 'time',
-                            label: '',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '세탁',
+                    items: [
+                      ServiceItem(
+                        objectId: '1',
+                        type: 'text',
+                        label: '요청하신 시간에 관리실 직원이 방문할 예정입니다.',
+                      ),
+                      ServiceItem(
+                        objectId: '2',
+                        type: 'dateTime',
+                        label: '',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.car_detailed,
-                    text: '출차',
-                    onTap: () {
-                      _alert(
-                        title: '출차',
-                        items: [
-                          AlertItem(
-                            type: 'date',
-                            label: '예약시간 설정',
-                          ),
-                          AlertItem(
-                            type: 'time',
-                            label: '',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '출차',
+                    items: [
+                      ServiceItem(
+                        objectId: '1',
+                        type: 'text',
+                        label: '요청하신 시간에 관리실 직원이 방문할 예정입니다.',
+                      ),
+                      ServiceItem(
+                        objectId: '2',
+                        type: 'dateTime',
+                        label: '',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.exclamationmark_bubble,
-                    text: '관리실 호출',
-                    onTap: () {
-                      _alert(
-                        title: '관리실 호출',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '관리실 호출',
+                    items: [
+                      ServiceItem(
+                        objectId: '1',
+                        type: 'text',
+                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      ),
+                    ],
                   ),
                 ],
                 ...[
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.tag,
-                    text: '딜리버리',
+                    label: '딜리버리',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.paw,
-                    text: '팻케어',
+                    label: '팻케어',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.cube_box,
-                    text: '택배',
-                    onTap: () {
-                      _alert(
-                        title: '택배',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '택배',
+                    items: [
+                      ServiceItem(
+                        objectId: '1',
+                        type: 'text',
+                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.arrow_3_trianglepath,
-                    text: '분리수거',
-                    onTap: () {
-                      _alert(
-                        title: '분리수거',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                          ),
-                        ],
-                      );
-                    },
+                    label: '분리수거',
+                    items: [
+                      ServiceItem(
+                        objectId: '1',
+                        type: 'text',
+                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                      ),
+                    ],
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.trash,
-                    text: '종량제봉투',
-                    onTap: () {
-                      _alert(
-                        title: '종량제봉투',
-                        items: [
-                          AlertItem(
-                            type: 'text',
-                            label: '10분내로 문 앞에 배송해드립니다.',
-                          ),
-                          AlertItem(
-                            type: 'option',
-                            label: '20L',
-                            min: 1,
-                            max: 10,
-                          ),
-                          AlertItem(
-                            type: 'option',
-                            label: '50L',
-                            min: 1,
-                            max: 10,
-                          ),
-                          AlertItem(
-                            type: 'option',
-                            label: '100L',
-                            min: 1,
-                            max: 10,
-                          ),
-                        ],
-                      );
-                    },
+                    label: '종량제봉투',
+                    items: [
+                      ServiceItem(
+                        objectId: '1',
+                        type: 'text',
+                        label: '10분내로 문 앞에 배송해드립니다.',
+                      ),
+                      ServiceItem(
+                        objectId: '2',
+                        type: 'count',
+                        label: '20L',
+                        max: 15,
+                      ),
+                      ServiceItem(
+                        objectId: '3',
+                        type: 'count',
+                        label: '50L',
+                        max: 10,
+                      ),
+                      ServiceItem(
+                        objectId: '4',
+                        type: 'count',
+                        label: '100L',
+                        max: 5,
+                      ),
+                    ],
                   ),
                 ],
                 ...[
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.paintbrush,
-                    text: '인테리어',
+                    label: '인테리어',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.archivebox,
-                    text: '이사',
+                    label: '이사',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
                   ),
-                  _serviceItem(
+                  ServiceButton(
                     icon: CupertinoIcons.info_circle,
-                    text: '정보',
+                    label: '정보',
                     onTap: () {
-                      AppRouter.toSurroundInfoPage();
+                      AppRouter.toInformationPage();
                     },
                   ),
                 ],
@@ -310,292 +281,4 @@ class _HomeViewState extends State<HomeView>
           ),
         ),
       );
-
-  _serviceItem({
-    IconData icon,
-    String text,
-    GestureTapCallback onTap,
-  }) =>
-      Material(
-        color: Colors.transparent,
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 12),
-                child: Icon(
-                  icon,
-                  size: 64,
-                ),
-              ),
-              Text(
-                text ?? '',
-                style: TextStyle(
-                  fontSize: 22,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  _alert({
-    String title,
-    String type,
-    List<AlertItem> items,
-  }) async {
-    await showDialog(
-      context: context,
-      child: AlertDialog(
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        buttonPadding: EdgeInsets.zero,
-        actionsPadding: EdgeInsets.zero,
-        title: Container(
-          padding: EdgeInsets.all(24),
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
-            ),
-          ),
-        ),
-        content: IntrinsicHeight(
-          child: Column(
-            children: [
-              Divider(),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 100),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ...items.map(
-                      (item) {
-                        switch (item.type) {
-                          case 'text':
-                            return _alertTextContent(label: item.label);
-
-                          case 'date':
-                            return _alertDateContent(label: item.label);
-
-                          case 'time':
-                            return _alertTimeContent(label: item.label);
-
-                          case 'option':
-                            return _alertOptionContent(
-                              label: item.label,
-                              max: item.max,
-                              min: item.min,
-                            );
-                        }
-
-                        return Container();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Divider(),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 24,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        '취소',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 24,
-                    ),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      color: Colors.white,
-                      child: Text(
-                        '호출',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  _alertTextContent({
-    String label,
-  }) =>
-      Container(
-        margin: EdgeInsets.only(bottom: 24),
-        padding: EdgeInsets.symmetric(horizontal: 100),
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 24,
-          ),
-        ),
-      );
-
-  _alertDateContent({
-    String label,
-  }) =>
-      Container(
-        margin: EdgeInsets.only(bottom: 24),
-        padding: EdgeInsets.symmetric(horizontal: 100),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              Container(width: 100),
-              _datePicker(),
-            ],
-          ),
-        ),
-      );
-
-  _alertTimeContent({
-    String label,
-  }) =>
-      Container(
-        margin: EdgeInsets.only(bottom: 24),
-        padding: EdgeInsets.symmetric(horizontal: 100),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              Container(width: 100),
-              _timePicker(),
-            ],
-          ),
-        ),
-      );
-
-  _datePicker() => InkWell(
-        onTap: () {
-          showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(
-              Duration(days: 100),
-            ),
-          );
-        },
-        child: Container(
-          child: Text('${DateFormat('yyyy-MM-dd').format(DateTime.now())}'),
-        ),
-      );
-
-  _timePicker() => InkWell(
-        onTap: () {
-          showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.now(),
-          );
-        },
-        child: Text('${TimeOfDay.now().format(context)}'),
-      );
-
-  _alertOptionContent({
-    String label,
-    int max,
-    int min,
-  }) =>
-      Container(
-        margin: EdgeInsets.only(bottom: 24),
-        padding: EdgeInsets.symmetric(horizontal: 100),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              Container(width: 100),
-              Container(
-                height: 24,
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  iconSize: 24,
-                  icon: Icon(CupertinoIcons.minus),
-                ),
-              ),
-              Text('$min'),
-              Container(
-                height: 24,
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  iconSize: 24,
-                  icon: Icon(CupertinoIcons.add),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-}
-
-class AlertItem {
-  final String type;
-  final String label;
-  final int max;
-  final int min;
-  final List<AlertItem> children;
-
-  AlertItem({
-    this.type,
-    this.label,
-    this.max,
-    this.min,
-    this.children,
-  });
 }

@@ -6,6 +6,7 @@
         "cupertino",
         "lerp",
         "mobx",
+        "prefs",
         "vsync"
     ]
 }

@@ -88,16 +88,7 @@ class _StatusBarState extends State<StatusBar> {
           Clock(
             fontSize: 24,
           ),
-          // TODO: 잠금화면 이동 버튼 제거
           Spacer(),
-          InkWell(
-            onTap: () {
-              AppRouter.toLockPage();
-            },
-            child: Text(
-              '잠금화면',
-            ),
-          ),
           _wifiInidicator(),
           _batteryIndicator(),
         ],

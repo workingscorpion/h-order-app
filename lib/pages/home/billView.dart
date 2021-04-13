@@ -128,7 +128,12 @@ class _BillViewState extends State<BillView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ViewHeader(text: '관리비 내역'),
+              Row(
+                children: [
+                  ViewHeader(text: '관리비 내역'),
+                  Spacer(),
+                ],
+              ),
               _bill(),
             ],
           ),
