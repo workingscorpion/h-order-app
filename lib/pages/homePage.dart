@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage>
                   '관리비납부현황',
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
-                _verticalDevider(height: 15),
+                _verticalDevider(),
                 Text(
                   '납부완료',
                   style: TextStyle(
@@ -253,15 +253,12 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _verticalDevider({
-    double height,
-  }) =>
-      Container(
-        height: height != null ? height : 20,
+  _verticalDevider() => Container(
+        height: 15,
         child: VerticalDivider(
           color: Theme.of(context).accentColor,
           thickness: 1,
-          width: 20,
+          width: 10,
         ),
       );
 
