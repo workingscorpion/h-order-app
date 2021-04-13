@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productModel.dart';
@@ -75,51 +76,14 @@ class _ProductPageState extends State<ProductPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    flex: 8,
-                    child: Hero(
-                      tag: widget.product.index,
-                      child: Container(
-                        height: MediaQuery.of(context).size.width * .5,
-                        child: Image.asset(
-                          widget.product.image,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
+                  _productHeader(),
+                  _productImages(),
                   Expanded(
                     flex: 1,
                     child: _title(),
                   ),
-                  Expanded(
-                    flex: 8,
-                    child: ListView(
-                      children: [
-                        ...widget.product.options
-                                ?.expand((option) => _option(option: option)) ??
-                            [],
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: FlatButton(
-                        onPressed: () {
-                          _save();
-                        },
-                        color: Colors.blueGrey,
-                        child: Text(
-                          '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  _productOptions(),
+                  _selectButton(),
                 ],
               ),
             ),
@@ -128,6 +92,83 @@ class _ProductPageState extends State<ProductPage>
       ),
     );
   }
+
+  _selectButton() => Expanded(
+        flex: 1,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+          child: FlatButton(
+            onPressed: () {
+              _save();
+            },
+            color: Colors.blueGrey,
+            child: Text(
+              '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      );
+
+  _productOptions() => Expanded(
+        flex: 8,
+        child: ListView(
+          children: [
+            ...widget.product.options
+                    ?.expand((option) => _option(option: option)) ??
+                [],
+          ],
+        ),
+      );
+
+  _productImages() => Expanded(
+        flex: 8,
+        child: Hero(
+          tag: widget.product.index,
+          child: Container(
+            height: MediaQuery.of(context).size.width * .5,
+            child: Image.asset(
+              widget.product.image,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      );
+
+  _productHeader() => Row(
+        children: [
+          Text(
+            '본보야지',
+            style: Theme.of(context).textTheme.headline1.copyWith(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          Spacer(),
+          TextButton(
+            onPressed: () {
+              AppRouter.pop();
+            },
+            child: Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: Text(
+                    '목록보기',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+                Icon(
+                  CupertinoIcons.chevron_right_2,
+                  color: Theme.of(context).textTheme.bodyText2.color,
+                ),
+              ],
+            ),
+          )
+        ],
+      );
 
   _title() => Material(
         color: Colors.transparent,
