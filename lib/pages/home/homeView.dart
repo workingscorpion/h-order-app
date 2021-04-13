@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/serviceItem.dart';
-import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -43,6 +42,7 @@ class _HomeViewState extends State<HomeView>
                     label: '시설보수',
                     items: [
                       ServiceItem(
+                        objectId: '1',
                         type: 'text',
                         label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
                       ),
@@ -53,6 +53,7 @@ class _HomeViewState extends State<HomeView>
                     label: '청소',
                     items: [
                       ServiceItem(
+                        objectId: '1',
                         type: 'dateTime',
                         label: '',
                       ),
@@ -63,6 +64,7 @@ class _HomeViewState extends State<HomeView>
                     label: '세탁',
                     items: [
                       ServiceItem(
+                        objectId: '1',
                         type: 'dateTime',
                         label: '',
                       ),
@@ -73,6 +75,7 @@ class _HomeViewState extends State<HomeView>
                     label: '출차',
                     items: [
                       ServiceItem(
+                        objectId: '1',
                         type: 'dateTime',
                         label: '',
                       ),
@@ -83,6 +86,7 @@ class _HomeViewState extends State<HomeView>
                     label: '관리실 호출',
                     items: [
                       ServiceItem(
+                        objectId: '1',
                         type: 'text',
                         label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
                       ),
@@ -109,6 +113,7 @@ class _HomeViewState extends State<HomeView>
                     label: '택배',
                     items: [
                       ServiceItem(
+                        objectId: '1',
                         type: 'label',
                         label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
                       ),
@@ -119,6 +124,7 @@ class _HomeViewState extends State<HomeView>
                     label: '분리수거',
                     items: [
                       ServiceItem(
+                        objectId: '1',
                         type: 'label',
                         label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
                       ),
@@ -129,26 +135,27 @@ class _HomeViewState extends State<HomeView>
                     label: '종량제봉투',
                     items: [
                       ServiceItem(
-                        type: 'label',
+                        objectId: '1',
+                        type: 'text',
                         label: '10분내로 문 앞에 배송해드립니다.',
                       ),
                       ServiceItem(
-                        type: 'option',
+                        objectId: '2',
+                        type: 'count',
                         label: '20L',
-                        min: 1,
-                        max: 10,
+                        max: 15,
                       ),
                       ServiceItem(
-                        type: 'option',
+                        objectId: '3',
+                        type: 'count',
                         label: '50L',
-                        min: 1,
                         max: 10,
                       ),
                       ServiceItem(
-                        type: 'option',
+                        objectId: '4',
+                        type: 'count',
                         label: '100L',
-                        min: 1,
-                        max: 10,
+                        max: 5,
                       ),
                     ],
                   ),
