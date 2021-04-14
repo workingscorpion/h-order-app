@@ -64,5 +64,9 @@ flutter:
     - assets/icons/service/
     - assets/sample/
     - assets/sample/payment/
+    - assets/sample/commontown/
+    - assets/sample/commontown/banner/
+    - assets/sample/commontown/service/
+    - assets/sample/commontown/item/
     - assets/sample/screen/
     - assets/splash/

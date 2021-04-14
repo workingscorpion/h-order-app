@@ -15,6 +15,12 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
+  List<String> images = [
+    'assets/sample/commontown/banner/1.png',
+    'assets/sample/commontown/banner/2.png',
+    'assets/sample/commontown/banner/3.png',
+  ];
+
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -274,11 +280,11 @@ class _HomeViewState extends State<HomeView>
         child: LayoutBuilder(
           builder: (context, constraint) => CarouselSlider(
             items: [
-              ...[1, 2, 3, 4, 5, 6].map(
+              ...images.map(
                 (item) => Container(
                   alignment: Alignment.center,
                   child: Image.asset(
-                    'assets/splash/splash.png',
+                    item,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
