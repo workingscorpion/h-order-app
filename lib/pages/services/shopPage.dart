@@ -295,12 +295,16 @@ class _ShopPageState extends State<ShopPage>
                   ),
                 ),
                 Container(
+                  height: 28,
+                  alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(top: 10),
-                  child: Text(
-                    product.name,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 21,
+                  child: FittedBox(
+                    child: Text(
+                      product.name,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 21,
+                      ),
                     ),
                   ),
                 ),
