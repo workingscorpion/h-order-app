@@ -59,6 +59,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/icons/home/
     - assets/icons/notice/
     - assets/icons/service/
     - assets/sample/
