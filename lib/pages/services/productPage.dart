@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -129,11 +130,44 @@ class _ProductPageState extends State<ProductPage>
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+
+  _productHeader() => Row(
+        children: [
+          Text(
+            '본보야지',
+            style: Theme.of(context).textTheme.headline1.copyWith(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          Spacer(),
+          TextButton(
+            onPressed: () {
+              AppRouter.pop();
+            },
+            child: Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: Text(
+                    '목록보기',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+                Icon(
+                  CupertinoIcons.chevron_right_2,
+                  color: Theme.of(context).textTheme.bodyText2.color,
+                ),
+              ],
+            ),
+          )
+        ],
+      );
 
   _productCount() => Container(
         margin: EdgeInsets.only(bottom: 10),
@@ -249,63 +283,32 @@ class _ProductPageState extends State<ProductPage>
         child: Container(
           margin: EdgeInsets.only(bottom: 20),
           child: CarouselSlider(
-            items: _productImages([
-              widget.product.image,
-              widget.product.image,
-              widget.product.image
-            ]),
             options: CarouselOptions(
               enableInfiniteScroll: true,
               enlargeCenterPage: true,
               viewportFraction: 0.6,
             ),
-          ),
-        ),
-      );
-
-  _productImages(List<String> images) => List.generate(
-        images.length,
-        (index) => AspectRatio(
-          aspectRatio: 1,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Image.asset(
-              widget.product.image,
-              fit: BoxFit.fill,
-            ),
-          ),
-          Expanded(
-            flex: 8,
-            child: ListView(
-              children: [
-                ...widget.product.options
-                        ?.expand((option) => _option(option: option)) ??
-                    [],
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: FlatButton(
-                onPressed: () {
-                  _save();
-                },
-                color: Colors.blueGrey,
-                child: Text(
-                  '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
-                  style: TextStyle(
-                    color: Colors.white,
+            items: [
+              ...[
+                widget.product.image,
+                widget.product.image,
+                widget.product.image
+              ].map(
+                (item) => AspectRatio(
+                  aspectRatio: 1,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image.asset(
+                      item,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      );
 
   _titleCard() => Container(
         margin: EdgeInsets.only(bottom: 10),
@@ -362,7 +365,7 @@ class _ProductPageState extends State<ProductPage>
     double depth = 1,
   }) =>
       Container(
-        margin: depth <= 1 ? EdgeInsets.only(bottom: 10) : null,
+        margin: depth <= 1 ? EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(8),
@@ -434,7 +437,7 @@ class _ProductPageState extends State<ProductPage>
                                 style: TextStyle(),
                               ),
                             )
-                          : null,
+                          : Container(),
                     ),
                   ],
                 ),
@@ -448,7 +451,7 @@ class _ProductPageState extends State<ProductPage>
                       height: 5,
                       thickness: 1,
                     )
-                  : null,
+                  : Container(),
             ),
             ...(option.options?.length ?? 0) > 0
                 ? option.options
