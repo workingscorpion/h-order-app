@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/alertService.dart';
 import 'package:h_order/constants/serviceStatus.dart';
-import 'package:intl/intl.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ServiceButton extends StatefulWidget {
   final IconData icon;
@@ -120,7 +120,14 @@ class _ServiceButtonState extends State<ServiceButton> {
       ),
     );
 
-    print(result);
+    Fluttertoast.showToast(
+      msg: "   신청되었습니다.   ",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+      textColor: Theme.of(context).textTheme.bodyText1.color,
+      fontSize: 17,
+    );
   }
 }
 
