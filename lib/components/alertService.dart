@@ -250,11 +250,7 @@ class _AlertServiceState extends State<AlertService> {
                 width: 32,
                 height: 32,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.black,
-                  ),
+                  color: Color(0xff606162),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(7),
                     bottomLeft: Radius.circular(7),
@@ -273,6 +269,7 @@ class _AlertServiceState extends State<AlertService> {
                   icon: Icon(
                     CupertinoIcons.minus,
                     size: 14,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -290,11 +287,7 @@ class _AlertServiceState extends State<AlertService> {
                 width: 32,
                 height: 32,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.black,
-                  ),
+                  color: Color(0xff606162),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(7),
                     bottomRight: Radius.circular(7),
@@ -313,6 +306,7 @@ class _AlertServiceState extends State<AlertService> {
                   icon: Icon(
                     CupertinoIcons.add,
                     size: 14,
+                    color: Colors.white,
                   ),
                 ),
               ),
