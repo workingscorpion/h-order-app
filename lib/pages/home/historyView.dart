@@ -363,71 +363,113 @@ class _HistoryViewState extends State<HistoryView> {
         ),
       );
 
-  _filter() => Container(
-        alignment: Alignment.centerRight,
-        padding: EdgeInsets.symmetric(
-          vertical: 12,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            PopupMenuButton(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                width: 160,
-                decoration: BoxDecoration(),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 30),
-                      child: Text(_popupText()),
+  _filter() => DefaultTextStyle(
+        style: TextStyle(fontSize: 16),
+        child: Container(
+          alignment: Alignment.centerRight,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              PopupMenuButton(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 1,
+                        color: Colors.black,
+                      ),
                     ),
-                    Spacer(),
-                    Icon(CupertinoIcons.chevron_down),
-                  ],
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 8,
+                  ),
+                  width: 160,
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 30),
+                        child: Text(
+                          _popupText(),
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(CupertinoIcons.chevron_down),
+                    ],
+                  ),
                 ),
+                padding: EdgeInsets.symmetric(
+                  vertical: 12,
+                ),
+                offset: Offset(0, 100),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: "all",
+                    child: Container(
+                      child: Text(
+                        '전체',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
+                      ),
+                      width: 100,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: "apply",
+                    child: Container(
+                      child: Text(
+                        '신청',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
+                      ),
+                      width: 100,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: "receipted",
+                    child: Container(
+                      child: Text(
+                        '접수',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
+                      ),
+                      width: 100,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: "done",
+                    child: Container(
+                      child: Text(
+                        '처리완료',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
+                      ),
+                      width: 100,
+                    ),
+                  ),
+                ],
+                onSelected: (value) {
+                  selectedPopupMenu = value;
+                  list = [...origin]
+                      .where((h) => _popupIndex().contains(h.status))
+                      .toList();
+                  setState(() {});
+                },
               ),
-              padding: EdgeInsets.zero,
-              offset: Offset(0, 35),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: "all",
-                  child: Container(
-                    child: Text('전체'),
-                    width: 100,
-                  ),
-                ),
-                PopupMenuItem(
-                  value: "apply",
-                  child: Container(
-                    child: Text('신청'),
-                    width: 100,
-                  ),
-                ),
-                PopupMenuItem(
-                  value: "receipted",
-                  child: Container(
-                    child: Text('접수'),
-                    width: 100,
-                  ),
-                ),
-                PopupMenuItem(
-                  value: "done",
-                  child: Container(
-                    child: Text('처리완료'),
-                    width: 100,
-                  ),
-                ),
-              ],
-              onSelected: (value) {
-                selectedPopupMenu = value;
-                list = [...origin]
-                    .where((h) => _popupIndex().contains(h.status))
-                    .toList();
-                setState(() {});
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       );
 
