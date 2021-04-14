@@ -26,24 +26,13 @@ class _ProductPageState extends State<ProductPage>
 
   int _quantity;
   Map<int, ProductOptionModel> _optionMap;
-  Map<int, int> _optionQuantityMap;
-  Map<int, bool> _selectedOption;
+  Map<int, int> _selectedOption;
 
   List<ProductOptionModel> _required;
   List<ProductOptionModel> _optional;
 
   int get totalAmount {
-    var optionPrice = 0;
-    final options = [...widget.product.options];
-    options.addAll([...widget.product.options].expand((e) => e.options));
-
-    _selectedOption.forEach((key, value) {
-      if (value) {
-        optionPrice +=
-            options.singleWhere((element) => element.index == key).price;
-      }
-    });
-    return (amount + optionPrice) * _quantity;
+    return amount * _quantity;
   }
 
   int get amount {
@@ -51,11 +40,18 @@ class _ProductPageState extends State<ProductPage>
   }
 
   int get optionAmount {
-    return _optionQuantityMap.entries.fold(
-        0,
-        (previousValue, element) =>
-            previousValue +
-            element.value * (_optionMap[element.key]?.price ?? 0));
+    var optionPrice = 0;
+    final options = [...widget.product.options];
+    options.addAll([...widget.product.options].expand((e) => e.options));
+
+    _selectedOption.forEach((key, value) {
+      if (value >= 1) {
+        optionPrice +=
+            options.singleWhere((element) => element.index == key).price *
+                value;
+      }
+    });
+    return optionPrice;
   }
 
   @override
@@ -64,7 +60,6 @@ class _ProductPageState extends State<ProductPage>
 
     _quantity = 1;
     _optionMap = Map();
-    _optionQuantityMap = Map();
     _selectedOption = Map();
 
     _initOptionsQuantity(widget.product.options);
@@ -81,8 +76,7 @@ class _ProductPageState extends State<ProductPage>
   _initOptionsQuantity(List<ProductOptionModel> options) {
     options.forEach((option) {
       _optionMap[option.index] = option;
-      _optionQuantityMap[option.index] = 0;
-      _selectedOption[option.index] = false;
+      _selectedOption[option.index] = 0;
 
       if ((option.options?.length ?? 0) > 0) {
         _initOptionsQuantity(option.options);
@@ -397,11 +391,12 @@ class _ProductPageState extends State<ProductPage>
                                     width: 20,
                                     margin: EdgeInsets.only(right: 5),
                                     child: Radio(
-                                      value: true,
+                                      value: 1,
                                       groupValue: _selectedOption[option.index],
                                       toggleable: true,
                                       onChanged: (val) {
-                                        _selectedOption[option.index] = val;
+                                        _selectedOption[option.index] =
+                                            val == 1 ? val : 0;
                                         setState(() {});
                                       },
                                     ),
@@ -463,46 +458,15 @@ class _ProductPageState extends State<ProductPage>
         ),
       );
 
-  _changeSelect({
-    ProductOptionModel option,
-    bool value,
-  }) async {
-    if (value && option.parent != null) {
-      final parent = _optionMap[option.parent];
-
-      if ((parent.max ?? 0) > 0) {
-        final count = parent.options
-            .where((element) => _optionQuantityMap[element.index] == 1)
-            .length;
-
-        if (parent.max <= count) {
-          await Fluttertoast.cancel();
-          await Fluttertoast.showToast(
-            msg: '옵션 최대개수를 초과하여 선택 할 수 없습니다. (최대 ${parent.max}개)',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 2,
-          );
-
-          return;
-        }
-      }
-    }
-
-    _optionQuantityMap[option.index] = value ? 1 : 0;
-    setState(() {});
-  }
-
   _save() {
     final result = CartItemModel(
       name: widget.product.name,
       amount: amount,
       optionAmount: optionAmount,
-      optionQuantity: _optionQuantityMap,
+      optionQuantity: _selectedOption,
       quantity: _quantity,
       product: widget.product,
     );
-
     Navigator.of(context).pop(result);
   }
 }
