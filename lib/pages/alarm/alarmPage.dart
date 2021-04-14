@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/alarmInput.dart';
+import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:intl/intl.dart';
 
@@ -21,35 +22,45 @@ class _AlarmPageState extends State<AlarmPage> {
           title: Text('알람설정'),
         ),
         body: SafeArea(
-          child: Column(
-            children: [
-              Container(
-                height: 600,
-                child: _input(),
-              ),
-              Expanded(
-                child: AnimatedList(
-                  key: _listKey,
-                  padding: EdgeInsets.all(24),
-                  initialItemCount: list.length,
-                  itemBuilder: (context, index, animation) => SlideTransition(
-                    position: animation.drive(
-                      Tween<Offset>(
-                        begin: Offset(-1, 0),
-                        end: Offset(0, 0),
+          child: Container(
+            child: Column(
+              children: [
+                StatusBar(),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 600,
+                        child: _input(),
                       ),
-                    ),
-                    child: FadeTransition(
-                      opacity: animation,
-                      child: _item(
-                        index: index,
-                        item: list[index],
+                      Expanded(
+                        child: AnimatedList(
+                          key: _listKey,
+                          padding: EdgeInsets.all(24),
+                          initialItemCount: list.length,
+                          itemBuilder: (context, index, animation) =>
+                              SlideTransition(
+                            position: animation.drive(
+                              Tween<Offset>(
+                                begin: Offset(-1, 0),
+                                end: Offset(0, 0),
+                              ),
+                            ),
+                            child: FadeTransition(
+                              opacity: animation,
+                              child: _item(
+                                index: index,
+                                item: list[index],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );

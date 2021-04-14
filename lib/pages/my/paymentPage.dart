@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/components/statusBar.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -13,124 +14,137 @@ class _PaymentPageState extends State<PaymentPage> {
           title: Text('결제수단 관리'),
         ),
         body: SafeArea(
+            child: Container(
           child: Column(
             children: [
+              StatusBar(),
               Expanded(
-                child: ListView(
-                  padding: EdgeInsets.all(24),
+                child: Column(
                   children: [
-                    _title(
-                      text: '주 계좌',
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(32),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: DefaultTextStyle(
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        ),
-                        child: Row(
-                          children: [
-                            Text('김오더 계좌'),
-                            Text('kb국민은행'),
-                            Text('123456*****1235'),
-                            Spacer(),
-                            _button(text: '수정'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(height: 12),
-                    Row(
-                      children: [
-                        Spacer(),
-                        Container(
-                          child: Material(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: Colors.white,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.black,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                ),
-                                alignment: Alignment.center,
-                                width: 200,
-                                padding: EdgeInsets.symmetric(vertical: 8),
-                                child: Text(
-                                  '결제비밀번호 설정',
-                                  style: TextStyle(fontSize: 16),
-                                ),
+                    Expanded(
+                      child: ListView(
+                        padding: EdgeInsets.all(24),
+                        children: [
+                          _title(
+                            text: '주 계좌',
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(32),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                            ),
+                            child: DefaultTextStyle(
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text('김오더 계좌'),
+                                  Text('kb국민은행'),
+                                  Text('123456*****1235'),
+                                  Spacer(),
+                                  _button(text: '수정'),
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                        Container(width: 24),
-                        Container(
-                          child: Material(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: Colors.white,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.black,
-                                  ),
+                          Container(height: 12),
+                          Row(
+                            children: [
+                              Spacer(),
+                              Container(
+                                child: Material(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
+                                  color: Colors.white,
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 1,
+                                          color: Colors.black,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
+                                      alignment: Alignment.center,
+                                      width: 200,
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 8),
+                                      child: Text(
+                                        '결제비밀번호 설정',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                alignment: Alignment.center,
-                                width: 200,
-                                padding: EdgeInsets.symmetric(vertical: 8),
-                                child: Text(
-                                  '결제수단 추가',
-                                  style: TextStyle(fontSize: 16),
+                              ),
+                              Container(width: 24),
+                              Container(
+                                child: Material(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
+                                  color: Colors.white,
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 1,
+                                          color: Colors.black,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
+                                      alignment: Alignment.center,
+                                      width: 200,
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 8),
+                                      child: Text(
+                                        '결제수단 추가',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
                                 ),
+                              ),
+                            ],
+                          ),
+                          Container(height: 32),
+                          _title(
+                            text: '등록 계좌',
+                          ),
+                          ...List.generate(
+                            2,
+                            (index) => _card(
+                              item: PaymentModel(
+                                type: 'account',
+                                image: 'assets/sample/payment/bank_kb.jpg',
+                                name: 'KB국민은행',
+                                numbers: ['****', '1234'],
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Container(height: 32),
-                    _title(
-                      text: '등록 계좌',
-                    ),
-                    ...List.generate(
-                      2,
-                      (index) => _card(
-                        item: PaymentModel(
-                          type: 'account',
-                          image: 'assets/sample/payment/bank_kb.jpg',
-                          name: 'KB국민은행',
-                          numbers: ['****', '1234'],
-                        ),
-                      ),
-                    ),
-                    Container(height: 30),
-                    _title(
-                      text: '등록 카드',
-                    ),
-                    ...List.generate(
-                      5,
-                      (index) => _card(
-                        item: PaymentModel(
-                          type: 'type',
-                          image: 'assets/sample/payment/card_kakao.png',
-                          name: '카카오뱅크 카드',
-                          numbers: ['****', '****', '****', '1234'],
-                        ),
+                          Container(height: 30),
+                          _title(
+                            text: '등록 카드',
+                          ),
+                          ...List.generate(
+                            5,
+                            (index) => _card(
+                              item: PaymentModel(
+                                type: 'type',
+                                image: 'assets/sample/payment/card_kakao.png',
+                                name: '카카오뱅크 카드',
+                                numbers: ['****', '****', '****', '1234'],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -138,7 +152,7 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
             ],
           ),
-        ),
+        )),
       );
 
   _button({

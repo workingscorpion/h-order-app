@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/store/navigationStore.dart';
 import 'package:intl/intl.dart';
 
@@ -34,74 +35,83 @@ class _ScreenPageState extends State<ScreenPage> {
           title: Text('화면 설정'),
         ),
         body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _title(text: '잠금 화면'),
-              Expanded(
-                child: Container(
-                  color: Colors.white,
-                  child: ListView(
-                    padding: EdgeInsets.all(24),
-                    scrollDirection: Axis.horizontal,
+          child: Container(
+            child: Column(
+              children: [
+                StatusBar(),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _item(
-                        groupValue: _selectedLockScreen,
-                        name: '라이트 모드',
-                        image: 'assets/sample/screen/light.png',
-                        onChanged: (value) {
-                          _selectedLockScreen = value;
-                          setState(() {});
-                        },
+                      _title(text: '잠금 화면'),
+                      Expanded(
+                        child: Container(
+                          color: Colors.white,
+                          child: ListView(
+                            padding: EdgeInsets.all(24),
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              _item(
+                                groupValue: _selectedLockScreen,
+                                name: '라이트 모드',
+                                image: 'assets/sample/screen/light.png',
+                                onChanged: (value) {
+                                  _selectedLockScreen = value;
+                                  setState(() {});
+                                },
+                              ),
+                              _item(
+                                groupValue: _selectedLockScreen,
+                                name: '다크 모드',
+                                image: 'assets/sample/screen/dark.png',
+                                onChanged: (value) {
+                                  _selectedLockScreen = value;
+                                  setState(() {});
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      _item(
-                        groupValue: _selectedLockScreen,
-                        name: '다크 모드',
-                        image: 'assets/sample/screen/dark.png',
-                        onChanged: (value) {
-                          _selectedLockScreen = value;
-                          setState(() {});
-                        },
+                      _title(text: '홈 화면'),
+                      Expanded(
+                        child: Container(
+                          color: Colors.white,
+                          child: ListView(
+                            padding: EdgeInsets.all(24),
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              _item(
+                                groupValue: _selectedHomeScreen,
+                                name: '라이트 모드',
+                                image: 'assets/sample/screen/light.png',
+                                onChanged: (value) {
+                                  _selectedHomeScreen = value;
+                                  // NavigationStore.instance.appKey.currentState
+                                  //     .setTheme(true);
+                                  setState(() {});
+                                },
+                              ),
+                              _item(
+                                groupValue: _selectedHomeScreen,
+                                name: '다크 모드',
+                                image: 'assets/sample/screen/dark.png',
+                                onChanged: (value) {
+                                  _selectedHomeScreen = value;
+                                  // NavigationStore.instance.appKey.currentState
+                                  //     .setTheme(false);
+                                  setState(() {});
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              _title(text: '홈 화면'),
-              Expanded(
-                child: Container(
-                  color: Colors.white,
-                  child: ListView(
-                    padding: EdgeInsets.all(24),
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      _item(
-                        groupValue: _selectedHomeScreen,
-                        name: '라이트 모드',
-                        image: 'assets/sample/screen/light.png',
-                        onChanged: (value) {
-                          _selectedHomeScreen = value;
-                          // NavigationStore.instance.appKey.currentState
-                          //     .setTheme(true);
-                          setState(() {});
-                        },
-                      ),
-                      _item(
-                        groupValue: _selectedHomeScreen,
-                        name: '다크 모드',
-                        image: 'assets/sample/screen/dark.png',
-                        onChanged: (value) {
-                          _selectedHomeScreen = value;
-                          // NavigationStore.instance.appKey.currentState
-                          //     .setTheme(false);
-                          setState(() {});
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
