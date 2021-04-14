@@ -133,10 +133,7 @@ class _ShopPageState extends State<ShopPage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: _shopHeader(),
-                      ),
+                      _shopHeader(),
                       TabBar(
                         controller: _tabController,
                         isScrollable: true,
@@ -154,30 +151,20 @@ class _ShopPageState extends State<ShopPage>
                           ),
                         ],
                       ),
-                      Container(
-                        height: 20,
-                      ),
                       Expanded(
                         child: TabBarView(
                           controller: _tabController,
                           children: [
                             ..._categories.map(
-                              (category) => Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(24),
-                                child: GridView.count(
-                                  padding: EdgeInsets.all(5),
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 30,
-                                  crossAxisCount: 3,
-                                  children: [
-                                    ...category.products.map((product) =>
-                                        _product(product: product)),
-                                  ],
-                                ),
+                              (category) => GridView.count(
+                                padding: EdgeInsets.all(5),
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 5,
+                                crossAxisCount: 3,
+                                children: [
+                                  ...category.products.map(
+                                      (product) => _product(product: product)),
+                                ],
                               ),
                             ),
                           ],
@@ -208,13 +195,7 @@ class _ShopPageState extends State<ShopPage>
             },
             child: Row(
               children: [
-                Container(
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text(
-                    '목록보기',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ),
+                Text('홈화면', style: Theme.of(context).textTheme.bodyText2),
                 Icon(
                   CupertinoIcons.chevron_right_2,
                   color: Theme.of(context).textTheme.bodyText2.color,
@@ -243,31 +224,31 @@ class _ShopPageState extends State<ShopPage>
                   child: Hero(
                     tag: product.index,
                     child: Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            product.image,
-                            fit: BoxFit.cover,
-                          ),
-                        )),
+                      margin: EdgeInsets.only(bottom: 5),
+                      child: Image.asset(
+                        product.image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-                Text(
-                  product.name,
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.bodyText2,
+                Container(
+                  child: Text(
+                    product.name,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
-                Divider(
-                  color: Theme.of(context).accentColor,
-                ),
-                Text(
-                  '${NumberFormat().format(product.price)}원',
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(fontSize: 20),
+                Container(
+                  child: Text(
+                    '${NumberFormat().format(product.price)} ₩',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -65,30 +65,28 @@ class _MyViewState extends State<MyView> {
   }) =>
       Container(
         margin: EdgeInsets.only(bottom: 12),
-        child: InkWell(
-          onTap: onTap,
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 16,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              border: Border.all(
-                width: 1,
-                color: Theme.of(context).textTheme.bodyText2.color,
+        child: Material(
+          clipBehavior: Clip.antiAlias,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: Colors.white,
+          child: InkWell(
+            onTap: onTap,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 24,
               ),
-            ),
-            child: Row(
-              children: [
-                Text(title),
-                Spacer(),
-                Icon(
-                  CupertinoIcons.chevron_right_2,
-                  size: 20,
-                  color: Theme.of(context).textTheme.bodyText2.color,
-                ),
-              ],
+              child: Row(
+                children: [
+                  Text(title),
+                  Spacer(),
+                  Icon(
+                    CupertinoIcons.chevron_right_2,
+                    size: 20,
+                    color: Theme.of(context).textTheme.bodyText2.color,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -59,19 +59,28 @@ class AlarmInputState extends State<AlarmInput> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Color(0xfff6f7fb),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                margin: EdgeInsets.only(bottom: 24),
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                margin: EdgeInsets.only(bottom: 12),
                 child: Text('시간 설정'),
               ),
-              Expanded(
+              Container(
+                margin: EdgeInsets.only(bottom: 40),
+                height: 300,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
                 child: _time(),
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 24),
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                margin: EdgeInsets.only(bottom: 12),
                 child: Text('요일반복 설정'),
               ),
               Row(
@@ -98,19 +107,21 @@ class AlarmInputState extends State<AlarmInput> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(
-                  top: 24,
-                ),
+                margin: EdgeInsets.only(top: 20),
                 child: FlatButton(
+                  color: Colors.black,
                   padding: EdgeInsets.symmetric(
-                    vertical: 24,
+                    vertical: 16,
                   ),
                   onPressed: () {
                     _add();
                   },
                   child: Text(
                     widget.selectedTime == null ? '추가' : '저장',
-                    style: TextStyle(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
                   ),
                 ),
               ),
@@ -170,26 +181,23 @@ class AlarmInputState extends State<AlarmInput> {
 
             setState(() {});
           },
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 150),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
+          child: AnimatedContainer(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            duration: Duration(milliseconds: 150),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: _selectedWeekDays.contains(value)
+                  ? Colors.black
+                  : Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+            ),
+            child: Text(
+              value,
+              style: TextStyle(
+                fontSize: 17,
                 color: _selectedWeekDays.contains(value)
-                    ? Theme.of(context).accentColor
-                    : Theme.of(context).accentColor.withOpacity(0),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                border: Border.all(
-                  color: Theme.of(context).accentColor,
-                  width: 1,
-                ),
-              ),
-              child: Text(
-                value,
-                style: TextStyle(
-                  fontSize: 38,
-                ),
+                    ? Colors.white
+                    : Colors.black,
               ),
             ),
           ),
@@ -215,66 +223,121 @@ class AlarmInputState extends State<AlarmInput> {
         controller: controller,
         onSelectedItemChanged: onSelectedItemChanged,
         physics: FixedExtentScrollPhysics(),
-        perspective: 0.01,
         itemExtent: _itemExtent,
-        overAndUnderCenterOpacity: .25,
+        overAndUnderCenterOpacity: .1,
         childDelegate: ListWheelChildLoopingListDelegate(
           children: children,
         ),
       );
 
+  _divier() => Container(
+        width: 40,
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(width: 1, color: Colors.black),
+          ),
+        ),
+      );
+
   _hour() => Expanded(
-        child: _listWheelScrollView(
-          controller: _hourListViewController,
-          onSelectedItemChanged: (value) {
-            _selectTime(hour: _hours[value]);
-          },
+        child: Stack(
+          alignment: Alignment.center,
           children: [
-            ..._hours.map(
-              (value) => Text(
-                NumberFormat('00').format(value),
-                style: TextStyle(
-                  fontSize: 50,
+            Positioned(
+              top: 90,
+              child: _divier(),
+            ),
+            _listWheelScrollView(
+              controller: _hourListViewController,
+              onSelectedItemChanged: (value) {
+                _selectTime(hour: _hours[value]);
+              },
+              children: [
+                ..._hours.map(
+                  (value) => Center(
+                    child: Text(
+                      NumberFormat('00').format(value),
+                      style: TextStyle(
+                        fontSize: 50,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
+            ),
+            Positioned(
+              bottom: 90,
+              child: _divier(),
             ),
           ],
         ),
       );
 
   _minute() => Expanded(
-        child: _listWheelScrollView(
-          controller: _minuteListViewController,
-          onSelectedItemChanged: (value) {
-            _selectTime(minute: _minutes[value]);
-          },
+        child: Stack(
+          alignment: Alignment.center,
           children: [
-            ..._minutes.map(
-              (value) => Text(
-                NumberFormat('00').format(value),
-                style: TextStyle(
-                  fontSize: 50,
-                ),
+            Positioned(
+              top: 90,
+              child: _divier(),
+            ),
+            Expanded(
+              child: _listWheelScrollView(
+                controller: _minuteListViewController,
+                onSelectedItemChanged: (value) {
+                  _selectTime(minute: _minutes[value]);
+                },
+                children: [
+                  ..._minutes.map(
+                    (value) => Center(
+                      child: Text(
+                        NumberFormat('00').format(value),
+                        style: TextStyle(
+                          fontSize: 50,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
+            ),
+            Positioned(
+              bottom: 90,
+              child: _divier(),
             ),
           ],
         ),
       );
 
   _noon() => Expanded(
-        child: _listWheelScrollView(
-          controller: _noonListViewController,
-          onSelectedItemChanged: (value) {
-            _selectTime(noon: _noons[value]);
-          },
+        child: Stack(
+          alignment: Alignment.center,
           children: [
-            ..._noons.map(
-              (item) => Text(
-                item,
-                style: TextStyle(
-                  fontSize: 50,
+            Positioned(
+              top: 90,
+              child: _divier(),
+            ),
+            _listWheelScrollView(
+              controller: _noonListViewController,
+              onSelectedItemChanged: (value) {
+                _selectTime(noon: _noons[value]);
+              },
+              children: [
+                ..._noons.map(
+                  (item) => Center(
+                    child: Text(
+                      item,
+                      style: TextStyle(
+                        fontSize: 50,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
+            ),
+            Positioned(
+              bottom: 90,
+              child: _divier(),
             ),
           ],
         ),
@@ -290,7 +353,6 @@ class AlarmInputState extends State<AlarmInput> {
       );
 
   _colon() => Container(
-        transform: Matrix4.translationValues(0, -18, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -10,6 +10,7 @@ class ServiceButton extends StatefulWidget {
   final List<ServiceItem> items;
   final GestureTapCallback onTap;
   final ServiceStatus status;
+  final Color color;
 
   ServiceButton({
     this.icon,
@@ -17,6 +18,7 @@ class ServiceButton extends StatefulWidget {
     this.items,
     this.onTap,
     this.status,
+    this.color,
   });
 
   @override
@@ -52,10 +54,11 @@ class _ServiceButtonState extends State<ServiceButton> {
               child: Icon(
                 widget.icon,
                 size: 34,
+                color: widget.color ?? Colors.black,
               ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Theme.of(context).primaryColor,
+                color: Colors.white,
               ),
             ),
             Text(

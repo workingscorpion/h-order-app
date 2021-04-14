@@ -39,60 +39,66 @@ class _ScreenPageState extends State<ScreenPage> {
             children: [
               _title(text: '잠금 화면'),
               Expanded(
-                child: ListView(
-                  padding: EdgeInsets.all(24),
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _item(
-                      groupValue: _selectedLockScreen,
-                      name: '라이트 모드',
-                      image: 'assets/sample/screen/light.png',
-                      onChanged: (value) {
-                        _selectedLockScreen = value;
-                        setState(() {});
-                      },
-                    ),
-                    _item(
-                      groupValue: _selectedLockScreen,
-                      name: '다크 모드',
-                      image: 'assets/sample/screen/dark.png',
-                      onChanged: (value) {
-                        _selectedLockScreen = value;
-                        setState(() {});
-                      },
-                    ),
-                  ],
+                child: Container(
+                  color: Colors.white,
+                  child: ListView(
+                    padding: EdgeInsets.all(24),
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _item(
+                        groupValue: _selectedLockScreen,
+                        name: '라이트 모드',
+                        image: 'assets/sample/screen/light.png',
+                        onChanged: (value) {
+                          _selectedLockScreen = value;
+                          setState(() {});
+                        },
+                      ),
+                      _item(
+                        groupValue: _selectedLockScreen,
+                        name: '다크 모드',
+                        image: 'assets/sample/screen/dark.png',
+                        onChanged: (value) {
+                          _selectedLockScreen = value;
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
               _title(text: '홈 화면'),
               Expanded(
-                child: ListView(
-                  padding: EdgeInsets.all(24),
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _item(
-                      groupValue: _selectedHomeScreen,
-                      name: '라이트 모드',
-                      image: 'assets/sample/screen/light.png',
-                      onChanged: (value) {
-                        _selectedHomeScreen = value;
-                        NavigationStore.instance.appKey.currentState
-                            .setTheme(true);
-                        setState(() {});
-                      },
-                    ),
-                    _item(
-                      groupValue: _selectedHomeScreen,
-                      name: '다크 모드',
-                      image: 'assets/sample/screen/dark.png',
-                      onChanged: (value) {
-                        _selectedHomeScreen = value;
-                        NavigationStore.instance.appKey.currentState
-                            .setTheme(false);
-                        setState(() {});
-                      },
-                    ),
-                  ],
+                child: Container(
+                  color: Colors.white,
+                  child: ListView(
+                    padding: EdgeInsets.all(24),
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _item(
+                        groupValue: _selectedHomeScreen,
+                        name: '라이트 모드',
+                        image: 'assets/sample/screen/light.png',
+                        onChanged: (value) {
+                          _selectedHomeScreen = value;
+                          // NavigationStore.instance.appKey.currentState
+                          //     .setTheme(true);
+                          setState(() {});
+                        },
+                      ),
+                      _item(
+                        groupValue: _selectedHomeScreen,
+                        name: '다크 모드',
+                        image: 'assets/sample/screen/dark.png',
+                        onChanged: (value) {
+                          _selectedHomeScreen = value;
+                          // NavigationStore.instance.appKey.currentState
+                          //     .setTheme(false);
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -104,6 +110,9 @@ class _ScreenPageState extends State<ScreenPage> {
     String text,
   }) =>
       Container(
+        margin: EdgeInsets.only(
+          top: 24,
+        ),
         padding: EdgeInsets.all(24),
         child: Text(text),
       );
@@ -121,7 +130,9 @@ class _ScreenPageState extends State<ScreenPage> {
           }
         },
         child: Container(
-          padding: EdgeInsets.all(24),
+          padding: EdgeInsets.symmetric(
+            horizontal: 24,
+          ),
           child: IntrinsicWidth(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,7 +199,7 @@ class _ScreenPageState extends State<ScreenPage> {
                   value: name,
                   groupValue: groupValue,
                   onChanged: onChanged,
-                  activeColor: Colors.white,
+                  activeColor: Color(0xfff7b500),
                 ),
               ],
             ),

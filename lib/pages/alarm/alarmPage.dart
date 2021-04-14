@@ -23,7 +23,8 @@ class _AlarmPageState extends State<AlarmPage> {
         body: SafeArea(
           child: Column(
             children: [
-              Expanded(
+              Container(
+                height: 600,
                 child: _input(),
               ),
               Expanded(
@@ -74,6 +75,10 @@ class _AlarmPageState extends State<AlarmPage> {
     AlarmModel item,
   }) =>
       Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+        ),
         margin: EdgeInsets.only(
           bottom: 24,
         ),
@@ -98,23 +103,27 @@ class _AlarmPageState extends State<AlarmPage> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 24),
-                    child: Text(
-                      '${DateFormat('a hh:mm').format(item.time)}',
-                      style: TextStyle(
-                        height: 1,
-                        fontSize: 36,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 24),
+                        child: Text(
+                          '${DateFormat('a hh:mm').format(item.time)}',
+                          style: TextStyle(
+                            fontSize: 36,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Text(
-                    item.weekDays.join(', '),
-                    style: TextStyle(
-                      height: 1,
-                      fontSize: 22,
-                      color: Colors.white54,
-                    ),
+                      Text(
+                        item.weekDays.join(', '),
+                        style: TextStyle(
+                          height: 1,
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
                   Spacer(flex: 1),
                   CupertinoSwitch(
@@ -137,16 +146,25 @@ class _AlarmPageState extends State<AlarmPage> {
                       }
                     },
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 20),
-                    child: RaisedButton(
-                      color: CustomColors.backgroundDarkGrey,
-                      onPressed: () {
-                        _deleteItem(index);
-                      },
-                      child: Text(
-                        '삭제',
-                        style: TextStyle(color: Colors.white),
+                  Container(width: 16),
+                  Material(
+                    clipBehavior: Clip.antiAlias,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    color: Color(0xff606162),
+                    child: InkWell(
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 100,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 8,
+                        ),
+                        child: Text(
+                          '삭제',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
