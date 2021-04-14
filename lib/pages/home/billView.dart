@@ -70,7 +70,7 @@ class _BillViewState extends State<BillView> {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.symmetric(vertical: 20),
+        padding: EdgeInsets.only(top: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -86,38 +86,40 @@ class _BillViewState extends State<BillView> {
         ),
       );
 
-  _accountInfo() => Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 24,
+  _accountInfo() => DefaultTextStyle(
+        style: TextStyle(
+          fontSize: 17,
+          color: Theme.of(context).primaryColor,
         ),
         child: Container(
           padding: EdgeInsets.symmetric(
-            horizontal: 48,
-            vertical: 24,
+            horizontal: 24,
           ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(8),
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 48,
+              vertical: 24,
             ),
-            color: Theme.of(context).accentColor,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                '[납부계좌 안내]',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
               ),
-              Text(
-                '[$_bankName] $_account $_accountOwner',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+              color: Theme.of(context).accentColor,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  '[납부계좌 안내]',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+                Text(
+                  '[$_bankName] $_account $_accountOwner',
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -213,6 +215,10 @@ class _BillViewState extends State<BillView> {
                     item.status ? '납부' : '미납',
                     maxLines: 1,
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color:
+                          item.status ? Color(0xff21d021) : Color(0xffe02020),
+                    ),
                   ),
                   Container(
                     height: 24,

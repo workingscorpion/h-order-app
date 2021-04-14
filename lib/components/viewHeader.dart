@@ -12,7 +12,6 @@ class ViewHeader extends StatelessWidget {
     return Container(
       width: 240,
       padding: EdgeInsets.symmetric(
-        horizontal: 46,
         vertical: 16,
       ),
       child: Text(
