@@ -20,7 +20,7 @@ class AlarmInput extends StatefulWidget {
 
 class AlarmInputState extends State<AlarmInput> {
   static const int _minuteStep = 5;
-  static const double _itemExtent = 100;
+  static const double _itemExtent = 120;
 
   final _hours = List.generate(12, (value) => value + 1);
   final _minutes =
@@ -58,75 +58,73 @@ class AlarmInputState extends State<AlarmInput> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Color(0xfff6f7fb),
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                margin: EdgeInsets.only(bottom: 12),
-                child: Text('시간 설정'),
+  Widget build(BuildContext context) => Container(
+        color: Color(0xfff6f7fb),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              margin: EdgeInsets.only(bottom: 12),
+              child: Text('시간 설정'),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 40),
+              height: 300,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(5)),
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 40),
-                height: 300,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: _time(),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                margin: EdgeInsets.only(bottom: 12),
-                child: Text('요일반복 설정'),
-              ),
-              Row(
-                children: [
-                  ..._weekDays
-                      .map(
-                        (item) => _weekDayItem(
-                          value: item,
-                        ),
-                      )
-                      .toList()
-                      .asMap()
-                      .entries
-                      .expand(
-                        (e) => e.key < _weekDays.length - 1
-                            ? [
-                                e.value,
-                                Container(
-                                  width: 10,
-                                ),
-                              ]
-                            : [e.value],
+              child: _time(),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              margin: EdgeInsets.only(bottom: 12),
+              child: Text('요일반복 설정'),
+            ),
+            Row(
+              children: [
+                ..._weekDays
+                    .map(
+                      (item) => _weekDayItem(
+                        value: item,
                       ),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                child: FlatButton(
-                  color: Colors.black,
-                  padding: EdgeInsets.symmetric(
-                    vertical: 16,
-                  ),
-                  onPressed: () {
-                    _add();
-                  },
-                  child: Text(
-                    widget.selectedTime == null ? '추가' : '저장',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    )
+                    .toList()
+                    .asMap()
+                    .entries
+                    .expand(
+                      (e) => e.key < _weekDays.length - 1
+                          ? [
+                              e.value,
+                              Container(
+                                width: 10,
+                              ),
+                            ]
+                          : [e.value],
                     ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child: FlatButton(
+                color: Colors.black,
+                padding: EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
+                onPressed: () {
+                  _add();
+                },
+                child: Text(
+                  widget.selectedTime == null ? '추가' : '저장',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
 
@@ -281,25 +279,23 @@ class AlarmInputState extends State<AlarmInput> {
               top: 90,
               child: _divier(),
             ),
-            Expanded(
-              child: _listWheelScrollView(
-                controller: _minuteListViewController,
-                onSelectedItemChanged: (value) {
-                  _selectTime(minute: _minutes[value]);
-                },
-                children: [
-                  ..._minutes.map(
-                    (value) => Center(
-                      child: Text(
-                        NumberFormat('00').format(value),
-                        style: TextStyle(
-                          fontSize: 50,
-                        ),
+            _listWheelScrollView(
+              controller: _minuteListViewController,
+              onSelectedItemChanged: (value) {
+                _selectTime(minute: _minutes[value]);
+              },
+              children: [
+                ..._minutes.map(
+                  (value) => Center(
+                    child: Text(
+                      NumberFormat('00').format(value),
+                      style: TextStyle(
+                        fontSize: 50,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Positioned(
               bottom: 90,
