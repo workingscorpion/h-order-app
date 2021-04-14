@@ -276,7 +276,7 @@ class _HomeViewState extends State<HomeView>
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color: CustomColors.backgroundLightGrey,
+                                color: Colors.white,
                                 border: Border.all(
                                   width: 2,
                                   color: Colors.black,
