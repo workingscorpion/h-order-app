@@ -111,6 +111,10 @@ class _ShopPageState extends State<ShopPage>
       length: _categories.length,
       vsync: this,
     );
+
+    _tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -123,66 +127,107 @@ class _ShopPageState extends State<ShopPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: _floatingActionButton(),
-        body: Container(
-          child: Column(
-            children: [
-              StatusBar(),
-              Expanded(
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _shopHeader(),
-                      TabBar(
+      floatingActionButton: _floatingActionButton(),
+      body: Container(
+        child: Column(
+          children: [
+            StatusBar(),
+            Expanded(
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _shopHeader(),
+                    Container(
+                      height: 50,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.symmetric(horizontal: 24),
+                        children: [
+                          ..._categories
+                              .asMap()
+                              .map(
+                                (index, item) => MapEntry(
+                                  index,
+                                  Container(
+                                    margin: (index < _categories.length - 1)
+                                        ? EdgeInsets.only(right: 10)
+                                        : EdgeInsets.zero,
+                                    child: Material(
+                                      child: InkWell(
+                                        onTap: () {
+                                          _tabController.animateTo(index);
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 52,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: _tabController.index == index
+                                                ? Colors.black
+                                                : Colors.white,
+                                            border: Border.all(
+                                              width: 1,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            item.name,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2
+                                                .copyWith(
+                                                  color: _tabController.index ==
+                                                          index
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .values,
+                        ],
+                      ),
+                    ),
+                    Container(height: 24),
+                    Expanded(
+                      child: TabBarView(
                         controller: _tabController,
-                        isScrollable: true,
-                        indicatorColor: Colors.white,
-                        labelPadding: EdgeInsets.zero,
-                        tabs: [
+                        children: [
                           ..._categories.map(
-                            (item) => Container(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 52,
+                            (category) => GridView.count(
+                              padding: EdgeInsets.only(
+                                left: 24,
+                                right: 24,
+                                bottom: 24,
                               ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: Text(
-                                item.name,
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              crossAxisCount: 3,
+                              childAspectRatio: 1 / 1.33,
+                              children: [
+                                ...category.products.map(
+                                  (product) => _product(product: product),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                      Expanded(
-                        child: TabBarView(
-                          controller: _tabController,
-                          children: [
-                            ..._categories.map(
-                              (category) => GridView.count(
-                                padding: EdgeInsets.all(24),
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 5,
-                                crossAxisCount: 3,
-                                children: [
-                                  ...category.products.map(
-                                      (product) => _product(product: product)),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   _shopHeader() => Container(
@@ -203,7 +248,10 @@ class _ShopPageState extends State<ShopPage>
               },
               child: Row(
                 children: [
-                  Text('홈화면', style: Theme.of(context).textTheme.bodyText2),
+                  Text(
+                    '홈화면',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
                   Icon(
                     CupertinoIcons.chevron_right_2,
                     color: Theme.of(context).textTheme.bodyText2.color,
@@ -228,12 +276,15 @@ class _ShopPageState extends State<ShopPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  flex: 8,
-                  child: Hero(
-                    tag: product.index,
+                Hero(
+                  tag: product.index,
+                  child: AspectRatio(
+                    aspectRatio: 1,
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 5),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
                       child: Image.asset(
                         product.image,
                         fit: BoxFit.cover,
@@ -242,20 +293,28 @@ class _ShopPageState extends State<ShopPage>
                   ),
                 ),
                 Container(
+                  margin: EdgeInsets.only(top: 10),
                   child: Text(
                     product.name,
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 21,
                     ),
                   ),
                 ),
+                Divider(
+                  height: 10,
+                  thickness: .5,
+                  color: Colors.black,
+                ),
                 Container(
+                  margin: EdgeInsets.only(bottom: 10),
                   child: Text(
                     '${NumberFormat().format(product.price)} ₩',
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 17,
+                      color: Color(0xff666666),
                     ),
                   ),
                 ),
@@ -266,7 +325,8 @@ class _ShopPageState extends State<ShopPage>
       );
 
   _floatingActionButton() => Container(
-        width: MediaQuery.of(context).size.width * .1,
+        height: MediaQuery.of(context).size.width * .12,
+        width: MediaQuery.of(context).size.width * .12,
         child: AspectRatio(
           aspectRatio: 1,
           child: FloatingActionButton(
@@ -274,11 +334,13 @@ class _ShopPageState extends State<ShopPage>
             onPressed: () {
               AppRouter.toCartPage(_cart);
             },
-            child: Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
+                  transform: Matrix4.translationValues(-1, 0, 0),
+                  width: 22,
                   height: 22,
                   alignment: Alignment.center,
                   child: Icon(
@@ -286,12 +348,19 @@ class _ShopPageState extends State<ShopPage>
                     size: 22,
                   ),
                 ),
-                Container(width: 6),
-                Text(
-                  quantity < 99 ? '$quantity' : '99+',
-                  style: TextStyle(
-                    height: 1,
-                    fontSize: 24,
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Text(
+                    quantity < 99 ? '$quantity' : '99+',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ],

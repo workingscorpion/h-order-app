@@ -1,9 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productModel.dart';
@@ -99,30 +97,37 @@ class _ProductPageState extends State<ProductPage>
             child: Hero(
               tag: widget.product.index,
               child: Container(
-                padding: EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
                       margin: EdgeInsets.only(bottom: 10),
                       child: _productHeader(),
                     ),
                     _productSlider(),
                     Expanded(
                       flex: 8,
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        children: [
-                          Flex(
-                            direction: Axis.vertical,
-                            children: [
-                              _titleCard(),
-                            ],
-                          ),
-                          _optionCard(),
-                          _productCount(),
-                        ],
+                      child: DefaultTextStyle(
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
+                        child: ListView(
+                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                          children: [
+                            Flex(
+                              direction: Axis.vertical,
+                              children: [
+                                _titleCard(),
+                              ],
+                            ),
+                            _optionCard(),
+                            _productCount(),
+                          ],
+                        ),
                       ),
                     ),
                     _saveButton(),
@@ -179,7 +184,7 @@ class _ProductPageState extends State<ProductPage>
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('수량', style: Theme.of(context).textTheme.bodyText2),
+            Text('수량'),
             Spacer(),
             Container(
               margin: EdgeInsets.only(left: 10),
@@ -188,11 +193,10 @@ class _ProductPageState extends State<ProductPage>
                 children: [
                   _countCalc(true),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 12),
+                    width: 60,
                     child: Text(
                       '$_quantity',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black),
                     ),
                     alignment: Alignment.center,
                   ),
@@ -244,28 +248,32 @@ class _ProductPageState extends State<ProductPage>
 
   _saveButton() => Expanded(
         flex: 1,
-        child: Container(
-          margin: EdgeInsets.only(top: 20),
-          child: FlatButton(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              onPressed: () {
-                _save();
-              },
-              color: Theme.of(context).accentColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Material(
+          color: Theme.of(context).accentColor,
+          child: InkWell(
+            onTap: () {
+              _save();
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 34),
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  Container(),
                   Text(
                     '장바구니 담기',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
-                  Text(
-                    '${NumberFormat().format(totalAmount)}원',
-                    style: Theme.of(context).textTheme.bodyText1,
+                  Positioned(
+                    right: 0,
+                    child: Text(
+                      '${NumberFormat().format(totalAmount)}원',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ),
                 ],
-              )),
+              ),
+            ),
+          ),
         ),
       );
 
@@ -274,7 +282,10 @@ class _ProductPageState extends State<ProductPage>
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(
           _optional.length,
-          (index) => _option(option: _optional[index], depth: 1),
+          (index) => Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: _option(option: _optional[index], depth: 1),
+          ),
         ),
       );
 
@@ -286,7 +297,7 @@ class _ProductPageState extends State<ProductPage>
             options: CarouselOptions(
               enableInfiniteScroll: true,
               enlargeCenterPage: true,
-              viewportFraction: 0.6,
+              viewportFraction: 0.5,
             ),
             items: [
               ...[
@@ -297,7 +308,7 @@ class _ProductPageState extends State<ProductPage>
                 (item) => AspectRatio(
                   aspectRatio: 1,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(10),
                     child: Image.asset(
                       item,
                       fit: BoxFit.cover,
@@ -312,37 +323,44 @@ class _ProductPageState extends State<ProductPage>
 
   _titleCard() => Container(
         margin: EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.all(24),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 5),
               child: Text(
                 widget.product.name,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: TextStyle(
+                  fontSize: 21,
+                ),
               ),
             ),
             Divider(
               color: Theme.of(context).accentColor,
-              height: 5,
-              thickness: 1,
+              height: 10,
+              thickness: .5,
             ),
+            Container(height: 16),
             Column(
               children: _required.length > 0
                   ? List.generate(
                       _required.length,
-                      (index) => _option(option: _required[index], depth: 1),
+                      (index) => _option(
+                        option: _required[index],
+                        depth: 1,
+                      ),
                     )
                   : [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
                             width: 20,
+                            height: 20,
                             margin: EdgeInsets.only(right: 5),
                             child: Radio(
                               onChanged: (value) {},
@@ -365,26 +383,27 @@ class _ProductPageState extends State<ProductPage>
     double depth = 1,
   }) =>
       Container(
-        margin: depth <= 1 ? EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
+        padding:
+            depth == 1 ? EdgeInsets.symmetric(vertical: 24) : EdgeInsets.zero,
+        margin:
+            depth > 1 ? EdgeInsets.only(top: 16) : EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 20,
-              padding: EdgeInsets.only(
-                left: 20 +
-                    MediaQuery.of(context).size.height / 20 / 3 * (depth - 1),
-                right: 20,
-              ),
-              child: FractionallySizedBox(
-                heightFactor: .6,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
+            IntrinsicHeight(
+              child: Container(
+                padding: EdgeInsets.only(
+                  left: 24,
+                  right: 24,
+                ),
+                child: FractionallySizedBox(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
                         margin: EdgeInsets.only(right: 8),
                         child: Row(
                           children: depth > 1 ||
@@ -392,6 +411,7 @@ class _ProductPageState extends State<ProductPage>
                               ? [
                                   Container(
                                     width: 20,
+                                    height: 20,
                                     margin: EdgeInsets.only(right: 5),
                                     child: Radio(
                                       value: 1,
@@ -406,50 +426,48 @@ class _ProductPageState extends State<ProductPage>
                                   ),
                                   Text(
                                     option.name,
-                                    style: TextStyle(),
                                   ),
                                 ]
                               : [
                                   Text(
                                     option.name,
-                                    style: TextStyle(),
+                                    style: TextStyle(
+                                      fontSize: 21,
+                                    ),
                                   ),
                                 ],
-                        )),
-                    ...((option.max ?? 0) > 0)
-                        ? [
-                            Text(
-                              '(최대${option.max}개)',
-                              style: TextStyle(
-                                color: Colors.white38,
+                        ),
+                      ),
+                      ...((option.max ?? 0) > 0)
+                          ? [
+                              Text(
+                                '(최대${option.max}개)',
                               ),
-                            ),
-                          ]
-                        : [],
-                    Spacer(),
-                    Container(
-                      child: option.price > 0
-                          ? Container(
-                              alignment: Alignment.centerRight,
-                              margin: EdgeInsets.only(right: 12),
-                              child: Text(
-                                '+${NumberFormat().format(option.price)}원',
-                                style: TextStyle(),
-                              ),
-                            )
-                          : Container(),
-                    ),
-                  ],
+                            ]
+                          : [],
+                      Spacer(),
+                      Container(
+                        child: option.price > 0
+                            ? Container(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '+${NumberFormat().format(option.price)}원',
+                                ),
+                              )
+                            : Container(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 24),
               child: (option.options?.length ?? 0) > 0
                   ? Divider(
                       color: Theme.of(context).accentColor,
-                      height: 5,
-                      thickness: 1,
+                      height: 10,
+                      thickness: .5,
                     )
                   : Container(),
             ),

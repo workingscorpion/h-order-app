@@ -166,7 +166,7 @@ class AppRouter {
   static toShoppingCompletePage(List<CartItemModel> cart) {
     return Navigator.of(context).pushNamedAndRemoveUntil(
       RouteNames.ShoppingComplete,
-      (route) => route.settings.name != RouteNames.Shop,
+      (route) => route.settings.name == RouteNames.Home,
       arguments: cart,
     );
   }

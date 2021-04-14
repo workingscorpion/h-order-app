@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
@@ -191,6 +192,7 @@ class _HomePageState extends State<HomePage>
               .bodyText1
               .copyWith(fontWeight: FontWeight.normal),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
@@ -225,10 +227,13 @@ class _HomePageState extends State<HomePage>
                   ),
                 ],
               ),
-              Icon(
-                CupertinoIcons.cloud_sun,
-                color: Colors.white,
-                size: 120,
+              Container(
+                width: 100,
+                height: 100,
+                child: SvgPicture.asset(
+                  'assets/icons/home/weather_cloudsun.svg',
+                  alignment: Alignment.bottomCenter,
+                ),
               ),
             ],
           ),

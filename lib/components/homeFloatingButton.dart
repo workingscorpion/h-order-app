@@ -10,8 +10,8 @@ class HomeFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.width * .1,
-      width: MediaQuery.of(context).size.width * .1,
+      height: MediaQuery.of(context).size.width * .12,
+      width: MediaQuery.of(context).size.width * .12,
       margin: EdgeInsets.only(bottom: 20),
       child: FloatingActionButton(
         onPressed: () {
@@ -20,7 +20,7 @@ class HomeFloatingButton extends StatelessWidget {
         child: SvgPicture.asset(
           'assets/icons/home/home.svg',
           color: Theme.of(context).primaryColor,
-          height: 60,
+          height: 40,
         ),
       ),
     );

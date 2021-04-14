@@ -65,86 +65,36 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
                   Text(
                     '주문이 완료되었습니다.',
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 40,
                     ),
                   ),
+                  Container(height: 30),
                   Text(
                     '주문하신 매장에서 주문을 수락한 뒤에는 결제취소가 불가합니다.',
                     style: TextStyle(
-                      fontSize: 10,
+                      fontSize: 20,
+                      color: Colors.black54,
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  width: 1,
-                ),
-              ),
-            ),
-            padding: EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-            ),
-            child: Column(
-              children: [
-                _titleItem(
-                  label: '배달위치',
-                  text: '진주오피스텔 A동 102호',
-                ),
-                _titleItem(
-                  label: '결제정보',
-                  text: '롯데카드 [1234]',
-                  margin: false,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 12),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      '총 금액',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${NumberFormat().format(totalAmount)} ₩',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: FlatButton(
-              color: Colors.blueGrey,
-              onPressed: () {
+          Material(
+            color: Colors.black,
+            child: InkWell(
+              onTap: () {
                 _save();
               },
-              child: Text(
-                '홈으로',
-                style: TextStyle(
-                  fontSize: 16,
+              child: Container(
+                height: 80,
+                alignment: Alignment.center,
+                child: Text(
+                  '메인으로',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
