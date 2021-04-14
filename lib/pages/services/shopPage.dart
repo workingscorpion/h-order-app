@@ -130,7 +130,6 @@ class _ShopPageState extends State<ShopPage>
               StatusBar(),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -138,15 +137,21 @@ class _ShopPageState extends State<ShopPage>
                       TabBar(
                         controller: _tabController,
                         isScrollable: true,
+                        indicatorColor: Colors.white,
+                        labelPadding: EdgeInsets.zero,
                         tabs: [
                           ..._categories.map(
                             (item) => Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 52,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                              ),
                               child: Text(
                                 item.name,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    .copyWith(fontSize: 40),
+                                style: Theme.of(context).textTheme.bodyText2,
                               ),
                             ),
                           ),
@@ -158,7 +163,7 @@ class _ShopPageState extends State<ShopPage>
                           children: [
                             ..._categories.map(
                               (category) => GridView.count(
-                                padding: EdgeInsets.all(5),
+                                padding: EdgeInsets.all(24),
                                 crossAxisSpacing: 5,
                                 mainAxisSpacing: 5,
                                 crossAxisCount: 3,
@@ -180,31 +185,34 @@ class _ShopPageState extends State<ShopPage>
         ));
   }
 
-  _shopHeader() => Row(
-        children: [
-          Text(
-            '본보야지',
-            style: Theme.of(context).textTheme.headline1.copyWith(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          Spacer(),
-          TextButton(
-            onPressed: () {
-              AppRouter.pop();
-            },
-            child: Row(
-              children: [
-                Text('홈화면', style: Theme.of(context).textTheme.bodyText2),
-                Icon(
-                  CupertinoIcons.chevron_right_2,
-                  color: Theme.of(context).textTheme.bodyText2.color,
-                ),
-              ],
+  _shopHeader() => Container(
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+        child: Row(
+          children: [
+            Text(
+              '본보야지',
+              style: Theme.of(context).textTheme.headline1.copyWith(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
-          )
-        ],
+            Spacer(),
+            TextButton(
+              onPressed: () {
+                AppRouter.pop();
+              },
+              child: Row(
+                children: [
+                  Text('홈화면', style: Theme.of(context).textTheme.bodyText2),
+                  Icon(
+                    CupertinoIcons.chevron_right_2,
+                    color: Theme.of(context).textTheme.bodyText2.color,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       );
 
   _product({
