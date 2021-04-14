@@ -141,11 +141,14 @@ class _HomePageState extends State<HomePage>
                 ),
               ],
             ),
-            Text(
-              '서울특별시 구로구 경인로 67길 67 신도림081 (우: 08208)',
-              softWrap: true,
-              style: TextStyle(
-                fontSize: 20,
+            Expanded(
+              flex: 1,
+              child: Text(
+                '서울특별시 구로구 경인로 67길 67 신도림081 (우: 08208)',
+                softWrap: true,
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
             ),
             Container(height: 20),
@@ -174,66 +177,61 @@ class _HomePageState extends State<HomePage>
           children: [
             Spacer(),
             _infoHeader(),
-            Spacer(),
-            Container(
-              padding: EdgeInsets.all(24),
-              decoration: _weatherGradient(),
-              child: Row(
+            _weather(),
+          ],
+        ),
+      );
+
+  _weather() => Container(
+        decoration: _weatherGradient(),
+        padding: EdgeInsets.all(24),
+        child: DefaultTextStyle(
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1
+              .copyWith(fontWeight: FontWeight.normal),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
                 children: [
-                  // Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     Container(
-                  //       child: Text(
-                  //         '오늘, 어제보다 2℃ 높아요',
-                  //         style: TextStyle(
-                  //           fontSize: 18,
-                  //           color: Colors.white,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     Row(
-                  //       crossAxisAlignment: CrossAxisAlignment.baseline,
-                  //       children: [
-                  //         Text(
-                  //           '38',
-                  //           style: TextStyle(
-                  //             fontSize: 70,
-                  //             color: Colors.white,
-                  //           ),
-                  //         ),
-                  //         Container(
-                  //           child: Stack(
-                  //             children: [
-                  //               Positioned(
-                  //                 top: 0,
-                  //                 left: 0,
-                  //                 child: Text(
-                  //                   '℃',
-                  //                   style: TextStyle(
-                  //                     fontSize: 25,
-                  //                     color: Colors.white,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //         Text(
-                  //           '/ 11℃ 약간 흐림',
-                  //           style: TextStyle(
-                  //             fontSize: 18,
-                  //             color: Colors.white,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     )
-                  //   ],
-                  // ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: Text('오늘, 어제보다 2℃ 높아요'),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            height: 60,
+                            child: Text('38',
+                                style: TextStyle(fontSize: 70, height: 1)),
+                          ),
+                          Text(
+                            '℃',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        '/11℃ 약간 흐림',
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ),
-          ],
+              Icon(
+                CupertinoIcons.cloud_sun,
+                color: Colors.white,
+                size: 120,
+              ),
+            ],
+          ),
         ),
       );
 
