@@ -39,7 +39,7 @@ class _InfoPageState extends State<InfoPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: _card(text: 'Kim order'),
+                                child: _card(text: '김커먼'),
                               ),
                               Container(width: 32),
                               Spacer(flex: 2),
@@ -82,7 +82,7 @@ class _InfoPageState extends State<InfoPage> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     _header(text: '입주 호실'),
-                                    _card(text: '남동 202호 (52.3 m2  / D타입)​'),
+                                    _card(text: '남동 202호 (42.9 m2  / C-1타입)​'),
                                   ],
                                 ),
                               ),
@@ -93,7 +93,7 @@ class _InfoPageState extends State<InfoPage> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     _header(text: '입주 형태'),
-                                    _card(text: '월세   ㅣ   월 600,000원'),
+                                    _card(text: '렌트비   ㅣ   월 1,040,000원'),
                                   ],
                                 ),
                               ),

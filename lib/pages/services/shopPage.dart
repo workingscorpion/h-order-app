@@ -54,54 +54,56 @@ class _ShopPageState extends State<ShopPage>
     final random = Random();
     var count = 0;
 
-    _categories = List.generate(10, (i) {
-      final index = count++;
+    final List<String> _categoryNames = ['심플리오', '오드리선', '마타주', '런드리라운지24'];
 
-      return CategoryModel(
-        index: index,
-        name: 'Category $index',
-        products: List.generate(15, (_i) {
-          final _index = count++;
+    final List<String> _itemNames = [
+      '헤븐리 샴푸',
+      '리프레싱 스칼프샴푸',
+      '리프레싱 스칼프 린스',
+      '비오틴 탈모케어 샴푸',
+      '프로틴부스터 헤어트리트먼트',
+      '샤이닝 헤어세럼',
+      '내추럴 글로우 토너',
+      '내추럴 글로우 크림',
+      '리얼이펙트 EGF앰플',
+    ];
 
-          return ProductModel(
-            index: _index,
-            categoryIndex: index,
-            image: 'assets/sample/${random.nextInt(9) + 1}.jpg',
-            name: 'Product $_index',
-            price: (random.nextInt(15) + 5) * 1000,
-            options: List.generate(random.nextInt(5) + 5, (__i) {
-              final __index = count++;
-              final hasSubOption = random.nextBool();
-              final subOptionLength =
-                  hasSubOption ? (random.nextInt(3) + 1) : 0;
-              final max = hasSubOption ? random.nextInt(subOptionLength) : 0;
+    final List<int> _itemPrice = [
+      6500,
+      6000,
+      6000,
+      17000,
+      8500,
+      6000,
+      10000,
+      18000,
+      29000,
+    ];
 
-              return ProductOptionModel(
-                index: __index,
-                name: 'Option $__index',
-                price: hasSubOption ? 0 : (random.nextInt(15) + 5) * 100,
-                multiple: hasSubOption && random.nextBool(),
-                max: max,
-                isRequired: false,
-                options: hasSubOption
-                    ? List.generate(subOptionLength, (___i) {
-                        final ___index = count++;
+    _getLength(int index) {
+      if (index == 1) {
+        return 7;
+      }
+      return 9;
+    }
 
-                        return ProductOptionModel(
-                          parent: __index,
-                          index: ___index,
-                          name: 'Sub Option $___index',
-                          price: (random.nextInt(15) + 5) * 100,
-                          multiple: max > 0 ? false : random.nextBool(),
-                        );
-                      })
-                    : [],
-              );
-            }),
-          );
-        }),
-      );
-    });
+    _categories = List.generate(
+        4,
+        (index) => CategoryModel(
+              index: index,
+              name: _categoryNames[index],
+              products: List.generate(
+                _getLength(index),
+                (i) => ProductModel(
+                  index: i,
+                  categoryIndex: index,
+                  image: 'assets/sample/commontown/item/s${i + 1}.jpg',
+                  name: _itemNames[i],
+                  price: _itemPrice[i],
+                  options: List(),
+                ),
+              ),
+            ));
 
     _categories.expand((element) => element.products).forEach((product) {
       _buttonKeys[product.index] = GlobalKey();
