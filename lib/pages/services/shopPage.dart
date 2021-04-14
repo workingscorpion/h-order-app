@@ -237,7 +237,7 @@ class _ShopPageState extends State<ShopPage>
         child: Row(
           children: [
             Text(
-              '본보야지',
+              '심플리오',
               style: Theme.of(context).textTheme.headline1.copyWith(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
