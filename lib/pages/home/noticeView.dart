@@ -377,7 +377,7 @@ Nothing is as cautiously cuddly as a pet porcupine.''',
         header: _row(
           flex: flex,
           children: children,
-          color: Theme.of(context).primaryColor,
+          color: Colors.transparent,
         ),
         body: Container(
           padding: EdgeInsets.all(26),
