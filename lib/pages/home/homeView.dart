@@ -68,7 +68,8 @@ class _HomeViewState extends State<HomeView>
                       ServiceItem(
                         objectId: '1',
                         type: 'text',
-                        label: '요청하신 시간에 관리실 직원이 방문할 예정입니다.',
+                        label:
+                            '개인룸 청소를 신청합니다.\n(기본 월 1회 무료,\n이후 회당 20,000원의 요금이 발생하며\n대음달 관리비에 적용됩니다.)',
                       ),
                       ServiceItem(
                         objectId: '2',
@@ -84,12 +85,18 @@ class _HomeViewState extends State<HomeView>
                       ServiceItem(
                         objectId: '1',
                         type: 'text',
-                        label: '요청하신 시간에 관리실 직원이 방문할 예정입니다.',
+                        label:
+                            '세탁서비스를 신청합니다.\n다음날 오전 10시에 수거, 오후 6시에 배달됩니다.\n(개인룸 내 수거함을 이용바랍니다.)',
                       ),
                       ServiceItem(
                         objectId: '2',
-                        type: 'dateTime',
-                        label: '',
+                        type: 'count',
+                        label: '침구세트 세탁',
+                      ),
+                      ServiceItem(
+                        objectId: '3',
+                        type: 'count',
+                        label: '수건(7장) 세탁',
                       ),
                     ],
                   ),
@@ -100,12 +107,7 @@ class _HomeViewState extends State<HomeView>
                       ServiceItem(
                         objectId: '1',
                         type: 'text',
-                        label: '요청하신 시간에 관리실 직원이 방문할 예정입니다.',
-                      ),
-                      ServiceItem(
-                        objectId: '2',
-                        type: 'dateTime',
-                        label: '',
+                        label: '5-10분 내로 출차됩니다.',
                       ),
                     ],
                   ),
@@ -116,7 +118,7 @@ class _HomeViewState extends State<HomeView>
                       ServiceItem(
                         objectId: '1',
                         type: 'text',
-                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        label: '커먼매니저를 호출합니다.\n10분 내로 방문 예정입니다.',
                       ),
                     ],
                   ),
@@ -143,7 +145,17 @@ class _HomeViewState extends State<HomeView>
                       ServiceItem(
                         objectId: '1',
                         type: 'text',
-                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
+                        label: '택배 수거를 요청합니다.',
+                      ),
+                      ServiceItem(
+                        objectId: '2',
+                        type: 'count',
+                        label: '개수',
+                      ),
+                      ServiceItem(
+                        objectId: '1',
+                        type: 'text',
+                        label: '택배 수거를 요청합니다.',
                       ),
                     ],
                   ),
@@ -160,29 +172,35 @@ class _HomeViewState extends State<HomeView>
                   ),
                   ServiceButton(
                     icon: CupertinoIcons.trash,
-                    label: '종량제봉투',
+                    label: '생필품 신청',
                     items: [
                       ServiceItem(
                         objectId: '1',
                         type: 'text',
-                        label: '10분내로 문 앞에 배송해드립니다.',
+                        label: '신청한 생필품은 다음달 관리비에 적용됩니다.',
                       ),
                       ServiceItem(
                         objectId: '2',
                         type: 'count',
-                        label: '20L',
+                        label: '휴지(500원)',
                         max: 15,
                       ),
                       ServiceItem(
                         objectId: '3',
                         type: 'count',
-                        label: '50L',
+                        label: '각티슈(1,000원)',
                         max: 10,
                       ),
                       ServiceItem(
                         objectId: '4',
                         type: 'count',
-                        label: '100L',
+                        label: '드럼세탁기 세제(3,000원)',
+                        max: 5,
+                      ),
+                      ServiceItem(
+                        objectId: '5丁',
+                        type: 'count',
+                        label: '종량제봉투 50L(1,000원)',
                         max: 5,
                       ),
                     ],
