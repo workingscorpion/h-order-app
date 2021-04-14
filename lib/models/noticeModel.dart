@@ -8,7 +8,6 @@ class NoticeModel {
   final String title;
   final String writer;
   final String content;
-  final int hit;
   final DateTime createdTime;
 
   NoticeModel({
@@ -16,7 +15,6 @@ class NoticeModel {
     this.writer,
     this.title,
     this.content,
-    this.hit,
     this.createdTime,
   });
 

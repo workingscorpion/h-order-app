@@ -12,7 +12,6 @@ NoticeModel _$NoticeModelFromJson(Map<String, dynamic> json) {
     writer: json['writer'] as String,
     title: json['title'] as String,
     content: json['content'] as String,
-    hit: json['hit'] as int,
     createdTime: json['createdTime'] == null
         ? null
         : DateTime.parse(json['createdTime'] as String),
@@ -25,6 +24,5 @@ Map<String, dynamic> _$NoticeModelToJson(NoticeModel instance) =>
       'title': instance.title,
       'writer': instance.writer,
       'content': instance.content,
-      'hit': instance.hit,
       'createdTime': instance.createdTime?.toIso8601String(),
     };
