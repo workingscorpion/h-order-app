@@ -11,6 +11,7 @@ class ProductOptionModel {
   final int price;
   final bool multiple;
   final int max;
+  final bool isRequired;
   final List<ProductOptionModel> options;
 
   ProductOptionModel({
@@ -21,6 +22,7 @@ class ProductOptionModel {
     this.price,
     this.multiple,
     this.max,
+    this.isRequired,
     this.options,
   });
 

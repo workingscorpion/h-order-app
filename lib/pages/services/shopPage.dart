@@ -82,6 +82,7 @@ class _ShopPageState extends State<ShopPage>
                 price: hasSubOption ? 0 : (random.nextInt(15) + 5) * 100,
                 multiple: hasSubOption && random.nextBool(),
                 max: max,
+                isRequired: false,
                 options: hasSubOption
                     ? List.generate(subOptionLength, (___i) {
                         final ___index = count++;
