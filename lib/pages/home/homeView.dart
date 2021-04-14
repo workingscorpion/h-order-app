@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/serviceButton.dart';
 import 'package:h_order/components/viewHeader.dart';
+import 'package:h_order/constants/customColors.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -19,6 +20,13 @@ class _HomeViewState extends State<HomeView>
     'assets/sample/commontown/banner/1.png',
     'assets/sample/commontown/banner/2.png',
     'assets/sample/commontown/banner/3.png',
+  ];
+
+  List<String> serviceImages = [
+    'assets/sample/commontown/service/se1.png',
+    'assets/sample/commontown/service/se2.png',
+    'assets/sample/commontown/service/se3.png',
+    'assets/sample/commontown/service/se4.png',
   ];
 
   @override
@@ -126,7 +134,7 @@ class _HomeViewState extends State<HomeView>
                 ...[
                   ServiceButton(
                     icon: CupertinoIcons.tag,
-                    label: '딜리버리',
+                    label: '커먼플러스',
                     onTap: () {
                       AppRouter.toShopPage();
                     },
@@ -257,21 +265,27 @@ class _HomeViewState extends State<HomeView>
                   scrollDirection: Axis.horizontal,
                   children: [
                     ...List.generate(
-                      10,
+                      4,
                       (index) => Container(
                         margin: EdgeInsets.only(right: 8),
                         child: AspectRatio(
                           aspectRatio: 1.413 / 1,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              AppRouter.toShopPage();
+                            },
                             child: Container(
                               decoration: BoxDecoration(
+                                color: CustomColors.backgroundLightGrey,
                                 border: Border.all(
-                                  width: 1,
+                                  width: 2,
                                   color: Colors.black,
                                 ),
                               ),
-                              child: Text('제휴 서비스 $index'),
+                              child: Image.asset(
+                                serviceImages[index],
+                                fit: BoxFit.fitWidth,
+                              ),
                             ),
                           ),
                         ),
