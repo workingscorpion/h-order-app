@@ -1,6 +1,7 @@
 import 'package:drag_and_drop_gridview/devdrag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/serviceButton.dart';
 import 'package:h_order/components/statusBar.dart';
 
@@ -73,14 +74,15 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text('즐겨찾기'),
-        ),
         body: SafeArea(
           child: Container(
             child: Column(
               children: [
                 StatusBar(),
+                PageHeader(
+                  title: '즐겨찾기',
+                  canBack: true,
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

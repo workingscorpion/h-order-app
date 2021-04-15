@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
@@ -67,7 +68,10 @@ class _CartPageState extends State<CartPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _cartHeader(),
+                    PageHeader(
+                      title: '심플리오',
+                      canBack: true,
+                    ),
                     _cartItems(),
                     _amount(),
                     _payButton(),
@@ -80,36 +84,6 @@ class _CartPageState extends State<CartPage>
       ),
     );
   }
-
-  _cartHeader() => Container(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        child: Row(
-          children: [
-            Text(
-              '장바구니',
-              style: Theme.of(context).textTheme.headline1.copyWith(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            Spacer(),
-            TextButton(
-              onPressed: () {
-                AppRouter.pop();
-              },
-              child: Row(
-                children: [
-                  Text('목록보기', style: Theme.of(context).textTheme.bodyText2),
-                  Icon(
-                    CupertinoIcons.chevron_right_2,
-                    color: Theme.of(context).textTheme.bodyText2.color,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      );
 
   _cartItems() => Expanded(
         child: DefaultTextStyle(

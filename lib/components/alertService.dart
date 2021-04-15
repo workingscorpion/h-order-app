@@ -21,6 +21,8 @@ class AlertService extends StatefulWidget {
 class _AlertServiceState extends State<AlertService> {
   Map<String, dynamic> data = Map();
 
+  final _textConttroller = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +37,9 @@ class _AlertServiceState extends State<AlertService> {
 
             case 'count':
               return MapEntry(value.objectId, 0);
+
+            case 'input':
+              return MapEntry(value.objectId, '');
           }
 
           return MapEntry(value.objectId, null);
@@ -145,6 +150,7 @@ class _AlertServiceState extends State<AlertService> {
                     minWidth: 140,
                     onPressed: () {
                       Navigator.of(context).pop();
+                      return false;
                     },
                     child: Text(
                       '취소',
@@ -159,7 +165,9 @@ class _AlertServiceState extends State<AlertService> {
                   FlatButton(
                     minWidth: 140,
                     onPressed: () {
-                      Navigator.of(context).pop(data);
+                      // FIXME
+                      Navigator.of(context).pop(true);
+                      // Navigator.of(context).pop(data);
                     },
                     color: Colors.black,
                     child: Text(
@@ -191,6 +199,9 @@ class _AlertServiceState extends State<AlertService> {
 
       case 'count':
         return _alertCountContent(item: item);
+
+      case 'input':
+        return _alertInputContent(item: item);
     }
 
     return Container();
@@ -207,6 +218,41 @@ class _AlertServiceState extends State<AlertService> {
           style: TextStyle(
             fontSize: 22,
           ),
+        ),
+      );
+
+  _alertInputContent({
+    ServiceItem item,
+  }) =>
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 80),
+        child: TextField(
+          cursorWidth: 1,
+          cursorColor: Colors.black,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.black,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(3),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.black,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.black,
+              ),
+            ),
+            hintText: item.label,
+          ),
+          controller: _textConttroller,
         ),
       );
 
@@ -297,7 +343,7 @@ class _AlertServiceState extends State<AlertService> {
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     data[item.objectId] += 1;
-                    if (data[item.objectId] > item.max) {
+                    if (item.max != null && data[item.objectId] > item.max) {
                       data[item.objectId] = item.max;
                     }
                     setState(() {});

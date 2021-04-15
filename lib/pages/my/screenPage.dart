@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/store/navigationStore.dart';
 import 'package:intl/intl.dart';
@@ -31,14 +32,15 @@ class _ScreenPageState extends State<ScreenPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text('화면 설정'),
-        ),
         body: SafeArea(
           child: Container(
             child: Column(
               children: [
                 StatusBar(),
+                PageHeader(
+                  title: '화면 설정',
+                  canBack: true,
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -149,7 +151,7 @@ class _ScreenPageState extends State<ScreenPage> {
               children: [
                 Expanded(
                   child: AspectRatio(
-                    aspectRatio: 9 / 19.5,
+                    aspectRatio: 0.625,
                     child: Container(
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(

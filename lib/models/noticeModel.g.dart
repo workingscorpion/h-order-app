@@ -15,6 +15,7 @@ NoticeModel _$NoticeModelFromJson(Map<String, dynamic> json) {
     createdTime: json['createdTime'] == null
         ? null
         : DateTime.parse(json['createdTime'] as String),
+    isRead: json['isRead'] as bool,
   );
 }
 
@@ -25,4 +26,5 @@ Map<String, dynamic> _$NoticeModelToJson(NoticeModel instance) =>
       'writer': instance.writer,
       'content': instance.content,
       'createdTime': instance.createdTime?.toIso8601String(),
+      'isRead': instance.isRead,
     };
