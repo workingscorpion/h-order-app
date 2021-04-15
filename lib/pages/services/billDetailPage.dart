@@ -22,7 +22,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
             ),
             Expanded(
               child: Image.asset(
-                'assets/sample/sample2.png',
+                'assets/sample/billSample.png',
                 fit: BoxFit.contain,
               ),
             ),
