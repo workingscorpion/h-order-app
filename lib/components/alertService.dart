@@ -145,6 +145,7 @@ class _AlertServiceState extends State<AlertService> {
                     minWidth: 140,
                     onPressed: () {
                       Navigator.of(context).pop();
+                      return false;
                     },
                     child: Text(
                       '취소',
@@ -159,7 +160,9 @@ class _AlertServiceState extends State<AlertService> {
                   FlatButton(
                     minWidth: 140,
                     onPressed: () {
-                      Navigator.of(context).pop(data);
+                      // FIXME
+                      Navigator.of(context).pop(true);
+                      // Navigator.of(context).pop(data);
                     },
                     color: Colors.black,
                     child: Text(

@@ -120,14 +120,19 @@ class _ServiceButtonState extends State<ServiceButton> {
       ),
     );
 
-    Fluttertoast.showToast(
-      msg: "   신청되었습니다.   ",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
-      textColor: Theme.of(context).textTheme.bodyText1.color,
-      fontSize: 17,
-    );
+    print('======================================');
+    print(result);
+
+    if (result) {
+      Fluttertoast.showToast(
+        msg: "   신청되었습니다.   ",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+        textColor: Theme.of(context).textTheme.bodyText1.color,
+        fontSize: 17,
+      );
+    }
   }
 }
 
