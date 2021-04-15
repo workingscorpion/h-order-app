@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/statusBar.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -10,14 +11,15 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text('결제수단 관리'),
-        ),
         body: SafeArea(
             child: Container(
           child: Column(
             children: [
               StatusBar(),
+              PageHeader(
+                title: '결제수단 관리',
+                canBack: true,
+              ),
               Expanded(
                 child: Column(
                   children: [

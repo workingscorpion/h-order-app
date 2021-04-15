@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/statusBar.dart';
 
 class InfoPage extends StatefulWidget {
@@ -16,14 +17,15 @@ class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Color(0xfff6f7fb),
-        appBar: AppBar(
-          title: Text('내 정보'),
-        ),
         body: SafeArea(
           child: Container(
             child: Column(
               children: [
                 StatusBar(),
+                PageHeader(
+                  title: '내 정보',
+                  canBack: true,
+                ),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(24),
