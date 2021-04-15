@@ -58,17 +58,6 @@ class _HomeViewState extends State<HomeView>
               crossAxisCount: 5,
               children: [
                 ...[
-                  // ServiceButton(
-                  //   icon: CupertinoIcons.hammer,
-                  //   label: '시설보수',
-                  //   items: [
-                  //     ServiceItem(
-                  //       objectId: '1',
-                  //       type: 'text',
-                  //       label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                  //     ),
-                  //   ],
-                  // ),
                   ServiceButton(
                     icon: CupertinoIcons.sparkles,
                     label: '청소',
@@ -264,18 +253,70 @@ class _HomeViewState extends State<HomeView>
                       onTap: () {
                         AppRouter.toShopPage();
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.black,
+                      child: Stack(
+                        children: [
+                          FractionallySizedBox(
+                            widthFactor: 1,
+                            heightFactor: 1,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              child: Image.asset(
+                                serviceImages[index],
+                                fit: BoxFit.fitWidth,
+                              ),
+                            ),
                           ),
-                        ),
-                        child: Image.asset(
-                          serviceImages[index],
-                          fit: BoxFit.fitWidth,
-                        ),
+                          FractionallySizedBox(
+                            widthFactor: 1,
+                            heightFactor: 1,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black38,
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 24,
+                            left: 24,
+                            child: DefaultTextStyle(
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "고샵 (GO SHOP)",
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    "#멀티샵 #생필품 #세계주류 #굿즈",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Container(height: 5),
+                                  Text(
+                                    "00:00 ~ 24:00",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

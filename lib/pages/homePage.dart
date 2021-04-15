@@ -154,16 +154,16 @@ class _HomePageState extends State<HomePage>
             ),
             Container(height: 20),
             FlatButton(
-              height: 44,
+              height: 36,
               color: Theme.of(context).accentColor,
               onPressed: () {
                 AppRouter.toAlarmPage();
               },
               child: Text(
-                '알림 설정',
+                '알람 설정',
                 maxLines: 1,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 17,
                   color: Theme.of(context).primaryColor,
                 ),
               ),
@@ -262,14 +262,17 @@ class _HomePageState extends State<HomePage>
           color: Theme.of(context).accentColor,
           thickness: 1,
           width: 10,
+          indent: 14,
+          endIndent: 11,
         ),
       );
 
   _status() => StatusBar();
 
   _infoButtons() => Container(
-        height: 44,
+        height: 36,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ...[
               '입주민 공지',
@@ -307,18 +310,21 @@ class _HomePageState extends State<HomePage>
       Expanded(
         child: InkWell(
           onTap: onPressed,
-          child: Text(
-            text,
-            maxLines: 1,
-            style: Theme.of(context)
-                .textTheme
-                .headline2
-                .copyWith(fontWeight: FontWeight.bold)
-                .copyWith(
-                  letterSpacing: -1,
-                  fontSize: 16,
-                ),
-            textAlign: TextAlign.center,
+          child: Container(
+            alignment: Alignment.center,
+            child: Text(
+              text,
+              maxLines: 1,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline2
+                  .copyWith(fontWeight: FontWeight.bold)
+                  .copyWith(
+                    letterSpacing: -1,
+                    fontSize: 16,
+                  ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       );

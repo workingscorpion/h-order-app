@@ -94,45 +94,42 @@ class _ProductPageState extends State<ProductPage>
         children: [
           Expanded(
             flex: 8,
-            child: Hero(
-              tag: widget.product.index,
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: _productHeader(),
-                    ),
-                    _productSlider(),
-                    Expanded(
-                      flex: 8,
-                      child: DefaultTextStyle(
-                        style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                        ),
-                        child: ListView(
-                          padding: EdgeInsets.symmetric(horizontal: 24),
-                          shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
-                          children: [
-                            Flex(
-                              direction: Axis.vertical,
-                              children: [
-                                _titleCard(),
-                              ],
-                            ),
-                            _optionCard(),
-                            _productCount(),
-                          ],
-                        ),
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: _productHeader(),
+                  ),
+                  _productSlider(),
+                  Expanded(
+                    flex: 8,
+                    child: DefaultTextStyle(
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black,
+                      ),
+                      child: ListView(
+                        padding: EdgeInsets.symmetric(horizontal: 24),
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        children: [
+                          Flex(
+                            direction: Axis.vertical,
+                            children: [
+                              _titleCard(),
+                            ],
+                          ),
+                          _optionCard(),
+                          _productCount(),
+                        ],
                       ),
                     ),
-                    _saveButton(),
-                  ],
-                ),
+                  ),
+                  _saveButton(),
+                ],
               ),
             ),
           ),
@@ -304,19 +301,35 @@ class _ProductPageState extends State<ProductPage>
                 widget.product.image,
                 widget.product.image,
                 widget.product.image
-              ].map(
-                (item) => AspectRatio(
-                  aspectRatio: 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      item,
-                      fit: BoxFit.cover,
+              ]
+                  .asMap()
+                  .map(
+                    (index, item) => MapEntry(
+                      index,
+                      index == 0
+                          ? Hero(
+                              tag: widget.product.index,
+                              child: _productSliderItem(image: item),
+                            )
+                          : _productSliderItem(image: item),
                     ),
-                  ),
-                ),
-              ),
+                  )
+                  .values,
             ],
+          ),
+        ),
+      );
+
+  _productSliderItem({
+    String image,
+  }) =>
+      AspectRatio(
+        aspectRatio: 1,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(
+            image,
+            fit: BoxFit.cover,
           ),
         ),
       );
