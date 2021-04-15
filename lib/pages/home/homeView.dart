@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/serviceButton.dart';
-import 'package:h_order/components/viewHeader.dart';
-import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/constants/sampleData.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -16,19 +15,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
-  List<String> images = [
-    'assets/sample/commontown/banner/1.png',
-    'assets/sample/commontown/banner/2.png',
-    'assets/sample/commontown/banner/3.png',
-  ];
-
-  List<String> serviceImages = [
-    'assets/sample/commontown/service/se1.png',
-    'assets/sample/commontown/service/se2.png',
-    'assets/sample/commontown/service/se3.png',
-    'assets/sample/commontown/service/se4.png',
-  ];
-
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -259,7 +245,7 @@ class _HomeViewState extends State<HomeView>
                         ),
                       ),
                       child: Image.asset(
-                        serviceImages[index],
+                        SampleHomeData.serviceImages[index],
                         fit: BoxFit.fitWidth,
                       ),
                     ),
@@ -276,7 +262,7 @@ class _HomeViewState extends State<HomeView>
         child: LayoutBuilder(
           builder: (context, constraint) => CarouselSlider(
             items: [
-              ...images.map(
+              ...SampleHomeData.bannerImages.map(
                 (item) => Container(
                   alignment: Alignment.center,
                   child: Image.asset(

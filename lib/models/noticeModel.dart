@@ -9,6 +9,7 @@ class NoticeModel {
   final String writer;
   final String content;
   final DateTime createdTime;
+  final bool isRead;
 
   NoticeModel({
     this.index,
@@ -16,6 +17,7 @@ class NoticeModel {
     this.title,
     this.content,
     this.createdTime,
+    this.isRead,
   });
 
   factory NoticeModel.fromJson(Map<String, dynamic> json) =>

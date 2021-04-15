@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
 import 'package:h_order/components/statusBar.dart';
+import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
 
@@ -125,7 +126,7 @@ class _HomePageState extends State<HomePage>
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '202호',
+                  '${SampleHomeData.room}',
                   style: Theme.of(context)
                       .textTheme
                       .headline1
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage>
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    '김커먼 님',
+                    '${SampleHomeData.name} 님',
                     style: Theme.of(context).textTheme.headline2.copyWith(
                           fontSize: 32,
                         ),
@@ -145,7 +146,7 @@ class _HomePageState extends State<HomePage>
             Expanded(
               flex: 1,
               child: Text(
-                '서울특별시 구로구 경인로 67길 67 신도림081 (우: 08208)',
+                '${SampleHomeData.address}',
                 softWrap: true,
                 style: TextStyle(
                   fontSize: 20,
@@ -220,7 +221,7 @@ class _HomePageState extends State<HomePage>
                         ],
                       ),
                       Text(
-                        '/11℃ 약간 흐림',
+                        '/8℃ 약간 흐림',
                         style: TextStyle(fontSize: 17),
                       ),
                     ],
