@@ -111,8 +111,6 @@ class _HomeViewState extends State<HomeView>
                       ),
                     ],
                   ),
-                ],
-                ...[
                   ServiceButton(
                     icon: CupertinoIcons.tag,
                     label: '커먼플러스',
@@ -120,6 +118,8 @@ class _HomeViewState extends State<HomeView>
                       AppRouter.toShopPage();
                     },
                   ),
+                ],
+                ...[
                   ServiceButton(
                     icon: CupertinoIcons.paw,
                     label: '펫케어',
@@ -194,27 +194,11 @@ class _HomeViewState extends State<HomeView>
                       ),
                     ],
                   ),
-                ],
-                ...[
                   ServiceButton(
                     icon: CupertinoIcons.paintbrush,
                     label: '인테리어',
                     onTap: () {
                       AppRouter.toShopPage();
-                    },
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.archivebox,
-                    label: '이사',
-                    onTap: () {
-                      AppRouter.toShopPage();
-                    },
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.info_circle,
-                    label: '정보',
-                    onTap: () {
-                      AppRouter.toInformationPage();
                     },
                   ),
                 ],
