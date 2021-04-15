@@ -12,7 +12,6 @@ class HomeFloatingButton extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.width * .12,
       width: MediaQuery.of(context).size.width * .12,
-      margin: EdgeInsets.only(bottom: 20),
       child: FloatingActionButton(
         onPressed: () {
           return callback();
