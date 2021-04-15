@@ -133,9 +133,9 @@ class _HomeViewState extends State<HomeView>
                         label: '개수',
                       ),
                       ServiceItem(
-                        objectId: '1',
-                        type: 'text',
-                        label: '택배 수거를 요청합니다.',
+                        objectId: '3',
+                        type: 'input',
+                        label: '요청사항',
                       ),
                     ],
                   ),
