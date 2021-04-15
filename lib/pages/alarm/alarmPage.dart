@@ -19,50 +19,48 @@ class _AlarmPageState extends State<AlarmPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: SafeArea(
-          child: Container(
-            child: Column(
-              children: [
-                StatusBar(),
-                PageHeader(
-                  title: '알람 설정',
-                  canBack: true,
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 600,
-                        child: _input(),
-                      ),
-                      Expanded(
-                        child: AnimatedList(
-                          key: _listKey,
-                          padding: EdgeInsets.all(24),
-                          initialItemCount: list.length,
-                          itemBuilder: (context, index, animation) =>
-                              SlideTransition(
-                            position: animation.drive(
-                              Tween<Offset>(
-                                begin: Offset(-1, 0),
-                                end: Offset(0, 0),
-                              ),
+        body: Container(
+          child: Column(
+            children: [
+              StatusBar(),
+              PageHeader(
+                title: '알람 설정',
+                canBack: true,
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 600,
+                      child: _input(),
+                    ),
+                    Expanded(
+                      child: AnimatedList(
+                        key: _listKey,
+                        padding: EdgeInsets.all(24),
+                        initialItemCount: list.length,
+                        itemBuilder: (context, index, animation) =>
+                            SlideTransition(
+                          position: animation.drive(
+                            Tween<Offset>(
+                              begin: Offset(-1, 0),
+                              end: Offset(0, 0),
                             ),
-                            child: FadeTransition(
-                              opacity: animation,
-                              child: _item(
-                                index: index,
-                                item: list[index],
-                              ),
+                          ),
+                          child: FadeTransition(
+                            opacity: animation,
+                            child: _item(
+                              index: index,
+                              item: list[index],
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );

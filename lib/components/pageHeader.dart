@@ -11,13 +11,15 @@ class PageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      height: 80,
       padding: EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 40),
+            style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  fontSize: 28,
+                ),
           ),
           Spacer(),
           canBack
@@ -28,18 +30,12 @@ class PageHeader extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(right: 5),
                         child: Text(
                           '뒤로 가기',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              .copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                                fontSize: 16,
+                              ),
                         ),
-                      ),
-                      Icon(
-                        CupertinoIcons.chevron_right_2,
-                        color: Theme.of(context).textTheme.bodyText2.color,
                       ),
                     ],
                   ),

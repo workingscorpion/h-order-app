@@ -103,7 +103,11 @@ class _HomePageState extends State<HomePage>
                         fontSize: 20,
                       ),
                 ),
-                _verticalDevider(),
+                VerticalDivider(
+                  color: Theme.of(context).accentColor,
+                  thickness: 1,
+                  width: 10,
+                ),
                 Text(
                   '납부완료',
                   style: TextStyle(
@@ -122,6 +126,7 @@ class _HomePageState extends State<HomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Container(height: 10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [

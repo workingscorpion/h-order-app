@@ -26,7 +26,7 @@ class _HomeViewState extends State<HomeView>
       );
 
   _menu() => Expanded(
-        flex: 1,
+        flex: 3,
         child: Container(
           child: Material(
             color: Colors.transparent,
@@ -216,7 +216,7 @@ class _HomeViewState extends State<HomeView>
       );
 
   _cards() => Expanded(
-        flex: 1,
+        flex: 2,
         child: Container(
           child: ListView(
             padding: EdgeInsets.only(
@@ -245,10 +245,6 @@ class _HomeViewState extends State<HomeView>
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.black,
-                                ),
                               ),
                               child: Image.asset(
                                 SampleHomeData.serviceImages[index],
@@ -260,13 +256,7 @@ class _HomeViewState extends State<HomeView>
                             widthFactor: 1,
                             heightFactor: 1,
                             child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black38,
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.black,
-                                ),
-                              ),
+                              color: Colors.black38,
                             ),
                           ),
                           Positioned(
@@ -275,26 +265,25 @@ class _HomeViewState extends State<HomeView>
                             child: DefaultTextStyle(
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 17,
                               ),
                               child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     "고샵 (GO SHOP)",
                                     style: TextStyle(
-                                      fontSize: 32,
+                                      fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
                                     "#멀티샵 #생필품 #세계주류 #굿즈",
-                                    style: TextStyle(fontSize: 20),
                                   ),
-                                  Container(height: 5),
                                   Text(
                                     "00:00 ~ 24:00",
-                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ],
                               ),
