@@ -120,9 +120,6 @@ class _ServiceButtonState extends State<ServiceButton> {
       ),
     );
 
-    print('======================================');
-    print(result);
-
     if (result) {
       Fluttertoast.showToast(
         msg: "   신청되었습니다.   ",
