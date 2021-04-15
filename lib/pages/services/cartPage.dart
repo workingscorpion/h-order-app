@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
@@ -61,7 +60,6 @@ class _CartPageState extends State<CartPage>
       body: Container(
         child: Column(
           children: [
-            StatusBar(),
             Expanded(
               child: Container(
                 color: CustomColors.backgroundLightGrey,

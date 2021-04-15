@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/constants/routeNames.dart';
 import 'package:h_order/store/navigationStore.dart';
@@ -174,6 +175,12 @@ class AppState extends State<App> with WidgetsBindingObserver {
         navigatorKey: NavigationStore.instance.navigatorKey,
         onGenerateRoute: AppRouter.generateRoute,
         initialRoute: RouteNames.Splash,
+        builder: (context, child) => Column(
+          children: [
+            StatusBar(),
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }

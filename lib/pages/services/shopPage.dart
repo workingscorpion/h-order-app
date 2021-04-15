@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/dynamicHeightGridView.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/categoryModel.dart';
@@ -83,7 +81,6 @@ class _ShopPageState extends State<ShopPage>
       body: Container(
         child: Column(
           children: [
-            StatusBar(),
             PageHeader(
               title: '심플리오',
               canBack: true,

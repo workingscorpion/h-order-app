@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/components/statusBar.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -15,7 +14,6 @@ class _PaymentPageState extends State<PaymentPage> {
             child: Container(
           child: Column(
             children: [
-              StatusBar(),
               PageHeader(
                 title: '결제수단 관리',
                 canBack: true,

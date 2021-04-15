@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/sampleData.dart';
 
 class InfoPage extends StatefulWidget {
@@ -22,7 +21,6 @@ class _InfoPageState extends State<InfoPage> {
           child: Container(
             child: Column(
               children: [
-                StatusBar(),
                 PageHeader(
                   title: '내 정보',
                   canBack: true,

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/store/navigationStore.dart';
 import 'package:intl/intl.dart';
 
@@ -36,7 +35,6 @@ class _ScreenPageState extends State<ScreenPage> {
           child: Container(
             child: Column(
               children: [
-                StatusBar(),
                 PageHeader(
                   title: '화면 설정',
                   canBack: true,

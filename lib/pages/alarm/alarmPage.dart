@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/alarmInput.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:intl/intl.dart';
 
@@ -22,7 +21,6 @@ class _AlarmPageState extends State<AlarmPage> {
         body: Container(
           child: Column(
             children: [
-              StatusBar(),
               PageHeader(
                 title: '알람 설정',
                 canBack: true,

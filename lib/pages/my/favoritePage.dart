@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/serviceButton.dart';
-import 'package:h_order/components/statusBar.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -78,7 +77,6 @@ class _FavoritePageState extends State<FavoritePage> {
           child: Container(
             child: Column(
               children: [
-                StatusBar(),
                 PageHeader(
                   title: '즐겨찾기',
                   canBack: true,

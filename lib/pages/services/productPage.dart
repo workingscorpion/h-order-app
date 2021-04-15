@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productModel.dart';
@@ -91,7 +90,6 @@ class _ProductPageState extends State<ProductPage>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          StatusBar(),
           Expanded(
             flex: 8,
             child: Container(

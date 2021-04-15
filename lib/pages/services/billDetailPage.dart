@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/components/statusBar.dart';
 
 class BillDetailPage extends StatefulWidget {
   BillDetailPage({Key key}) : super(key: key);
@@ -16,7 +15,6 @@ class _BillDetailPageState extends State<BillDetailPage> {
     return Scaffold(
       body: Column(
         children: [
-          StatusBar(),
           PageHeader(
             title: '관리비 내역 > 고지서',
             canBack: true,

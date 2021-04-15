@@ -15,13 +15,14 @@ class StatusBar extends StatefulWidget {
 }
 
 class _StatusBarState extends State<StatusBar> {
+  static const max = 100;
+  static const maxCount = 5;
+
   final _battery = Battery();
 
   BatteryState _batteryState;
   int _wifiLevel = 0;
   int _batteryLevel = 0;
-  static const max = 100;
-  static const maxCount = 5;
 
   StreamSubscription<BatteryState> _batteryStateSubscription;
 
@@ -72,15 +73,16 @@ class _StatusBarState extends State<StatusBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 50,
       padding: EdgeInsets.symmetric(
-        vertical: 12,
         horizontal: 24,
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Colors.white,
         border: Border(
           bottom: BorderSide(
-            color: Theme.of(context).bottomAppBarColor,
+            width: .5,
+            color: Colors.black26,
           ),
         ),
       ),

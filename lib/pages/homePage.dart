@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
-import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
@@ -53,7 +52,6 @@ class _HomePageState extends State<HomePage>
           child: SafeArea(
             child: Column(
               children: [
-                _status(),
                 _info(),
                 _body(),
               ],
@@ -272,8 +270,6 @@ class _HomePageState extends State<HomePage>
           endIndent: 11,
         ),
       );
-
-  _status() => StatusBar();
 
   _infoButtons() => Container(
         height: 36,

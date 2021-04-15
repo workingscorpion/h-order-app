@@ -46,9 +46,10 @@ class _ClockState extends State<Clock> {
     return Container(
       child: Text(
         _isAfterNoon ? '$_text PM' : '$_text AM',
-        style: TextStyle(
-          fontSize: 18,
-        ),
+        style: Theme.of(context)
+            .textTheme
+            .bodyText1
+            .copyWith(color: Colors.black, fontSize: 18),
       ),
     );
   }
