@@ -151,7 +151,7 @@ class _ScreenPageState extends State<ScreenPage> {
               children: [
                 Expanded(
                   child: AspectRatio(
-                    aspectRatio: 9 / 19.5,
+                    aspectRatio: 0.625,
                     child: Container(
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
