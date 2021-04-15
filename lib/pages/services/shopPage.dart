@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/categoryModel.dart';
@@ -134,12 +135,15 @@ class _ShopPageState extends State<ShopPage>
         child: Column(
           children: [
             StatusBar(),
+            PageHeader(
+              title: '심플리오',
+              canBack: true,
+            ),
             Expanded(
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _shopHeader(),
                     Container(
                       height: 50,
                       child: ListView(
@@ -231,39 +235,6 @@ class _ShopPageState extends State<ShopPage>
       ),
     );
   }
-
-  _shopHeader() => Container(
-        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
-        child: Row(
-          children: [
-            Text(
-              '심플리오',
-              style: Theme.of(context).textTheme.headline1.copyWith(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            Spacer(),
-            TextButton(
-              onPressed: () {
-                AppRouter.pop();
-              },
-              child: Row(
-                children: [
-                  Text(
-                    '홈화면',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  Icon(
-                    CupertinoIcons.chevron_right_2,
-                    color: Theme.of(context).textTheme.bodyText2.color,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      );
 
   _product({
     ProductModel product,

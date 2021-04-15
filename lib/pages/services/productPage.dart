@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productModel.dart';
@@ -100,10 +101,9 @@ class _ProductPageState extends State<ProductPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: _productHeader(),
+                    PageHeader(
+                      title: '심플리오',
+                      canBack: true,
                     ),
                     _productSlider(),
                     Expanded(
@@ -140,39 +140,6 @@ class _ProductPageState extends State<ProductPage>
       ),
     );
   }
-
-  _productHeader() => Row(
-        children: [
-          Text(
-            '심플리오',
-            style: Theme.of(context).textTheme.headline1.copyWith(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          Spacer(),
-          TextButton(
-            onPressed: () {
-              AppRouter.pop();
-            },
-            child: Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 10),
-                  child: Text(
-                    '목록보기',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ),
-                Icon(
-                  CupertinoIcons.chevron_right_2,
-                  color: Theme.of(context).textTheme.bodyText2.color,
-                ),
-              ],
-            ),
-          )
-        ],
-      );
 
   _productCount() => Container(
         margin: EdgeInsets.only(bottom: 10),
