@@ -77,7 +77,7 @@ class _HomeViewState extends State<HomeView>
                         objectId: '1',
                         type: 'text',
                         label:
-                            '개인룸 청소를 신청합니다.\n(기본 월 1회 무료,\n이후 회당 20,000원의 요금이 발생하며\n대음달 관리비에 적용됩니다.)',
+                            '개인룸 청소를 신청합니다.\n(기본 월 1회 무료,\n이후 회당 20,000원의 요금이 발생하며\n다음달 관리비에 적용됩니다.)',
                       ),
                       ServiceItem(
                         objectId: '2',
@@ -94,7 +94,7 @@ class _HomeViewState extends State<HomeView>
                         objectId: '1',
                         type: 'text',
                         label:
-                            '세탁서비스를 신청합니다.\n다음날 오전 10시에 수거, 오후 6시에 배달됩니다.\n(개인룸 내 수거함을 이용바랍니다.)',
+                            '세탁서비스를 신청합니다.\n다음날 오전 10시에 수거,\n오후 6시에 배달됩니다.\n(개인룸 내 수거함을 이용바랍니다.)',
                       ),
                       ServiceItem(
                         objectId: '2',

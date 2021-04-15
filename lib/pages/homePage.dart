@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage>
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    '김오더 님',
+                    '김커먼 님',
                     style: Theme.of(context).textTheme.headline2.copyWith(
                           fontSize: 32,
                         ),
@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage>
                           Container(
                             alignment: Alignment.bottomCenter,
                             height: 60,
-                            child: Text('38',
+                            child: Text('18',
                                 style: TextStyle(fontSize: 70, height: 1)),
                           ),
                           Text(
