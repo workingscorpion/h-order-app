@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/components/clock.dart';
 import 'package:battery/battery.dart';
 import 'package:wifi/wifi.dart';
@@ -18,7 +19,9 @@ class _StatusBarState extends State<StatusBar> {
 
   BatteryState _batteryState;
   int _wifiLevel = 0;
-  double _batteryLevel = 0;
+  int _batteryLevel = 0;
+  static const max = 100;
+  static const maxCount = 5;
 
   StreamSubscription<BatteryState> _batteryStateSubscription;
 
@@ -48,7 +51,7 @@ class _StatusBarState extends State<StatusBar> {
 
   _getBatteryLevel() {
     _battery.batteryLevel.then((value) {
-      _batteryLevel = value.toDouble() / 100;
+      _batteryLevel = value;
       setState(() {});
     });
   }
@@ -97,43 +100,60 @@ class _StatusBarState extends State<StatusBar> {
   _wifiInidicator() => Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
         padding: EdgeInsets.only(bottom: 5),
-        child: Icon(
-          _wifiLevel > 0 ? CupertinoIcons.wifi : CupertinoIcons.xmark_circle,
-          size: 24,
+        alignment: Alignment.center,
+        child: SvgPicture.asset(
+          _getWifiImage(_wifiLevel),
+          height: 17,
         ),
       );
 
-  _batteryIndicator() => Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            width: 40,
-            height: 20,
-            padding: EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.all(Radius.circular(3)),
-            ),
-            alignment: Alignment.centerLeft,
-            child: FractionallySizedBox(
-              widthFactor: _batteryLevel,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            child: _batteryState == BatteryState.charging
-                ? Icon(
-                    CupertinoIcons.bolt_fill,
-                    color: Colors.white,
-                    size: 13,
-                  )
-                : Container(),
-          )
-        ],
+  _getWifiImage(int level) {
+    switch (level) {
+      case 0:
+        return 'assets/icons/statusbar/wifi_0.svg';
+
+      case 1:
+        return 'assets/icons/statusbar/wifi_1.svg';
+
+      case 2:
+        return 'assets/icons/statusbar/wifi_2.svg';
+
+      case 3:
+        return 'assets/icons/statusbar/wifi_3.svg';
+
+      default:
+        return 'assets/icons/statusbar/wifi_0.svg';
+    }
+  }
+
+  _batteryIndicator() => Container(
+        child: SvgPicture.asset(
+          _getBatteryImage(_batteryLevel),
+        ),
       );
+
+  _getBatteryImage(int level) {
+    final battery = (level / (max / (maxCount - 1))).floor();
+    final keyword = _batteryState == BatteryState.charging ? "charging_" : "";
+
+    switch (battery) {
+      case 0:
+        return 'assets/icons/statusbar/${keyword}battery_0.svg';
+
+      case 1:
+        return 'assets/icons/statusbar/${keyword}battery_1.svg';
+
+      case 2:
+        return 'assets/icons/statusbar/${keyword}battery_2.svg';
+
+      case 3:
+        return 'assets/icons/statusbar/${keyword}battery_3.svg';
+
+      case 4:
+        return 'assets/icons/statusbar/${keyword}battery_4.svg';
+
+      default:
+        return 'assets/icons/statusbar/${keyword}battery_0.svg';
+    }
+  }
 }
