@@ -246,65 +246,44 @@ class _HomeViewState extends State<HomeView>
   _cards() => Expanded(
         flex: 1,
         child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
+            padding: EdgeInsets.only(
+              bottom: 24,
+              left: 24,
+              right: 24,
+            ),
+            scrollDirection: Axis.horizontal,
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24,
-                ),
-                child: _cardHeader(),
-              ),
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.only(
-                    bottom: 24,
-                    left: 24,
-                    right: 24,
-                  ),
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    ...List.generate(
-                      4,
-                      (index) => Container(
-                        margin: EdgeInsets.only(right: 8),
-                        child: AspectRatio(
-                          aspectRatio: 1.413 / 1,
-                          child: InkWell(
-                            onTap: () {
-                              AppRouter.toShopPage();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                  width: 2,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              child: Image.asset(
-                                serviceImages[index],
-                                fit: BoxFit.fitWidth,
-                              ),
-                            ),
+              ...List.generate(
+                4,
+                (index) => Container(
+                  margin: EdgeInsets.only(right: 8),
+                  child: AspectRatio(
+                    aspectRatio: 1.413 / 1,
+                    child: InkWell(
+                      onTap: () {
+                        AppRouter.toShopPage();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.black,
                           ),
+                        ),
+                        child: Image.asset(
+                          serviceImages[index],
+                          fit: BoxFit.fitWidth,
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],
           ),
         ),
-      );
-
-  _cardHeader() => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ViewHeader(text: '우리동네 둘러보기'),
-          Spacer(),
-        ],
       );
 
   _carousel() => AspectRatio(
