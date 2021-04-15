@@ -343,7 +343,7 @@ class _AlertServiceState extends State<AlertService> {
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     data[item.objectId] += 1;
-                    if (data[item.objectId] > item.max) {
+                    if (item.max != null && data[item.objectId] > item.max) {
                       data[item.objectId] = item.max;
                     }
                     setState(() {});
