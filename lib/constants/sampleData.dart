@@ -1,4 +1,7 @@
+import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/noticeModel.dart';
+import 'package:h_order/models/productModel.dart';
+import 'package:h_order/models/productOptionModel.dart';
 
 class SampleHomeData {
   static final String room = "202호";
@@ -28,7 +31,7 @@ class SampleHomeData {
 }
 
 class SampleNoticeData {
-  static final List<String> titles = [
+  final List<String> titles = [
     '5월 커뮤니티 프로그램을 소개합니다.',
     '커먼타운의 코로나 19 대응정책',
     "함께 사용해서 더 좋은, 커먼타운 '키친'",
@@ -38,7 +41,7 @@ class SampleNoticeData {
     '신도림 081 룸타입 정보',
   ];
 
-  static final List<String> names = [
+  final List<String> names = [
     '커먼매니저',
     '커먼매니저',
     '커먼매니저',
@@ -48,7 +51,7 @@ class SampleNoticeData {
     '커먼매니저',
   ];
 
-  static final List<String> contents = [
+  final List<String> contents = [
     '''<div _ngcontent-jmp-c18="" class="content_blog flex_col col1"><div class="blog_content_paragraph body2">커먼타운은 비슷한 취향을 가진 멤버들이 만나서 즐거운 활동을 하며 관계를 쌓아갈 수 있도록 매월 다양한 <a href="https://www.commontown.co/ko/community-detail">커뮤니티 프로그램</a>을 진행하고 있는데요. 코로나19로부터 멤버들의 건강을 지키기 위해 중단되었던 커뮤니티 프로그램을 5월 24일부터 다시 재개합니다. 코로나19로 면역력이 부쩍 약해진 멤버들을 위해, 면역력 증강과 체력 회복에 도움이 되는 다양한 프로그램을 준비했어요.</div><div class="blog_content_paragraph body2">* 아직 코로나19 확산세가 줄어들지 않은 만큼, 커먼타운은 모든 커먼타운 멤버의 안전을 최우선으로 고려하여 프로그램 진행의 모든 과정에서 주의를 기울일 예정입니다.</div><div class="blog_content_paragraph body2">* 코로나19로 인해 프로그램 진행이 어렵다고 판단될 시, 프로그램은 취소될 수 있습니다.</div><div class="blog_content_heading1 title7">5월의 커뮤니티 프로그램</div><div class="blog_content_image img_blog"><img src="https://images.prismic.io/commontown-sales/23b28990-71dd-4991-8a4b-ef84cfa52b22_6326affe-8475-4cdd-ad1f-d0048b17c9fd.png?auto=compress,format&amp;w=720"></div><ul><li class="blog_content_list_item body2">5월 24일 : 면역력 증강을 위한 한강 러닝<br>사회적 거리두기로 신체 활동이 줄어든 요즘. 한강 러닝을 함께하며, 약해진 면역력을 높여보세요.</li></ul><div class="blog_content_image img_blog"><img src="https://images.prismic.io/commontown-sales/77a88e73-caa6-43cf-8d38-80499eb5a951_20200504_210746.jpg?auto=compress,format&amp;w=720"></div><ul><li class="blog_content_list_item body2">5월 25일 : 공간으로 이해하는 서울의 역사 (남산 편)<br>오늘날 낭만적인 공간으로만 인식되는 남산. 원창님과 한양도성 남산 구간을 함께 걸으며, 그 속에 숨어있는 역사와 이야기를 들어보는 시간을 가집니다.<br>일제 강점기 시기, 일본이 남산 중턱을 파괴하고 세운 ‘조선신궁’은 일제 식민 지배 상징 역할을 하기도 했으며, 그 외에도 남산 곳곳에는 여러 역사적 반전이 서려 있습니다. 일제 강점기 시기 남산이 겪었던 슬프고 아픈 이야기를 들으며, 또 다른 시각에서 바라보는 남산의 풍경은 어떠한 모습일 지 함께 경험해봐요.</li></ul><div class="blog_content_image img_blog"><img src="https://images.prismic.io/commontown-sales/80b70844-925a-489e-9b7b-a5273288cb0c_%E1%84%80%E1%85%AA%E1%86%AB%E1%84%8B%E1%85%A1%E1%86%A8%E1%84%89%E1%85%A1%E1%86%AB1.JPG?auto=compress,format&amp;w=720"></div><ul><li class="blog_content_list_item body2">5월 26일 : 서울의 명산 관악산 야경 트레킹<br>원창님과 함께하는 야경 트레킹. 서울 남부를 대표하는 산, 관악산을 함께 오르며 목동부터 강남, 잠실에 이르는 서울 강남 지역의 야경을 한 눈에 담아보세요.<br></li></ul><div class="blog_content_image img_blog"><img src="https://images.prismic.io/commontown-sales/3574a317-39a6-4f82-b7a8-256b6d7f326f_ba29b103-c46d-4721-8d0d-a6ec87388df4.png?auto=compress,format&amp;w=720"></div><ul><li class="blog_content_list_item body2">5월 27일 : 마음 근육을 키워가는 빈야사 요가<br>진선님과 함께하는 빈야사 요가. 견고하고 단단한 움직임으로 나의 몸을 바라봅니다. 역동적인 동작을 통해 몸이 가벼워지고 즐거워지는 경험을 하면, 복잡한 생각과 감정은 나에게서 점점 멀어질거에요.</li></ul><div class="blog_content_paragraph body2">즐거운 만남이 가득한 커뮤니티 리빙, 커먼타운의 하우스가 궁금하시다면 <a href="https://www.commontown.co/ko/house-list/seoul/all">이곳</a>을 클릭해 커먼타운에 대해 더 자세히 알아보세요.</div></div>''',
     '''<div _ngcontent-jmp-c18="" class="content_blog flex_col col1"><div class="blog_content_heading1 title7">커먼타운은 모든 커먼타운 멤버의 안전을 최우선으로 고려해, 코로나19 대응정책을 마련하여 하우스를 운영하고 있습니다.</div><div class="blog_content_paragraph body2">신규 멤버의 하우스 투어와 입주는 아래와 같이 진행하고 있습니다.</div><ul><li class="blog_content_list_item body2">신규 입주자의 하우스 투어를 최소로 진행하기 위해, VR 투어를 권장하고 있습니다.</li><li class="blog_content_list_item body2">하우스 투어 전, 해당 하우스 멤버에게 하우스 투어가 있음을 공지합니다. (다인실 투어의 경우 기존 멤버들이 외부인의 방 출입에 대해 불편을 느낄시, 커먼타운은 이를 존중하여 VR투어로 대체할 것입니다.)</li><li class="blog_content_list_item body2">하우스 투어 진행시 신규 입주자와 직원 모두 사전에 체온을 측정하고, 마스크 착용을 의무화합니다.</li><li class="blog_content_list_item body2">신규 입주자는 입주 확정 전, 해외 방문 이력 및 집단 발병과 관련되어 있는 지 여부 등을 &lt;코로나19 관련 서약서&gt; 제출을 통해 확인합니다.</li></ul><div class="blog_content_paragraph body2">하우스 방문을 통한 관리를 위해, 모든 매니저는 예방규칙을 준수하고 있습니다.</div><ul><li class="blog_content_list_item body2">하우스 관리를 위해 방문하는 모든 커먼타운 매니저는 사전에 체온 측정을 진행하고, 마스크 착용을 의무화합니다.</li><li class="blog_content_list_item body2">코로나19 의심 증상(발열 여부 - 체온 37.5℃ 이상, 호흡기 증상 - 기침, 인후통 등)이 나타나면 하우스 방문은 취소되며, 즉시 코로나19 검사를 시행합니다.</li><li class="blog_content_list_item body2">매니저의 건강 문제로 서비스 제공일정이 변경될 경우, 문자로 사전 공지합니다. (서비스 당일 오전 내 발송)</li></ul><div class="blog_content_paragraph body2">코로나19 예방을 위해 하우스 청소 진행시 아래와 같은 조치를 추가로 시행합니다.</div><ul><li class="blog_content_list_item body2">매주 진행하는 공용공간 청소 서비스는 계속 진행됩니다.</li><li class="blog_content_list_item body2">청소 서비스 진행시 기본적인 방역 작업을 함께 진행합니다.</li><li class="blog_content_list_item body2">접촉이 많은 부분(각종 손잡이, 세탁기, 건조기, 정수기 등 가전제품 버튼 등)을 소독합니다.</li><li class="blog_content_list_item body2">하우스 내부에 살균 소독제와 손 세정제를 상시 비치하여, 멤버들이 수시로 사용할 수 있도록 했습니다.</li></ul><div class="blog_content_paragraph body2">친구 혹은 지인을 하우스에 초대하는 것에 대해, 커먼타운은 일시적으로 규제 조치를 시행합니다.</div><div class="blog_content_paragraph body2">[트리하우스]</div><ul><li class="blog_content_list_item body2">모든 커먼타운 멤버의 안전을 위해, 지인의 하우스 출입을 최소화해주세요.</li><li class="blog_content_list_item body2">부득이하게 외부인이 방문해야할 경우, 메인 출입구에서 방문 대장을 작성해야 출입이 가능합니다. (이름, 연락처, 체온, 방문 목적, 해외 방문 이력 등을 기록합니다.)</li><li class="blog_content_list_item body2">외부인과 함께 사용하는 경우가 많은 6층 테라스의 바비큐 장비 대여 서비스는 잠정 중단합니다.</li></ul><div class="blog_content_paragraph body2">[그 외 하우스]</div><ul><li class="blog_content_list_item body2">커먼타운은 커먼타운 멤버의 안전을 최우선으로 고려하여 트리하우스 외 모든 하우스의 지인 초대 및 방문을 제한합니다.</li></ul><div class="blog_content_paragraph body2">커뮤니티 프로그램의 안전한 진행을 위해 아래와 같은 정책을 마련했습니다.</div><ul><li class="blog_content_list_item body2">커먼타운 매니저는 프로그램 진행의 모든 단계에서 프로그램을 안전하게 진행하기 위해 노력하겠습니다.</li><li class="blog_content_list_item body2">커뮤니티 프로그램에 참석하는 모든 멤버는 사전 체온 측정을 진행해야 합니다.</li><li class="blog_content_list_item body2">코로나19 의심 증상이 있는 경우, 프로그램 참석을 제한합니다.</li><li class="blog_content_list_item body2">프로그램 진행 시 참석하는 모든 사람의&nbsp; 마스크 착용을 의무화합니다.</li><li class="blog_content_list_item body2">코로나19 확산 추이에 따라 해당 일정에 맞춰 프로그램을 진행하는 것이 어렵다고 판단될 시, 프로그램이 사전에 취소될 수 있습니다. (프로그램 취소 공지는 당일 오전까지 멤버에게 문자로 발송합니다.)</li><li class="blog_content_list_item body2">프로그램을 조금 더 안전한 방식으로 운영하기 위해, 밀폐된 공간에서 진행하는 프로그램은 지양하고 있으며, 실외에서 진행할 수 있는 프로그램 위주로 진행하고 있습니다.</li></ul></div>''',
     '''<div _ngcontent-jmp-c18="" class="content_blog flex_col col1"><div class="blog_content_paragraph body2">커먼타운에 사는 멤버들은 식사 시간이 외롭지 않습니다. 이유가 무엇이냐고 물으신다면, 확실하게 대답할 수 있습니다. 말 그대로입니다.</div><div class="blog_content_heading1 title7">‘함께 밥 먹을 수 있으니까요.‘</div><div class="blog_content_paragraph body2">사실, 함께 밥 먹는다는 것은 많은 의미를 내포하고 있습니다.</div><div class="blog_content_paragraph body2">여러 명이 테이블에 둘러앉아도 불편함이 없어야 하고, 음식을 준비할 때도 동선에 제약이 없어야 합니다. 그리고 음식을 보관할 공간도 충분해야 합니다. 먹을 식기도 부족함이 없어야 하고요. 물론, 기꺼이 소중한 저녁 시간을 함께 보내고 싶을 만큼, 좋은 사람들이 있어야 하죠.</div><div class="blog_content_paragraph body2">하지만 이 모든 조건을 완벽하게 충족하는 것은 생각보다 어렵습니다. 함께 식사하기 위해서 따로 만남을 갖는 ‘소셜 다이닝’의 개념이 주목받는 것도 같은 맥락입니다. 음식을 나누며, 여러 이야기 나눌 수 있는 환경과 조건을, 1인 가구가 늘어나는 현실에서 모두 챙기는 것이 힘들기 때문입니다.</div><div class="blog_content_paragraph body2">커먼타운이 공용 공간, 특히, 키친을 제대로 마련하는 데 큰 노력을 기울인 것도 이 때문입니다. 적어도 커먼타운의 멤버라면, 함께 밥을 먹으며, 도란도란 대화할 수 있는 그 시간을 누구나 누릴 수 있도록 배려하고 싶었습니다.</div><div class="blog_content_paragraph body2">﻿</div><div class="blog_content_paragraph body2">﻿</div><div class="blog_content_heading1 title7">다용도로 활용 가능한 넓은 테이블!</div><div class="blog_content_image img_blog"><img src="https://images.prismic.io/commontown-sales/e5ea05bb-32ac-4ff7-b4b6-92200bf7e9d6_2.+%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A2%E1%84%8B%E1%85%AF%E1%86%AB+512.jpg?auto=compress,format&amp;w=720"></div><div class="blog_content_paragraph body2">멤버가 함께 식사할 수 있는 넓은 테이블이 있습니다. 이곳은 식사는 물론, 커피나 맥주를 마시는 공간이 될 수 있고, 개인 작업을 할 수 있는 워크스테이션이 될 수도 있습니다. 그만큼 다용도로 활용하기 좋습니다. 게다가 커먼타운의 다이닝 공간은 인테리어가 특별합니다. 조명, 식탁보 등 멋진 소품이 이곳에서 보내는 시간을 더 빛나게 합니다.</div><div class="blog_content_paragraph body2">혼자 밥 먹고 싶을 때도 있을 텐데, 넓은 테이블이 괜히 불편할 것 같다고요? 걱정하지 마세요. 혼밥족을 위한 바 테이블이 마련된 하우스도 있습니다.</div><div class="blog_content_paragraph body2">﻿</div><div class="blog_content_paragraph body2">﻿</div><div class="blog_content_heading1 title7">주방 집기, 모두 세팅 완료!</div><div class="blog_content_image img_blog"><img src="https://images.prismic.io/commontown-sales/6beeb82e-9f6f-41f9-8346-97d681b2a4ec_3.+%E1%84%8B%E1%85%B5%E1%86%B8%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC+023+%E1%84%8F%E1%85%B5%E1%84%8E%E1%85%B5%E1%86%AB.jpg?auto=compress,format&amp;w=720"></div><div class="blog_content_paragraph body2">주방에서 사용하는 집기들은 생각보다 가짓수가 많습니다. 젓가락, 숟가락부터 크고 작은 접시, 간단하게 요리할 수 있는 냄비와 프라이팬까지. 그래서 커먼타운이 프라이팬, 밥솥, 냄비, 도마, 집게 등 공용 집기들은 물론이고 접시, 숟가락, 젓가락 등 개인 집기들까지 전부 다 마련했습니다.</div><div class="blog_content_paragraph body2">멤버들과 예쁜 그릇에 사이 좋게 식사를 할 수 있겠죠? 넉넉하게 준비되어 있어, 언제든 부담 없이 쓸 수 있습니다.</div><div class="blog_content_paragraph body2">﻿</div><div class="blog_content_paragraph body2">﻿</div><div class="blog_content_paragraph body2">넓은 다이닝 공간, 고급 집기들, 음식물 냉동고 등은 한 차원 높은 생활을 누리는 데 큰 도움이 될 거예요.</div><div class="blog_content_heading1 title7">오로지 커먼타운에서 함께 살기 때문에 누릴 수 있는 것이죠.</div><div class="blog_content_paragraph body2">어떤가요? 이곳에서 살고 싶지 않은가요?</div><div class="blog_content_paragraph body2">함께 사용해서 더 좋은 집, 커먼타운에서 살아보세요.﻿</div></div>''',
@@ -58,7 +61,7 @@ class SampleNoticeData {
     '''<div _ngcontent-jmp-c36="" class="room_type"> <p _ngcontent-jmp-c36="" class="title7">룸 타입</p><app-card-room-detail _ngcontent-jmp-c36="" _nghost-jmp-c37="" > <div _ngcontent-jmp-c37="" class="card_room_detail desktop"> <div _ngcontent-jmp-c37="" class="image_container_room_detail"> <img class="room_card_slider YBynfBEAACMAI8OE" src="https://images.prismic.io/commontown-sales/59b3a0cc-b8ae-4e36-8fbf-e39c66831b20_%E1%84%92%E1%85%A1%E1%84%8B%E1%85%AE%E1%84%89%E1%85%B3+%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A6+-+%E1%84%90%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8+A+1.png"/> </div><div _ngcontent-jmp-c37="" class="info_room"> <div _ngcontent-jmp-c37="" class="header"> <span _ngcontent-jmp-c37="" class="name body1">Type A</span ><span _ngcontent-jmp-c37="" class="status" >오픈 프로모션 중</span > </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">6개월</span ><span _ngcontent-jmp-c37="" class="btn2">₩890,000/월 ~</span> </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">3개월</span ><span _ngcontent-jmp-c37="" class="btn2">₩1,080,000/월 ~</span> </div><div _ngcontent-jmp-c37="" class="includes body1">포함 내역</div><ul _ngcontent-jmp-c37="" class="includes_items"> <li _ngcontent-jmp-c37="" class="body4"> (실제 제공 가구, 가전 변동 가능) </li><li _ngcontent-jmp-c37="" class="body4">신발장</li><li _ngcontent-jmp-c37="" class="body4">주방 (쿡탑, 냉장고 포함)</li><li _ngcontent-jmp-c37="" class="body4">빌트인 옷장, 수납장</li><li _ngcontent-jmp-c37="" class="body4">빌트인 데스크</li><li _ngcontent-jmp-c37="" class="body4">세탁선반 &amp; 건조헹거</li><li _ngcontent-jmp-c37="" class="body4">매트리스</li><li _ngcontent-jmp-c37="" class="body4">스마트 도어락</li><li _ngcontent-jmp-c37="" class="body4">에어컨</li><li _ngcontent-jmp-c37="" class="body4">9kg 드럼세탁기</li><li _ngcontent-jmp-c37="" class="body4">화장실</li></ul> </div></div></app-card-room-detail ><app-card-room-detail _ngcontent-jmp-c36="" _nghost-jmp-c37="" > <div _ngcontent-jmp-c37="" class="card_room_detail desktop"> <div _ngcontent-jmp-c37="" class="image_container_room_detail"> <img class="room_card_slider YBynfBEAACMAI8OE" src="https://images.prismic.io/commontown-sales/3ad8cb77-c787-44f7-a54c-f0fbb0f4ef37_%E1%84%92%E1%85%A1%E1%84%8B%E1%85%AE%E1%84%89%E1%85%B3+%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A6+-+%E1%84%90%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8+B+1.png"/> </div><div _ngcontent-jmp-c37="" class="info_room"> <div _ngcontent-jmp-c37="" class="header"> <span _ngcontent-jmp-c37="" class="name body1">Type B</span ><span _ngcontent-jmp-c37="" class="status" >오픈 프로모션 중</span > </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">6개월</span ><span _ngcontent-jmp-c37="" class="btn2">₩920,000/월 ~</span> </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">3개월</span ><span _ngcontent-jmp-c37="" class="btn2">₩1,110,000/월 ~</span> </div><div _ngcontent-jmp-c37="" class="includes body1">포함 내역</div><ul _ngcontent-jmp-c37="" class="includes_items"> <li _ngcontent-jmp-c37="" class="body4"> (실제 제공 가구, 가전 변동 가능) </li><li _ngcontent-jmp-c37="" class="body4">신발장</li><li _ngcontent-jmp-c37="" class="body4">주방 (쿡탑, 냉장고 포함)</li><li _ngcontent-jmp-c37="" class="body4"> 헹거형 시스템 옷장 겸 수납장 </li><li _ngcontent-jmp-c37="" class="body4">빌트인 데스크</li><li _ngcontent-jmp-c37="" class="body4">세탁선반 및 건조헹거</li><li _ngcontent-jmp-c37="" class="body4">매트리스</li><li _ngcontent-jmp-c37="" class="body4">스마트 도어락</li><li _ngcontent-jmp-c37="" class="body4">에어컨</li><li _ngcontent-jmp-c37="" class="body4">9kg 드럼세탁기</li><li _ngcontent-jmp-c37="" class="body4">화장실</li></ul> </div></div></app-card-room-detail ><app-card-room-detail _ngcontent-jmp-c36="" _nghost-jmp-c37="" > <div _ngcontent-jmp-c37="" class="card_room_detail desktop"> <div _ngcontent-jmp-c37="" class="image_container_room_detail"> <img class="room_card_slider YBynfBEAACMAI8OE" src="https://images.prismic.io/commontown-sales/4e4b4659-84ed-4d84-9375-22dbc0a20360_%E1%84%92%E1%85%A1%E1%84%8B%E1%85%AE%E1%84%89%E1%85%B3+%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A6+-+%E1%84%90%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8+C+1.png"/> </div><div _ngcontent-jmp-c37="" class="info_room"> <div _ngcontent-jmp-c37="" class="header"> <span _ngcontent-jmp-c37="" class="name body1">Type C</span ><span _ngcontent-jmp-c37="" class="status" >오픈 프로모션 중</span > </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">-</span ><span _ngcontent-jmp-c37="" class="btn2">12개월 이상 계약 가능</span> </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">C-1 (42.9㎡)</span ><span _ngcontent-jmp-c37="" class="btn2">₩1,040,000/월</span> </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">C-2 (46.2㎡)</span ><span _ngcontent-jmp-c37="" class="btn2">₩1,090,000/월</span> </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">C-3 (50.8㎡)</span ><span _ngcontent-jmp-c37="" class="btn2">₩1,140,000/월</span> </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">C-4 (53.8㎡)</span ><span _ngcontent-jmp-c37="" class="btn2">₩1,190,000/월</span> </div><div _ngcontent-jmp-c37="" class="price"> <span _ngcontent-jmp-c37="" class="body2">C-5 (65.3㎡)</span ><span _ngcontent-jmp-c37="" class="btn2">₩1,490,000/월</span> </div><div _ngcontent-jmp-c37="" class="includes body1">포함 내역</div><ul _ngcontent-jmp-c37="" class="includes_items"> <li _ngcontent-jmp-c37="" class="body4"> (실제 제공 가구, 가전 변동 가능) </li><li _ngcontent-jmp-c37="" class="body4">신발장</li><li _ngcontent-jmp-c37="" class="body4">주방 (쿡탑, 냉장고 포함)</li><li _ngcontent-jmp-c37="" class="body4">계단 하부 수납장</li><li _ngcontent-jmp-c37="" class="body4">세탁선반 및 건조헹거</li><li _ngcontent-jmp-c37="" class="body4">매트리스</li><li _ngcontent-jmp-c37="" class="body4"> 프라이빗 테라스(C-5만 해당) </li><li _ngcontent-jmp-c37="" class="body4">스마트 도어락</li><li _ngcontent-jmp-c37="" class="body4">에어컨</li><li _ngcontent-jmp-c37="" class="body4">9kg 드럼세탁기</li><li _ngcontent-jmp-c37="" class="body4">화장실</li></ul> </div></div></app-card-room-detail > </div>''',
   ];
 
-  static final List<DateTime> dates = [
+  final List<DateTime> dates = [
     DateTime(2021, 4, 19),
     DateTime(2021, 4, 17),
     DateTime(2021, 4, 09),
@@ -80,6 +83,63 @@ class SampleNoticeData {
         content: contents[i],
         isRead: true,
         // isRead: i >= titles.length / 2 ? false : true,
+      ));
+    }
+  }
+}
+
+class SampleShopData {
+  final List<String> _categoryNames = ['심플리오', '오드리선', '마타주', '런드리라운지24'];
+
+  final List<String> _itemNames = [
+    '헤븐리 샴푸',
+    '리프레싱 스칼프샴푸',
+    '리프레싱 스칼프 린스',
+    '비오틴 탈모케어 샴푸',
+    '프로틴부스터 헤어트리트먼트',
+    '샤이닝 헤어세럼',
+    '내추럴 글로우 토너',
+    '내추럴 글로우 크림',
+    '리얼이펙트 EGF앰플',
+  ];
+
+  final List<int> _itemPrice = [
+    6500,
+    6000,
+    6000,
+    17000,
+    8500,
+    6000,
+    10000,
+    18000,
+    29000,
+  ];
+
+  _getLength(int index) {
+    if (index == 1) {
+      return 7;
+    }
+    return 9;
+  }
+
+  final List<CategoryModel> categories = List<CategoryModel>();
+
+  SampleShopData() {
+    for (var index = 0; index < _categoryNames.length; index++) {
+      categories.add(CategoryModel(
+        index: index,
+        name: _categoryNames[index],
+        products: List.generate(
+          _getLength(index),
+          (i) => ProductModel(
+            index: i,
+            categoryIndex: index,
+            image: 'assets/sample/commontown/item/s${i + 1}.jpg',
+            name: _itemNames[i],
+            price: _itemPrice[i],
+            options: List<ProductOptionModel>(),
+          ),
+        ),
       ));
     }
   }

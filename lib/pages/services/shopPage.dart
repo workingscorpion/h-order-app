@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/statusBar.dart';
+import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/productModel.dart';
@@ -52,59 +53,7 @@ class _ShopPageState extends State<ShopPage>
 
     _cart = List();
 
-    final random = Random();
-    var count = 0;
-
-    final List<String> _categoryNames = ['심플리오', '오드리선', '마타주', '런드리라운지24'];
-
-    final List<String> _itemNames = [
-      '헤븐리 샴푸',
-      '리프레싱 스칼프샴푸',
-      '리프레싱 스칼프 린스',
-      '비오틴 탈모케어 샴푸',
-      '프로틴부스터 헤어트리트먼트',
-      '샤이닝 헤어세럼',
-      '내추럴 글로우 토너',
-      '내추럴 글로우 크림',
-      '리얼이펙트 EGF앰플',
-    ];
-
-    final List<int> _itemPrice = [
-      6500,
-      6000,
-      6000,
-      17000,
-      8500,
-      6000,
-      10000,
-      18000,
-      29000,
-    ];
-
-    _getLength(int index) {
-      if (index == 1) {
-        return 7;
-      }
-      return 9;
-    }
-
-    _categories = List.generate(
-        4,
-        (index) => CategoryModel(
-              index: index,
-              name: _categoryNames[index],
-              products: List.generate(
-                _getLength(index),
-                (i) => ProductModel(
-                  index: i,
-                  categoryIndex: index,
-                  image: 'assets/sample/commontown/item/s${i + 1}.jpg',
-                  name: _itemNames[i],
-                  price: _itemPrice[i],
-                  options: List(),
-                ),
-              ),
-            ));
+    _categories = SampleShopData().categories;
 
     _categories.expand((element) => element.products).forEach((product) {
       _buttonKeys[product.index] = GlobalKey();
