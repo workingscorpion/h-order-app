@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
 import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/models/homeModel.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
 
@@ -28,9 +29,14 @@ class _HomePageState extends State<HomePage>
   DateTime currentBackPressTime;
   bool isOpened = false;
 
+  HomeModel home;
+
   @override
   void initState() {
     super.initState();
+
+    home = SampleData.home();
+
     currentBackPressTime = null;
 
     _tabController = TabController(
@@ -129,7 +135,7 @@ class _HomePageState extends State<HomePage>
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '${SampleHomeData.room}',
+                  '${home.room}',
                   style: Theme.of(context)
                       .textTheme
                       .headline1
@@ -138,7 +144,7 @@ class _HomePageState extends State<HomePage>
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    '${SampleHomeData.name} 님',
+                    '${home.name} 님',
                     style: Theme.of(context).textTheme.headline2.copyWith(
                           fontSize: 32,
                         ),
@@ -149,7 +155,7 @@ class _HomePageState extends State<HomePage>
             Expanded(
               flex: 1,
               child: Text(
-                '${SampleHomeData.address}',
+                '${home.address}',
                 softWrap: true,
                 style: TextStyle(
                   fontSize: 20,

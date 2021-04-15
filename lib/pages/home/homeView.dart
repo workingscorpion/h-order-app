@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/serviceButton.dart';
 import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/models/homeModel.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -15,6 +16,14 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
+  HomeModel home;
+
+  @override
+  void initState() {
+    super.initState();
+    home = SampleData.home();
+  }
+
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -247,7 +256,7 @@ class _HomeViewState extends State<HomeView>
                                 color: Colors.white,
                               ),
                               child: Image.asset(
-                                SampleHomeData.serviceImages[index],
+                                home.serviceImages[index],
                                 fit: BoxFit.fitWidth,
                               ),
                             ),
@@ -305,7 +314,7 @@ class _HomeViewState extends State<HomeView>
         child: LayoutBuilder(
           builder: (context, constraint) => CarouselSlider(
             items: [
-              ...SampleHomeData.bannerImages.map(
+              ...home.bannerImages.map(
                 (item) => Container(
                   alignment: Alignment.center,
                   child: Image.asset(

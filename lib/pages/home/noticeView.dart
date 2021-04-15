@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +23,7 @@ class _NoticeViewState extends State<NoticeView> {
   void initState() {
     super.initState();
 
-    list = [...SampleNoticeData().notices];
+    list = [...SampleData.notices()];
   }
 
   @override

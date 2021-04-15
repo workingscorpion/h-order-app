@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/models/homeModel.dart';
+import 'package:intl/intl.dart';
 
 class InfoPage extends StatefulWidget {
   @override
@@ -9,10 +11,18 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
+  final _listKey = GlobalKey<AnimatedListState>();
+
   int _selectedIndex;
   List<InfoModel> list = List();
 
-  final _listKey = GlobalKey<AnimatedListState>();
+  HomeModel home;
+
+  @override
+  void initState() {
+    super.initState();
+    home = SampleData.home();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -40,7 +50,7 @@ class _InfoPageState extends State<InfoPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: _card(text: SampleHomeData.name),
+                                child: _card(text: home.name),
                               ),
                               Container(width: 32),
                               Spacer(flex: 2),
@@ -51,20 +61,18 @@ class _InfoPageState extends State<InfoPage> {
                             children: [
                               Expanded(
                                 child: _card(
-                                    label: '휴대폰 번호',
-                                    text: '${SampleHomeData.phone}'),
+                                    label: '휴대폰 번호', text: '${home.cellPhone}'),
                               ),
                               Container(width: 16),
                               Expanded(
                                 child: _card(
-                                    label: '유선 번호',
-                                    text: '${SampleHomeData.number}'),
+                                    label: '유선 번호', text: '${home.phone}'),
                               ),
                               Container(width: 16),
                               Expanded(
                                 child: _card(
                                     label: '비상 연락망',
-                                    text: '${SampleHomeData.emergencyNumber}'),
+                                    text: '${home.emergencyPhone}'),
                               ),
                             ],
                           ),
@@ -73,7 +81,8 @@ class _InfoPageState extends State<InfoPage> {
                             children: [
                               Expanded(
                                 child: _card(
-                                  text: '${SampleHomeData.contractPeriod}',
+                                  text:
+                                      '${DateFormat('yyyy-MM-dd').format(home.contractStartDate)} ~ ${DateFormat('yyyy-MM-dd').format(home.contractEndDate)} ${(home.contractEndDate.difference(home.contractStartDate).inDays / 30).floor()}개월',
                                 ),
                               ),
                               Container(width: 16),
@@ -88,7 +97,7 @@ class _InfoPageState extends State<InfoPage> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     _header(text: '입주 호실'),
-                                    _card(text: '${SampleHomeData.roomDetail}'),
+                                    _card(text: '${home.roomDetail}'),
                                   ],
                                 ),
                               ),
@@ -99,15 +108,14 @@ class _InfoPageState extends State<InfoPage> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     _header(text: '입주 형태'),
-                                    _card(
-                                        text: '${SampleHomeData.contractType}'),
+                                    _card(text: '${home.contractType}'),
                                   ],
                                 ),
                               ),
                             ],
                           ),
                           _header(text: '지급 물품 현황'),
-                          _card(text: '${SampleHomeData.goods}'),
+                          _card(text: home.items.join('\n')),
                         ],
                       ),
                     ),
