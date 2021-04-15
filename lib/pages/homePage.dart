@@ -160,10 +160,10 @@ class _HomePageState extends State<HomePage>
                 AppRouter.toAlarmPage();
               },
               child: Text(
-                '알림 설정',
+                '알람 설정',
                 maxLines: 1,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 16,
                   color: Theme.of(context).primaryColor,
                 ),
               ),
