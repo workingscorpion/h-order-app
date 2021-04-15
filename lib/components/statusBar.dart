@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/clock.dart';
 import 'package:battery/battery.dart';
 import 'package:wifi/wifi.dart';
