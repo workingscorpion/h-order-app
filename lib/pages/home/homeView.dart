@@ -220,6 +220,7 @@ class _HomeViewState extends State<HomeView>
         child: Container(
           child: ListView(
             padding: EdgeInsets.only(
+              top: 24,
               bottom: 24,
               left: 24,
               right: 24,
@@ -250,7 +251,7 @@ class _HomeViewState extends State<HomeView>
                                 ),
                               ),
                               child: Image.asset(
-                                serviceImages[index],
+                                SampleHomeData.serviceImages[index],
                                 fit: BoxFit.fitWidth,
                               ),
                             ),
@@ -301,16 +302,12 @@ class _HomeViewState extends State<HomeView>
                           ),
                         ],
                       ),
-                      child: Image.asset(
-                        SampleHomeData.serviceImages[index],
-                        fit: BoxFit.fitWidth,
-                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 

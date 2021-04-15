@@ -87,9 +87,6 @@ class _ProductPageState extends State<ProductPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('상점'),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -99,10 +96,9 @@ class _ProductPageState extends State<ProductPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: _productHeader(),
+                  PageHeader(
+                    title: '심플리오',
+                    canBack: true,
                   ),
                   _productSlider(),
                   Expanded(
