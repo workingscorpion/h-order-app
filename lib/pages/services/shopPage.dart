@@ -4,11 +4,11 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/dynamicHeightGridView.dart';
 import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/productModel.dart';
-import 'package:h_order/models/productOptionModel.dart';
 import 'package:intl/intl.dart';
 
 class ShopPage extends StatefulWidget {
@@ -202,19 +202,20 @@ class _ShopPageState extends State<ShopPage>
                         controller: _tabController,
                         children: [
                           ..._categories.map(
-                            (category) => GridView.count(
+                            (category) => DynamicHeightGridView(
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 50,
+                              crossAxisCount: 3,
                               padding: EdgeInsets.only(
                                 left: 24,
                                 right: 24,
                                 bottom: 24,
                               ),
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              crossAxisCount: 3,
-                              childAspectRatio: 1 / 1.33,
                               children: [
                                 ...category.products.map(
-                                  (product) => _product(product: product),
+                                  (product) => _product(
+                                    product: product,
+                                  ),
                                 ),
                               ],
                             ),
@@ -275,56 +276,55 @@ class _ShopPageState extends State<ShopPage>
             onTap: () {
               _detail(product: product);
             },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Hero(
-                  tag: product.index,
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: Image.asset(
-                        product.image,
-                        fit: BoxFit.cover,
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Hero(
+                    tag: product.index,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Container(
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        child: Image.asset(
+                          product.image,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  height: 28,
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(top: 10),
-                  child: FittedBox(
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(top: 10),
                     child: Text(
-                      product.name,
+                      product.name + product.name,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 21,
                       ),
                     ),
                   ),
-                ),
-                Divider(
-                  height: 10,
-                  thickness: .5,
-                  color: Colors.black,
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    '${NumberFormat().format(product.price)} ₩',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Color(0xff666666),
+                  Divider(
+                    height: 10,
+                    thickness: .5,
+                    color: Colors.black26,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      '${NumberFormat().format(product.price)} ₩',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color(0xff666666),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

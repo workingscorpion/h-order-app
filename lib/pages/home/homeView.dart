@@ -58,17 +58,6 @@ class _HomeViewState extends State<HomeView>
               crossAxisCount: 5,
               children: [
                 ...[
-                  // ServiceButton(
-                  //   icon: CupertinoIcons.hammer,
-                  //   label: '시설보수',
-                  //   items: [
-                  //     ServiceItem(
-                  //       objectId: '1',
-                  //       type: 'text',
-                  //       label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                  //     ),
-                  //   ],
-                  // ),
                   ServiceButton(
                     icon: CupertinoIcons.sparkles,
                     label: '청소',

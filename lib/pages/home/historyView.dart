@@ -209,16 +209,16 @@ class _HistoryViewState extends State<HistoryView> {
   _statusColor(int status) {
     switch (status) {
       case 0:
-        return Colors.red;
+        return Color(0xffe02020);
 
       case 1:
-        return Colors.yellow;
+        return Color(0xfff7b500);
 
       case 2:
-        return Colors.green;
+        return Color(0xff21d021);
 
       default:
-        return Colors.red;
+        return Color(0xffe02020);
     }
   }
 
