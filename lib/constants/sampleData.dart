@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:h_order/models/categoryModel.dart';
+import 'package:h_order/models/historyDetailModel.dart';
+import 'package:h_order/models/historyModel.dart';
 import 'package:h_order/models/homeModel.dart';
+import 'package:h_order/models/keyValueModel.dart';
 import 'package:h_order/models/noticeModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:h_order/models/serviceModel.dart';
@@ -93,6 +96,89 @@ abstract class SampleData {
     "writer": "커먼매니저",
     "content": "<div _ngcontent-jmp-c36=\\"\\" class=\\"room_type\\"> <p _ngcontent-jmp-c36=\\"\\" class=\\"title7\\">룸 타입</p><app-card-room-detail _ngcontent-jmp-c36=\\"\\" _nghost-jmp-c37=\\"\\" > <div _ngcontent-jmp-c37=\\"\\" class=\\"card_room_detail desktop\\"> <div _ngcontent-jmp-c37=\\"\\" class=\\"image_container_room_detail\\"> <img class=\\"room_card_slider YBynfBEAACMAI8OE\\" src=\\"https://images.prismic.io/commontown-sales/59b3a0cc-b8ae-4e36-8fbf-e39c66831b20_%E1%84%92%E1%85%A1%E1%84%8B%E1%85%AE%E1%84%89%E1%85%B3+%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A6+-+%E1%84%90%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8+A+1.png\\"/> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"info_room\\"> <div _ngcontent-jmp-c37=\\"\\" class=\\"header\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"name body1\\">Type A</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"status\\" >오픈 프로모션 중</span > </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">6개월</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">₩890,000/월 ~</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">3개월</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">₩1,080,000/월 ~</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"includes body1\\">포함 내역</div><ul _ngcontent-jmp-c37=\\"\\" class=\\"includes_items\\"> <li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\"> (실제 제공 가구, 가전 변동 가능) </li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">신발장</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">주방 (쿡탑, 냉장고 포함)</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">빌트인 옷장, 수납장</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">빌트인 데스크</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">세탁선반 &amp; 건조헹거</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">매트리스</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">스마트 도어락</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">에어컨</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">9kg 드럼세탁기</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">화장실</li></ul> </div></div></app-card-room-detail ><app-card-room-detail _ngcontent-jmp-c36=\\"\\" _nghost-jmp-c37=\\"\\" > <div _ngcontent-jmp-c37=\\"\\" class=\\"card_room_detail desktop\\"> <div _ngcontent-jmp-c37=\\"\\" class=\\"image_container_room_detail\\"> <img class=\\"room_card_slider YBynfBEAACMAI8OE\\" src=\\"https://images.prismic.io/commontown-sales/3ad8cb77-c787-44f7-a54c-f0fbb0f4ef37_%E1%84%92%E1%85%A1%E1%84%8B%E1%85%AE%E1%84%89%E1%85%B3+%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A6+-+%E1%84%90%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8+B+1.png\\"/> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"info_room\\"> <div _ngcontent-jmp-c37=\\"\\" class=\\"header\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"name body1\\">Type B</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"status\\" >오픈 프로모션 중</span > </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">6개월</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">₩920,000/월 ~</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">3개월</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">₩1,110,000/월 ~</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"includes body1\\">포함 내역</div><ul _ngcontent-jmp-c37=\\"\\" class=\\"includes_items\\"> <li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\"> (실제 제공 가구, 가전 변동 가능) </li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">신발장</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">주방 (쿡탑, 냉장고 포함)</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\"> 헹거형 시스템 옷장 겸 수납장 </li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">빌트인 데스크</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">세탁선반 및 건조헹거</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">매트리스</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">스마트 도어락</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">에어컨</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">9kg 드럼세탁기</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">화장실</li></ul> </div></div></app-card-room-detail ><app-card-room-detail _ngcontent-jmp-c36=\\"\\" _nghost-jmp-c37=\\"\\" > <div _ngcontent-jmp-c37=\\"\\" class=\\"card_room_detail desktop\\"> <div _ngcontent-jmp-c37=\\"\\" class=\\"image_container_room_detail\\"> <img class=\\"room_card_slider YBynfBEAACMAI8OE\\" src=\\"https://images.prismic.io/commontown-sales/4e4b4659-84ed-4d84-9375-22dbc0a20360_%E1%84%92%E1%85%A1%E1%84%8B%E1%85%AE%E1%84%89%E1%85%B3+%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A6+-+%E1%84%90%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8+C+1.png\\"/> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"info_room\\"> <div _ngcontent-jmp-c37=\\"\\" class=\\"header\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"name body1\\">Type C</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"status\\" >오픈 프로모션 중</span > </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">-</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">12개월 이상 계약 가능</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">C-1 (42.9㎡)</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">₩1,040,000/월</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">C-2 (46.2㎡)</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">₩1,090,000/월</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">C-3 (50.8㎡)</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">₩1,140,000/월</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">C-4 (53.8㎡)</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">₩1,190,000/월</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"price\\"> <span _ngcontent-jmp-c37=\\"\\" class=\\"body2\\">C-5 (65.3㎡)</span ><span _ngcontent-jmp-c37=\\"\\" class=\\"btn2\\">₩1,490,000/월</span> </div><div _ngcontent-jmp-c37=\\"\\" class=\\"includes body1\\">포함 내역</div><ul _ngcontent-jmp-c37=\\"\\" class=\\"includes_items\\"> <li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\"> (실제 제공 가구, 가전 변동 가능) </li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">신발장</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">주방 (쿡탑, 냉장고 포함)</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">계단 하부 수납장</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">세탁선반 및 건조헹거</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">매트리스</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\"> 프라이빗 테라스(C-5만 해당) </li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">스마트 도어락</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">에어컨</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">9kg 드럼세탁기</li><li _ngcontent-jmp-c37=\\"\\" class=\\"body4\\">화장실</li></ul> </div></div></app-card-room-detail > </div>",
     "createdTime": "2021-02-27"
+  }
+]''';
+
+  static final String historyJson = '''[
+  {
+    "index": 10,
+    "serviceName": "호출",
+    "summary": "-",
+    "price": 0,
+    "status": 0,
+    "createdTime": "2021-05-05"
+  },
+  {
+    "index": 9,
+    "serviceName": "커먼플러스",
+    "summary": "심플리오",
+    "price": 12000,
+    "status": 1,
+    "createdTime": "2021-05-01"
+  },
+  {
+    "index": 8,
+    "serviceName": "세탁",
+    "summary": "침구세트 세탁",
+    "price": 5000,
+    "status": 1,
+    "createdTime": "2021-04-24"
+  },
+  {
+    "index": 7,
+    "serviceName": "택배",
+      "summary": "2개",
+      "price": 0,
+      "status": 2,
+    "createdTime": "2021-04-15"
+  },
+  {
+    "index": 6,
+    "serviceName": "생필품",
+    "summary": "종량제 봉투 20L 외 2개",
+    "price": 8000,
+    "status": 2,
+    "createdTime": "2021-04-02"
+  },
+  {
+    "index": 5,
+    "serviceName": "청소",
+    "summary": "2021/03/15 예약",
+    "price": 0,
+    "status": 2,
+    "createdTime": "2021-03-30"
+  },
+  {
+    "index": 4,
+    "serviceName": "팻케어",
+    "summary": "간식 1개",
+    "price": 1000,
+    "status": 2,
+    "createdTime": "2021-03-10"
+  },
+  {
+    "index": 3,
+    "serviceName": "세탁",
+    "summary": "수건 세탁",
+    "price": 2000,
+    "status": 2,
+    "createdTime": "2021-02-14"
+  },
+  {
+    "index": 2,
+    "serviceName": "생필품",
+    "summary": "휴지 4개 외 4건",
+    "price": 6000,
+    "status": 2,
+    "createdTime": "2021-01-28"
+  },
+  {
+    "index": 1,
+    "serviceName": "호출",
+    "summary": "-",
+    "price": 0,
+    "status": 2,
+    "createdTime": "2021-01-03"
   }
 ]''';
 
@@ -1784,6 +1870,36 @@ abstract class SampleData {
   static List<NoticeModel> notices() {
     final list = jsonDecode(noticeJson) as List;
     return list.map((json) => NoticeModel.fromJson(json)).toList();
+  }
+
+  static List<HistoryModel> histories() {
+    final list = jsonDecode(historyJson) as List;
+
+    return list
+        .map((json) => HistoryModel.fromJson(json))
+        .map((e) => HistoryModel(
+              index: e.index,
+              serviceName: e.serviceName,
+              summary: e.summary,
+              amount: e.amount,
+              status: e.status,
+              createdTime: e.createdTime,
+              detail: HistoryDetailModel(
+                title: '종량제 봉투',
+                createdTime: DateTime.now(),
+                amount: 5300,
+                paymentMethod: '국민카드',
+                paymentData: '1234',
+                detail: [
+                  KeyValueModel(key: '20L', value: 1, price: 1000),
+                  KeyValueModel(key: '50L', value: 1, price: 1800),
+                  KeyValueModel(key: '100L', value: 1, price: 2500),
+                ],
+                reservedTime: DateTime.now(),
+                request: '문앞에 두고 벨을 눌러주세요',
+              ),
+            ))
+        .toList();
   }
 
   static List<ServiceModel> services() {
