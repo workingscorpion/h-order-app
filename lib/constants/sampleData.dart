@@ -487,7 +487,7 @@ abstract class SampleData {
   },
   {
     "objectId": "14",
-    "name": "본보야지",
+    "name": "봉보야쥬",
     "type": "shop",
     "image": "assets/sample/commontown/service/se4.png",
     "items": [
