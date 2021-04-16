@@ -21,11 +21,14 @@ class _BillDetailPageState extends State<BillDetailPage> {
           Expanded(
             child: ListView(
               children: [
-                Expanded(
-                  child: Image.asset(
-                    'assets/sample/billSample.png',
-                    fit: BoxFit.contain,
-                  ),
+                Flex(
+                  direction: Axis.vertical,
+                  children: [
+                    Image.asset(
+                      'assets/sample/billSample.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ],
                 ),
               ],
             ),
