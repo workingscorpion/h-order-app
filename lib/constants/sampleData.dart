@@ -525,19 +525,19 @@ abstract class SampleData {
   {
     "objectId": "interior_1",
     "serviceObjectId": "interior",
-    "name": "asd",
+    "name": "가구",
     "products": []
   },
   {
     "objectId": "interior_2",
     "serviceObjectId": "interior",
-    "name": "asdf",
+    "name": "패브릭",
     "products": []
   },
   {
     "objectId": "interior_3",
     "serviceObjectId": "interior",
-    "name": "asdf",
+    "name": "홈데코",
     "products": []
   },
   {
@@ -1505,7 +1505,7 @@ abstract class SampleData {
   },
   {
     "objectId": "pet_3_1",
-    "categoryObjectId": "pet_5",
+    "categoryObjectId": "pet_3",
     "images": ["assets/sample/commontown/item/pet/s31.jpg"],
     "name": "애견목줄",
     "price": 8200,
@@ -1513,7 +1513,7 @@ abstract class SampleData {
   },
   {
     "objectId": "pet_3_2",
-    "categoryObjectId": "pet_5",
+    "categoryObjectId": "pet_3",
     "images": ["assets/sample/commontown/item/pet/s32.jpg"],
     "name": "배변봉",
     "price": 5200,
@@ -1521,7 +1521,7 @@ abstract class SampleData {
   },
   {
     "objectId": "pet_3_3",
-    "categoryObjectId": "pet_5",
+    "categoryObjectId": "pet_3",
     "images": ["assets/sample/commontown/item/pet/s33.jpg"],
     "name": "애견샴푸",
     "price": 18000,
@@ -1529,7 +1529,7 @@ abstract class SampleData {
   },
   {
     "objectId": "pet_3_4",
-    "categoryObjectId": "pet_5",
+    "categoryObjectId": "pet_3",
     "images": ["assets/sample/commontown/item/pet/s34.png"],
     "name": "애견패드",
     "price": 1200,
@@ -1537,8 +1537,8 @@ abstract class SampleData {
   },
   {
     "objectId": "pet_3_5",
-    "categoryObjectId": "pet_5",
-    "images": ["assets/sample/commontown/item/pet/s35.jpg"],
+    "categoryObjectId": "pet_3",
+    "images": ["assets/sample/commontown/item/pet/s35.png"],
     "name": "케이지",
     "price": 35000,
     "options": []
