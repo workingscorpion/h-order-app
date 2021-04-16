@@ -561,7 +561,31 @@ abstract class SampleData {
   {
     "objectId": "goshop_1",
     "serviceObjectId": "goshop",
-    "name": "GOSHOP CATEGORY",
+    "name": "음료",
+    "products": []
+  },
+  {
+    "objectId": "goshop_2",
+    "serviceObjectId": "goshop",
+    "name": "컵라면",
+    "products": []
+  },
+  {
+    "objectId": "goshop_3",
+    "serviceObjectId": "goshop",
+    "name": "즉석식품",
+    "products": []
+  },
+  {
+    "objectId": "goshop_4",
+    "serviceObjectId": "goshop",
+    "name": "과자",
+    "products": []
+  },
+  {
+    "objectId": "goshop_5",
+    "serviceObjectId": "goshop",
+    "name": "생필품",
     "products": []
   },
   {
@@ -1592,160 +1616,160 @@ abstract class SampleData {
     "options": []
   },
   {
-    "objectId": "goshop_1_7",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_2_7",
+    "categoryObjectId": "goshop_2",
     "name": "농심 신라면 소컵",
     "price": 1290,
     "images": ["assets/sample/commontown/item/goshop/s7.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_8",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_2_8",
+    "categoryObjectId": "goshop_2",
     "name": "삼양 불닭볶음면",
     "price": 1690,
     "images": ["assets/sample/commontown/item/goshop/s8.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_9",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_2_9",
+    "categoryObjectId": "goshop_2",
     "name": "팔도 비빔면",
     "price": 1690,
     "images": ["assets/sample/commontown/item/goshop/s9.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_10",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_3_10",
+    "categoryObjectId": "goshop_3",
     "name": "CJ햇반 컵반 사골곰탕국밥",
     "price": 3490,
     "images": ["assets/sample/commontown/item/goshop/s10.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_11",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_3_11",
+    "categoryObjectId": "goshop_3",
     "name": "CJ햇반 컵반 중화마파두부덮밥",
     "price": 3490,
     "images": ["assets/sample/commontown/item/goshop/s11.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_12",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_3_12",
+    "categoryObjectId": "goshop_3",
     "name": "CJ고메 토마토미트볼",
     "price": 4900,
     "images": ["assets/sample/commontown/item/goshop/s12.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_13",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_3_13",
+    "categoryObjectId": "goshop_3",
     "name": "CJ 비비고 전복죽",
     "price": 4900,
     "images": ["assets/sample/commontown/item/goshop/s13.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_14",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_4_14",
+    "categoryObjectId": "goshop_4",
     "name": "프링글스 오리지날맛",
     "price": 2490,
     "images": ["assets/sample/commontown/item/goshop/s14.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_15",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_4_15",
+    "categoryObjectId": "goshop_4",
     "name": "롯데 몽쉘크림(6입)",
     "price": 2900,
     "images": ["assets/sample/commontown/item/goshop/s15.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_16",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_4_16",
+    "categoryObjectId": "goshop_4",
     "name": "크라운 초코하입(6개입)",
     "price": 1490,
     "images": ["assets/sample/commontown/item/goshop/s16.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_17",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_4_17",
+    "categoryObjectId": "goshop_4",
     "name": "롯데 빼빼로아몬드",
     "price": 1490,
     "images": ["assets/sample/commontown/item/goshop/s17.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_18",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_4_18",
+    "categoryObjectId": "goshop_4",
     "name": "크라운 쿠크다스 커피(9입)",
     "price": 1900,
     "images": ["assets/sample/commontown/item/goshop/s18.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_19",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_4_19",
+    "categoryObjectId": "goshop_4",
     "name": "오리온 촉촉한초코칩",
     "price": 2490,
     "images": ["assets/sample/commontown/item/goshop/s19.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_20",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_4_20",
+    "categoryObjectId": "goshop_4",
     "name": "크라운 국희샌드",
     "price": 1490,
     "images": ["assets/sample/commontown/item/goshop/s20.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_21",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_4_21",
+    "categoryObjectId": "goshop_4",
     "name": "오리온 포카칩",
     "price": 1600,
     "images": ["assets/sample/commontown/item/goshop/s21.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_22",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_5_22",
+    "categoryObjectId": "goshop_5",
     "name": "토디앙 네이처그린 물티슈 캡(100매)",
     "price": 1900,
     "images": ["assets/sample/commontown/item/goshop/s22.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_23",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_5_23",
+    "categoryObjectId": "goshop_5",
     "name": "좋은느낌 유기농순면커버 슬날 중(14P)",
     "price": 5900,
     "images": ["assets/sample/commontown/item/goshop/s23.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_24",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_5_24",
+    "categoryObjectId": "goshop_5",
     "name": "니베아 쉐이빙폼",
     "price": 6900,
     "images": ["assets/sample/commontown/item/goshop/s24.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_25",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_5_25",
+    "categoryObjectId": "goshop_5",
     "name": "미쟝센 파워스윙 매트 왁스",
     "price": 9900,
     "images": ["assets/sample/commontown/item/goshop/s25.png"],
     "options": []
   },
   {
-    "objectId": "goshop_1_26",
-    "categoryObjectId": "goshop_1",
+    "objectId": "goshop_5_26",
+    "categoryObjectId": "goshop_5",
     "name": "PACE4 휴대용면도기(4입)",
     "price": 5900,
     "images": ["assets/sample/commontown/item/goshop/s26.png"],
