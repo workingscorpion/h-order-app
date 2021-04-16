@@ -69,5 +69,8 @@ flutter:
     - assets/sample/commontown/banner/
     - assets/sample/commontown/service/
     - assets/sample/commontown/item/
+    - assets/sample/daily_necessity/
+    - assets/sample/daily_necessity/item/
     - assets/sample/screen/
     - assets/splash/
+    

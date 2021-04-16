@@ -246,7 +246,7 @@ abstract class SampleData {
     ]
   },
   {
-    "objectId": "9",
+    "objectId": "daily_necessity",
     "name": "생필품 신청",
     "type": "shop",
     "image": "assets/icons/service/trashbag.svg",
@@ -479,6 +479,12 @@ abstract class SampleData {
     "serviceObjectId": "goshop",
     "name": "GOSHOP CATEGORY",
     "products": []
+  },
+  {
+    "objectId": "daily_necessity_1",
+    "serviceObjectId": "daily_necessity",
+    "name": "생필품",
+    "products": []
   }
 ]
 ''';
@@ -491,6 +497,119 @@ abstract class SampleData {
     "name": "헤븐리 샴푸",
     "price": 6500,
     "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_1",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s1.png"],
+    "name": "휴지",
+    "price": 500,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_2",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s2.jpg"],
+    "name": "각티슈",
+    "price": 1000,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_3",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s3.jpg"],
+    "name": "드럼세탁기 세제",
+    "price": 3000,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_4",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s4.png"],
+    "name": "주방세제",
+    "price": 2000,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_5",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s5.jpg"],
+    "name": "샴푸",
+    "price": 9000,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_6",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s6.png"],
+    "name": "린스",
+    "price": 9000,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_7",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s7.jpg"],
+    "name": "바디워시",
+    "price": 7000,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_8",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s8.png"],
+    "name": "비누",
+    "price": 1000,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_9",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s9.png"],
+    "name": "칫솔",
+    "price": 1000,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_10",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s10.jpg"],
+    "name": "치약",
+    "price": 2000,
+    "options": []
+  },
+  {
+    "objectId": "daily_necessity_1_11",
+    "categoryObjectId": "daily_necessity_1",
+    "images": ["assets/sample/daily_necessity/item/s11.jpg"],
+    "name": "종량제봉투",
+    "price": 1000,
+    "options": [
+      {
+        "isRequired": true,
+        "objectId": "daily_necessity_1_11_1_1",
+        "parentObjectId": null,
+        "name": "10L",
+        "price": 0,
+        "options": []
+      },
+      {
+        "isRequired": true,
+        "objectId": "daily_necessity_1_11_1_2",
+        "parentObjectId": null,
+        "name": "20L",
+        "price": 1000,
+        "options": []
+      },
+      {
+        "isRequired": true,
+        "objectId": "daily_necessity_1_11_1_3",
+        "parentObjectId": null,
+        "name": "50L",
+        "price": 2000,
+        "options": []
+      }
+    ]
   }
 ]''';
 

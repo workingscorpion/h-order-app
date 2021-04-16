@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
@@ -68,14 +69,14 @@ class _ProductPageState extends State<ProductPage>
     _selectedOption = Map();
 
     _initOptionsQuantity(widget.product.options);
-    _filter();
-  }
 
-  _filter() {
-    _required =
-        widget.product.options.where((element) => element.isRequired).toList();
-    _optional =
-        widget.product.options.where((element) => !element.isRequired).toList();
+    _required = widget.product.options
+        .where((element) => (element.isRequired ?? false))
+        .toList();
+
+    _optional = widget.product.options
+        .where((element) => !(element.isRequired ?? false))
+        .toList();
   }
 
   _initOptionsQuantity(List<ProductOptionModel> options) {
@@ -118,14 +119,18 @@ class _ProductPageState extends State<ProductPage>
                         shrinkWrap: true,
                         physics: ClampingScrollPhysics(),
                         children: [
-                          Flex(
-                            direction: Axis.vertical,
-                            children: [
-                              _titleCard(),
-                            ],
+                          _card(
+                            child: _title(),
                           ),
-                          _optionCard(),
-                          _productCount(),
+                          ...List.generate(
+                            _optional.length,
+                            (index) => _card(
+                              child: _option(option: _optional[index]),
+                            ),
+                          ),
+                          _card(
+                            child: _productCount(),
+                          ),
                         ],
                       ),
                     ),
@@ -140,17 +145,32 @@ class _ProductPageState extends State<ProductPage>
     );
   }
 
-  _productCount() => Container(
+  _card({
+    Widget child,
+  }) =>
+      Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 24,
+          horizontal: 24,
+        ),
         margin: EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: child,
+      );
+
+  _productCount() => Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('수량'),
+            Text(
+              '수량',
+              style: TextStyle(
+                fontSize: 19,
+              ),
+            ),
             Spacer(),
             Container(
               margin: EdgeInsets.only(left: 10),
@@ -174,14 +194,14 @@ class _ProductPageState extends State<ProductPage>
         ),
       );
 
-  _countCalc(bool isLeft) => Container(
+  _countCalc(bool left) => Container(
         width: 35,
         height: 35,
         decoration: BoxDecoration(
-          color: isLeft && _quantity <= 0
+          color: left && _quantity <= 0
               ? CustomColors.aWhite
               : CustomColors.subTextBlack,
-          borderRadius: isLeft
+          borderRadius: left
               ? BorderRadius.only(
                   topLeft: Radius.circular(8),
                   bottomLeft: Radius.circular(8),
@@ -195,17 +215,19 @@ class _ProductPageState extends State<ProductPage>
           iconSize: 16,
           padding: EdgeInsets.zero,
           onPressed: () {
-            if (isLeft) {
-              if (_quantity > 0) {
-                _quantity--;
+            if (left) {
+              _quantity -= 1;
+
+              if (_quantity < 1) {
+                _quantity = 1;
               }
             } else {
-              _quantity++;
+              _quantity += 1;
             }
             setState(() {});
           },
           icon: Icon(
-            isLeft ? CupertinoIcons.minus : CupertinoIcons.plus,
+            left ? CupertinoIcons.minus : CupertinoIcons.plus,
             size: 20,
             color: Theme.of(context).textTheme.bodyText1.color,
           ),
@@ -239,18 +261,6 @@ class _ProductPageState extends State<ProductPage>
                 ],
               ),
             ),
-          ),
-        ),
-      );
-
-  _optionCard() => ListView(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: List.generate(
-          _optional.length,
-          (index) => Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: _option(option: _optional[index], depth: 1),
           ),
         ),
       );
@@ -299,13 +309,7 @@ class _ProductPageState extends State<ProductPage>
         ),
       );
 
-  _titleCard() => Container(
-        margin: EdgeInsets.only(bottom: 10),
-        padding: EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(8),
-        ),
+  _title() => Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -317,20 +321,21 @@ class _ProductPageState extends State<ProductPage>
                 ),
               ),
             ),
-            Divider(
-              color: Theme.of(context).accentColor,
-              height: 10,
-              thickness: .5,
+            Container(
+              margin: EdgeInsets.only(bottom: 16),
+              child: Divider(
+                color: Theme.of(context).accentColor,
+                height: 10,
+                thickness: .5,
+              ),
             ),
-            Container(height: 16),
             Column(
               children: _required.length > 0
                   ? List.generate(
-                      _required.length,
-                      (index) => _option(
-                        option: _required[index],
-                        depth: 1,
-                      ),
+                      _required.length * 2 - 1,
+                      (index) => index % 2 == 0
+                          ? _option(option: _required[(index / 2).floor()])
+                          : Container(height: 16),
                     )
                   : [
                       Row(
@@ -341,6 +346,8 @@ class _ProductPageState extends State<ProductPage>
                             height: 20,
                             margin: EdgeInsets.only(right: 5),
                             child: Radio(
+                              value: null,
+                              groupValue: null,
                               onChanged: (value) {},
                             ),
                           ),
@@ -358,25 +365,12 @@ class _ProductPageState extends State<ProductPage>
 
   _option({
     ProductOptionModel option,
-    double depth = 1,
   }) =>
       Container(
-        padding:
-            depth == 1 ? EdgeInsets.symmetric(vertical: 24) : EdgeInsets.zero,
-        margin:
-            depth > 1 ? EdgeInsets.only(top: 16) : EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(8),
-        ),
         child: Column(
           children: [
             IntrinsicHeight(
               child: Container(
-                padding: EdgeInsets.only(
-                  left: 24,
-                  right: 24,
-                ),
                 child: FractionallySizedBox(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -384,37 +378,61 @@ class _ProductPageState extends State<ProductPage>
                       Container(
                         margin: EdgeInsets.only(right: 8),
                         child: Row(
-                          children:
-                              depth > 1 || (option.options?.length ?? -1) == 0
-                                  ? [
-                                      Container(
-                                        width: 20,
-                                        height: 20,
-                                        margin: EdgeInsets.only(right: 5),
-                                        child: Radio(
-                                          value: 1,
-                                          groupValue:
-                                              _selectedOption[option.objectId],
-                                          toggleable: true,
-                                          onChanged: (val) {
-                                            _selectedOption[option.objectId] =
-                                                val == 1 ? val : 0;
-                                            setState(() {});
-                                          },
-                                        ),
-                                      ),
-                                      Text(
-                                        option.name,
-                                      ),
-                                    ]
-                                  : [
-                                      Text(
-                                        option.name,
-                                        style: TextStyle(
-                                          fontSize: 21,
-                                        ),
-                                      ),
-                                    ],
+                          children: (option.options?.length ?? -1) == 0
+                              ? [
+                                  Container(
+                                    width: 20,
+                                    height: 20,
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: Radio(
+                                      value: 1,
+                                      groupValue:
+                                          _selectedOption[option.objectId],
+                                      toggleable: (option.multiple ?? false),
+                                      onChanged: (value) {
+                                        if ((option.multiple ?? false)) {
+                                          _selectedOption[option.objectId] =
+                                              _selectedOption[
+                                                          option.objectId] ==
+                                                      1
+                                                  ? 0
+                                                  : 1;
+                                        } else {
+                                          if (option.isRequired ?? false) {
+                                            widget.product.options
+                                                .where((item) =>
+                                                    (item.isRequired ?? false))
+                                                .forEach((item) {
+                                              _selectedOption[item.objectId] =
+                                                  0;
+                                            });
+                                          } else {
+                                            _optionMap[option.parentObjectId]
+                                                .options
+                                                .forEach((item) {
+                                              _selectedOption[item.objectId] =
+                                                  0;
+                                            });
+                                          }
+
+                                          _selectedOption[option.objectId] = 1;
+                                        }
+                                        setState(() {});
+                                      },
+                                    ),
+                                  ),
+                                  Text(
+                                    option.name,
+                                  ),
+                                ]
+                              : [
+                                  Text(
+                                    option.name,
+                                    style: TextStyle(
+                                      fontSize: 21,
+                                    ),
+                                  ),
+                                ],
                         ),
                       ),
                       ...((option.max ?? 0) > 0)
@@ -426,11 +444,11 @@ class _ProductPageState extends State<ProductPage>
                           : [],
                       Spacer(),
                       Container(
-                        child: option.price > 0
+                        child: (option.price ?? 0) > 0
                             ? Container(
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  '+${NumberFormat().format(option.price)}원',
+                                  '${NumberFormat().format(option.price)}원',
                                 ),
                               )
                             : Container(),
@@ -440,25 +458,47 @@ class _ProductPageState extends State<ProductPage>
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: (option.options?.length ?? 0) > 0
-                  ? Divider(
+            (option.options?.length ?? 0) > 0
+                ? Container(
+                    margin: EdgeInsets.only(bottom: 16),
+                    child: Divider(
                       color: Theme.of(context).accentColor,
                       height: 10,
                       thickness: .5,
-                    )
-                  : Container(),
-            ),
+                    ),
+                  )
+                : Container(),
             ...(option.options?.length ?? 0) > 0
-                ? option.options
-                    .map((sub) => _option(option: sub, depth: depth + 1))
+                ? List.generate(
+                    option.options.length * 2 - 1,
+                    (index) => index % 2 == 0
+                        ? _option(option: option.options[(index / 2).floor()])
+                        : Container(height: 16),
+                  )
                 : [],
           ],
         ),
       );
 
-  _save() {
+  _save() async {
+    final requiredOpiotns =
+        widget.product.options.where((item) => item.isRequired ?? false);
+    if (requiredOpiotns.length > 0) {
+      if (!requiredOpiotns.any((item) => _selectedOption[item.objectId] > 0)) {
+        await Fluttertoast.cancel();
+        await Fluttertoast.showToast(
+          msg: '필수옵션을 선택해주세요.',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+          textColor: Theme.of(context).textTheme.bodyText1.color,
+          fontSize: 17,
+        );
+
+        return;
+      }
+    }
+
     final result = CartItemModel(
       name: widget.product.name,
       amount: amount,
@@ -467,6 +507,7 @@ class _ProductPageState extends State<ProductPage>
       quantity: _quantity,
       product: widget.product,
     );
+
     Navigator.of(context).pop(result);
   }
 }

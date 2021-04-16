@@ -364,12 +364,14 @@ class _HomePageState extends State<HomePage>
 
       currentBackPressTime = now;
 
+      await Fluttertoast.cancel();
       await Fluttertoast.showToast(
         msg: '뒤로가기를 한 번 더 누르면 종료 됩니다.',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 2,
-        fontSize: 14,
+        backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+        textColor: Theme.of(context).textTheme.bodyText1.color,
+        fontSize: 17,
       );
 
       return false;

@@ -211,6 +211,7 @@ class _ShopPageState extends State<ShopPage>
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Colors.white,
                         ),
                         child: Image.asset(
                           product.images[0],
