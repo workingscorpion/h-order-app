@@ -22,12 +22,12 @@ class _InformationPageState extends State<InformationPage>
     super.initState();
     _appBarKey = GlobalKey();
 
-    _categories = List.generate(5, (i) {
-      return CategoryModel(
-        index: i,
-        name: 'Category ${i + 1}',
-      );
-    });
+    // _categories = List.generate(5, (i) {
+    //   return CategoryModel(
+    //     objectId: i,
+    //     name: 'Category ${i + 1}',
+    //   );
+    // });
 
     _images = [
       'assets/sample/1.jpg',

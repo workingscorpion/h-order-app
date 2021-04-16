@@ -20,7 +20,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage>
     with SingleTickerProviderStateMixin {
-  Map<int, ProductOptionModel> _optionMap;
+  Map<String, ProductOptionModel> _optionMap;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _CartPageState extends State<CartPage>
 
   _initOptionsQuantity(List<ProductOptionModel> options) {
     options?.forEach((option) {
-      _optionMap[option.index] = option;
+      _optionMap[option.objectId] = option;
 
       if ((option.options?.length ?? 0) > 0) {
         _initOptionsQuantity(option.options);
@@ -426,8 +426,8 @@ class _CartPageState extends State<CartPage>
     final name =
         quantity != null ? '${option.name} ($quantity)' : '${option.name}';
 
-    if (option.parent != null) {
-      final parent = _optionMap[option.parent];
+    if (option.parentObjectId != null) {
+      final parent = _optionMap[option.parentObjectId];
       return _optionName(option: parent) + ' > ' + name;
     }
 

@@ -8,9 +8,9 @@ part of 'productModel.dart';
 
 ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
   return ProductModel(
-    index: json['index'] as int,
-    categoryIndex: json['categoryIndex'] as int,
-    image: json['image'] as String,
+    objectId: json['objectId'] as String,
+    categoryObjectId: json['categoryObjectId'] as String,
+    images: (json['images'] as List)?.map((e) => e as String)?.toList(),
     name: json['name'] as String,
     price: json['price'] as int,
     options: (json['options'] as List)
@@ -23,9 +23,9 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
     <String, dynamic>{
-      'index': instance.index,
-      'categoryIndex': instance.categoryIndex,
-      'image': instance.image,
+      'objectId': instance.objectId,
+      'categoryObjectId': instance.categoryObjectId,
+      'images': instance.images,
       'name': instance.name,
       'price': instance.price,
       'options': instance.options,

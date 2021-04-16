@@ -52,7 +52,15 @@ class _HomeViewState extends State<HomeView>
               mainAxisSpacing: 20,
               crossAxisCount: 5,
               children: [
-                ...services.map((item) => ServiceButton(service: item)),
+                ...services
+                    .where((item) =>
+                        item.items
+                            .singleWhere(
+                                (element) => element.type == 'position',
+                                orElse: () => null)
+                            ?.value !=
+                        "bottom")
+                    .map((item) => ServiceButton(service: item)),
               ],
             ),
           ),
@@ -71,15 +79,39 @@ class _HomeViewState extends State<HomeView>
             ),
             scrollDirection: Axis.horizontal,
             children: [
-              ...List.generate(
-                4,
-                (index) => Container(
+              ...services
+                  .where((item) =>
+                      item.items
+                          .singleWhere((element) => element.type == 'position',
+                              orElse: () => null)
+                          ?.value ==
+                      "bottom")
+                  .map((item) {
+                final position = item.items.singleWhere(
+                    (element) => element.type == 'position',
+                    orElse: () => null);
+
+                final hashTags = position.children
+                        ?.singleWhere((element) => element.type == 'hashTag',
+                            orElse: () => null)
+                        ?.children
+                        ?.map((element) => element.value) ??
+                    List();
+
+                final businessPeriod = position.children
+                        ?.singleWhere(
+                            (element) => element.type == 'businessPeriod',
+                            orElse: () => null)
+                        ?.value ??
+                    '';
+
+                return Container(
                   margin: EdgeInsets.only(right: 8),
                   child: AspectRatio(
                     aspectRatio: 1.413 / 1,
                     child: InkWell(
                       onTap: () {
-                        AppRouter.toShopPage();
+                        AppRouter.toShopPage(service: item);
                       },
                       child: Stack(
                         children: [
@@ -91,7 +123,7 @@ class _HomeViewState extends State<HomeView>
                                 color: Colors.white,
                               ),
                               child: Image.asset(
-                                home.serviceImages[index],
+                                item.image,
                                 fit: BoxFit.fitWidth,
                               ),
                             ),
@@ -117,18 +149,14 @@ class _HomeViewState extends State<HomeView>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "고샵 (GO SHOP)",
+                                    item.name,
                                     style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text(
-                                    "#멀티샵 #생필품 #세계주류 #굿즈",
-                                  ),
-                                  Text(
-                                    "00:00 ~ 24:00",
-                                  ),
+                                  Text(hashTags.map((e) => '#$e').join(' ')),
+                                  Text(businessPeriod),
                                 ],
                               ),
                             ),
@@ -137,8 +165,8 @@ class _HomeViewState extends State<HomeView>
                       ),
                     ),
                   ),
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),

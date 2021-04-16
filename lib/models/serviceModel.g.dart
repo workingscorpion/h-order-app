@@ -11,7 +11,7 @@ ServiceModel _$ServiceModelFromJson(Map<String, dynamic> json) {
     objectId: json['objectId'] as String,
     name: json['name'] as String,
     type: json['type'] as String,
-    icon: json['icon'] as String,
+    image: json['image'] as String,
     items: (json['items'] as List)
         ?.map((e) =>
             e == null ? null : ItemModel.fromJson(e as Map<String, dynamic>))
@@ -24,6 +24,6 @@ Map<String, dynamic> _$ServiceModelToJson(ServiceModel instance) =>
       'objectId': instance.objectId,
       'name': instance.name,
       'type': instance.type,
-      'icon': instance.icon,
+      'image': instance.image,
       'items': instance.items,
     };

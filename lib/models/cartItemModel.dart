@@ -12,7 +12,7 @@ class CartItemModel {
   final String name;
   final int amount;
   final int optionAmount;
-  final Map<int, int> optionQuantity;
+  final Map<String, int> optionQuantity;
 
   int get totalAmount {
     return _quantity * (amount + optionAmount);
@@ -26,10 +26,10 @@ class CartItemModel {
 
   get key {
     final list = optionQuantity.entries.toList()
-      ..sort((a, b) => a.key > b.key ? 1 : -1);
+      ..sort((a, b) => a.key.compareTo(b.key));
     final options = list.map((element) => '${element.key}=${element.value}');
 
-    return '${product.index}?' + options.join('&');
+    return '${product.objectId}?' + options.join('&');
   }
 
   CartItemModel({

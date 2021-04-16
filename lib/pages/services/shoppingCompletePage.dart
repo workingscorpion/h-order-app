@@ -18,7 +18,7 @@ class ShoppingCompletePage extends StatefulWidget {
 
 class _ShoppingCompletePageState extends State<ShoppingCompletePage>
     with SingleTickerProviderStateMixin {
-  Map<int, ProductOptionModel> _optionMap;
+  Map<String, ProductOptionModel> _optionMap;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
 
   _initOptionsQuantity(List<ProductOptionModel> options) {
     options.forEach((option) {
-      _optionMap[option.index] = option;
+      _optionMap[option.objectId] = option;
 
       if ((option.options?.length ?? 0) > 0) {
         _initOptionsQuantity(option.options);

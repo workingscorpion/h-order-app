@@ -4,8 +4,8 @@ part 'productOptionModel.g.dart';
 
 @JsonSerializable()
 class ProductOptionModel {
-  final int index;
-  final int parent;
+  final String objectId;
+  final String parentObjectId;
   final String image;
   final String name;
   final int price;
@@ -15,8 +15,8 @@ class ProductOptionModel {
   final List<ProductOptionModel> options;
 
   ProductOptionModel({
-    this.index,
-    this.parent,
+    this.objectId,
+    this.parentObjectId,
     this.image,
     this.name,
     this.price,

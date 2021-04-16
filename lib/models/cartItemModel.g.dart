@@ -17,7 +17,7 @@ CartItemModel _$CartItemModelFromJson(Map<String, dynamic> json) {
     amount: json['amount'] as int,
     optionAmount: json['optionAmount'] as int,
     optionQuantity: (json['optionQuantity'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(int.parse(k), e as int),
+      (k, e) => MapEntry(k, e as int),
     ),
   );
 }
@@ -29,7 +29,6 @@ Map<String, dynamic> _$CartItemModelToJson(CartItemModel instance) =>
       'name': instance.name,
       'amount': instance.amount,
       'optionAmount': instance.optionAmount,
-      'optionQuantity':
-          instance.optionQuantity?.map((k, e) => MapEntry(k.toString(), e)),
+      'optionQuantity': instance.optionQuantity,
       'quantity': instance.quantity,
     };

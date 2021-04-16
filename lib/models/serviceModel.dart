@@ -8,14 +8,14 @@ class ServiceModel {
   final String objectId;
   final String name;
   final String type;
-  final String icon;
+  final String image;
   final List<ItemModel> items;
 
   ServiceModel({
     this.objectId,
     this.name,
     this.type,
-    this.icon,
+    this.image,
     this.items,
   });
 

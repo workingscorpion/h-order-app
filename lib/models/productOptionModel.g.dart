@@ -8,8 +8,8 @@ part of 'productOptionModel.dart';
 
 ProductOptionModel _$ProductOptionModelFromJson(Map<String, dynamic> json) {
   return ProductOptionModel(
-    index: json['index'] as int,
-    parent: json['parent'] as int,
+    objectId: json['objectId'] as String,
+    parentObjectId: json['parentObjectId'] as String,
     image: json['image'] as String,
     name: json['name'] as String,
     price: json['price'] as int,
@@ -26,8 +26,8 @@ ProductOptionModel _$ProductOptionModelFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ProductOptionModelToJson(ProductOptionModel instance) =>
     <String, dynamic>{
-      'index': instance.index,
-      'parent': instance.parent,
+      'objectId': instance.objectId,
+      'parentObjectId': instance.parentObjectId,
       'image': instance.image,
       'name': instance.name,
       'price': instance.price,

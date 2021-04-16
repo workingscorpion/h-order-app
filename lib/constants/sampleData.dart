@@ -102,7 +102,7 @@ abstract class SampleData {
     "objectId": "1",
     "name": "청소",
     "type": "call",
-    "icon": "assets/icons/service/cleaning.svg",
+    "image": "assets/icons/service/cleaning.svg",
     "items": [
       {
         "objectId": "0",
@@ -125,7 +125,7 @@ abstract class SampleData {
     "objectId": "2",
     "name": "세탁",
     "type": "call",
-    "icon": "assets/icons/service/laundry.svg",
+    "image": "assets/icons/service/laundry.svg",
     "items": [
       {
         "objectId": "0",
@@ -153,7 +153,7 @@ abstract class SampleData {
     "objectId": "3",
     "name": "출차",
     "type": "call",
-    "icon": "assets/icons/service/car.svg",
+    "image": "assets/icons/service/car.svg",
     "items": [
       {
         "objectId": "0",
@@ -171,7 +171,7 @@ abstract class SampleData {
     "objectId": "4",
     "name": "관리실 호출",
     "type": "call",
-    "icon": "assets/icons/service/call.svg",
+    "image": "assets/icons/service/call.svg",
     "items": [
       {
         "objectId": "0",
@@ -186,24 +186,24 @@ abstract class SampleData {
     ]
   },
   {
-    "objectId": "5",
+    "objectId": "common_plus",
     "name": "커먼플러스",
     "type": "shop",
-    "icon": "assets/icons/service/move.svg",
+    "image": "assets/icons/service/move.svg",
     "items": []
   },
   {
     "objectId": "6",
     "name": "펫케어",
     "type": "shop",
-    "icon": "assets/icons/service/pet.svg",
+    "image": "assets/icons/service/pet.svg",
     "items": []
   },
   {
     "objectId": "7",
     "name": "택배",
     "type": "call",
-    "icon": "assets/icons/service/delivery.svg",
+    "image": "assets/icons/service/delivery.svg",
     "items": [
       {
         "objectId": "0",
@@ -231,7 +231,7 @@ abstract class SampleData {
     "objectId": "8",
     "name": "분리수거",
     "type": "call",
-    "icon": "assets/icons/service/recycle.svg",
+    "image": "assets/icons/service/recycle.svg",
     "items": [
       {
         "objectId": "0",
@@ -249,16 +249,241 @@ abstract class SampleData {
     "objectId": "9",
     "name": "생필품 신청",
     "type": "shop",
-    "icon": "assets/icons/service/trashbag.svg",
+    "image": "assets/icons/service/trashbag.svg",
     "items": []
   },
   {
     "objectId": "10",
     "name": "인테리어",
     "type": "shop",
-    "icon": "assets/icons/service/interior.svg",
+    "image": "assets/icons/service/interior.svg",
     "items": []
+  },
+  {
+    "objectId": "goshop",
+    "name": "고샵",
+    "type": "shop",
+    "image": "assets/sample/commontown/service/se1.png",
+    "items": [
+      {
+        "objectId": "99",
+        "type": "position",
+        "value": "bottom",
+        "children": [
+          {
+            "objectId": "1000",
+            "type": "businessPeriod",
+            "value": "00:00 ~ 24:00"
+          },
+          {
+            "objectId": "1001",
+            "type": "hashTag",
+            "value": "",
+            "children": [
+              {
+                "objectId": "2001",
+                "type": "text",
+                "value": "멀티샵"
+              },
+              {
+                "objectId": "2002",
+                "type": "text",
+                "value": "생필품"
+              },
+              {
+                "objectId": "2003",
+                "type": "text",
+                "value": "세계주류"
+              },
+              {
+                "objectId": "2004",
+                "type": "text",
+                "value": "굿즈"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "objectId": "12",
+    "name": "웨스트도어",
+    "type": "shop",
+    "image": "assets/sample/commontown/service/se2.png",
+    "items": [
+      {
+        "objectId": "99",
+        "type": "position",
+        "value": "bottom",
+        "children": [
+          {
+            "objectId": "1000",
+            "type": "businessPeriod",
+            "value": "00:00 ~ 24:00"
+          },
+          {
+            "objectId": "1001",
+            "type": "hashTag",
+            "value": "",
+            "children": [
+              {
+                "objectId": "2001",
+                "type": "text",
+                "value": "멀티샵"
+              },
+              {
+                "objectId": "2002",
+                "type": "text",
+                "value": "생필품"
+              },
+              {
+                "objectId": "2003",
+                "type": "text",
+                "value": "세계주류"
+              },
+              {
+                "objectId": "2004",
+                "type": "text",
+                "value": "굿즈"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "objectId": "13",
+    "name": "비베러디쉬",
+    "type": "shop",
+    "image": "assets/sample/commontown/service/se3.png",
+    "items": [
+      {
+        "objectId": "99",
+        "type": "position",
+        "value": "bottom",
+        "children": [
+          {
+            "objectId": "1000",
+            "type": "businessPeriod",
+            "value": "00:00 ~ 24:00"
+          },
+          {
+            "objectId": "1001",
+            "type": "hashTag",
+            "value": "",
+            "children": [
+              {
+                "objectId": "2001",
+                "type": "text",
+                "value": "멀티샵"
+              },
+              {
+                "objectId": "2002",
+                "type": "text",
+                "value": "생필품"
+              },
+              {
+                "objectId": "2003",
+                "type": "text",
+                "value": "세계주류"
+              },
+              {
+                "objectId": "2004",
+                "type": "text",
+                "value": "굿즈"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "objectId": "14",
+    "name": "본보야지",
+    "type": "shop",
+    "image": "assets/sample/commontown/service/se4.png",
+    "items": [
+      {
+        "objectId": "99",
+        "type": "position",
+        "value": "bottom",
+        "children": [
+          {
+            "objectId": "1000",
+            "type": "businessPeriod",
+            "value": "00:00 ~ 24:00"
+          },
+          {
+            "objectId": "1001",
+            "type": "hashTag",
+            "value": "",
+            "children": [
+              {
+                "objectId": "2001",
+                "type": "text",
+                "value": "멀티샵"
+              },
+              {
+                "objectId": "2002",
+                "type": "text",
+                "value": "생필품"
+              },
+              {
+                "objectId": "2003",
+                "type": "text",
+                "value": "세계주류"
+              },
+              {
+                "objectId": "2004",
+                "type": "text",
+                "value": "굿즈"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
+]''';
+
+  static final String categoryJson = '''[
+  {
+    "objectId": "common_plus_1",
+    "serviceObjectId": "common_plus",
+    "name": "심플리오",
+    "products": []
+  },
+  {
+    "objectId": "common_plus_2",
+    "serviceObjectId": "common_plus",
+    "name": "오드리선",
+    "products": []
+  },
+  {
+    "objectId": "common_plus_3",
+    "serviceObjectId": "common_plus",
+    "name": "마타주",
+    "products": []
+  },
+  {
+    "objectId": "common_plus_4",
+    "serviceObjectId": "common_plus",
+    "name": "런드리라운지24",
+    "products": []
+  },
+  {
+    "objectId": "goshop_1",
+    "serviceObjectId": "goshop",
+    "name": "GOSHOP CATEGORY",
+    "products": []
+  }
+]
+''';
+
+  static final String productJson = '''[
 ]''';
 
   static HomeModel home() {
@@ -273,6 +498,16 @@ abstract class SampleData {
   static List<ServiceModel> services() {
     final list = jsonDecode(serviceJson) as List;
     return list.map((json) => ServiceModel.fromJson(json)).toList();
+  }
+
+  static List<CategoryModel> categories() {
+    final list = jsonDecode(categoryJson) as List;
+    return list.map((json) => CategoryModel.fromJson(json)).toList();
+  }
+
+  static List<ProductModel> products() {
+    final list = jsonDecode(productJson) as List;
+    return list.map((json) => ProductModel.fromJson(json)).toList();
   }
 }
 
@@ -315,14 +550,14 @@ class SampleShopData {
   SampleShopData() {
     for (var index = 0; index < _categoryNames.length; index++) {
       categories.add(CategoryModel(
-        index: index,
+        // objectId: objectId,
         name: _categoryNames[index],
         products: List.generate(
           _getLength(index),
           (i) => ProductModel(
-            index: i,
-            categoryIndex: index,
-            image: 'assets/sample/commontown/item/s${i + 1}.jpg',
+            // index: i,
+            // categoryIndex: index,
+            // image: 'assets/sample/commontown/item/s${i + 1}.jpg',
             name: _itemNames[i],
             price: _itemPrice[i],
             options: List<ProductOptionModel>(),

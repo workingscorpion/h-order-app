@@ -30,7 +30,6 @@ class _ShopPageState extends State<ShopPage>
 
   GlobalKey _appBarKey;
   GlobalKey _floatingButtonKey;
-  Map<int, GlobalKey> _buttonKeys;
 
   TabController _tabController;
 
@@ -54,15 +53,10 @@ class _ShopPageState extends State<ShopPage>
 
     _appBarKey = GlobalKey();
     _floatingButtonKey = GlobalKey();
-    _buttonKeys = Map();
 
     _cart = List();
 
     _categories = SampleShopData().categories;
-
-    _categories.expand((element) => element.products).forEach((product) {
-      _buttonKeys[product.index] = GlobalKey();
-    });
 
     _tabController = TabController(
       length: _categories.length,
@@ -205,7 +199,7 @@ class _ShopPageState extends State<ShopPage>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Hero(
-                    tag: product.index,
+                    tag: product.objectId,
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: Container(
@@ -214,7 +208,7 @@ class _ShopPageState extends State<ShopPage>
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                         ),
                         child: Image.asset(
-                          product.image,
+                          product.images[0],
                           fit: BoxFit.cover,
                         ),
                       ),

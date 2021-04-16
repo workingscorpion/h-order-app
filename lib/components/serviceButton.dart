@@ -62,7 +62,7 @@ class _ServiceButtonState extends State<ServiceButton> {
                 width: 38,
                 height: 38,
                 child: SvgPicture.asset(
-                  widget.service.icon,
+                  widget.service.image,
                   color: widget.color ?? Colors.black,
                 ),
               ),

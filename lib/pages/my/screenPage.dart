@@ -190,6 +190,7 @@ class _ScreenPageState extends State<ScreenPage> {
                                   DateFormat('HH:mm').format(DateTime.now()),
                                   style: TextStyle(
                                     fontSize: 32,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Spacer(flex: 4),

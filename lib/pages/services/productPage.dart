@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
@@ -25,8 +24,8 @@ class _ProductPageState extends State<ProductPage>
   static const int minQuantity = 1;
 
   int _quantity;
-  Map<int, ProductOptionModel> _optionMap;
-  Map<int, int> _selectedOption;
+  Map<String, ProductOptionModel> _optionMap;
+  Map<String, int> _selectedOption;
 
   List<ProductOptionModel> _required;
   List<ProductOptionModel> _optional;
@@ -47,7 +46,7 @@ class _ProductPageState extends State<ProductPage>
     _selectedOption.forEach((key, value) {
       if (value >= 1) {
         optionPrice +=
-            options.singleWhere((element) => element.index == key).price *
+            options.singleWhere((element) => element.objectId == key).price *
                 value;
       }
     });
@@ -75,8 +74,8 @@ class _ProductPageState extends State<ProductPage>
 
   _initOptionsQuantity(List<ProductOptionModel> options) {
     options.forEach((option) {
-      _optionMap[option.index] = option;
-      _selectedOption[option.index] = 0;
+      _optionMap[option.objectId] = option;
+      _selectedOption[option.objectId] = 0;
 
       if ((option.options?.length ?? 0) > 0) {
         _initOptionsQuantity(option.options);
@@ -261,18 +260,14 @@ class _ProductPageState extends State<ProductPage>
               viewportFraction: 0.5,
             ),
             items: [
-              ...[
-                widget.product.image,
-                widget.product.image,
-                widget.product.image,
-              ]
+              ...widget.product.images
                   .asMap()
                   .map(
                     (index, item) => MapEntry(
                       index,
                       index == 0
                           ? Hero(
-                              tag: widget.product.index,
+                              tag: widget.product.objectId,
                               child: _productSliderItem(image: item),
                             )
                           : _productSliderItem(image: item),
@@ -383,36 +378,37 @@ class _ProductPageState extends State<ProductPage>
                       Container(
                         margin: EdgeInsets.only(right: 8),
                         child: Row(
-                          children: depth > 1 ||
-                                  (option.options?.length ?? -1) == 0
-                              ? [
-                                  Container(
-                                    width: 20,
-                                    height: 20,
-                                    margin: EdgeInsets.only(right: 5),
-                                    child: Radio(
-                                      value: 1,
-                                      groupValue: _selectedOption[option.index],
-                                      toggleable: true,
-                                      onChanged: (val) {
-                                        _selectedOption[option.index] =
-                                            val == 1 ? val : 0;
-                                        setState(() {});
-                                      },
-                                    ),
-                                  ),
-                                  Text(
-                                    option.name,
-                                  ),
-                                ]
-                              : [
-                                  Text(
-                                    option.name,
-                                    style: TextStyle(
-                                      fontSize: 21,
-                                    ),
-                                  ),
-                                ],
+                          children:
+                              depth > 1 || (option.options?.length ?? -1) == 0
+                                  ? [
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        margin: EdgeInsets.only(right: 5),
+                                        child: Radio(
+                                          value: 1,
+                                          groupValue:
+                                              _selectedOption[option.objectId],
+                                          toggleable: true,
+                                          onChanged: (val) {
+                                            _selectedOption[option.objectId] =
+                                                val == 1 ? val : 0;
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ),
+                                      Text(
+                                        option.name,
+                                      ),
+                                    ]
+                                  : [
+                                      Text(
+                                        option.name,
+                                        style: TextStyle(
+                                          fontSize: 21,
+                                        ),
+                                      ),
+                                    ],
                         ),
                       ),
                       ...((option.max ?? 0) > 0)
