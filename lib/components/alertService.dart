@@ -18,7 +18,7 @@ class AlertService extends StatefulWidget {
 class _AlertServiceState extends State<AlertService> {
   Map<String, dynamic> data = Map();
 
-  final _textConttroller = TextEditingController();
+  final _textController = TextEditingController();
 
   @override
   void initState() {
@@ -253,7 +253,7 @@ class _AlertServiceState extends State<AlertService> {
             ),
             hintText: item.value,
           ),
-          controller: _textConttroller,
+          controller: _textController,
         ),
       );
 
@@ -263,16 +263,6 @@ class _AlertServiceState extends State<AlertService> {
       Container(
         padding: EdgeInsets.symmetric(horizontal: 80),
         child: DateTimeInput(),
-      );
-
-  _timePicker() => InkWell(
-        onTap: () {
-          showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.now(),
-          );
-        },
-        child: Text('${TimeOfDay.now().format(context)}'),
       );
 
   _alertCountContent({

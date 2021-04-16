@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
-import 'package:intl/intl.dart';
 
 class ShoppingCompletePage extends StatefulWidget {
   final List<CartItemModel> cart;
@@ -103,35 +102,6 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
       ),
     );
   }
-
-  _titleItem({
-    String label,
-    String text,
-    bool margin = true,
-  }) =>
-      Container(
-        margin: margin ? EdgeInsets.only(bottom: 8) : EdgeInsets.zero,
-        child: Row(
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Expanded(
-              child: Text(
-                text,
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
 
   _save() async {
     AppRouter.toHomePage();

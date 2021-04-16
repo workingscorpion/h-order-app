@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/alarmInput.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/constants/customColors.dart';
 import 'package:intl/intl.dart';
 
 class AlarmPage extends StatefulWidget {
@@ -196,16 +195,6 @@ class _AlarmPageState extends State<AlarmPage> {
     if (_selectedIndex != null) {}
 
     setState(() {});
-  }
-
-  _deleteItem(int index) {
-    setState(() {
-      list.removeAt(index);
-      _listKey.currentState.removeItem(
-        index,
-        (context, animation) => null,
-      );
-    });
   }
 }
 

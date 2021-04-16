@@ -50,7 +50,6 @@ class _ShopPageState extends State<ShopPage>
       }
     });
 
-    _appBarKey = GlobalKey();
     _floatingButtonKey = GlobalKey();
 
     _cart = List();

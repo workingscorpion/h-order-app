@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
@@ -170,14 +169,14 @@ class _Logo extends StatefulWidget {
 }
 
 class _LogoState extends State<_Logo> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Tween<Matrix4> _tween = Tween(
-    begin: Matrix4.rotationZ(0),
-    end: Matrix4.rotationZ(-0.1),
-  );
-  Animation<Matrix4> _animation;
+  // AnimationController _controller;
+  // Tween<Matrix4> _tween = Tween(
+  //   begin: Matrix4.rotationZ(0),
+  //   end: Matrix4.rotationZ(-0.1),
+  // );
+  // Animation<Matrix4> _animation;
 
-  final _duration = Duration(milliseconds: 200);
+  // final _duration = Duration(milliseconds: 200);
 
   @override
   void initState() {

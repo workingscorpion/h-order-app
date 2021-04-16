@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:h_order/pages/alarm/alarmPage.dart';
 import 'package:intl/intl.dart';
 
 class DateTimeInput extends StatefulWidget {
@@ -69,12 +68,6 @@ class DateTimeInputState extends State<DateTimeInput> {
         height: 90,
         child: _dateTime(),
       );
-
-  _add() {
-    if (widget.onAdd != null) {
-      widget.onAdd(_selectedTime);
-    }
-  }
 
   _dateTime() => Row(
         mainAxisAlignment: MainAxisAlignment.center,

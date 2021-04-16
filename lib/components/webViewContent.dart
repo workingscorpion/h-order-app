@@ -15,7 +15,6 @@ class WebViewContent extends StatefulWidget {
 }
 
 class _WebViewContentState extends State<WebViewContent> {
-  WebViewController _controller;
   String url;
 
   @override

@@ -5,7 +5,6 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
 import 'package:h_order/constants/serviceStatus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/serviceModel.dart';
 
 class ServiceButton extends StatefulWidget {
@@ -135,7 +134,7 @@ class _ServiceButtonState extends State<ServiceButton> {
           '신청되었습니다.';
 
       await Fluttertoast.showToast(
-        msg: "   ${resultMessage}   ",
+        msg: "   $resultMessage   ",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
