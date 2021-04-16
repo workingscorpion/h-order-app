@@ -19,6 +19,7 @@ class _HistoryViewState extends State<HistoryView> {
   FocusNode focusNode;
 
   List<HistoryModel> list;
+  List<HistoryModel> visibleList;
 
   List<int> ratio = [1, 2, 2, 2, 2, 2];
 
@@ -53,22 +54,8 @@ class _HistoryViewState extends State<HistoryView> {
   void initState() {
     super.initState();
 
-    final HistoryDetailModel detailMap = HistoryDetailModel(
-      title: '종량제 봉투',
-      createdTime: DateTime.now(),
-      amount: 5300,
-      paymentMethod: '국민카드',
-      paymentData: '1234',
-      detail: [
-        KeyValueModel(key: '20L', value: 1, price: 1000),
-        KeyValueModel(key: '50L', value: 1, price: 1800),
-        KeyValueModel(key: '100L', value: 1, price: 2500),
-      ],
-      reservedTime: DateTime.now(),
-      request: '문앞에 두고 벨을 눌러주세요',
-    );
-
     list = SampleData.histories();
+    visibleList = List.of(list);
   }
 
   @override
@@ -147,7 +134,7 @@ class _HistoryViewState extends State<HistoryView> {
   _historiesBody() => Expanded(
         child: ListView(
           children: [
-            ...list.map(
+            ...visibleList.map(
               (item) => _item(
                 children: [
                   Text(
@@ -278,14 +265,14 @@ class _HistoryViewState extends State<HistoryView> {
             Column(
               children: List.generate(
                 3,
-                (index) => _collapisbleFooter(index, content),
+                (index) => _collapsibleFooter(index, content),
               ),
             )
           ],
         ),
       );
 
-  _collapisbleFooter(int index, HistoryDetailModel content) => Container(
+  _collapsibleFooter(int index, HistoryDetailModel content) => Container(
         margin: EdgeInsets.only(bottom: 4),
         child: Row(
           children: [
@@ -415,7 +402,7 @@ class _HistoryViewState extends State<HistoryView> {
                 onSelected: (value) {
                   _selectedPopupMenu = value;
                   final index = _statusText.indexOf(value);
-                  list = [...list]
+                  visibleList = list
                       .where((h) => index == -1 || h.status == index)
                       .toList();
 

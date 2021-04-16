@@ -298,8 +298,11 @@ class _ProductPageState extends State<ProductPage>
   }) =>
       AspectRatio(
         aspectRatio: 1,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+          ),
           child: Image.asset(
             image,
             fit: BoxFit.cover,
