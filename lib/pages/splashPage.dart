@@ -72,8 +72,8 @@ class _SplashPageState extends State<SplashPage>
                 children: <Widget>[
                   Center(
                     child: Container(
-                      width: 120,
-                      height: 120,
+                      width: 98,
+                      height: 98,
                       child: _Logo(),
                     ),
                   ),
@@ -155,7 +155,7 @@ class _SplashPageState extends State<SplashPage>
     try {
       // await _hotelInfoStore.loadHotels();
       // await _hotelInfoStore.selectHotel(_hotelInfoStore.hotelList.first);
-      // AppRouter.toHomePage();
+      AppRouter.toHomePage();
     } catch (ex) {
       // AppRouter.toHotelSelectPage();
     }
