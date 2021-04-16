@@ -59,6 +59,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/icons/
     - assets/icons/statusbar/
     - assets/icons/home/
     - assets/icons/notice/

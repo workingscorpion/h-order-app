@@ -509,5 +509,15 @@ class _ProductPageState extends State<ProductPage>
     );
 
     Navigator.of(context).pop(result);
+
+    await Fluttertoast.cancel();
+    await Fluttertoast.showToast(
+      msg: '선택하신 상품이 장바구니에 추가되었습니다.',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+      textColor: Theme.of(context).textTheme.bodyText1.color,
+      fontSize: 17,
+    );
   }
 }

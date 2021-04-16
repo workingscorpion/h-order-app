@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -50,6 +52,7 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Color(0xff111111),
         body: Stack(
           children: <Widget>[
             AnimatedBuilder(
@@ -67,7 +70,15 @@ class _SplashPageState extends State<SplashPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                  Center(
+                    child: Container(
+                      width: 120,
+                      height: 120,
+                      child: _Logo(),
+                    ),
+                  ),
                   Container(
+                    transform: Matrix4.translationValues(6, 0, 0),
                     height: 120,
                     alignment: Alignment.center,
                     child: AnimatedTextKit(
@@ -134,19 +145,72 @@ class _SplashPageState extends State<SplashPage>
 
       // await _userInfoStore.login(id: id);
 
-      await loadHotels();
+      await loadInfo();
     } catch (ex) {
       // AppRouter.toLoginPage();
     }
   }
 
-  loadHotels() async {
+  loadInfo() async {
     try {
       // await _hotelInfoStore.loadHotels();
       // await _hotelInfoStore.selectHotel(_hotelInfoStore.hotelList.first);
-      AppRouter.toHomePage();
+      // AppRouter.toHomePage();
     } catch (ex) {
       // AppRouter.toHotelSelectPage();
     }
+  }
+}
+
+class _Logo extends StatefulWidget {
+  _Logo();
+
+  @override
+  _LogoState createState() => _LogoState();
+}
+
+class _LogoState extends State<_Logo> with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+  Tween<Matrix4> _tween = Tween(
+    begin: Matrix4.rotationZ(0),
+    end: Matrix4.rotationZ(-0.1),
+  );
+  Animation<Matrix4> _animation;
+
+  final _duration = Duration(milliseconds: 200);
+
+  @override
+  void initState() {
+    super.initState();
+
+    // _controller = AnimationController(
+    //   duration: Duration(seconds: 1),
+    //   vsync: this,
+    // );
+    // _controller.repeat(reverse: false);
+    // _animation = _tween.animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    // _controller.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      alignment: Alignment.center,
+      child: SvgPicture.asset('assets/icons/logo.svg'),
+    );
+    // return AnimatedBuilder(
+    //   animation: _animation,
+    //   builder: (context, child) =>
+    // );
   }
 }
