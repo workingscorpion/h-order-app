@@ -6,6 +6,7 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/serviceButton.dart';
 import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/models/homeModel.dart';
+import 'package:h_order/models/serviceModel.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -17,11 +18,13 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
   HomeModel home;
+  List<ServiceModel> services;
 
   @override
   void initState() {
     super.initState();
     home = SampleData.home();
+    services = SampleData.services();
   }
 
   @override
@@ -49,159 +52,7 @@ class _HomeViewState extends State<HomeView>
               mainAxisSpacing: 20,
               crossAxisCount: 5,
               children: [
-                ...[
-                  ServiceButton(
-                    icon: CupertinoIcons.sparkles,
-                    label: '청소',
-                    items: [
-                      ServiceItem(
-                        objectId: '1',
-                        type: 'text',
-                        label:
-                            '개인룸 청소를 신청합니다.\n(기본 월 1회 무료,\n이후 회당 20,000원의 요금이 발생하며\n다음달 관리비에 적용됩니다.)',
-                      ),
-                      ServiceItem(
-                        objectId: '2',
-                        type: 'dateTime',
-                        label: '',
-                      ),
-                    ],
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.tornado,
-                    label: '세탁',
-                    items: [
-                      ServiceItem(
-                        objectId: '1',
-                        type: 'text',
-                        label:
-                            '세탁서비스를 신청합니다.\n다음날 오전 10시에 수거,\n오후 6시에 배달됩니다.\n(개인룸 내 수거함을 이용바랍니다.)',
-                      ),
-                      ServiceItem(
-                        objectId: '2',
-                        type: 'count',
-                        label: '침구세트 세탁',
-                      ),
-                      ServiceItem(
-                        objectId: '3',
-                        type: 'count',
-                        label: '수건(7장) 세탁',
-                      ),
-                    ],
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.car_detailed,
-                    label: '출차',
-                    items: [
-                      ServiceItem(
-                        objectId: '1',
-                        type: 'text',
-                        label: '5-10분 내로 출차됩니다.',
-                      ),
-                    ],
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.exclamationmark_bubble,
-                    label: '관리실 호출',
-                    items: [
-                      ServiceItem(
-                        objectId: '1',
-                        type: 'text',
-                        label: '커먼매니저를 호출합니다.\n10분 내로 방문 예정입니다.',
-                      ),
-                    ],
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.tag,
-                    label: '커먼플러스',
-                    onTap: () {
-                      AppRouter.toShopPage();
-                    },
-                  ),
-                ],
-                ...[
-                  ServiceButton(
-                    icon: CupertinoIcons.paw,
-                    label: '펫케어',
-                    onTap: () {
-                      AppRouter.toShopPage();
-                    },
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.cube_box,
-                    label: '택배',
-                    items: [
-                      ServiceItem(
-                        objectId: '1',
-                        type: 'text',
-                        label: '택배 수거를 요청합니다.',
-                      ),
-                      ServiceItem(
-                        objectId: '2',
-                        type: 'count',
-                        label: '개수',
-                      ),
-                      ServiceItem(
-                        objectId: '3',
-                        type: 'input',
-                        label: '요청사항',
-                      ),
-                    ],
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.arrow_3_trianglepath,
-                    label: '분리수거',
-                    items: [
-                      ServiceItem(
-                        objectId: '1',
-                        type: 'text',
-                        label: '5분 내로 관리실 직원이 방문 할 예정입니다.',
-                      ),
-                    ],
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.trash,
-                    label: '생필품 신청',
-                    items: [
-                      ServiceItem(
-                        objectId: '1',
-                        type: 'text',
-                        label: '신청한 생필품은 다음달 관리비에 적용됩니다.',
-                      ),
-                      ServiceItem(
-                        objectId: '2',
-                        type: 'count',
-                        label: '휴지(500원)',
-                        max: 15,
-                      ),
-                      ServiceItem(
-                        objectId: '3',
-                        type: 'count',
-                        label: '각티슈(1,000원)',
-                        max: 10,
-                      ),
-                      ServiceItem(
-                        objectId: '4',
-                        type: 'count',
-                        label: '드럼세탁기 세제(3,000원)',
-                        max: 5,
-                      ),
-                      ServiceItem(
-                        objectId: '5丁',
-                        type: 'count',
-                        label: '종량제봉투 50L(1,000원)',
-                        max: 5,
-                      ),
-                    ],
-                  ),
-                  ServiceButton(
-                    icon: CupertinoIcons.paintbrush,
-                    label: '인테리어',
-                    onTap: () {
-                      AppRouter.toShopPage();
-                    },
-                  ),
-                ],
+                ...services.map((item) => ServiceButton(service: item)),
               ],
             ),
           ),

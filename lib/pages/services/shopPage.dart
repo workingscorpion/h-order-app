@@ -9,9 +9,16 @@ import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/productModel.dart';
+import 'package:h_order/models/serviceModel.dart';
 import 'package:intl/intl.dart';
 
 class ShopPage extends StatefulWidget {
+  final ServiceModel service;
+
+  ShopPage({
+    this.service,
+  });
+
   @override
   _ShopPageState createState() => _ShopPageState();
 }

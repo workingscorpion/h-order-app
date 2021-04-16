@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/serviceButton.dart';
+import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/models/serviceModel.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -10,64 +12,14 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  List<MenuModel> list;
-  List<MenuModel> favoriteList;
+  List<ServiceModel> list;
+  List<ServiceModel> favoriteList;
 
   @override
   void initState() {
     super.initState();
 
-    list = [
-      MenuModel(
-        icon: CupertinoIcons.hammer,
-        name: '시설보수',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.sparkles,
-        name: '청소',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.tornado,
-        name: '세탁',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.car_detailed,
-        name: '출차',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.exclamationmark_bubble,
-        name: '관리실호출',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.tag,
-        name: '딜리버리',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.paw,
-        name: '펫케어',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.cube_box,
-        name: '택배',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.arrow_3_trianglepath,
-        name: '분리수거',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.trash,
-        name: '종량제봉투',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.paintbrush,
-        name: '인테리어',
-      ),
-      MenuModel(
-        icon: CupertinoIcons.archivebox,
-        name: '이사',
-      ),
-    ].toList();
-
+    list = SampleData.services();
     favoriteList = List();
   }
 
@@ -100,8 +52,7 @@ class _FavoritePageState extends State<FavoritePage> {
                           itemCount: list.length,
                           itemBuilder: (context, index) {
                             return ServiceButton(
-                              icon: list[index].icon,
-                              label: list[index].name,
+                              service: list[index],
                               color: favoriteList.indexOf(list[index]) != -1
                                   ? Color(0xfff7b500)
                                   : Colors.black,
@@ -143,8 +94,7 @@ class _FavoritePageState extends State<FavoritePage> {
                           ),
                           itemCount: favoriteList.length,
                           itemBuilder: (context, index) => ServiceButton(
-                            icon: favoriteList[index].icon,
-                            label: favoriteList[index].name,
+                            service: favoriteList[index],
                             onTap: () {},
                           ),
                           onWillAccept: (oldIndex, newIndex) {

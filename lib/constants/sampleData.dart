@@ -5,6 +5,7 @@ import 'package:h_order/models/homeModel.dart';
 import 'package:h_order/models/noticeModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
+import 'package:h_order/models/serviceModel.dart';
 
 abstract class SampleData {
   static final String homeJson = '''{
@@ -96,6 +97,132 @@ abstract class SampleData {
   }
 ]''';
 
+  static final String serviceJson = '''[
+  {
+    "objectId": "1",
+    "name": "청소",
+    "type": "call",
+    "icon": "",
+    "items": [
+      {
+        "objectId": "1",
+        "type": "text",
+        "value": "개인룸 청소를 신청합니다.\\n(기본 월 1회 무료,\\n이후 회당 20,000원의 요금이 발생하며\\n다음달 관리비에 적용됩니다.)"
+      },
+      {
+        "objectId": "2",
+        "type": "dateTime",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "objectId": "2",
+    "name": "세탁",
+    "type": "call",
+    "icon": "",
+    "items": [
+      {
+        "objectId": "1",
+        "type": "text",
+        "value": "세탁서비스를 신청합니다.\\n다음날 오전 10시에 수거,\\n오후 6시에 배달됩니다.\\n(개인룸 내 수거함을 이용바랍니다.)"
+      },
+      {
+        "objectId": "2",
+        "type": "count",
+        "value": "침구세트 세탁"
+      },
+      {
+        "objectId": "3",
+        "type": "count",
+        "value": "수건(7장) 세탁"
+      }
+    ]
+  },
+  {
+    "objectId": "3",
+    "name": "출차",
+    "type": "call",
+    "items": [
+      {
+        "objectId": "1",
+        "type": "text",
+        "value": "5-10분 내로 출차됩니다."
+      }
+    ]
+  },
+  {
+    "objectId": "4",
+    "name": "관리실 호출",
+    "type": "call",
+    "items": [
+      {
+        "objectId": "1",
+        "type": "text",
+        "value": "커먼매니저를 호출합니다.\\n10분 내로 방문 예정입니다."
+      }
+    ]
+  },
+  {
+    "objectId": "5",
+    "name": "커먼플러스",
+    "type": "shop",
+    "items": []
+  },
+  {
+    "objectId": "6",
+    "name": "펫케어",
+    "type": "shop",
+    "items": []
+  },
+  {
+    "objectId": "7",
+    "name": "택배",
+    "type": "call",
+    "items": [
+      {
+        "objectId": "1",
+        "type": "text",
+        "value": "택배 수거를 요청합니다."
+      },
+      {
+        "objectId": "2",
+        "type": "count",
+        "value": "개수"
+      },
+      {
+        "objectId": "3",
+        "type": "input",
+        "value": "요청사항"
+      }
+    ]
+  },
+  {
+    "objectId": "8",
+    "name": "분리수거",
+    "type": "call",
+    "items": [
+      {
+        "objectId": "1",
+        "type": "text",
+        "value": "5분 내로 관리실 직원이 방문 할 예정입니다."
+      }
+    ]
+  },
+  {
+    "objectId": "9",
+    "name": "생필품 신청",
+    "type": "shop",
+    "items": []
+  },
+  {
+    "objectId": "10",
+    "name": "인테리어",
+    "type": "shop",
+    "items": []
+  }
+]''';
+
   static HomeModel home() {
     return HomeModel.fromJson(jsonDecode(homeJson));
   }
@@ -103,6 +230,11 @@ abstract class SampleData {
   static List<NoticeModel> notices() {
     final list = jsonDecode(noticeJson) as List;
     return list.map((json) => NoticeModel.fromJson(json)).toList();
+  }
+
+  static List<ServiceModel> services() {
+    final list = jsonDecode(serviceJson) as List;
+    return list.map((json) => ServiceModel.fromJson(json)).toList();
   }
 }
 

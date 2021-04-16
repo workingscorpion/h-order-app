@@ -1,17 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/dateTimeInput.dart';
-import 'package:h_order/components/serviceButton.dart';
+import 'package:h_order/models/itemModel.dart';
+import 'package:h_order/models/serviceModel.dart';
 
 class AlertService extends StatefulWidget {
-  final IconData icon;
-  final String label;
-  final List<ServiceItem> items;
+  final ServiceModel service;
 
   AlertService({
-    this.icon,
-    this.label,
-    this.items,
+    this.service,
   });
 
   @override
@@ -27,7 +24,7 @@ class _AlertServiceState extends State<AlertService> {
   void initState() {
     super.initState();
 
-    data = widget.items?.asMap()?.map((key, value) {
+    data = widget.service.items?.asMap()?.map((key, value) {
           switch (value.type) {
             case 'date':
               return MapEntry(value.objectId, DateTime.now());
@@ -50,7 +47,7 @@ class _AlertServiceState extends State<AlertService> {
   @override
   Widget build(BuildContext context) {
     final children =
-        widget.items.map((item) => _alertContent(item: item)).toList();
+        widget.service.items.map((item) => _alertContent(item: item)).toList();
 
     return Container(
       width: 560,
@@ -76,7 +73,7 @@ class _AlertServiceState extends State<AlertService> {
                       Container(
                         padding: EdgeInsets.all(24),
                         child: Text(
-                          widget.label,
+                          widget.service.name,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 24,
@@ -114,7 +111,8 @@ class _AlertServiceState extends State<AlertService> {
                     final i = (index / 2).floor();
                     if (index % 2 == 1) {
                       if (i + 1 < children.length) {
-                        if (widget.items[i].type != widget.items[i + 1].type) {
+                        if (widget.service.items[i].type !=
+                            widget.service.items[i + 1].type) {
                           return Container(
                             height: 40,
                           );
@@ -188,7 +186,7 @@ class _AlertServiceState extends State<AlertService> {
   }
 
   _alertContent({
-    ServiceItem item,
+    ItemModel item,
   }) {
     switch (item.type) {
       case 'text':
@@ -208,12 +206,12 @@ class _AlertServiceState extends State<AlertService> {
   }
 
   _alertTextContent({
-    ServiceItem item,
+    ItemModel item,
   }) =>
       Container(
         padding: EdgeInsets.symmetric(horizontal: 80),
         child: Text(
-          item.label,
+          item.value,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 22,
@@ -222,7 +220,7 @@ class _AlertServiceState extends State<AlertService> {
       );
 
   _alertInputContent({
-    ServiceItem item,
+    ItemModel item,
   }) =>
       Container(
         padding: EdgeInsets.symmetric(horizontal: 80),
@@ -250,14 +248,14 @@ class _AlertServiceState extends State<AlertService> {
                 color: Colors.black,
               ),
             ),
-            hintText: item.label,
+            hintText: item.value,
           ),
           controller: _textConttroller,
         ),
       );
 
   _alertDateTimeContent({
-    ServiceItem item,
+    ItemModel item,
   }) =>
       Container(
         padding: EdgeInsets.symmetric(horizontal: 80),
@@ -275,7 +273,7 @@ class _AlertServiceState extends State<AlertService> {
       );
 
   _alertCountContent({
-    ServiceItem item,
+    ItemModel item,
   }) =>
       Container(
         padding: EdgeInsets.symmetric(horizontal: 100),
@@ -285,7 +283,7 @@ class _AlertServiceState extends State<AlertService> {
             children: [
               Expanded(
                 child: Text(
-                  item.label,
+                  item.value,
                   style: TextStyle(
                     fontSize: 22,
                   ),

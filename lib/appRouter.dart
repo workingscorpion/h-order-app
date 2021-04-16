@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/constants/routeNames.dart';
 import 'package:h_order/models/productModel.dart';
+import 'package:h_order/models/serviceModel.dart';
 import 'package:h_order/pages/alarm/alarmPage.dart';
 import 'package:h_order/pages/homePage.dart';
 import 'package:h_order/pages/lockPage.dart';
@@ -46,7 +47,8 @@ class AppRouter {
       case RouteNames.Shop:
         return MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => ShopPage(),
+          builder: (BuildContext context) =>
+              ShopPage(service: settings.arguments as ServiceModel),
         );
 
       case RouteNames.Cart:
@@ -152,8 +154,10 @@ class AppRouter {
         .pushNamedAndRemoveUntil(RouteNames.Home, (Route route) => false);
   }
 
-  static toShopPage() {
-    return Navigator.of(context).pushNamed(RouteNames.Shop);
+  static toShopPage({
+    ServiceModel service,
+  }) {
+    return Navigator.of(context).pushNamed(RouteNames.Shop, arguments: service);
   }
 
   static toCartPage(List<CartItemModel> cart) {

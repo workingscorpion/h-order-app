@@ -1,23 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
 import 'package:h_order/constants/serviceStatus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:h_order/models/itemModel.dart';
+import 'package:h_order/models/serviceModel.dart';
 
 class ServiceButton extends StatefulWidget {
-  final IconData icon;
-  final String label;
-  final List<ServiceItem> items;
-  final GestureTapCallback onTap;
+  final ServiceModel service;
   final ServiceStatus status;
+  final GestureTapCallback onTap;
   final Color color;
 
   ServiceButton({
-    this.icon,
-    this.label,
-    this.items,
-    this.onTap,
+    this.service,
     this.status,
+    this.onTap,
     this.color,
   });
 
@@ -36,11 +35,20 @@ class _ServiceButtonState extends State<ServiceButton> {
         onTap: () {
           if (widget.onTap != null) {
             widget.onTap();
-          } else {
-            _alert(
-              title: widget.label,
-              items: widget.items,
-            );
+            return;
+          }
+
+          switch (widget.service.type) {
+            case 'shop':
+              AppRouter.toShopPage(service: widget.service);
+              return;
+
+            case 'call':
+              _alert(
+                title: widget.service.name,
+                // items: widget.service.items,
+              );
+              return;
           }
         },
         child: Column(
@@ -51,18 +59,18 @@ class _ServiceButtonState extends State<ServiceButton> {
               height: 92,
               width: 92,
               margin: EdgeInsets.only(bottom: 10),
-              child: Icon(
-                widget.icon,
-                size: 34,
-                color: widget.color ?? Colors.black,
-              ),
+              // child: Icon(
+              //   widget.service.icon,
+              //   size: 34,
+              //   color: widget.color ?? Colors.black,
+              // ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
             ),
             Text(
-              widget.label ?? '',
+              widget.service.name ?? '',
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -97,7 +105,7 @@ class _ServiceButtonState extends State<ServiceButton> {
 
   _alert({
     String title,
-    List<ServiceItem> items,
+    List<ItemModel> items,
   }) async {
     final result = await showDialog(
       barrierColor: Colors.black.withOpacity(.85),
@@ -112,11 +120,7 @@ class _ServiceButtonState extends State<ServiceButton> {
         contentPadding: EdgeInsets.zero,
         buttonPadding: EdgeInsets.zero,
         actionsPadding: EdgeInsets.zero,
-        content: AlertService(
-          icon: widget.icon,
-          label: widget.label,
-          items: widget.items,
-        ),
+        content: AlertService(service: widget.service),
       ),
     );
 
@@ -131,22 +135,4 @@ class _ServiceButtonState extends State<ServiceButton> {
       );
     }
   }
-}
-
-class ServiceItem {
-  final String objectId;
-  final String type;
-  final String label;
-  final int min;
-  final int max;
-  final List<ServiceItem> children;
-
-  ServiceItem({
-    this.objectId,
-    this.type,
-    this.label,
-    this.min,
-    this.max,
-    this.children,
-  });
 }
