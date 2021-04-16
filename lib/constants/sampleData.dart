@@ -193,7 +193,7 @@ abstract class SampleData {
     "items": []
   },
   {
-    "objectId": "6",
+    "objectId": "pet",
     "name": "펫케어",
     "type": "shop",
     "image": "assets/icons/service/pet.svg",
@@ -253,7 +253,7 @@ abstract class SampleData {
     "items": []
   },
   {
-    "objectId": "10",
+    "objectId": "interior",
     "name": "인테리어",
     "type": "shop",
     "image": "assets/icons/service/interior.svg",
@@ -1458,7 +1458,7 @@ abstract class SampleData {
   {
     "objectId": "pet_1_1",
     "categoryObjectId": "pet_1",
-    "images": ["assets/sample/commontown/item/pet/s11.png"],
+    "images": ["assets/sample/commontown/item/pet/s11.jpg"],
     "name": "고양이사료(성묘용)",
     "price": 12000,
     "options": []
@@ -1466,7 +1466,7 @@ abstract class SampleData {
   {
     "objectId": "pet_1_2",
     "categoryObjectId": "pet_1",
-    "images": ["assets/sample/commontown/item/pet/s12.png"],
+    "images": ["assets/sample/commontown/item/pet/s12.jpg"],
     "name": "고양이사료",
     "price": 15000,
     "options": []
@@ -1474,7 +1474,7 @@ abstract class SampleData {
   {
     "objectId": "pet_1_3",
     "categoryObjectId": "pet_1",
-    "images": ["assets/sample/commontown/item/pet/s13.png"],
+    "images": ["assets/sample/commontown/item/pet/s13.jpg"],
     "name": "애견 사료(성견용)",
     "price": 12000,
     "options": []
@@ -1482,7 +1482,7 @@ abstract class SampleData {
   {
     "objectId": "pet_1_4",
     "categoryObjectId": "pet_1",
-    "images": ["assets/sample/commontown/item/pet/s14.png"],
+    "images": ["assets/sample/commontown/item/pet/s14.jpg"],
     "name": "애견사료(puppy용)",
     "price": 15000,
     "options": []
@@ -1490,7 +1490,7 @@ abstract class SampleData {
   {
     "objectId": "pet_2_1",
     "categoryObjectId": "pet_2",
-    "images": ["assets/sample/commontown/item/pet/s21.png"],
+    "images": ["assets/sample/commontown/item/pet/s21.jpg"],
     "name": "간식(캔)",
     "price": 5000,
     "options": []
@@ -1498,7 +1498,7 @@ abstract class SampleData {
   {
     "objectId": "pet_2_2",
     "categoryObjectId": "pet_2",
-    "images": ["assets/sample/commontown/item/pet/s22.png"],
+    "images": ["assets/sample/commontown/item/pet/s22.jpg"],
     "name": "개껌",
     "price": 3000,
     "options": []
@@ -1506,7 +1506,7 @@ abstract class SampleData {
   {
     "objectId": "pet_3_1",
     "categoryObjectId": "pet_5",
-    "images": ["assets/sample/commontown/item/pet/s31.png"],
+    "images": ["assets/sample/commontown/item/pet/s31.jpg"],
     "name": "애견목줄",
     "price": 8200,
     "options": []
@@ -1514,7 +1514,7 @@ abstract class SampleData {
   {
     "objectId": "pet_3_2",
     "categoryObjectId": "pet_5",
-    "images": ["assets/sample/commontown/item/pet/s32.png"],
+    "images": ["assets/sample/commontown/item/pet/s32.jpg"],
     "name": "배변봉",
     "price": 5200,
     "options": []
@@ -1522,7 +1522,7 @@ abstract class SampleData {
   {
     "objectId": "pet_3_3",
     "categoryObjectId": "pet_5",
-    "images": ["assets/sample/commontown/item/pet/s33.png"],
+    "images": ["assets/sample/commontown/item/pet/s33.jpg"],
     "name": "애견샴푸",
     "price": 18000,
     "options": []
@@ -1538,7 +1538,7 @@ abstract class SampleData {
   {
     "objectId": "pet_3_5",
     "categoryObjectId": "pet_5",
-    "images": ["assets/sample/commontown/item/pet/s35.png"],
+    "images": ["assets/sample/commontown/item/pet/s35.jpg"],
     "name": "케이지",
     "price": 35000,
     "options": []
