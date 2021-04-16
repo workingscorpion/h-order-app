@@ -193,7 +193,7 @@ abstract class SampleData {
     "items": []
   },
   {
-    "objectId": "6",
+    "objectId": "pet",
     "name": "펫케어",
     "type": "shop",
     "image": "assets/icons/service/pet.svg",
@@ -253,7 +253,7 @@ abstract class SampleData {
     "items": []
   },
   {
-    "objectId": "10",
+    "objectId": "interior",
     "name": "인테리어",
     "type": "shop",
     "image": "assets/icons/service/interior.svg",
@@ -520,6 +520,42 @@ abstract class SampleData {
     "objectId": "westdoor_8",
     "serviceObjectId": "westdoor",
     "name": "DESSERT",
+    "products": []
+  },
+  {
+    "objectId": "interior_1",
+    "serviceObjectId": "interior",
+    "name": "가구",
+    "products": []
+  },
+  {
+    "objectId": "interior_2",
+    "serviceObjectId": "interior",
+    "name": "패브릭",
+    "products": []
+  },
+  {
+    "objectId": "interior_3",
+    "serviceObjectId": "interior",
+    "name": "홈데코",
+    "products": []
+  },
+  {
+    "objectId": "pet_1",
+    "serviceObjectId": "pet",
+    "name": "사료",
+    "products": []
+  },
+  {
+    "objectId": "pet_2",
+    "serviceObjectId": "pet",
+    "name": "간식",
+    "products": []
+  },
+  {
+    "objectId": "pet_3",
+    "serviceObjectId": "pet",
+    "name": "용품",
     "products": []
   },
   {
@@ -1298,6 +1334,214 @@ abstract class SampleData {
         "options": []
       }
     ]
+  },
+  {
+    "objectId": "interior_1_1",
+    "categoryObjectId": "interior_1",
+    "images": [
+      "assets/sample/commontown/item/interior/s111.png",
+      "assets/sample/commontown/item/interior/s112.png",
+      "assets/sample/commontown/item/interior/s113.png"
+    ],
+    "name": "회전의자",
+    "price": 55000,
+    "options": []
+  },
+  {
+    "objectId": "interior_1_2",
+    "categoryObjectId": "interior_1",
+    "images": [
+      "assets/sample/commontown/item/interior/s121.png",
+      "assets/sample/commontown/item/interior/s122.png",
+      "assets/sample/commontown/item/interior/s123.png"
+    ],
+    "name": "등받이 의자",
+    "price": 44000,
+    "options": []
+  },
+  {
+    "objectId": "interior_2_1",
+    "categoryObjectId": "interior_2",
+    "images": [
+      "assets/sample/commontown/item/interior/s211.png",
+      "assets/sample/commontown/item/interior/s212.png",
+      "assets/sample/commontown/item/interior/s213.png"
+    ],
+    "name": "벨벳의자",
+    "price": 61000,
+    "options": []
+  },
+  {
+    "objectId": "interior_3_1",
+    "categoryObjectId": "interior_3",
+    "images": [
+      "assets/sample/commontown/item/interior/s311.png",
+      "assets/sample/commontown/item/interior/s312.png",
+      "assets/sample/commontown/item/interior/s313.png"
+    ],
+    "name": "유리화병",
+    "price": 12000,
+    "options": []
+  },
+  {
+    "objectId": "interior_3_2",
+    "categoryObjectId": "interior_3",
+    "images": [
+      "assets/sample/commontown/item/interior/s321.png",
+      "assets/sample/commontown/item/interior/s322.png",
+      "assets/sample/commontown/item/interior/s323.png"
+    ],
+    "name": "화병세트",
+    "price": 18000,
+    "options": []
+  },
+  {
+    "objectId": "interior_3_3",
+    "categoryObjectId": "interior_3",
+    "images": [
+      "assets/sample/commontown/item/interior/s331.png",
+      "assets/sample/commontown/item/interior/s332.png",
+      "assets/sample/commontown/item/interior/s333.png"
+    ],
+    "name": "우산꽂이",
+    "price": 18000,
+    "options": []
+  },
+  {
+    "objectId": "interior_3_4",
+    "categoryObjectId": "interior_3",
+    "images": [
+      "assets/sample/commontown/item/interior/s341.png",
+      "assets/sample/commontown/item/interior/s342.png",
+      "assets/sample/commontown/item/interior/s343.png"
+    ],
+    "name": "가죽스툴",
+    "price": 59000,
+    "options": []
+  },
+  {
+    "objectId": "interior_3_5",
+    "categoryObjectId": "interior_3",
+    "images": [
+      "assets/sample/commontown/item/interior/s351.png",
+      "assets/sample/commontown/item/interior/s352.png",
+      "assets/sample/commontown/item/interior/s353.png"
+    ],
+    "name": "목재스툴",
+    "price": 40000,
+    "options": []
+  },
+  {
+    "objectId": "interior_3_6",
+    "categoryObjectId": "interior_3",
+    "images": [
+      "assets/sample/commontown/item/interior/s361.png",
+      "assets/sample/commontown/item/interior/s362.png",
+      "assets/sample/commontown/item/interior/s363.png"
+    ],
+    "name": "인테리어 스크린",
+    "price": 21000,
+    "options": []
+  },
+  {
+    "objectId": "interior_3_7",
+    "categoryObjectId": "interior_3",
+    "images": [
+      "assets/sample/commontown/item/interior/s371.png",
+      "assets/sample/commontown/item/interior/s372.png",
+      "assets/sample/commontown/item/interior/s373.png"
+    ],
+    "name": "테이블",
+    "price": 98000,
+    "options": []
+  },
+  {
+    "objectId": "pet_1_1",
+    "categoryObjectId": "pet_1",
+    "images": ["assets/sample/commontown/item/pet/s11.jpg"],
+    "name": "고양이사료(성묘용)",
+    "price": 12000,
+    "options": []
+  },
+  {
+    "objectId": "pet_1_2",
+    "categoryObjectId": "pet_1",
+    "images": ["assets/sample/commontown/item/pet/s12.jpg"],
+    "name": "고양이사료",
+    "price": 15000,
+    "options": []
+  },
+  {
+    "objectId": "pet_1_3",
+    "categoryObjectId": "pet_1",
+    "images": ["assets/sample/commontown/item/pet/s13.jpg"],
+    "name": "애견 사료(성견용)",
+    "price": 12000,
+    "options": []
+  },
+  {
+    "objectId": "pet_1_4",
+    "categoryObjectId": "pet_1",
+    "images": ["assets/sample/commontown/item/pet/s14.jpg"],
+    "name": "애견사료(puppy용)",
+    "price": 15000,
+    "options": []
+  },
+  {
+    "objectId": "pet_2_1",
+    "categoryObjectId": "pet_2",
+    "images": ["assets/sample/commontown/item/pet/s21.jpg"],
+    "name": "간식(캔)",
+    "price": 5000,
+    "options": []
+  },
+  {
+    "objectId": "pet_2_2",
+    "categoryObjectId": "pet_2",
+    "images": ["assets/sample/commontown/item/pet/s22.jpg"],
+    "name": "개껌",
+    "price": 3000,
+    "options": []
+  },
+  {
+    "objectId": "pet_3_1",
+    "categoryObjectId": "pet_3",
+    "images": ["assets/sample/commontown/item/pet/s31.jpg"],
+    "name": "애견목줄",
+    "price": 8200,
+    "options": []
+  },
+  {
+    "objectId": "pet_3_2",
+    "categoryObjectId": "pet_3",
+    "images": ["assets/sample/commontown/item/pet/s32.jpg"],
+    "name": "배변봉",
+    "price": 5200,
+    "options": []
+  },
+  {
+    "objectId": "pet_3_3",
+    "categoryObjectId": "pet_3",
+    "images": ["assets/sample/commontown/item/pet/s33.jpg"],
+    "name": "애견샴푸",
+    "price": 18000,
+    "options": []
+  },
+  {
+    "objectId": "pet_3_4",
+    "categoryObjectId": "pet_3",
+    "images": ["assets/sample/commontown/item/pet/s34.png"],
+    "name": "애견패드",
+    "price": 1200,
+    "options": []
+  },
+  {
+    "objectId": "pet_3_5",
+    "categoryObjectId": "pet_3",
+    "images": ["assets/sample/commontown/item/pet/s35.png"],
+    "name": "케이지",
+    "price": 35000,
+    "options": []
   }
 ]
 ''';

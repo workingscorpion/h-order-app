@@ -74,6 +74,7 @@ flutter:
     - assets/sample/daily_necessity/item/
     - assets/sample/commontown/item/commonplus/
     - assets/sample/commontown/item/westdoor/
+    - assets/sample/commontown/item/pet/
+    - assets/sample/commontown/item/interior/
     - assets/sample/screen/
     - assets/splash/
-    
