@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/viewHeader.dart';
+import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
 import 'package:h_order/models/keyValueModel.dart';
@@ -17,7 +18,6 @@ class HistoryView extends StatefulWidget {
 class _HistoryViewState extends State<HistoryView> {
   FocusNode focusNode;
 
-  List<HistoryModel> origin;
   List<HistoryModel> list;
 
   List<int> ratio = [1, 2, 2, 2, 2, 2];
@@ -68,20 +68,7 @@ class _HistoryViewState extends State<HistoryView> {
       request: '문앞에 두고 벨을 눌러주세요',
     );
 
-    origin = List.generate(
-      30,
-      (index) => HistoryModel(
-        index: index + 1,
-        serviceName: '서비스명$index',
-        createdTime: DateTime.now(),
-        summary: '상세항목$index',
-        amount: index * 1000,
-        status: index % _statusText.length,
-        detail: detailMap,
-      ),
-    );
-
-    list = [...origin];
+    list = SampleData.histories();
   }
 
   @override
@@ -428,7 +415,7 @@ class _HistoryViewState extends State<HistoryView> {
                 onSelected: (value) {
                   _selectedPopupMenu = value;
                   final index = _statusText.indexOf(value);
-                  list = [...origin]
+                  list = [...list]
                       .where((h) => index == -1 || h.status == index)
                       .toList();
 
