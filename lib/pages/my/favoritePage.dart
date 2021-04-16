@@ -30,7 +30,7 @@ class _FavoritePageState extends State<FavoritePage> {
             child: Column(
               children: [
                 PageHeader(
-                  title: '즐겨찾기',
+                  title: ['즐겨찾기'],
                   canBack: true,
                 ),
                 Expanded(

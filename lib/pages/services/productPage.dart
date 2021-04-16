@@ -4,14 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
+import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
+import 'package:h_order/models/serviceModel.dart';
 import 'package:intl/intl.dart';
 
 class ProductPage extends StatefulWidget {
+  final ServiceModel service;
+  final CategoryModel category;
   final ProductModel product;
 
   ProductPage({
+    this.service,
+    this.category,
     this.product,
   });
 
@@ -96,7 +102,7 @@ class _ProductPageState extends State<ProductPage>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   PageHeader(
-                    title: '심플리오',
+                    title: [widget.service.name, widget.category.name],
                     canBack: true,
                   ),
                   _productSlider(),

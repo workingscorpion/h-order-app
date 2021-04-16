@@ -16,7 +16,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
       body: Column(
         children: [
           PageHeader(
-            title: '관리비 내역 > 고지서',
+            title: ['관리비 내역', '고지서'],
             canBack: true,
           ),
           Expanded(

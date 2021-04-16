@@ -22,7 +22,7 @@ class _AlarmPageState extends State<AlarmPage> {
           child: Column(
             children: [
               PageHeader(
-                title: '알람 설정',
+                title: ['알람 설정'],
                 canBack: true,
               ),
               Expanded(

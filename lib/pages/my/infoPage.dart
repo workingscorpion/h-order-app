@@ -32,7 +32,7 @@ class _InfoPageState extends State<InfoPage> {
             child: Column(
               children: [
                 PageHeader(
-                  title: '내 정보',
+                  title: ['내 정보'],
                   canBack: true,
                 ),
                 Expanded(

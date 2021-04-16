@@ -67,7 +67,7 @@ class _CartPageState extends State<CartPage>
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     PageHeader(
-                      title: '심플리오',
+                      title: ['심플리오'],
                       canBack: true,
                     ),
                     _cartItems(),

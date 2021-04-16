@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 
 class PageHeader extends StatelessWidget {
-  PageHeader({this.title, this.canBack});
-
-  final String title;
+  final List<String> title;
   final bool canBack;
+
+  PageHeader({
+    this.title,
+    this.canBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +17,38 @@ class PageHeader extends StatelessWidget {
       height: 80,
       padding: EdgeInsets.symmetric(horizontal: 24),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.bodyText2.copyWith(
-                  fontSize: 28,
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              children: [
+                ...List.generate(
+                  (title.length * 2 - 1),
+                  (index) {
+                    if (index % 2 == 0) {
+                      final i = (index / 2).floor();
+                      return Text(
+                        title[i],
+                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                              fontSize: index == 0 ? 28 : 20,
+                              color:
+                                  index == 0 ? Colors.black : Color(0xff606162),
+                            ),
+                      );
+                    }
+
+                    return VerticalDivider(
+                      color: Colors.black,
+                      width: 24,
+                      thickness: .5,
+                      indent: 9,
+                      endIndent: 6,
+                    );
+                  },
                 ),
+              ],
+            ),
           ),
           Spacer(),
           canBack

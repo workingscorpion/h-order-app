@@ -83,7 +83,7 @@ class _ShopPageState extends State<ShopPage>
         child: Column(
           children: [
             PageHeader(
-              title: widget.service.name,
+              title: [widget.service.name],
               canBack: true,
             ),
             Expanded(
@@ -165,6 +165,7 @@ class _ShopPageState extends State<ShopPage>
                               children: [
                                 ...category.products.map(
                                   (product) => _product(
+                                    category: category,
                                     product: product,
                                   ),
                                 ),
@@ -185,6 +186,7 @@ class _ShopPageState extends State<ShopPage>
   }
 
   _product({
+    CategoryModel category,
     ProductModel product,
   }) =>
       Material(
@@ -192,7 +194,10 @@ class _ShopPageState extends State<ShopPage>
         child: Container(
           child: InkWell(
             onTap: () {
-              _detail(product: product);
+              _detail(
+                category: category,
+                product: product,
+              );
             },
             child: IntrinsicHeight(
               child: Column(
@@ -295,8 +300,13 @@ class _ShopPageState extends State<ShopPage>
 
   _detail({
     ProductModel product,
+    CategoryModel category,
   }) async {
-    final result = await AppRouter.toProductPage(product);
+    final result = await AppRouter.toProductPage(
+      service: widget.service,
+      category: category,
+      product: product,
+    );
 
     if (result == null) {
       return;

@@ -15,7 +15,7 @@ class _PaymentPageState extends State<PaymentPage> {
           child: Column(
             children: [
               PageHeader(
-                title: '결제수단 관리',
+                title: ['결제수단 관리'],
                 canBack: true,
               ),
               Expanded(

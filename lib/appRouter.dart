@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/constants/routeNames.dart';
+import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:h_order/models/serviceModel.dart';
 import 'package:h_order/pages/alarm/alarmPage.dart';
@@ -175,15 +176,19 @@ class AppRouter {
     );
   }
 
-  static toProductPage(
+  static toProductPage({
+    ServiceModel service,
+    CategoryModel category,
     ProductModel product,
-  ) async {
+  }) async {
     return Navigator.of(context).push(
       MaterialPageRoute(
         settings: RouteSettings(
           name: RouteNames.Product,
         ),
         builder: (BuildContext context) => ProductPage(
+          service: service,
+          category: category,
           product: product,
         ),
       ),

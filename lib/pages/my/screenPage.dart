@@ -36,7 +36,7 @@ class _ScreenPageState extends State<ScreenPage> {
             child: Column(
               children: [
                 PageHeader(
-                  title: '화면 설정',
+                  title: ['화면 설정'],
                   canBack: true,
                 ),
                 Expanded(
