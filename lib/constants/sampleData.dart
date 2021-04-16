@@ -102,7 +102,7 @@ abstract class SampleData {
     "objectId": "1",
     "name": "청소",
     "type": "call",
-    "icon": "",
+    "icon": "assets/icons/service/cleaning.svg",
     "items": [
       {
         "objectId": "1",
@@ -120,7 +120,7 @@ abstract class SampleData {
     "objectId": "2",
     "name": "세탁",
     "type": "call",
-    "icon": "",
+    "icon": "assets/icons/service/laundry.svg",
     "items": [
       {
         "objectId": "1",
@@ -143,6 +143,7 @@ abstract class SampleData {
     "objectId": "3",
     "name": "출차",
     "type": "call",
+    "icon": "assets/icons/service/car.svg",
     "items": [
       {
         "objectId": "1",
@@ -155,6 +156,7 @@ abstract class SampleData {
     "objectId": "4",
     "name": "관리실 호출",
     "type": "call",
+    "icon": "assets/icons/service/call.svg",
     "items": [
       {
         "objectId": "1",
@@ -167,18 +169,21 @@ abstract class SampleData {
     "objectId": "5",
     "name": "커먼플러스",
     "type": "shop",
+    "icon": "assets/icons/service/move.svg",
     "items": []
   },
   {
     "objectId": "6",
     "name": "펫케어",
     "type": "shop",
+    "icon": "assets/icons/service/pet.svg",
     "items": []
   },
   {
     "objectId": "7",
     "name": "택배",
     "type": "call",
+    "icon": "assets/icons/service/delivery.svg",
     "items": [
       {
         "objectId": "1",
@@ -201,6 +206,7 @@ abstract class SampleData {
     "objectId": "8",
     "name": "분리수거",
     "type": "call",
+    "icon": "assets/icons/service/recycle.svg",
     "items": [
       {
         "objectId": "1",
@@ -213,12 +219,14 @@ abstract class SampleData {
     "objectId": "9",
     "name": "생필품 신청",
     "type": "shop",
+    "icon": "assets/icons/service/trashbag.svg",
     "items": []
   },
   {
     "objectId": "10",
     "name": "인테리어",
     "type": "shop",
+    "icon": "assets/icons/service/interior.svg",
     "items": []
   }
 ]''';

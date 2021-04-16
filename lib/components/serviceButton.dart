@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
 import 'package:h_order/constants/serviceStatus.dart';
@@ -58,12 +59,16 @@ class _ServiceButtonState extends State<ServiceButton> {
             Container(
               height: 92,
               width: 92,
+              alignment: Alignment.center,
               margin: EdgeInsets.only(bottom: 10),
-              // child: Icon(
-              //   widget.service.icon,
-              //   size: 34,
-              //   color: widget.color ?? Colors.black,
-              // ),
+              child: Container(
+                width: 38,
+                height: 38,
+                child: SvgPicture.asset(
+                  widget.service.icon,
+                  color: widget.color ?? Colors.black,
+                ),
+              ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
