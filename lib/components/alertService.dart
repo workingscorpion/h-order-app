@@ -46,8 +46,11 @@ class _AlertServiceState extends State<AlertService> {
 
   @override
   Widget build(BuildContext context) {
-    final children =
-        widget.service.items.map((item) => _alertContent(item: item)).toList();
+    final children = widget.service.items
+            ?.where((item) => item.type != 'resultMessage')
+            ?.map((item) => _alertContent(item: item))
+            ?.toList() ??
+        List();
 
     return Container(
       width: 560,
