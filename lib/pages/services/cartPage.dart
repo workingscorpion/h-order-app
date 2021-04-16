@@ -101,61 +101,6 @@ class _CartPageState extends State<CartPage>
         ),
       );
 
-  _paymentInfo() => Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              width: 1,
-              color: Colors.black,
-            ),
-          ),
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 8,
-        ),
-        child: Column(
-          children: [
-            _titleItem(
-              label: '배달위치',
-              text: '진주오피스텔 A동 102호',
-            ),
-            _titleItem(
-              label: '결제정보',
-              text: '롯데카드 [1234]',
-              margin: false,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 12),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    width: 1,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                Text(
-                  '총 금액',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    '${NumberFormat().format(totalAmount)}원',
-                    textAlign: TextAlign.right,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-
   _payButton() => Material(
         color: Theme.of(context).accentColor,
         child: InkWell(
@@ -191,32 +136,6 @@ class _CartPageState extends State<CartPage>
               ],
             ),
           ),
-        ),
-      );
-
-  _titleItem({
-    String label,
-    String text,
-    bool margin = true,
-  }) =>
-      Container(
-        margin: margin ? EdgeInsets.only(bottom: 8) : EdgeInsets.zero,
-        child: Row(
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Expanded(
-              child: Text(
-                text,
-                textAlign: TextAlign.right,
-                style: TextStyle(),
-              ),
-            ),
-          ],
         ),
       );
 

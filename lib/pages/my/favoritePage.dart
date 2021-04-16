@@ -125,39 +125,6 @@ class _FavoritePageState extends State<FavoritePage> {
         padding: EdgeInsets.all(24),
         child: Text(text),
       );
-
-  _serviceItem({
-    IconData icon,
-    String text,
-    GestureTapCallback onTap,
-  }) =>
-      Material(
-        color: Colors.transparent,
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 12),
-                child: Icon(
-                  icon,
-                  size: 64,
-                ),
-              ),
-              Text(
-                text ?? '',
-                style: TextStyle(
-                  fontSize: 22,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
 }
 
 class MenuModel {

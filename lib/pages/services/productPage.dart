@@ -28,8 +28,6 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage>
     with SingleTickerProviderStateMixin {
-  static const int minQuantity = 1;
-
   int _quantity;
   Map<String, ProductOptionModel> _optionMap;
   Map<String, int> _selectedOption;
@@ -481,10 +479,10 @@ class _ProductPageState extends State<ProductPage>
       );
 
   _save() async {
-    final requiredOpiotns =
+    final requiredOptions =
         widget.product.options.where((item) => item.isRequired ?? false);
-    if (requiredOpiotns.length > 0) {
-      if (!requiredOpiotns.any((item) => _selectedOption[item.objectId] > 0)) {
+    if (requiredOptions.length > 0) {
+      if (!requiredOptions.any((item) => _selectedOption[item.objectId] > 0)) {
         await Fluttertoast.cancel();
         await Fluttertoast.showToast(
           msg: '필수옵션을 선택해주세요.',

@@ -11,11 +11,7 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
-  final _listKey = GlobalKey<AnimatedListState>();
-
-  int _selectedIndex;
   List<InfoModel> list = List();
-
   HomeModel home;
 
   @override
@@ -174,37 +170,6 @@ class _InfoPageState extends State<InfoPage> {
             ),
           ],
         ),
-      );
-
-  _item({
-    String label,
-    String value,
-  }) =>
-      TableRow(
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Colors.white24,
-            ),
-          ),
-        ),
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(
-              vertical: 32,
-              horizontal: 24,
-            ),
-            child: Text(label),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              vertical: 32,
-              horizontal: 24,
-            ),
-            child: Text(value),
-          ),
-        ],
       );
 }
 

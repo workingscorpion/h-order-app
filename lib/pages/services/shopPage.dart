@@ -28,7 +28,6 @@ class _ShopPageState extends State<ShopPage>
   final StreamController _streamController = StreamController.broadcast();
   StreamSubscription _streamSubscription;
 
-  GlobalKey _appBarKey;
   GlobalKey _floatingButtonKey;
 
   TabController _tabController;

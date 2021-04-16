@@ -4,6 +4,7 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/models/billModel.dart';
 import 'package:intl/intl.dart';
 
@@ -37,11 +38,17 @@ class _BillViewState extends State<BillView> {
   void initState() {
     super.initState();
 
-    final max = 30;
+    final home = SampleData.home();
+    final start = home.contractStartDate;
+
+    final diff = (DateTime.now().year - start.year) * 12 +
+        DateTime.now().month -
+        start.month;
+
     list = List.generate(
-      max,
+      diff,
       (index) => BillModel(
-        index: max - index,
+        index: diff - index,
         title: '${_calcExpiredDate(index).month}월분 고지서',
         expiredDate: _calcExpiredDate(index),
         paymentDate: DateTime(
@@ -50,7 +57,7 @@ class _BillViewState extends State<BillView> {
           DateTime.now().day + 12,
         ),
         amount: (index + 10) * 1000,
-        status: max - index >= max ? false : true,
+        status: diff - index >= diff ? false : true,
       ),
     );
   }

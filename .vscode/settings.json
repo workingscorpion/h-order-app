@@ -2,11 +2,16 @@
     "cSpell.words": [
         "Animatable",
         "Fluttertoast",
+        "RGBO",
         "bezier",
         "cupertino",
+        "devdrag",
+        "gridview",
         "lerp",
         "mobx",
         "prefs",
-        "vsync"
+        "toggleable",
+        "vsync",
+        "xmark"
     ]
 }
