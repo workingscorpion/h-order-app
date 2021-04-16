@@ -171,7 +171,7 @@ class _HistoryViewState extends State<HistoryView> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    item.amount != null
+                    item.amount != null && item.amount > 0
                         ? '${NumberFormat().format(item.amount)}원'
                         : '-',
                     maxLines: 1,
