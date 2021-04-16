@@ -105,6 +105,11 @@ abstract class SampleData {
     "icon": "assets/icons/service/cleaning.svg",
     "items": [
       {
+        "objectId": "0",
+        "type": "resultMessage",
+        "value": "예약되었습니다.​"
+      },
+      {
         "objectId": "1",
         "type": "text",
         "value": "개인룸 청소를 신청합니다.\\n(기본 월 1회 무료,\\n이후 회당 20,000원의 요금이 발생하며\\n다음달 관리비에 적용됩니다.)"
@@ -122,6 +127,11 @@ abstract class SampleData {
     "type": "call",
     "icon": "assets/icons/service/laundry.svg",
     "items": [
+      {
+        "objectId": "0",
+        "type": "resultMessage",
+        "value": "신청되었습니다."
+      },
       {
         "objectId": "1",
         "type": "text",
@@ -146,6 +156,11 @@ abstract class SampleData {
     "icon": "assets/icons/service/car.svg",
     "items": [
       {
+        "objectId": "0",
+        "type": "resultMessage",
+        "value": "신청되었습니다."
+      },
+      {
         "objectId": "1",
         "type": "text",
         "value": "5-10분 내로 출차됩니다."
@@ -158,6 +173,11 @@ abstract class SampleData {
     "type": "call",
     "icon": "assets/icons/service/call.svg",
     "items": [
+      {
+        "objectId": "0",
+        "type": "resultMessage",
+        "value": "신청되었습니다."
+      },
       {
         "objectId": "1",
         "type": "text",
@@ -186,6 +206,11 @@ abstract class SampleData {
     "icon": "assets/icons/service/delivery.svg",
     "items": [
       {
+        "objectId": "0",
+        "type": "resultMessage",
+        "value": "신청되었습니다."
+      },
+      {
         "objectId": "1",
         "type": "text",
         "value": "택배 수거를 요청합니다."
@@ -208,6 +233,11 @@ abstract class SampleData {
     "type": "call",
     "icon": "assets/icons/service/recycle.svg",
     "items": [
+      {
+        "objectId": "0",
+        "type": "resultMessage",
+        "value": "신청되었습니다."
+      },
       {
         "objectId": "1",
         "type": "text",

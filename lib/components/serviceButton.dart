@@ -45,10 +45,7 @@ class _ServiceButtonState extends State<ServiceButton> {
               return;
 
             case 'call':
-              _alert(
-                title: widget.service.name,
-                // items: widget.service.items,
-              );
+              _alert();
               return;
           }
         },
@@ -108,10 +105,9 @@ class _ServiceButtonState extends State<ServiceButton> {
     }
   }
 
-  _alert({
-    String title,
-    List<ItemModel> items,
-  }) async {
+  _alert() async {
+    await Fluttertoast.cancel();
+
     final result = await showDialog(
       barrierColor: Colors.black.withOpacity(.85),
       context: context,
@@ -129,9 +125,17 @@ class _ServiceButtonState extends State<ServiceButton> {
       ),
     );
 
-    if (result) {
-      Fluttertoast.showToast(
-        msg: "   신청되었습니다.   ",
+    if (result != null) {
+      final resultMessage = widget.service?.items
+              ?.singleWhere(
+                (item) => item.type == 'resultMessage',
+                orElse: () => null,
+              )
+              ?.value ??
+          '신청되었습니다.';
+
+      await Fluttertoast.showToast(
+        msg: "   ${resultMessage}   ",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
