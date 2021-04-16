@@ -16,15 +16,13 @@ class HistoryView extends StatefulWidget {
 
 class _HistoryViewState extends State<HistoryView> {
   FocusNode focusNode;
-  String selectedPopupMenu = 'all';
 
   List<HistoryModel> origin;
-
   List<HistoryModel> list;
 
   List<int> ratio = [1, 2, 2, 2, 2, 2];
 
-  List<String> headers = [
+  final List<String> headers = [
     'No.',
     '서비스명',
     '상세항목',
@@ -32,6 +30,24 @@ class _HistoryViewState extends State<HistoryView> {
     '결제금액',
     '상태',
   ];
+
+  final List<Color> _statusColors = [
+    Color(0xfff9b300),
+    Color(0xff197fff),
+    Color(0xff21d021),
+    Color(0xffe02020),
+    Color(0xfff9b300),
+  ];
+
+  final List<String> _statusText = [
+    '신청',
+    '접수',
+    '완료',
+    '취소',
+    '거절',
+  ];
+
+  String _selectedPopupMenu = '전체';
 
   @override
   void initState() {
@@ -60,7 +76,7 @@ class _HistoryViewState extends State<HistoryView> {
         createdTime: DateTime.now(),
         summary: '상세항목$index',
         amount: index * 1000,
-        status: index % 3,
+        status: index % _statusText.length,
         detail: detailMap,
       ),
     );
@@ -175,10 +191,10 @@ class _HistoryViewState extends State<HistoryView> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    _statusText(item.status),
+                    _statusText[item.status],
                     maxLines: 1,
                     style: TextStyle(
-                      color: _statusColor(item.status),
+                      color: _statusColors[item.status],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -189,38 +205,6 @@ class _HistoryViewState extends State<HistoryView> {
           ],
         ),
       );
-
-  _statusText(int status) {
-    switch (status) {
-      case 0:
-        return '신청';
-
-      case 1:
-        return '접수';
-
-      case 2:
-        return '처리완료';
-
-      default:
-        return '신청';
-    }
-  }
-
-  _statusColor(int status) {
-    switch (status) {
-      case 0:
-        return Color(0xffe02020);
-
-      case 1:
-        return Color(0xfff7b500);
-
-      case 2:
-        return Color(0xff21d021);
-
-      default:
-        return Color(0xffe02020);
-    }
-  }
 
   _row({
     Color color,
@@ -334,8 +318,10 @@ class _HistoryViewState extends State<HistoryView> {
     switch (index) {
       case 0:
         return Text(DateFormat('yyyy/MM/dd hh:mm').format(content.createdTime));
+
       case 1:
         return Text('${NumberFormat().format(content.amount)}원');
+
       case 2:
         return Text('${content.paymentMethod}(${content.paymentData})');
     }
@@ -345,8 +331,10 @@ class _HistoryViewState extends State<HistoryView> {
     switch (index) {
       case 0:
         return '이용일시';
+
       case 1:
         return '결제금액';
+
       case 2:
         return '결제방법';
     }
@@ -390,7 +378,7 @@ class _HistoryViewState extends State<HistoryView> {
                       Container(
                         margin: EdgeInsets.only(right: 30),
                         child: Text(
-                          _popupText(),
+                          _selectedPopupMenu,
                           style: TextStyle(
                             fontSize: 17,
                             color: Colors.black,
@@ -408,7 +396,7 @@ class _HistoryViewState extends State<HistoryView> {
                 offset: Offset(0, 100),
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    value: "all",
+                    value: "전체",
                     child: Container(
                       child: Text(
                         '전체',
@@ -420,51 +408,30 @@ class _HistoryViewState extends State<HistoryView> {
                       width: 100,
                     ),
                   ),
-                  PopupMenuItem(
-                    value: "apply",
-                    child: Container(
-                      child: Text(
-                        '신청',
-                        style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
+                  ...List.generate(
+                    _statusText.length,
+                    (index) => PopupMenuItem(
+                      value: _statusText[index],
+                      child: Container(
+                        child: Text(
+                          _statusText[index],
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Colors.black,
+                          ),
                         ),
+                        width: 100,
                       ),
-                      width: 100,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: "receipted",
-                    child: Container(
-                      child: Text(
-                        '접수',
-                        style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                        ),
-                      ),
-                      width: 100,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: "done",
-                    child: Container(
-                      child: Text(
-                        '처리완료',
-                        style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                        ),
-                      ),
-                      width: 100,
                     ),
                   ),
                 ],
                 onSelected: (value) {
-                  selectedPopupMenu = value;
+                  _selectedPopupMenu = value;
+                  final index = _statusText.indexOf(value);
                   list = [...origin]
-                      .where((h) => _popupIndex().contains(h.status))
+                      .where((h) => index == -1 || h.status == index)
                       .toList();
+
                   setState(() {});
                 },
               ),
@@ -472,42 +439,4 @@ class _HistoryViewState extends State<HistoryView> {
           ),
         ),
       );
-
-  _popupText() {
-    switch (selectedPopupMenu) {
-      case 'all':
-        return '전체';
-
-      case 'apply':
-        return '신청';
-
-      case 'receipted':
-        return '접수';
-
-      case 'done':
-        return '처리완료';
-
-      default:
-        return '전체';
-    }
-  }
-
-  List<int> _popupIndex() {
-    switch (selectedPopupMenu) {
-      case 'all':
-        return [0, 1, 2];
-
-      case 'apply':
-        return [0];
-
-      case 'receipted':
-        return [1];
-
-      case 'done':
-        return [2];
-
-      default:
-        return [0, 1, 2];
-    }
-  }
 }
