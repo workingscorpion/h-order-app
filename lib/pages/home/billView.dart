@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
@@ -40,9 +42,11 @@ class _BillViewState extends State<BillView> {
     final home = SampleData.home();
     final start = home.contractStartDate;
 
-    final diff = (DateTime.now().year - start.year) * 12 +
-        DateTime.now().month -
-        start.month;
+    final diff = (DateTime.now().year * 12 + DateTime.now().month) -
+        (start.year * 12 + start.month) +
+        1;
+
+    final random = Random();
 
     list = List.generate(
       diff,
@@ -53,9 +57,13 @@ class _BillViewState extends State<BillView> {
         paymentDate: DateTime(
           DateTime.now().year,
           DateTime.now().month - index,
-          DateTime.now().day + 12,
+          1 + random.nextInt(10),
         ),
-        amount: (index + 10) * 1000,
+        amount: 100000 +
+            random.nextInt(4) * 10000 +
+            random.nextInt(9) * 1000 +
+            random.nextInt(9) * 100 +
+            random.nextInt(9) * 10,
         status: diff - index >= diff ? false : true,
       ),
     );

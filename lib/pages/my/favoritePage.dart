@@ -19,7 +19,14 @@ class _FavoritePageState extends State<FavoritePage> {
   void initState() {
     super.initState();
 
-    list = SampleData.services();
+    list = SampleData.services()
+        .where((item) =>
+            item.items
+                .singleWhere((element) => element.type == 'position',
+                    orElse: () => null)
+                ?.value !=
+            "bottom")
+        .toList();
     favoriteList = List();
   }
 
