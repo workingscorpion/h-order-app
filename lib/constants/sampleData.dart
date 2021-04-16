@@ -104,7 +104,7 @@ abstract class SampleData {
     "index": 10,
     "serviceName": "호출",
     "summary": "-",
-    "price": 0,
+    "amount": 0,
     "status": 0,
     "createdTime": "2021-05-05"
   },
@@ -112,7 +112,7 @@ abstract class SampleData {
     "index": 9,
     "serviceName": "커먼플러스",
     "summary": "심플리오",
-    "price": 12000,
+    "amount": 12000,
     "status": 1,
     "createdTime": "2021-05-01"
   },
@@ -120,7 +120,7 @@ abstract class SampleData {
     "index": 8,
     "serviceName": "세탁",
     "summary": "침구세트 세탁",
-    "price": 5000,
+    "amount": 5000,
     "status": 1,
     "createdTime": "2021-04-24"
   },
@@ -128,7 +128,7 @@ abstract class SampleData {
     "index": 7,
     "serviceName": "택배",
       "summary": "2개",
-      "price": 0,
+      "amount": 0,
       "status": 2,
     "createdTime": "2021-04-15"
   },
@@ -136,7 +136,7 @@ abstract class SampleData {
     "index": 6,
     "serviceName": "생필품",
     "summary": "종량제 봉투 20L 외 2개",
-    "price": 8000,
+    "amount": 8000,
     "status": 2,
     "createdTime": "2021-04-02"
   },
@@ -144,7 +144,7 @@ abstract class SampleData {
     "index": 5,
     "serviceName": "청소",
     "summary": "2021/03/15 예약",
-    "price": 0,
+    "amount": 0,
     "status": 2,
     "createdTime": "2021-03-30"
   },
@@ -152,7 +152,7 @@ abstract class SampleData {
     "index": 4,
     "serviceName": "팻케어",
     "summary": "간식 1개",
-    "price": 1000,
+    "amount": 1000,
     "status": 2,
     "createdTime": "2021-03-10"
   },
@@ -160,7 +160,7 @@ abstract class SampleData {
     "index": 3,
     "serviceName": "세탁",
     "summary": "수건 세탁",
-    "price": 2000,
+    "amount": 2000,
     "status": 2,
     "createdTime": "2021-02-14"
   },
@@ -168,7 +168,7 @@ abstract class SampleData {
     "index": 2,
     "serviceName": "생필품",
     "summary": "휴지 4개 외 4건",
-    "price": 6000,
+    "amount": 6000,
     "status": 2,
     "createdTime": "2021-01-28"
   },
@@ -176,7 +176,7 @@ abstract class SampleData {
     "index": 1,
     "serviceName": "호출",
     "summary": "-",
-    "price": 0,
+    "amount": 0,
     "status": 2,
     "createdTime": "2021-01-03"
   }
