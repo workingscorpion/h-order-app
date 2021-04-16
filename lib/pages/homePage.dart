@@ -92,38 +92,36 @@ class _HomePageState extends State<HomePage>
         ],
       ));
 
-  _infoHeader() => Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Spacer(),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  '관리비납부현황',
-                  style: Theme.of(context).textTheme.bodyText2.copyWith(
-                        fontSize: 20,
-                      ),
-                ),
-                VerticalDivider(
-                  color: Theme.of(context).accentColor,
-                  thickness: 1,
-                  width: 10,
-                ),
-                Text(
-                  '납부완료',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+  _infoHeader() => Container(
+        margin: EdgeInsets.only(bottom: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Spacer(),
+            Text(
+              '관리비납부현황',
+              style: Theme.of(context).textTheme.bodyText2.copyWith(
                     fontSize: 20,
-                    color: Color.fromRGBO(33, 208, 33, 1),
                   ),
-                ),
-              ],
             ),
-          ),
-        ],
+            Container(
+              height: 15,
+              child: VerticalDivider(
+                color: Colors.black,
+                thickness: 1,
+                width: 20,
+              ),
+            ),
+            Text(
+              '납부완료',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Color(0xff21d021),
+              ),
+            ),
+          ],
+        ),
       );
 
   _leftPanel() => Expanded(
@@ -323,13 +321,11 @@ class _HomePageState extends State<HomePage>
             child: Text(
               text,
               maxLines: 1,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline2
-                  .copyWith(fontWeight: FontWeight.bold)
-                  .copyWith(
+              style: Theme.of(context).textTheme.headline2.copyWith(
                     letterSpacing: -1,
                     fontSize: 16,
+                    color: selected ? Colors.black : Color(0xff606162),
+                    fontWeight: FontWeight.bold,
                   ),
               textAlign: TextAlign.center,
             ),
