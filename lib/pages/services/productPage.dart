@@ -255,7 +255,7 @@ class _ProductPageState extends State<ProductPage>
           margin: EdgeInsets.only(bottom: 20),
           child: CarouselSlider(
             options: CarouselOptions(
-              enableInfiniteScroll: true,
+              enableInfiniteScroll: false,
               enlargeCenterPage: true,
               viewportFraction: 0.5,
             ),

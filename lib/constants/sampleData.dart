@@ -484,6 +484,14 @@ abstract class SampleData {
 ''';
 
   static final String productJson = '''[
+  {
+    "objectId": "common_plus_1_1",
+    "categoryObjectId": "common_plus_1",
+    "images": ["assets/sample/commontown/item/s1.jpg"],
+    "name": "헤븐리 샴푸",
+    "price": 6500,
+    "options": []
+  }
 ]''';
 
   static HomeModel home() {
@@ -500,9 +508,24 @@ abstract class SampleData {
     return list.map((json) => ServiceModel.fromJson(json)).toList();
   }
 
-  static List<CategoryModel> categories() {
+  static List<CategoryModel> categories(String serviceObjectId) {
     final list = jsonDecode(categoryJson) as List;
-    return list.map((json) => CategoryModel.fromJson(json)).toList();
+
+    final products = SampleData.products();
+
+    return list
+        .map((json) => CategoryModel.fromJson(json))
+        .toList()
+        .where((item) => item.serviceObjectId == serviceObjectId)
+        .map((item) => CategoryModel(
+              objectId: item.objectId,
+              serviceObjectId: item.serviceObjectId,
+              name: item.name,
+              products: products
+                  .where((product) => product.categoryObjectId == item.objectId)
+                  .toList(),
+            ))
+        .toList();
   }
 
   static List<ProductModel> products() {

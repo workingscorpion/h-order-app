@@ -56,7 +56,7 @@ class _ShopPageState extends State<ShopPage>
 
     _cart = List();
 
-    _categories = SampleShopData().categories;
+    _categories = SampleData.categories(widget.service.objectId);
 
     _tabController = TabController(
       length: _categories.length,
@@ -83,7 +83,7 @@ class _ShopPageState extends State<ShopPage>
         child: Column(
           children: [
             PageHeader(
-              title: '심플리오',
+              title: widget.service.name,
               canBack: true,
             ),
             Expanded(
@@ -218,7 +218,7 @@ class _ShopPageState extends State<ShopPage>
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(top: 10),
                     child: Text(
-                      product.name + product.name,
+                      product.name,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 21,
