@@ -31,7 +31,7 @@ class _BillViewState extends State<BillView> {
 
   String _bankName = '국민은행';
   String _account = '12345-78-9101112';
-  String _accountOwner = '웅신 미켈라의 아침';
+  String _accountOwner = '웅신 미켈란의 아침';
 
   List<BillModel> list;
 
