@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/http/client.dart';
+import 'package:h_order/http/types/login/requestLoginModel.dart';
+import 'package:h_order/store/navigationStore.dart';
+import 'package:h_order/utils/deviceInfo.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
@@ -17,7 +21,15 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
-  bool initialized = false;
+  final _duration = Duration(milliseconds: 200);
+
+  get initialized {
+    return NavigationStore.instance.appKey.currentState.initialized;
+  }
+
+  set initialized(bool value) {
+    NavigationStore.instance.appKey.currentState.initialized = value;
+  }
 
   AnimationController _controller;
   Tween<Alignment> _tween = Tween(
@@ -26,7 +38,8 @@ class _SplashPageState extends State<SplashPage>
   );
   Animation<Alignment> _animation;
 
-  final _duration = Duration(milliseconds: 200);
+  String _deviceId = '';
+  String _serialNumber = '';
 
   @override
   void initState() {
@@ -69,6 +82,7 @@ class _SplashPageState extends State<SplashPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                  Spacer(),
                   Center(
                     child: Container(
                       width: 98,
@@ -96,6 +110,17 @@ class _SplashPageState extends State<SplashPage>
                       ],
                     ),
                   ),
+                  Spacer(),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      '$_deviceId - $_serialNumber',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white54,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -104,16 +129,17 @@ class _SplashPageState extends State<SplashPage>
       );
 
   initialize() async {
+    initialized = false;
+
     final timer = Timer(Duration(seconds: 2), () async {
-      if (initialized) {
+      if (!initialized) {
         await autoLogin();
-        // _userInfoStore.isInitialized = true;
+
+        initialized = true;
       }
     });
 
     try {
-      initialized = false;
-
       await initializeDateFormatting('ko');
       Intl.defaultLocale = 'ko';
 
@@ -125,24 +151,57 @@ class _SplashPageState extends State<SplashPage>
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
       ]);
-
-      initialized = true;
     } finally {
       if (!timer.isActive) {
         await autoLogin();
-        // _userInfoStore.isInitialized = true;
+
+        initialized = true;
       }
     }
   }
 
+  load() async {
+    _deviceId = await DeviceInfo.deviceId();
+    setState(() {});
+
+    _serialNumber = await DeviceInfo.serialNumber();
+
+    if (_serialNumber?.isEmpty ?? true) {
+      _serialNumber = await showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text('발견된 시리얼 번호 없음'),
+          actions: [
+            FlatButton(
+              onPressed: () async {
+                final result = await DeviceInfo.scanSerialNumber();
+                print('####### $result');
+                Navigator.of(context).pop(result);
+              },
+              child: Text(
+                '스캔',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    setState(() {});
+  }
+
   autoLogin() async {
     try {
-      // final String id = await SharedPreferencesHelper.getUserId();
-      // if (id == null) {
-      //   throw Exception();
-      // }
+      await load();
 
-      // await _userInfoStore.login(id: id);
+      await Client.create().login(RequestLoginModel(
+        serialNumber: _serialNumber,
+        deviceId: _deviceId,
+        deviceToken: null,
+      ));
 
       await loadInfo();
     } catch (ex) {
@@ -152,8 +211,6 @@ class _SplashPageState extends State<SplashPage>
 
   loadInfo() async {
     try {
-      // await _hotelInfoStore.loadHotels();
-      // await _hotelInfoStore.selectHotel(_hotelInfoStore.hotelList.first);
       AppRouter.toHomePage();
     } catch (ex) {
       // AppRouter.toHotelSelectPage();

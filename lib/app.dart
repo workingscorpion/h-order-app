@@ -22,11 +22,17 @@ class App extends StatefulWidget {
 class AppState extends State<App> with WidgetsBindingObserver {
   static const _setMainDuration = Duration(minutes: 5);
 
+  bool initialized = false;
+
   Future _future;
   StreamSubscription _setMainSubscription;
 
   ThemeMode _themeMode = ThemeMode.light;
   Brightness _brightness = Brightness.light;
+
+  void setInitialized() {
+    initialized = true;
+  }
 
   @override
   void initState() {
@@ -156,6 +162,10 @@ class AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (!initialized) {
+      return;
+    }
+
     if (state == AppLifecycleState.inactive) {
       toLockPage();
     }
