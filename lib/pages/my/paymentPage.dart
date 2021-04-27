@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
+import 'package:h_order/constants/customColors.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -8,6 +9,24 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
+  TextEditingController _cardNumberController = TextEditingController();
+  TextEditingController _expireMonthController = TextEditingController();
+  TextEditingController _expireYearController = TextEditingController();
+  TextEditingController _cardPasswordController = TextEditingController();
+  TextEditingController _birthController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+
+  FocusNode _cardNumberFocusNode = FocusNode();
+  FocusNode _expireMonthFocusNode = FocusNode();
+  FocusNode _expireYearFocusNode = FocusNode();
+  FocusNode _cardPasswordFocusNode = FocusNode();
+  FocusNode _birthFocusNode = FocusNode();
+  FocusNode _phoneFocusNode = FocusNode();
+  FocusNode _nameFocusNode = FocusNode();
+  FocusNode _emailFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: SafeArea(
@@ -90,7 +109,14 @@ class _PaymentPageState extends State<PaymentPage> {
                                       BorderRadius.all(Radius.circular(5)),
                                   color: Colors.white,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      showDialog(
+                                        // child: _cardInputDialog(),
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            _cardInputDialog(),
+                                      );
+                                    },
                                     child: Container(
                                       decoration: BoxDecoration(
                                         border: Border.all(
@@ -269,6 +295,210 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
             ),
           ],
+        ),
+      );
+
+  _cardInputDialog() => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        child: _contentBox(),
+      );
+
+  _contentBox() => Container(
+        color: Colors.blue,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _creditCard(),
+            _cardNumber(),
+            _expireMonthAndYear(),
+            _cardPassword(),
+            _birth(),
+            _phone(),
+            Row(
+              children: [
+                _name(),
+                Spacer(),
+                _email(),
+              ],
+            ),
+            _submit(),
+          ],
+        ),
+      );
+
+  _inputDecoration({String text}) => InputDecoration(
+        hintText: text,
+        counterText: '',
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(3),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black,
+          ),
+        ),
+      );
+
+  _creditCard() => Center(
+        child: Container(
+          width: 400,
+          margin: EdgeInsets.only(bottom: 20),
+          child: AspectRatio(
+            aspectRatio: 1.586,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.red,
+              ),
+              child: Text('123'),
+            ),
+          ),
+        ),
+      );
+
+  _cardNumber() => Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: TextField(
+          focusNode: _cardNumberFocusNode,
+          controller: _cardNumberController,
+          decoration: _inputDecoration(text: '카드번호'),
+        ),
+      );
+
+  _expireMonthAndYear() => Container(
+        margin: EdgeInsets.only(bottom: 20),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black, width: 1),
+        ),
+        child: IntrinsicWidth(
+          child: Row(
+            children: [
+              Container(
+                width: 30,
+                child: _expireMonth(),
+              ),
+              Text('/'),
+              Container(
+                width: 30,
+                child: _expireYear(),
+              ),
+            ],
+          ),
+        ),
+      );
+
+  _expireMonth() => TextField(
+        focusNode: _expireMonthFocusNode,
+        controller: _expireMonthController,
+        decoration: InputDecoration(
+          hintText: '월',
+          counterText: '',
+        ),
+        maxLengthEnforced: true,
+        maxLength: 2,
+      );
+
+  _expireYear() => TextField(
+        focusNode: _expireYearFocusNode,
+        controller: _expireYearController,
+        decoration: InputDecoration(
+          hintText: '연',
+          counterText: '',
+        ),
+        maxLengthEnforced: true,
+        maxLength: 2,
+      );
+
+  _cardPassword() => Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: IntrinsicWidth(
+          child: TextField(
+            obscureText: true,
+            focusNode: _cardPasswordFocusNode,
+            controller: _cardPasswordController,
+            decoration: _inputDecoration(text: '비밀번호'),
+            maxLengthEnforced: true,
+            maxLength: 4,
+          ),
+        ),
+      );
+
+  _birth() => Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: IntrinsicWidth(
+          child: TextField(
+            focusNode: _birthFocusNode,
+            controller: _birthController,
+            decoration: _inputDecoration(text: '생일(6자리)'),
+            maxLengthEnforced: true,
+            maxLength: 6,
+          ),
+        ),
+      );
+
+  _phone() => Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: IntrinsicWidth(
+          child: TextField(
+            focusNode: _phoneFocusNode,
+            controller: _phoneController,
+            decoration: _inputDecoration(text: '핸드폰'),
+            maxLengthEnforced: true,
+            maxLength: 11,
+          ),
+        ),
+      );
+
+  _name() => Container(
+        margin: EdgeInsets.only(bottom: 20),
+        width: 200,
+        child: IntrinsicWidth(
+          child: TextField(
+            focusNode: _nameFocusNode,
+            controller: _nameController,
+            decoration: _inputDecoration(text: '이름'),
+          ),
+        ),
+      );
+
+  _email() => Container(
+        width: 500,
+        margin: EdgeInsets.only(bottom: 20),
+        child: IntrinsicWidth(
+          child: TextField(
+            focusNode: _emailFocusNode,
+            controller: _emailController,
+            decoration: _inputDecoration(text: '이메일'),
+          ),
+        ),
+      );
+
+  _submit() => InkWell(
+        child: Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            '등록',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       );
 }
