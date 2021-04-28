@@ -36,9 +36,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _cardNumber = ' ' * 16;
-    // _expireMonth = ' ' * 2;
     super.initState();
   }
 
