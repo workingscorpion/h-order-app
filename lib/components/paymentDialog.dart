@@ -30,6 +30,17 @@ class _PaymentDialogState extends State<PaymentDialog> {
   FocusNode _emailFocusNode = FocusNode();
 
   String _cardNumber = '';
+  String _expireYear = '';
+  String _expireMonth = '';
+  String _name = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _cardNumber = ' ' * 16;
+    // _expireMonth = ' ' * 2;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +60,12 @@ class _PaymentDialogState extends State<PaymentDialog> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CreditCard(cardNumber: _cardNumber),
+              CreditCard(
+                cardNumber: _cardNumber,
+                expireYear: _expireYear,
+                expireMonth: _expireMonth,
+                name: _name,
+              ),
               Container(
                 margin: EdgeInsets.only(bottom: 20),
                 child: IntrinsicWidth(
@@ -65,7 +81,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
               _cardPassword(),
               _birth(),
               _phone(),
-              _name(),
+              _nameInput(),
               _email(),
               _submit(),
             ],
@@ -96,8 +112,8 @@ class _PaymentDialogState extends State<PaymentDialog> {
             controller: _cardNumberController,
             decoration: _inputDecoration(text: '카드번호'),
             maxLength: 16,
-            onChanged: (text) {
-              _cardNumber = text;
+            onChanged: (String text) {
+              _cardNumber = text + (" " * (16 - text.length));
               setState(() {});
             },
           ),
@@ -110,7 +126,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
             children: [
               Container(
                 width: 30,
-                child: _expireMonth(),
+                child: _expireMonthInput(),
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
@@ -121,27 +137,36 @@ class _PaymentDialogState extends State<PaymentDialog> {
               ),
               Container(
                 width: 30,
-                child: _expireYear(),
+                child: _expireYearInput(),
               ),
             ],
           ),
         ),
       );
 
-  _expireMonth() => TextField(
+  _expireMonthInput() => TextField(
         focusNode: _expireMonthFocusNode,
         controller: _expireMonthController,
         decoration: _inputDecoration(text: '월'),
         maxLengthEnforced: true,
         maxLength: 2,
+        onChanged: (String text) {
+          _expireMonth = text;
+          // _expireMonth = text + (" " * (2 - text.length));
+          setState(() {});
+        },
       );
 
-  _expireYear() => TextField(
+  _expireYearInput() => TextField(
         focusNode: _expireYearFocusNode,
         controller: _expireYearController,
         decoration: _inputDecoration(text: '연'),
         maxLengthEnforced: true,
         maxLength: 2,
+        onChanged: (String text) {
+          _expireYear = text;
+          setState(() {});
+        },
       );
 
   _cardPassword() => Container(
@@ -184,7 +209,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
         ),
       );
 
-  _name() => Container(
+  _nameInput() => Container(
         margin: EdgeInsets.only(bottom: 20),
         width: 200,
         child: IntrinsicWidth(
@@ -192,6 +217,10 @@ class _PaymentDialogState extends State<PaymentDialog> {
             focusNode: _nameFocusNode,
             controller: _nameController,
             decoration: _inputDecoration(text: '이름'),
+            onChanged: (String text) {
+              _name = text;
+              setState(() {});
+            },
           ),
         ),
       );
