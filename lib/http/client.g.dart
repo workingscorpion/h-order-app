@@ -60,7 +60,7 @@ class _Client implements Client {
     final _data = <String, dynamic>{};
     _data.addAll(card?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>(
-        '/v1/device/payment/register',
+        '/v1/device/paymentmethod/register',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

@@ -18,7 +18,7 @@ abstract class Client {
   @POST("/v1/auth/logout")
   Future logout();
 
-  @POST("/v1/device/payment/register")
+  @POST("/v1/device/paymentmethod/register")
   Future<CardModel> cardRegister(
     @Body() CardRegisterModel card,
   );
