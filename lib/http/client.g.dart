@@ -9,7 +9,7 @@ part of 'client.dart';
 class _Client implements Client {
   _Client(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://192.168.0.104:5000/api';
+    baseUrl ??= 'http://192.168.0.11:5000/api';
   }
 
   final Dio _dio;
@@ -49,6 +49,26 @@ class _Client implements Client {
             baseUrl: baseUrl),
         data: _data);
     final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<CardModel> cardRegister(card) async {
+    ArgumentError.checkNotNull(card, 'card');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(card?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/v1/device/payment/register',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CardModel.fromJson(_result.data);
     return value;
   }
 }

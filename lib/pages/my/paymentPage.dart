@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/components/creditCard.dart';
+import 'package:h_order/http/client.dart';
+import 'package:h_order/http/types/payment/cardRegisterModel.dart';
+import 'package:mobx/mobx.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -26,6 +29,15 @@ class _PaymentPageState extends State<PaymentPage> {
   FocusNode _phoneFocusNode = FocusNode();
   FocusNode _nameFocusNode = FocusNode();
   FocusNode _emailFocusNode = FocusNode();
+
+  @observable
+  String _cardNumber = '';
+
+  @override
+  void initState() {
+    _cardNumber = '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -308,14 +320,23 @@ class _PaymentPageState extends State<PaymentPage> {
       );
 
   _contentBox() => Container(
-        color: Colors.blue,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _creditCard(),
-            _cardNumber(),
-            _expireMonthAndYear(),
+            CreditCard(cardNumber: _cardNumber),
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: IntrinsicWidth(
+                child: Row(
+                  children: [
+                    _cardNumberInput(),
+                    Spacer(),
+                    _expireMonthAndYear(),
+                  ],
+                ),
+              ),
+            ),
             _cardPassword(),
             _birth(),
             _phone(),
@@ -334,56 +355,35 @@ class _PaymentPageState extends State<PaymentPage> {
   _inputDecoration({String text}) => InputDecoration(
         hintText: text,
         counterText: '',
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(3),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-          ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-          ),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black),
         ),
       );
 
-  _creditCard() => Center(
-        child: Container(
-          width: 400,
-          margin: EdgeInsets.only(bottom: 20),
-          child: AspectRatio(
-            aspectRatio: 1.586,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.red,
-              ),
-              child: Text('123'),
-            ),
+  _cardNumberInput() => Container(
+        margin: EdgeInsets.only(right: 10),
+        width: 500,
+        child: IntrinsicWidth(
+          child: TextField(
+            focusNode: _cardNumberFocusNode,
+            controller: _cardNumberController,
+            decoration: _inputDecoration(text: '카드번호'),
+            maxLength: 16,
+            onChanged: (text) {
+              _cardNumber = text;
+              setState(() {});
+            },
           ),
-        ),
-      );
-
-  _cardNumber() => Container(
-        margin: EdgeInsets.only(bottom: 20),
-        child: TextField(
-          focusNode: _cardNumberFocusNode,
-          controller: _cardNumberController,
-          decoration: _inputDecoration(text: '카드번호'),
         ),
       );
 
   _expireMonthAndYear() => Container(
-        margin: EdgeInsets.only(bottom: 20),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black, width: 1),
-        ),
         child: IntrinsicWidth(
           child: Row(
             children: [
@@ -391,7 +391,13 @@ class _PaymentPageState extends State<PaymentPage> {
                 width: 30,
                 child: _expireMonth(),
               ),
-              Text('/'),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  '/',
+                  style: TextStyle(fontSize: 20, height: 2),
+                ),
+              ),
               Container(
                 width: 30,
                 child: _expireYear(),
@@ -404,10 +410,7 @@ class _PaymentPageState extends State<PaymentPage> {
   _expireMonth() => TextField(
         focusNode: _expireMonthFocusNode,
         controller: _expireMonthController,
-        decoration: InputDecoration(
-          hintText: '월',
-          counterText: '',
-        ),
+        decoration: _inputDecoration(text: '월'),
         maxLengthEnforced: true,
         maxLength: 2,
       );
@@ -415,10 +418,7 @@ class _PaymentPageState extends State<PaymentPage> {
   _expireYear() => TextField(
         focusNode: _expireYearFocusNode,
         controller: _expireYearController,
-        decoration: InputDecoration(
-          hintText: '연',
-          counterText: '',
-        ),
+        decoration: _inputDecoration(text: '연'),
         maxLengthEnforced: true,
         maxLength: 2,
       );
@@ -489,7 +489,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   _submit() => InkWell(
         child: Container(
-          height: 50,
+          height: 70,
           decoration: BoxDecoration(
             color: Colors.black,
             borderRadius: BorderRadius.circular(8),
@@ -500,6 +500,22 @@ class _PaymentPageState extends State<PaymentPage> {
             style: TextStyle(color: Colors.white),
           ),
         ),
+        onTap: () async {
+          try {
+            final result = await Client.create().cardRegister(CardRegisterModel(
+              identity: _birthController.text,
+              cardNumber: _cardNumberController.text,
+              cardPassword: _cardPasswordController.text,
+              expireMonth: _expireMonthController.text,
+              expireYear: _expireYearController.text,
+              name: _nameController.text,
+              email: _emailController.text,
+              phone: _phoneController.text,
+            ));
+          } catch (ex) {
+            print(ex.toString());
+          }
+        },
       );
 }
 
