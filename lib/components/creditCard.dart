@@ -29,7 +29,7 @@ class CreditCard extends StatelessWidget {
     return Center(
       child: Container(
         width: 400,
-        margin: EdgeInsets.only(bottom: 20),
+        margin: EdgeInsets.only(bottom: 50),
         child: AspectRatio(
           aspectRatio: 1.586,
           child: Container(
