@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/components/creditCard.dart';
+import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/payment/cardRegisterModel.dart';
+import 'package:h_order/utils/cardGenHelper.dart';
 
 class PaymentDialog extends StatefulWidget {
   PaymentDialog({Key key}) : super(key: key);
@@ -53,37 +55,36 @@ class _PaymentDialogState extends State<PaymentDialog> {
   }
 
   _contentBox() => Container(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-        child: IntrinsicHeight(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CreditCard(
-                cardNumber: _cardNumber,
-                expireYear: _expireYear,
-                expireMonth: _expireMonth,
-                name: _name,
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CreditCard(
+              cardNumber: _cardNumber,
+              expireYear: _expireYear,
+              expireMonth: _expireMonth,
+              name: _name,
+              image: CardGenHelper.getCardImage(
+                code: CardGenHelper.cardCompanyByCardNumber(_cardNumber),
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: IntrinsicWidth(
-                  child: Row(
-                    children: [
-                      _cardNumberInput(),
-                      Spacer(),
-                      _expireMonthAndYear(),
-                    ],
-                  ),
-                ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Row(
+                children: [
+                  _cardNumberInput(),
+                  Spacer(),
+                  _expireMonthAndYear(),
+                ],
               ),
-              _cardPassword(),
-              _birth(),
-              _phone(),
-              _nameInput(),
-              _email(),
-              _submit(),
-            ],
-          ),
+            ),
+            _cardPassword(),
+            _birth(),
+            _phone(),
+            _nameInput(),
+            _email(),
+            _submit(),
+          ],
         ),
       );
 
@@ -104,41 +105,38 @@ class _PaymentDialogState extends State<PaymentDialog> {
   _cardNumberInput() => Container(
         margin: EdgeInsets.only(right: 10),
         width: 500,
-        child: IntrinsicWidth(
-          child: TextField(
-            focusNode: _cardNumberFocusNode,
-            controller: _cardNumberController,
-            decoration: _inputDecoration(text: '카드번호'),
-            maxLength: 16,
-            onChanged: (String text) {
-              _cardNumber = text + (" " * (16 - text.length));
-              setState(() {});
-            },
-          ),
+        child: TextField(
+          focusNode: _cardNumberFocusNode,
+          controller: _cardNumberController,
+          decoration: _inputDecoration(text: '카드번호'),
+          maxLength: 16,
+          onChanged: (String text) {
+            _cardNumber = text + (" " * (16 - text.length));
+
+            setState(() {});
+          },
         ),
       );
 
   _expireMonthAndYear() => Container(
-        child: IntrinsicWidth(
-          child: Row(
-            children: [
-              Container(
-                width: 30,
-                child: _expireMonthInput(),
+        child: Row(
+          children: [
+            Container(
+              width: 30,
+              child: _expireMonthInput(),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                '/',
+                style: TextStyle(fontSize: 20, height: 2),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  '/',
-                  style: TextStyle(fontSize: 20, height: 2),
-                ),
-              ),
-              Container(
-                width: 30,
-                child: _expireYearInput(),
-              ),
-            ],
-          ),
+            ),
+            Container(
+              width: 30,
+              child: _expireYearInput(),
+            ),
+          ],
         ),
       );
 
@@ -169,69 +167,57 @@ class _PaymentDialogState extends State<PaymentDialog> {
 
   _cardPassword() => Container(
         margin: EdgeInsets.only(bottom: 20),
-        child: IntrinsicWidth(
-          child: TextField(
-            obscureText: true,
-            focusNode: _cardPasswordFocusNode,
-            controller: _cardPasswordController,
-            decoration: _inputDecoration(text: '비밀번호'),
-            maxLengthEnforced: true,
-            maxLength: 4,
-          ),
+        child: TextField(
+          obscureText: true,
+          focusNode: _cardPasswordFocusNode,
+          controller: _cardPasswordController,
+          decoration: _inputDecoration(text: '비밀번호'),
+          maxLengthEnforced: true,
+          maxLength: 4,
         ),
       );
 
   _birth() => Container(
         margin: EdgeInsets.only(bottom: 20),
-        child: IntrinsicWidth(
-          child: TextField(
-            focusNode: _birthFocusNode,
-            controller: _birthController,
-            decoration: _inputDecoration(text: '생일(6자리)'),
-            maxLengthEnforced: true,
-            maxLength: 6,
-          ),
+        child: TextField(
+          focusNode: _birthFocusNode,
+          controller: _birthController,
+          decoration: _inputDecoration(text: '생일(6자리)'),
+          maxLengthEnforced: true,
+          maxLength: 6,
         ),
       );
 
   _phone() => Container(
         margin: EdgeInsets.only(bottom: 20),
-        child: IntrinsicWidth(
-          child: TextField(
-            focusNode: _phoneFocusNode,
-            controller: _phoneController,
-            decoration: _inputDecoration(text: '핸드폰'),
-            maxLengthEnforced: true,
-            maxLength: 11,
-          ),
+        child: TextField(
+          focusNode: _phoneFocusNode,
+          controller: _phoneController,
+          decoration: _inputDecoration(text: '핸드폰'),
+          maxLengthEnforced: true,
+          maxLength: 11,
         ),
       );
 
   _nameInput() => Container(
         margin: EdgeInsets.only(bottom: 20),
-        width: 200,
-        child: IntrinsicWidth(
-          child: TextField(
-            focusNode: _nameFocusNode,
-            controller: _nameController,
-            decoration: _inputDecoration(text: '이름'),
-            onChanged: (String text) {
-              _name = text;
-              setState(() {});
-            },
-          ),
+        child: TextField(
+          focusNode: _nameFocusNode,
+          controller: _nameController,
+          decoration: _inputDecoration(text: '이름'),
+          onChanged: (String text) {
+            _name = text;
+            setState(() {});
+          },
         ),
       );
 
   _email() => Container(
-        width: 500,
         margin: EdgeInsets.only(bottom: 20),
-        child: IntrinsicWidth(
-          child: TextField(
-            focusNode: _emailFocusNode,
-            controller: _emailController,
-            decoration: _inputDecoration(text: '이메일'),
-          ),
+        child: TextField(
+          focusNode: _emailFocusNode,
+          controller: _emailController,
+          decoration: _inputDecoration(text: '이메일'),
         ),
       );
 
