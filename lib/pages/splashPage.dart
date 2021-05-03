@@ -197,11 +197,13 @@ class _SplashPageState extends State<SplashPage>
     try {
       await load();
 
-      await Client.create().login(RequestLoginModel(
+      final userInfo = await Client.create().login(RequestLoginModel(
         serialNumber: _serialNumber,
         deviceId: _deviceId,
         deviceToken: null,
       ));
+
+      Client.token = userInfo['token'];
 
       await loadInfo();
     } catch (ex) {
