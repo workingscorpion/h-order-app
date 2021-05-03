@@ -35,4 +35,7 @@ abstract class Client {
 
   @GET("/v1/device/service")
   Future<List<ServiceModel>> services();
+
+  @GET("/v1/device/service/{objectId}")
+  Future<ServiceModel> service(@Path('objectId') String objectId);
 }

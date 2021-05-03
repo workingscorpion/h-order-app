@@ -24,24 +24,24 @@ class _AlertServiceState extends State<AlertService> {
   void initState() {
     super.initState();
 
-    // data = widget.service.items?.asMap()?.map((key, value) {
-    //       switch (value.type) {
-    //         case 'Date':
-    //           return MapEntry(value.objectId, DateTime.now());
+    data = widget.service.items?.asMap()?.map((key, value) {
+          switch (value.type) {
+            case 'Date':
+              return MapEntry(value.objectId, DateTime.now());
 
-    //         case 'Time':
-    //           return MapEntry(value.objectId, null);
+            case 'Time':
+              return MapEntry(value.objectId, null);
 
-    //         case 'Number':
-    //           return MapEntry(value.objectId, 0);
+            case 'Number':
+              return MapEntry(value.objectId, 0);
 
-    //         case 'input':
-    //           return MapEntry(value.objectId, '');
-    //       }
+            case 'input':
+              return MapEntry(value.objectId, '');
+          }
 
-    //       return MapEntry(value.objectId, null);
-    //     }) ??
-    //     Map();
+          return MapEntry(value.objectId, null);
+        }) ??
+        Map();
   }
 
   @override

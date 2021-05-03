@@ -5,6 +5,7 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
 import 'package:h_order/constants/serviceStatus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 
 class ServiceButton extends StatefulWidget {
@@ -107,6 +108,8 @@ class _ServiceButtonState extends State<ServiceButton> {
   _alert() async {
     await Fluttertoast.cancel();
 
+    final service = await Client.create().service(widget.service.objectId);
+
     final result = await showDialog(
       barrierColor: Colors.black.withOpacity(.85),
       context: context,
@@ -120,7 +123,7 @@ class _ServiceButtonState extends State<ServiceButton> {
         contentPadding: EdgeInsets.zero,
         buttonPadding: EdgeInsets.zero,
         actionsPadding: EdgeInsets.zero,
-        content: AlertService(service: widget.service),
+        content: AlertService(service: service),
       ),
     );
 
