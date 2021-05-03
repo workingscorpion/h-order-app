@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
-import 'package:h_order/pages/alarm/alarmPage.dart';
-import 'package:intl/intl.dart';
 
 class MiniBanner extends StatefulWidget {
   final ServiceModel service;

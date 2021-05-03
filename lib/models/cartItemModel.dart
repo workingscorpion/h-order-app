@@ -1,3 +1,4 @@
+import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,7 +9,7 @@ class CartItemModel {
   static const minQuantity = 1;
 
   final int index;
-  final ProductModel product;
+  final ItemModel product;
   final String name;
   final int amount;
   final int optionAmount;

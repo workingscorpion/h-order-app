@@ -9,6 +9,7 @@ import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/categoryModel.dart';
+import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/productModel.dart';
 import 'package:intl/intl.dart';
 
@@ -33,7 +34,7 @@ class _ShopPageState extends State<ShopPage>
   TabController _tabController;
 
   List<CartItemModel> _cart;
-  List<CategoryModel> _categories;
+  List<ItemModel> _categories;
 
   int get quantity {
     return _cart.fold(
@@ -54,7 +55,8 @@ class _ShopPageState extends State<ShopPage>
 
     _cart = List();
 
-    _categories = SampleData.categories(widget.service.objectId);
+    _categories =
+        widget.service.items.where((item) => item.type == 'Group').toList();
 
     _tabController = TabController(
       length: _categories.length,
@@ -124,7 +126,7 @@ class _ShopPageState extends State<ShopPage>
                                             ),
                                           ),
                                           child: Text(
-                                            item.name,
+                                            item.value,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText2
@@ -161,7 +163,7 @@ class _ShopPageState extends State<ShopPage>
                                 bottom: 24,
                               ),
                               children: [
-                                ...category.products.map(
+                                ...category.items.map(
                                   (product) => _product(
                                     category: category,
                                     product: product,
@@ -184,73 +186,78 @@ class _ShopPageState extends State<ShopPage>
   }
 
   _product({
-    CategoryModel category,
-    ProductModel product,
-  }) =>
-      Material(
-        color: Colors.transparent,
-        child: Container(
-          child: InkWell(
-            onTap: () {
-              _detail(
-                category: category,
-                product: product,
-              );
-            },
-            child: IntrinsicHeight(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Hero(
-                    tag: product.objectId,
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: Container(
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          color: Colors.white,
-                        ),
-                        child: Image.asset(
-                          product.images[0],
-                          fit: BoxFit.cover,
-                        ),
+    ItemModel category,
+    ItemModel product,
+  }) {
+    final images = product.items.where((item) => item.type == 'Image');
+
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        child: InkWell(
+          onTap: () {
+            _detail(
+              category: category,
+              product: product,
+            );
+          },
+          child: IntrinsicHeight(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Hero(
+                  tag: product.objectId,
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        color: Colors.white,
                       ),
+                      child: (images?.isNotEmpty ?? false)
+                          ? Image.network(
+                              images.first.value,
+                              fit: BoxFit.cover,
+                            )
+                          : Container(),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(top: 10),
-                    child: Text(
-                      product.name,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 21,
-                      ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(top: 10),
+                  child: Text(
+                    product.value,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 21,
                     ),
                   ),
-                  Divider(
-                    height: 10,
-                    thickness: .5,
-                    color: Colors.black26,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      '${NumberFormat().format(product.price)} ₩',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Color(0xff666666),
-                      ),
+                ),
+                Divider(
+                  height: 10,
+                  thickness: .5,
+                  color: Colors.black26,
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    '${NumberFormat().format(product.price)} ₩',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Color(0xff666666),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   _floatingActionButton() => Container(
         height: MediaQuery.of(context).size.width * .12,
@@ -298,8 +305,8 @@ class _ShopPageState extends State<ShopPage>
       );
 
   _detail({
-    ProductModel product,
-    CategoryModel category,
+    ItemModel product,
+    ItemModel category,
   }) async {
     final result = await AppRouter.toProductPage(
       service: widget.service,

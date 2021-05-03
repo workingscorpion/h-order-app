@@ -6,15 +6,14 @@ import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
-import 'package:h_order/models/categoryModel.dart';
-import 'package:h_order/models/productModel.dart';
+import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
 import 'package:intl/intl.dart';
 
 class ProductPage extends StatefulWidget {
   final ServiceModel service;
-  final CategoryModel category;
-  final ProductModel product;
+  final ItemModel category;
+  final ItemModel product;
 
   ProductPage({
     this.service,
@@ -29,11 +28,11 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage>
     with SingleTickerProviderStateMixin {
   int _quantity;
-  Map<String, ProductOptionModel> _optionMap;
+  Map<String, ItemModel> _optionMap;
   Map<String, int> _selectedOption;
 
-  List<ProductOptionModel> _required;
-  List<ProductOptionModel> _optional;
+  List<ItemModel> _required;
+  List<ItemModel> _optional;
 
   int get totalAmount {
     return amount * _quantity;
@@ -45,8 +44,8 @@ class _ProductPageState extends State<ProductPage>
 
   int get optionAmount {
     var optionPrice = 0;
-    final options = [...widget.product.options];
-    options.addAll([...widget.product.options].expand((e) => e.options));
+    final options = [...widget.product.items];
+    options.addAll([...widget.product.items].expand((e) => e.items));
 
     _selectedOption.forEach((key, value) {
       if (value >= 1) {
@@ -58,6 +57,10 @@ class _ProductPageState extends State<ProductPage>
     return optionPrice;
   }
 
+  List<ItemModel> get images {
+    return widget.product.items.where((item) => item.type == 'Image').toList();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -66,24 +69,24 @@ class _ProductPageState extends State<ProductPage>
     _optionMap = Map();
     _selectedOption = Map();
 
-    _initOptionsQuantity(widget.product.options);
+    _initOptionsQuantity(widget.product.items);
 
-    _required = widget.product.options
-        .where((element) => (element.isRequired ?? false))
+    _required = widget.product.items
+        // .where((element) => (element.isRequired ?? false))
         .toList();
 
-    _optional = widget.product.options
-        .where((element) => !(element.isRequired ?? false))
+    _optional = widget.product.items
+        // .where((element) => !(element.isRequired ?? false))
         .toList();
   }
 
-  _initOptionsQuantity(List<ProductOptionModel> options) {
+  _initOptionsQuantity(List<ItemModel> options) {
     options.forEach((option) {
       _optionMap[option.objectId] = option;
       _selectedOption[option.objectId] = 0;
 
-      if ((option.options?.length ?? 0) > 0) {
-        _initOptionsQuantity(option.options);
+      if ((option.items?.length ?? 0) > 0) {
+        _initOptionsQuantity(option.items);
       }
     });
   }
@@ -101,7 +104,7 @@ class _ProductPageState extends State<ProductPage>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   PageHeader(
-                    title: [widget.service.name, widget.category.name],
+                    title: [widget.service.name, widget.category.value],
                     canBack: true,
                   ),
                   _productSlider(),
@@ -274,20 +277,22 @@ class _ProductPageState extends State<ProductPage>
               viewportFraction: 0.5,
             ),
             items: [
-              ...widget.product.images
-                  .asMap()
-                  .map(
-                    (index, item) => MapEntry(
-                      index,
-                      index == 0
-                          ? Hero(
-                              tag: widget.product.objectId,
-                              child: _productSliderItem(image: item),
-                            )
-                          : _productSliderItem(image: item),
-                    ),
-                  )
-                  .values,
+              ...(images?.isNotEmpty ?? false)
+                  ? images
+                      .asMap()
+                      .map(
+                        (index, item) => MapEntry(
+                          index,
+                          index == 0
+                              ? Hero(
+                                  tag: widget.product.objectId,
+                                  child: _productSliderItem(image: item.value),
+                                )
+                              : _productSliderItem(image: item.value),
+                        ),
+                      )
+                      .values
+                  : [],
             ],
           ),
         ),
@@ -303,7 +308,7 @@ class _ProductPageState extends State<ProductPage>
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
           ),
-          child: Image.asset(
+          child: Image.network(
             image,
             fit: BoxFit.cover,
           ),
@@ -316,7 +321,7 @@ class _ProductPageState extends State<ProductPage>
           children: [
             Container(
               child: Text(
-                widget.product.name,
+                widget.product.value,
                 style: TextStyle(
                   fontSize: 21,
                 ),
@@ -365,7 +370,7 @@ class _ProductPageState extends State<ProductPage>
       );
 
   _option({
-    ProductOptionModel option,
+    ItemModel option,
   }) =>
       Container(
         child: Column(
@@ -379,7 +384,7 @@ class _ProductPageState extends State<ProductPage>
                       Container(
                         margin: EdgeInsets.only(right: 8),
                         child: Row(
-                          children: (option.options?.length ?? -1) == 0
+                          children: (option.items?.length ?? -1) == 0
                               ? [
                                   Container(
                                     width: 20,
@@ -389,46 +394,46 @@ class _ProductPageState extends State<ProductPage>
                                       value: 1,
                                       groupValue:
                                           _selectedOption[option.objectId],
-                                      toggleable: (option.multiple ?? false),
-                                      onChanged: (value) {
-                                        if ((option.multiple ?? false)) {
-                                          _selectedOption[option.objectId] =
-                                              _selectedOption[
-                                                          option.objectId] ==
-                                                      1
-                                                  ? 0
-                                                  : 1;
-                                        } else {
-                                          if (option.isRequired ?? false) {
-                                            widget.product.options
-                                                .where((item) =>
-                                                    (item.isRequired ?? false))
-                                                .forEach((item) {
-                                              _selectedOption[item.objectId] =
-                                                  0;
-                                            });
-                                          } else {
-                                            _optionMap[option.parentObjectId]
-                                                .options
-                                                .forEach((item) {
-                                              _selectedOption[item.objectId] =
-                                                  0;
-                                            });
-                                          }
+                                      // toggleable: (option.multiple ?? false),
+                                      // onChanged: (value) {
+                                      //   if ((option.multiple ?? false)) {
+                                      //     _selectedOption[option.objectId] =
+                                      //         _selectedOption[
+                                      //                     option.objectId] ==
+                                      //                 1
+                                      //             ? 0
+                                      //             : 1;
+                                      //   } else {
+                                      //     if (option.isRequired ?? false) {
+                                      //       widget.product.options
+                                      //           .where((item) =>
+                                      //               (item.isRequired ?? false))
+                                      //           .forEach((item) {
+                                      //         _selectedOption[item.objectId] =
+                                      //             0;
+                                      //       });
+                                      //     } else {
+                                      //       _optionMap[option.parentObjectId]
+                                      //           .options
+                                      //           .forEach((item) {
+                                      //         _selectedOption[item.objectId] =
+                                      //             0;
+                                      //       });
+                                      //     }
 
-                                          _selectedOption[option.objectId] = 1;
-                                        }
-                                        setState(() {});
-                                      },
+                                      //     _selectedOption[option.objectId] = 1;
+                                      //   }
+                                      //   setState(() {});
+                                      // },
                                     ),
                                   ),
                                   Text(
-                                    option.name,
+                                    option.value,
                                   ),
                                 ]
                               : [
                                   Text(
-                                    option.name,
+                                    option.value,
                                     style: TextStyle(
                                       fontSize: 21,
                                     ),
@@ -459,31 +464,31 @@ class _ProductPageState extends State<ProductPage>
                 ),
               ),
             ),
-            (option.options?.length ?? 0) > 0
-                ? Container(
-                    margin: EdgeInsets.only(bottom: 16),
-                    child: Divider(
-                      color: Theme.of(context).accentColor,
-                      height: 10,
-                      thickness: .5,
-                    ),
-                  )
-                : Container(),
-            ...(option.options?.length ?? 0) > 0
-                ? List.generate(
-                    option.options.length * 2 - 1,
-                    (index) => index % 2 == 0
-                        ? _option(option: option.options[(index / 2).floor()])
-                        : Container(height: 16),
-                  )
-                : [],
+            // (option.options?.length ?? 0) > 0
+            //     ? Container(
+            //         margin: EdgeInsets.only(bottom: 16),
+            //         child: Divider(
+            //           color: Theme.of(context).accentColor,
+            //           height: 10,
+            //           thickness: .5,
+            //         ),
+            //       )
+            //     : Container(),
+            // ...(option.options?.length ?? 0) > 0
+            //     ? List.generate(
+            //         option.options.length * 2 - 1,
+            //         (index) => index % 2 == 0
+            //             ? _option(option: option.options[(index / 2).floor()])
+            //             : Container(height: 16),
+            //       )
+            //     : [],
           ],
         ),
       );
 
   _save() async {
-    final requiredOptions =
-        widget.product.options.where((item) => item.isRequired ?? false);
+    final requiredOptions = widget.product.items;
+    // .where((item) => item.isRequired ?? false);
     if (requiredOptions.length > 0) {
       if (!requiredOptions.any((item) => _selectedOption[item.objectId] > 0)) {
         await Fluttertoast.cancel();
@@ -501,7 +506,7 @@ class _ProductPageState extends State<ProductPage>
     }
 
     final result = CartItemModel(
-      name: widget.product.name,
+      name: widget.product.value,
       amount: amount,
       optionAmount: optionAmount,
       optionQuantity: _selectedOption,

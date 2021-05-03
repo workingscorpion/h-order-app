@@ -33,19 +33,22 @@ class _ServiceButtonState extends State<ServiceButton> {
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.all(Radius.circular(5)),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           if (widget.onTap != null) {
             widget.onTap();
             return;
           }
 
+          final service =
+              await Client.create().service(widget.service.objectId);
+
           switch (widget.service.type) {
             case 'Shop':
-              AppRouter.toShopPage(service: widget.service);
+              AppRouter.toShopPage(service: service);
               return;
 
             case 'Call':
-              _alert();
+              _alert(service);
               return;
           }
         },
@@ -105,10 +108,8 @@ class _ServiceButtonState extends State<ServiceButton> {
     }
   }
 
-  _alert() async {
+  _alert(ServiceModel service) async {
     await Fluttertoast.cancel();
-
-    final service = await Client.create().service(widget.service.objectId);
 
     final result = await showDialog(
       barrierColor: Colors.black.withOpacity(.85),
