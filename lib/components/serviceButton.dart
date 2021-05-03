@@ -53,21 +53,21 @@ class _ServiceButtonState extends State<ServiceButton> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
               height: 92,
               width: 92,
               alignment: Alignment.center,
               margin: EdgeInsets.only(bottom: 10),
               child: Container(
-                width: 38,
-                height: 38,
-                child: SvgPicture.asset(
-                  widget.service.image,
-                  color: widget.color ?? Colors.black,
-                ),
-              ),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
+                child: (widget.service.image?.isNotEmpty ?? false)
+                    ? Image.network(
+                        widget.service.image,
+                      )
+                    : Container(),
               ),
             ),
             Text(

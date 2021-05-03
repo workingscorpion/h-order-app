@@ -30,9 +30,9 @@ abstract class Client {
   @POST("/v1/auth/logout")
   Future logout();
 
-  @POST("/v1/device/layout")
+  @GET("/v1/device/layout")
   Future<LayoutModel> layout();
 
-  @POST("/v1/device/layout")
+  @GET("/v1/device/service")
   Future<List<ServiceModel>> services();
 }
