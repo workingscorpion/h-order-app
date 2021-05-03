@@ -5,7 +5,7 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
 import 'package:h_order/constants/serviceStatus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/models/serviceModel.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 
 class ServiceButton extends StatefulWidget {
   final ServiceModel service;

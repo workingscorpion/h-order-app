@@ -3,6 +3,7 @@
         "Animatable",
         "Fluttertoast",
         "RGBO",
+        "Serializable",
         "bezier",
         "commontown",
         "cupertino",

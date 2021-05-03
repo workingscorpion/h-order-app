@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
 import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/models/homeModel.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage>
   bool isOpened = false;
 
   HomeModel home;
+  LayoutModel layout;
 
   @override
   void initState() {
@@ -264,7 +266,7 @@ class _HomePageState extends State<HomePage>
         ),
       );
 
-  _verticalDevider() => Container(
+  _verticalDivider() => Container(
         height: 15,
         child: VerticalDivider(
           color: Theme.of(context).accentColor,
@@ -302,7 +304,7 @@ class _HomePageState extends State<HomePage>
                 )
                 .entries
                 .expand((item) => item.key != 0
-                    ? [_verticalDevider(), item.value]
+                    ? [_verticalDivider(), item.value]
                     : [item.value]),
           ],
         ),

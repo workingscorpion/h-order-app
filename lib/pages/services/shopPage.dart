@@ -6,10 +6,10 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/dynamicHeightGridView.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/productModel.dart';
-import 'package:h_order/models/serviceModel.dart';
 import 'package:intl/intl.dart';
 
 class ShopPage extends StatefulWidget {

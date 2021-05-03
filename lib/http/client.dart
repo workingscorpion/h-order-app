@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/login/requestLoginModel.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'client.g.dart';
@@ -27,4 +29,10 @@ abstract class Client {
 
   @POST("/v1/auth/logout")
   Future logout();
+
+  @POST("/v1/device/layout")
+  Future<LayoutModel> layout();
+
+  @POST("/v1/device/layout")
+  Future<List<ServiceModel>> services();
 }

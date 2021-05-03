@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/serviceButton.dart';
 import 'package:h_order/constants/sampleData.dart';
-import 'package:h_order/models/serviceModel.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 
 class FavoritePage extends StatefulWidget {
   @override

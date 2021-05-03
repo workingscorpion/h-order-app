@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/serviceButton.dart';
 import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/http/client.dart';
+import 'package:h_order/http/types/layout/layoutModel.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/homeModel.dart';
-import 'package:h_order/models/serviceModel.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -17,14 +19,21 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
-  HomeModel home;
+  LayoutModel layouts;
   List<ServiceModel> services;
+
+  HomeModel home;
 
   @override
   void initState() {
     super.initState();
     home = SampleData.home();
-    services = SampleData.services();
+    load();
+  }
+
+  load() async {
+    layouts = await Client.create().layout();
+    services = await Client.create().services();
   }
 
   @override

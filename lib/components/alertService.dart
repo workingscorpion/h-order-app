@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/dateTimeInput.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/itemModel.dart';
-import 'package:h_order/models/serviceModel.dart';
 
 class AlertService extends StatefulWidget {
   final ServiceModel service;
