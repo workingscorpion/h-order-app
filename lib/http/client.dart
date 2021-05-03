@@ -8,7 +8,19 @@ part 'client.g.dart';
 
 @RestApi(baseUrl: "http://192.168.0.11:5000/api")
 abstract class Client {
-  factory Client.create() => _Client(Dio());
+  factory Client.create() => _Client(
+        Dio(
+          BaseOptions(
+            headers: token != null
+                ? {
+                    "Authorization": 'Bearer $token',
+                  }
+                : {},
+          ),
+        ),
+      );
+
+  static String token;
 
   @POST("/v1/auth/login/device")
   Future login(
