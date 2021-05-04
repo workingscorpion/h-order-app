@@ -14,7 +14,7 @@ class PaymentStore extends PaymentStoreBase with _$PaymentStore {
 
 abstract class PaymentStoreBase with Store {
   @observable
-  List<PaymentMethodModel> cards;
+  List<PaymentMethodModel> cards = List();
 
   @observable
   bool loading = false;
@@ -35,52 +35,4 @@ abstract class PaymentStoreBase with Store {
       loading = false;
     }
   }
-
-  // @action
-  // updateCategoryPosition({
-  //   String categoryObjectId,
-  //   int position,
-  // }) async {
-  //   await WorkApi.updateCategoryPosition(
-  //     categoryObjectId: categoryObjectId,
-  //     position: position,
-  //   );
-  // }
-
-  // @action
-  // updateCardPosition({
-  //   String categoryObjectId,
-  //   String cardObjectId,
-  //   int position,
-  // }) async {
-  //   await WorkApi.updateCardPosition(
-  //     categoryObjectId: categoryObjectId,
-  //     cardObjectId: cardObjectId,
-  //     position: position,
-  //   );
-  // }
-
-  // @action
-  // createCard({
-  //   String categoryObjectId,
-  //   String content,
-  // }) async {
-  //   await WorkApi.createCard(
-  //     categoryObjectId: categoryObjectId,
-  //     content: content,
-  //   );
-
-  //   await loadWork();
-  // }
-
-  // @action
-  // updateCategoryTitle({
-  //   String categoryObjectId,
-  //   String title,
-  // }) async {
-  //   await WorkApi.updateCategoryTitle(
-  //     categoryObjectId: categoryObjectId,
-  //     title: title,
-  //   );
-  // }
 }

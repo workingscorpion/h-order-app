@@ -1,9 +1,9 @@
 import 'package:h_order/constants/cardCompanies.dart';
 
 class CardGenHelper {
-  static CardCompanyCode cardCompanyByCardNumber(String cardNumber) {
+  static CardCompanyText cardCompanyByCardNumber(String cardNumber) {
     final cardLength = cardNumber.replaceAll(" ", "").length;
-    CardCompanyCode result = CardCompanyCode.ETC;
+    CardCompanyText result = CardCompanyText.ETC;
     if (cardLength >= 4 && cardLength < 6) {
       result =
           getCardCompanies(str: cardNumber.substring(0, 4), isFourDigit: true);
@@ -16,7 +16,7 @@ class CardGenHelper {
   }
 
   static getCardCompanies({String str, bool isFourDigit}) {
-    CardCompanyCode result = CardCompanyCode.ETC;
+    CardCompanyText result = CardCompanyText.ETC;
     (isFourDigit ? CardCompanies.fourDigitMap : CardCompanies.sixDigitMap)
         .forEach((key, value) {
       if (value.contains(str)) {
@@ -26,7 +26,7 @@ class CardGenHelper {
     return result;
   }
 
-  static getCardImage({CardCompanyCode code}) {
-    return CardCompanies.cardImages[code];
+  static getCardImage({CardCompanyText text}) {
+    return CardCompanies.cardImages[text];
   }
 }

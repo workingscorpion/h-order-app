@@ -1,4 +1,4 @@
-enum CardCompanyCode {
+enum CardCompanyText {
   BC,
   KB,
   HANA,
@@ -38,47 +38,127 @@ enum CardCompanyCode {
 }
 
 class CardCompanies {
-  static Map<CardCompanyCode, String> cardImages = {
-    CardCompanyCode.BC: 'assets/cards/bc.png',
-    CardCompanyCode.KB: 'assets/cards/kb.png',
-    CardCompanyCode.HANA: 'assets/cards/hana.png',
-    CardCompanyCode.SAMSUNG: 'assets/cards/samsung.png',
-    CardCompanyCode.SHINHAN: 'assets/cards/shinhan.png',
-    CardCompanyCode.HYUNDAI: 'assets/cards/hyundai.png',
-    CardCompanyCode.LOTTE: 'assets/cards/lotte.png',
-    CardCompanyCode.HANMI: 'assets/cards/hanmi.png',
-    CardCompanyCode.SSGHANMI: 'assets/cards/ssghanmi.png',
-    CardCompanyCode.CITI: 'assets/cards/citi.png',
-    CardCompanyCode.NH: 'assets/cards/nh.png',
-    CardCompanyCode.SH: 'assets/cards/sh.png',
-    CardCompanyCode.CU: 'assets/cards/cu.png',
-    CardCompanyCode.WOORI: 'assets/cards/woori.png',
-    CardCompanyCode.GWANJU: 'assets/cards/gwanju.png',
-    CardCompanyCode.JEONBUK: 'assets/cards/jeonbuk.png',
-    CardCompanyCode.JEJU: 'assets/cards/jeju.png',
-    CardCompanyCode.SANEUN: 'assets/cards/saneun.png',
-    CardCompanyCode.VISA: 'assets/cards/visa.png',
-    CardCompanyCode.MASTER: 'assets/cards/master.png',
-    CardCompanyCode.DINERS: 'assets/cards/diners.png',
-    CardCompanyCode.AMX: 'assets/cards/amx.png',
-    CardCompanyCode.JCB: 'assets/cards/jcb.png',
-    CardCompanyCode.OKCASHBAG: 'assets/cards/okcashbag.png',
-    CardCompanyCode.POST: 'assets/cards/post.png',
-    CardCompanyCode.SBI: 'assets/cards/sbi.png',
-    CardCompanyCode.CHINA: 'assets/cards/china.png',
-    CardCompanyCode.MG: 'assets/cards/mg.png',
-    CardCompanyCode.KDB: 'assets/cards/kdb.png',
-    CardCompanyCode.KAKAOBANK: 'assets/cards/kakaobank.png',
-    CardCompanyCode.KBANK: 'assets/cards/kbank.png',
-    CardCompanyCode.PAYCO: 'assets/cards/payco.png',
-    CardCompanyCode.KAKAOMONEY: 'assets/cards/kakaomoney.png',
-    CardCompanyCode.SSGMONEY: 'assets/cards/ssgmoney.png',
-    CardCompanyCode.NAVER: 'assets/cards/naver.png',
-    CardCompanyCode.ETC: 'assets/cards/etc.png',
+  static Map<String, String> cardImageByCode = {
+    "01": 'assets/cards/bc.png',
+    "02": 'assets/cards/kb.png',
+    "03": 'assets/cards/hana.png',
+    "04": 'assets/cards/samsung.png',
+    "06": 'assets/cards/shinhan.png',
+    "07": 'assets/cards/hyundai.png',
+    "08": 'assets/cards/lotte.png',
+    "09": 'assets/cards/hanmi.png',
+    "10": 'assets/cards/ssghanmi.png',
+    "11": 'assets/cards/citi.png',
+    "12": 'assets/cards/nh.png',
+    "13": 'assets/cards/sh.png',
+    "14": 'assets/cards/cu.png',
+    "15": 'assets/cards/woori.png',
+    "16": 'assets/cards/hana.png',
+    "21": 'assets/cards/gwanju.png',
+    "22": 'assets/cards/jeonbuk.png',
+    "23": 'assets/cards/jeju.png',
+    "24": 'assets/cards/saneun.png',
+    "25": 'assets/cards/visa.png',
+    "26": 'assets/cards/master.png',
+    "27": 'assets/cards/diners.png',
+    "28": 'assets/cards/amx.png',
+    "29": 'assets/cards/jcb.png',
+    "31": 'assets/cards/okcashbag.png',
+    "32": 'assets/cards/post.png',
+    "33": 'assets/cards/sbi.png',
+    "34": 'assets/cards/china.png',
+    "35": 'assets/cards/mg.png',
+    "36": 'assets/cards/kdb.png',
+    "37": 'assets/cards/kakaobank.png',
+    "38": 'assets/cards/kbank.png',
+    "39": 'assets/cards/payco.png',
+    "40": 'assets/cards/kakaomoney.png',
+    "41": 'assets/cards/ssgmoney.png',
+    "42": 'assets/cards/naver.png',
+    "99": 'assets/cards/etc.png',
   };
 
-  static Map<CardCompanyCode, List<String>> fourDigitMap = {
-    CardCompanyCode.BC: [
+  static Map<String, String> cardNameByCode = {
+    "01": 'BC카드',
+    "02": 'KB국민',
+    "03": '하나카드',
+    "04": '삼성카드',
+    "06": '신한카드',
+    "07": '현대카드',
+    "08": '롯데카드',
+    "09": '한미카드',
+    "10": '신세계한미카드',
+    "11": '씨티카드',
+    "12": 'NH농협카드',
+    "13": '수협카드',
+    "14": '신협카드',
+    "15": '우리카드',
+    "16": '하나카드',
+    "21": '광주은행',
+    "22": '전북은행',
+    "23": '제주은행',
+    "24": '산은',
+    "25": '비자카드',
+    "26": '마스터(마에스트로)카드',
+    "27": '다이너스카드',
+    "28": '아메리칸 익스프레스 카드',
+    "29": 'JCB카드',
+    "31": 'OK캐시백',
+    "32": '우체국',
+    "33": 'SBI저축은행',
+    "34": '은련',
+    "35": '새마을금고',
+    "36": 'KDB캐피탈',
+    "37": '카카오뱅크',
+    "38": '케이뱅크',
+    "39": '페이코',
+    "40": '카카오페이',
+    "41": '신세계페이',
+    "42": '네이버페이',
+    "99": '기타',
+  };
+
+  static Map<CardCompanyText, String> cardImages = {
+    CardCompanyText.BC: 'assets/cards/bc.png',
+    CardCompanyText.KB: 'assets/cards/kb.png',
+    CardCompanyText.HANA: 'assets/cards/hana.png',
+    CardCompanyText.SAMSUNG: 'assets/cards/samsung.png',
+    CardCompanyText.SHINHAN: 'assets/cards/shinhan.png',
+    CardCompanyText.HYUNDAI: 'assets/cards/hyundai.png',
+    CardCompanyText.LOTTE: 'assets/cards/lotte.png',
+    CardCompanyText.HANMI: 'assets/cards/hanmi.png',
+    CardCompanyText.SSGHANMI: 'assets/cards/ssghanmi.png',
+    CardCompanyText.CITI: 'assets/cards/citi.png',
+    CardCompanyText.NH: 'assets/cards/nh.png',
+    CardCompanyText.SH: 'assets/cards/sh.png',
+    CardCompanyText.CU: 'assets/cards/cu.png',
+    CardCompanyText.WOORI: 'assets/cards/woori.png',
+    CardCompanyText.GWANJU: 'assets/cards/gwanju.png',
+    CardCompanyText.JEONBUK: 'assets/cards/jeonbuk.png',
+    CardCompanyText.JEJU: 'assets/cards/jeju.png',
+    CardCompanyText.SANEUN: 'assets/cards/saneun.png',
+    CardCompanyText.VISA: 'assets/cards/visa.png',
+    CardCompanyText.MASTER: 'assets/cards/master.png',
+    CardCompanyText.DINERS: 'assets/cards/diners.png',
+    CardCompanyText.AMX: 'assets/cards/amx.png',
+    CardCompanyText.JCB: 'assets/cards/jcb.png',
+    CardCompanyText.OKCASHBAG: 'assets/cards/okcashbag.png',
+    CardCompanyText.POST: 'assets/cards/post.png',
+    CardCompanyText.SBI: 'assets/cards/sbi.png',
+    CardCompanyText.CHINA: 'assets/cards/china.png',
+    CardCompanyText.MG: 'assets/cards/mg.png',
+    CardCompanyText.KDB: 'assets/cards/kdb.png',
+    CardCompanyText.KAKAOBANK: 'assets/cards/kakaobank.png',
+    CardCompanyText.KBANK: 'assets/cards/kbank.png',
+    CardCompanyText.PAYCO: 'assets/cards/payco.png',
+    CardCompanyText.KAKAOMONEY: 'assets/cards/kakaomoney.png',
+    CardCompanyText.SSGMONEY: 'assets/cards/ssgmoney.png',
+    CardCompanyText.NAVER: 'assets/cards/naver.png',
+    CardCompanyText.ETC: 'assets/cards/etc.png',
+  };
+
+  static Map<CardCompanyText, List<String>> fourDigitMap = {
+    CardCompanyText.BC: [
       "4162",
       "9440",
       "3560",
@@ -100,39 +180,47 @@ class CardCompanies {
       "9460",
       "9461"
     ],
-    CardCompanyCode.KB: ['4673'],
-    CardCompanyCode.HANA: [
+    CardCompanyText.KB: ['4673'],
+    CardCompanyText.HANA: [
       '4655',
       '5441',
       '6244',
     ],
-    CardCompanyCode.HYUNDAI: ['3616'],
-    CardCompanyCode.WOORI: [
+    CardCompanyText.HYUNDAI: ['3616'],
+    CardCompanyText.WOORI: [
       '4061',
       '4062',
       '4063',
       '4064',
       '4065',
     ],
-    CardCompanyCode.KBANK: ['4656'],
-    CardCompanyCode.VISA: ['4450'],
-    CardCompanyCode.MASTER: ['5898'],
-    CardCompanyCode.ETC: [
+    CardCompanyText.KBANK: ['4656'],
+    CardCompanyText.VISA: ['4450'],
+    CardCompanyText.MASTER: ['5898'],
+    CardCompanyText.ETC: [
       '4656',
       '9000',
     ]
   };
 
-  static Map<CardCompanyCode, List<String>> sixDigitMap = {
-    CardCompanyCode.BC: [
+  static Map<CardCompanyText, List<String>> sixDigitMap = {
+    CardCompanyText.BC: [
       '404825',
       '414025',
       '538159',
       '942150',
       '943150',
       '944603',
+      '356820',
+      '404678',
+      '440025',
+      '447320',
+      '490220',
+      '493455',
+      '538720',
+      '944520',
     ],
-    CardCompanyCode.KB: [
+    CardCompanyText.KB: [
       '356407',
       '356415',
       '356416',
@@ -166,7 +254,7 @@ class CardCompanies {
       '944547',
       '949094',
     ],
-    CardCompanyCode.HANA: [
+    CardCompanyText.HANA: [
       '356543',
       '356545',
       '371001',
@@ -184,13 +272,11 @@ class CardCompanies {
       '411904',
       '411905',
       '418236',
-      '440025',
       '455437',
       '457047',
       '459900',
       '459930',
       '459950',
-      '493455',
       '516574',
       '518185',
       '523830',
@@ -206,7 +292,7 @@ class CardCompanies {
       '626261',
       '941181',
     ],
-    CardCompanyCode.SAMSUNG: [
+    CardCompanyText.SAMSUNG: [
       '375987',
       '377989',
       '379183',
@@ -230,7 +316,7 @@ class CardCompanies {
       '941090',
       '942090',
     ],
-    CardCompanyCode.SHINHAN: [
+    CardCompanyText.SHINHAN: [
       '356900',
       '356901',
       '356902',
@@ -238,7 +324,6 @@ class CardCompanies {
       '377982',
       '379983',
       '377988',
-      '404678',
       '405753',
       '422155',
       '430972',
@@ -267,7 +352,7 @@ class CardCompanies {
       '941161',
       '942061',
     ],
-    CardCompanyCode.HYUNDAI: [
+    CardCompanyText.HYUNDAI: [
       '402857',
       '418123',
       '433028',
@@ -283,7 +368,7 @@ class CardCompanies {
       '949088',
       '949097',
     ],
-    CardCompanyCode.LOTTE: [
+    CardCompanyText.LOTTE: [
       '356914',
       '356915',
       '356916',
@@ -301,7 +386,7 @@ class CardCompanies {
       '940915',
       '940951',
     ],
-    CardCompanyCode.CITI: [
+    CardCompanyText.CITI: [
       '406357',
       '410109',
       '422727',
@@ -313,7 +398,7 @@ class CardCompanies {
       '588644',
       '940010',
     ],
-    CardCompanyCode.NH: [
+    CardCompanyText.NH: [
       '356316',
       '356317',
       '356418',
@@ -329,7 +414,7 @@ class CardCompanies {
       '944116',
       '946316',
     ],
-    CardCompanyCode.SH: [
+    CardCompanyText.SH: [
       '421417',
       '421418',
       '422190',
@@ -338,37 +423,32 @@ class CardCompanies {
       '940701',
       '940702',
     ],
-    CardCompanyCode.WOORI: [
-      '356820',
+    CardCompanyText.WOORI: [
       '421420',
-      '447320',
-      '490220',
       '515954',
       '535020',
       '537120',
       '537145',
-      '538720',
       '538920',
       '548020',
       '552220',
       '657020',
       '942520',
-      '944520',
     ],
-    CardCompanyCode.GWANJU: [
+    CardCompanyText.GWANJU: [
       '459952',
       '953003',
     ],
-    CardCompanyCode.JEJU: [
+    CardCompanyText.JEJU: [
       '463916',
     ],
-    CardCompanyCode.KAKAOBANK: [
+    CardCompanyText.KAKAOBANK: [
       '536510',
     ],
-    CardCompanyCode.KBANK: [
+    CardCompanyText.KBANK: [
       '459912',
     ],
-    CardCompanyCode.ETC: [
+    CardCompanyText.ETC: [
       '443233',
       '949130',
     ],

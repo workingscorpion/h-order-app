@@ -4,6 +4,7 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/creditCard.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/payment/cardRegisterModel.dart';
+import 'package:h_order/store/paymentStore.dart';
 import 'package:h_order/utils/cardGenHelper.dart';
 
 class PaymentDialog extends StatefulWidget {
@@ -14,6 +15,7 @@ class PaymentDialog extends StatefulWidget {
 }
 
 class _PaymentDialogState extends State<PaymentDialog> {
+  PaymentStore paymentStore = PaymentStore.instance;
   TextEditingController _cardNumberController = TextEditingController();
   TextEditingController _expireMonthController = TextEditingController();
   TextEditingController _expireYearController = TextEditingController();
@@ -66,7 +68,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
               expireMonth: _expireMonth,
               name: _name,
               image: CardGenHelper.getCardImage(
-                code: CardGenHelper.cardCompanyByCardNumber(_cardNumber),
+                text: CardGenHelper.cardCompanyByCardNumber(_cardNumber),
               ),
             ),
             Container(
@@ -247,6 +249,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
               email: _emailController.text,
               phone: _phoneController.text,
             ));
+            await paymentStore.loadCards();
             AppRouter.pop();
           } catch (ex) {
             print(ex.toString());
