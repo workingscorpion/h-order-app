@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/dateTimeInput.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/itemModel.dart';
-import 'package:h_order/models/serviceModel.dart';
 
 class AlertService extends StatefulWidget {
   final ServiceModel service;
@@ -26,13 +26,13 @@ class _AlertServiceState extends State<AlertService> {
 
     data = widget.service.items?.asMap()?.map((key, value) {
           switch (value.type) {
-            case 'date':
+            case 'Date':
               return MapEntry(value.objectId, DateTime.now());
 
-            case 'time':
+            case 'Time':
               return MapEntry(value.objectId, null);
 
-            case 'count':
+            case 'Number':
               return MapEntry(value.objectId, 0);
 
             case 'input':
@@ -110,31 +110,33 @@ class _AlertServiceState extends State<AlertService> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ...List.generate(children.length * 2 - 1, (index) {
-                    final i = (index / 2).floor();
-                    if (index % 2 == 1) {
-                      if (i + 1 < children.length) {
-                        if (widget.service.items[i].type !=
-                            widget.service.items[i + 1].type) {
-                          return Container(
-                            height: 40,
-                          );
-                        } else {
-                          return Divider(
-                            color: Color(0xffe5e5e5),
-                            height: 30,
-                            thickness: 1,
-                            indent: 100,
-                            endIndent: 100,
-                          );
-                        }
-                      }
+                  ...(children?.isNotEmpty ?? false)
+                      ? List.generate(children.length * 2 - 1, (index) {
+                          final i = (index / 2).floor();
+                          if (index % 2 == 1) {
+                            if (i + 1 < children.length) {
+                              if (widget.service.items[i].type !=
+                                  widget.service.items[i + 1].type) {
+                                return Container(
+                                  height: 40,
+                                );
+                              } else {
+                                return Divider(
+                                  color: Color(0xffe5e5e5),
+                                  height: 30,
+                                  thickness: 1,
+                                  indent: 100,
+                                  endIndent: 100,
+                                );
+                              }
+                            }
 
-                      return Container();
-                    }
+                            return Container();
+                          }
 
-                    return children[i];
-                  }),
+                          return children[i];
+                        })
+                      : [],
                 ],
               ),
             ),
@@ -192,16 +194,16 @@ class _AlertServiceState extends State<AlertService> {
     ItemModel item,
   }) {
     switch (item.type) {
-      case 'text':
+      case 'Text':
         return _alertTextContent(item: item);
 
-      case 'dateTime':
+      case 'DateTime':
         return _alertDateTimeContent(item: item);
 
-      case 'count':
+      case 'Number':
         return _alertCountContent(item: item);
 
-      case 'input':
+      case 'Input':
         return _alertInputContent(item: item);
     }
 

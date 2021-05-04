@@ -7,15 +7,17 @@ part 'serviceModel.g.dart';
 class ServiceModel {
   final String objectId;
   final String name;
-  final String type;
   final String image;
+  final String type;
+  final bool enabled;
   final List<ItemModel> items;
 
   ServiceModel({
     this.objectId,
     this.name,
-    this.type,
     this.image,
+    this.type,
+    this.enabled,
     this.items,
   });
 

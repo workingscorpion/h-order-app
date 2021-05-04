@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/models/cartItemModel.dart';
+import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
 
 class ShoppingCompletePage extends StatefulWidget {
@@ -17,7 +18,7 @@ class ShoppingCompletePage extends StatefulWidget {
 
 class _ShoppingCompletePageState extends State<ShoppingCompletePage>
     with SingleTickerProviderStateMixin {
-  Map<String, ProductOptionModel> _optionMap;
+  Map<String, ItemModel> _optionMap;
 
   @override
   void initState() {
@@ -25,16 +26,16 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
 
     _optionMap = Map();
     widget.cart.forEach((element) {
-      _initOptionsQuantity(element.product.options);
+      _initOptionsQuantity(element.product.items);
     });
   }
 
-  _initOptionsQuantity(List<ProductOptionModel> options) {
+  _initOptionsQuantity(List<ItemModel> options) {
     options.forEach((option) {
       _optionMap[option.objectId] = option;
 
-      if ((option.options?.length ?? 0) > 0) {
-        _initOptionsQuantity(option.options);
+      if ((option.items?.length ?? 0) > 0) {
+        _initOptionsQuantity(option.items);
       }
     });
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
@@ -7,7 +8,6 @@ import 'package:h_order/models/homeModel.dart';
 import 'package:h_order/models/keyValueModel.dart';
 import 'package:h_order/models/noticeModel.dart';
 import 'package:h_order/models/productModel.dart';
-import 'package:h_order/models/serviceModel.dart';
 
 abstract class SampleData {
   static final String homeJson = '''{

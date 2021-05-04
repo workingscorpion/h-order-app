@@ -4,6 +4,7 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
+import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/productOptionModel.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +21,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage>
     with SingleTickerProviderStateMixin {
-  Map<String, ProductOptionModel> _optionMap;
+  Map<String, ItemModel> _optionMap;
 
   @override
   void initState() {
@@ -28,16 +29,16 @@ class _CartPageState extends State<CartPage>
 
     _optionMap = Map();
     widget.cart?.forEach((element) {
-      _initOptionsQuantity(element.product.options);
+      _initOptionsQuantity(element.product.items);
     });
   }
 
-  _initOptionsQuantity(List<ProductOptionModel> options) {
+  _initOptionsQuantity(List<ItemModel> options) {
     options?.forEach((option) {
       _optionMap[option.objectId] = option;
 
-      if ((option.options?.length ?? 0) > 0) {
-        _initOptionsQuantity(option.options);
+      if ((option.items?.length ?? 0) > 0) {
+        _initOptionsQuantity(option.items);
       }
     });
   }
@@ -176,7 +177,7 @@ class _CartPageState extends State<CartPage>
                             ),
                             _option(
                               quantity: cartItem.quantity,
-                              name: cartItem.product.name,
+                              name: cartItem.product.value,
                               price: cartItem.product.price,
                             ),
                             ...cartItem.optionQuantity.entries
@@ -187,7 +188,8 @@ class _CartPageState extends State<CartPage>
                               return _option(
                                 depth: 1,
                                 quantity: element.value,
-                                name: _optionName(option: option),
+                                name: option.value,
+                                // name: _optionName(option: option),
                                 price: option.price,
                               );
                             }),
@@ -340,15 +342,15 @@ class _CartPageState extends State<CartPage>
 
   String _optionName({
     int quantity,
-    ProductOptionModel option,
+    ItemModel option,
   }) {
     final name =
-        quantity != null ? '${option.name} ($quantity)' : '${option.name}';
+        quantity != null ? '${option.value} ($quantity)' : '${option.value}';
 
-    if (option.parentObjectId != null) {
-      final parent = _optionMap[option.parentObjectId];
-      return _optionName(option: parent) + ' > ' + name;
-    }
+    // if (option.parentObjectId != null) {
+    //   final parent = _optionMap[option.parentObjectId];
+    //   return _optionName(option: parent) + ' > ' + name;
+    // }
 
     return name;
   }

@@ -5,7 +5,8 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
 import 'package:h_order/constants/serviceStatus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/models/serviceModel.dart';
+import 'package:h_order/http/client.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 
 class ServiceButton extends StatefulWidget {
   final ServiceModel service;
@@ -32,19 +33,22 @@ class _ServiceButtonState extends State<ServiceButton> {
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.all(Radius.circular(5)),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           if (widget.onTap != null) {
             widget.onTap();
             return;
           }
 
+          final service =
+              await Client.create().service(widget.service.objectId);
+
           switch (widget.service.type) {
-            case 'shop':
-              AppRouter.toShopPage(service: widget.service);
+            case 'Shop':
+              AppRouter.toShopPage(service: service);
               return;
 
-            case 'call':
-              _alert();
+            case 'Call':
+              _alert(service);
               return;
           }
         },
@@ -53,21 +57,21 @@ class _ServiceButtonState extends State<ServiceButton> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
               height: 92,
               width: 92,
               alignment: Alignment.center,
               margin: EdgeInsets.only(bottom: 10),
               child: Container(
-                width: 38,
-                height: 38,
-                child: SvgPicture.asset(
-                  widget.service.image,
-                  color: widget.color ?? Colors.black,
-                ),
-              ),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
+                child: (widget.service.image?.isNotEmpty ?? false)
+                    ? Image.network(
+                        widget.service.image,
+                      )
+                    : Container(),
               ),
             ),
             Text(
@@ -104,7 +108,7 @@ class _ServiceButtonState extends State<ServiceButton> {
     }
   }
 
-  _alert() async {
+  _alert(ServiceModel service) async {
     await Fluttertoast.cancel();
 
     final result = await showDialog(
@@ -120,7 +124,7 @@ class _ServiceButtonState extends State<ServiceButton> {
         contentPadding: EdgeInsets.zero,
         buttonPadding: EdgeInsets.zero,
         actionsPadding: EdgeInsets.zero,
-        content: AlertService(service: widget.service),
+        content: AlertService(service: service),
       ),
     );
 

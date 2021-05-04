@@ -7,17 +7,17 @@ class ItemModel {
   final String objectId;
   final String type;
   final String value;
-  final int min;
   final int max;
-  final List<ItemModel> children;
+  final int price;
+  final List<ItemModel> items;
 
   ItemModel({
     this.objectId,
     this.type,
     this.value,
-    this.min,
     this.max,
-    this.children,
+    this.price,
+    this.items,
   });
 
   factory ItemModel.fromJson(Map<String, dynamic> json) =>
