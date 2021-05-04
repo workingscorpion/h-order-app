@@ -71,7 +71,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                               Text(CardCompanies.cardNameByCode[
                                                   primaryMethod.bankCode]),
                                               Text(
-                                                  '****-****-****-${primaryMethod.cardLastNumber}'),
+                                                  '**** - **** - **** - ${primaryMethod.cardLastNumber}'),
                                               Spacer(),
                                               _button(text: '수정'),
                                             ],
@@ -264,7 +264,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                   ),
                   Text(
-                    '****-****-****-${item.numbers}',
+                    '**** - **** - **** - ${item.numbers}',
                     style: TextStyle(
                       fontSize: 24,
                       color: Colors.black,
