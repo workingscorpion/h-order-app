@@ -228,34 +228,6 @@ class _Logo extends StatefulWidget {
 }
 
 class _LogoState extends State<_Logo> with SingleTickerProviderStateMixin {
-  // AnimationController _controller;
-  // Tween<Matrix4> _tween = Tween(
-  //   begin: Matrix4.rotationZ(0),
-  //   end: Matrix4.rotationZ(-0.1),
-  // );
-  // Animation<Matrix4> _animation;
-
-  // final _duration = Duration(milliseconds: 200);
-
-  @override
-  void initState() {
-    super.initState();
-
-    // _controller = AnimationController(
-    //   duration: Duration(seconds: 1),
-    //   vsync: this,
-    // );
-    // _controller.repeat(reverse: false);
-    // _animation = _tween.animate(_controller);
-  }
-
-  @override
-  void dispose() {
-    // _controller.dispose();
-
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -266,9 +238,5 @@ class _LogoState extends State<_Logo> with SingleTickerProviderStateMixin {
       alignment: Alignment.center,
       child: SvgPicture.asset('assets/icons/logo.svg'),
     );
-    // return AnimatedBuilder(
-    //   animation: _animation,
-    //   builder: (context, child) =>
-    // );
   }
 }
