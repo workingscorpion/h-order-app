@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/paymentDialog.dart';
+import 'package:h_order/store/paymentStore.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -9,6 +10,18 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
+  PaymentStore paymentStore = PaymentStore.instance;
+
+  @override
+  void initState() {
+    load();
+    super.initState();
+  }
+
+  load() async {
+    await paymentStore.loadCards();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: SafeArea(
@@ -27,7 +40,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         padding: EdgeInsets.all(24),
                         children: [
                           _title(
-                            text: '주 계좌',
+                            text: '주 결제 수단',
                           ),
                           Container(
                             padding: EdgeInsets.all(32),
