@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/creditCard.dart';
-import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/payment/cardRegisterModel.dart';
 import 'package:h_order/utils/cardGenHelper.dart';
@@ -236,7 +237,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
         ),
         onTap: () async {
           try {
-            final result = await Client.create().cardRegister(CardRegisterModel(
+            await Client.create().cardRegister(CardRegisterModel(
               identity: _birthController.text,
               cardNumber: _cardNumberController.text,
               cardPassword: _cardPasswordController.text,
@@ -246,8 +247,17 @@ class _PaymentDialogState extends State<PaymentDialog> {
               email: _emailController.text,
               phone: _phoneController.text,
             ));
+            AppRouter.pop();
           } catch (ex) {
             print(ex.toString());
+            await Fluttertoast.showToast(
+              msg: "카드를 등록할 수 없습니다.",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+              textColor: Theme.of(context).textTheme.bodyText1.color,
+              fontSize: 17,
+            );
           }
         },
       );

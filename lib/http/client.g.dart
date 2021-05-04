@@ -53,7 +53,7 @@ class _Client implements Client {
   }
 
   @override
-  Future<CardModel> cardRegister(card) async {
+  Future<PaymentMethodModel> cardRegister(card) async {
     ArgumentError.checkNotNull(card, 'card');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -68,7 +68,28 @@ class _Client implements Client {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CardModel.fromJson(_result.data);
+    final value = PaymentMethodModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<List<PaymentMethodModel>> cards() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<List<dynamic>>(
+        '/v1/device/paymentmethod',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    var value = _result.data
+        .map((dynamic i) =>
+            PaymentMethodModel.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 }

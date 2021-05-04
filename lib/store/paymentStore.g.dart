@@ -12,13 +12,13 @@ mixin _$PaymentStore on PaymentStoreBase, Store {
   final _$cardsAtom = Atom(name: 'PaymentStoreBase.cards');
 
   @override
-  List<CardModel> get cards {
+  List<PaymentMethodModel> get cards {
     _$cardsAtom.reportRead();
     return super.cards;
   }
 
   @override
-  set cards(List<CardModel> value) {
+  set cards(List<PaymentMethodModel> value) {
     _$cardsAtom.reportWrite(value, super.cards, () {
       super.cards = value;
     });

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:h_order/http/types/login/requestLoginModel.dart';
 import 'package:h_order/http/types/payment/cardRegisterModel.dart';
-import 'package:h_order/models/cardModel.dart';
+import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'client.g.dart';
@@ -31,7 +31,10 @@ abstract class Client {
   Future logout();
 
   @POST("/v1/device/paymentmethod/register")
-  Future<CardModel> cardRegister(
+  Future<PaymentMethodModel> cardRegister(
     @Body() CardRegisterModel card,
   );
+
+  @GET("/v1/device/paymentmethod")
+  Future<List<PaymentMethodModel>> cards();
 }

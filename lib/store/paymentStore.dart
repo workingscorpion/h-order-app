@@ -1,5 +1,5 @@
 import 'package:h_order/http/client.dart';
-import 'package:h_order/models/cardModel.dart';
+import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/utils/lazy.dart';
 import 'package:mobx/mobx.dart';
 
@@ -14,28 +14,26 @@ class PaymentStore extends PaymentStoreBase with _$PaymentStore {
 
 abstract class PaymentStoreBase with Store {
   @observable
-  List<CardModel> cards;
+  List<PaymentMethodModel> cards;
 
   @observable
   bool loading = false;
 
   @action
   loadCards() async {
-    // if (loading) {
-    //   return;
-    // }
+    if (loading) {
+      return;
+    }
 
-    // try {
-    //   loading = true;
-
-    //   final response = await Client.create().
-
-    // } catch (e) {
-    //   print(e);
-    //   loading = false;
-    // } finally {
-    //   loading = false;
-    // }
+    try {
+      loading = true;
+      cards = await Client.create().cards();
+    } catch (e) {
+      print(e);
+      loading = false;
+    } finally {
+      loading = false;
+    }
   }
 
   // @action
