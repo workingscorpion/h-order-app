@@ -118,6 +118,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
 
             setState(() {});
           },
+          onEditingComplete: () {
+            FocusScope.of(context).requestFocus(_expireMonthFocusNode);
+          },
         ),
       );
 
@@ -154,6 +157,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
           // _expireMonth = text + (" " * (2 - text.length));
           setState(() {});
         },
+        onEditingComplete: () {
+          FocusScope.of(context).requestFocus(_expireYearFocusNode);
+        },
       );
 
   _expireYearInput() => TextField(
@@ -166,6 +172,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
           _expireYear = text;
           setState(() {});
         },
+        onEditingComplete: () {
+          FocusScope.of(context).requestFocus(_cardPasswordFocusNode);
+        },
       );
 
   _cardPassword() => Container(
@@ -177,6 +186,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
           decoration: _inputDecoration(text: '비밀번호'),
           maxLengthEnforced: true,
           maxLength: 4,
+          onEditingComplete: () {
+            FocusScope.of(context).requestFocus(_birthFocusNode);
+          },
         ),
       );
 
@@ -188,6 +200,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
           decoration: _inputDecoration(text: '생일(6자리)'),
           maxLengthEnforced: true,
           maxLength: 6,
+          onEditingComplete: () {
+            FocusScope.of(context).requestFocus(_phoneFocusNode);
+          },
         ),
       );
 
@@ -199,6 +214,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
           decoration: _inputDecoration(text: '핸드폰'),
           maxLengthEnforced: true,
           maxLength: 11,
+          onEditingComplete: () {
+            FocusScope.of(context).requestFocus(_nameFocusNode);
+          },
         ),
       );
 
@@ -212,6 +230,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
             _name = text;
             setState(() {});
           },
+          onEditingComplete: () {
+            FocusScope.of(context).requestFocus(_emailFocusNode);
+          },
         ),
       );
 
@@ -221,6 +242,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
           focusNode: _emailFocusNode,
           controller: _emailController,
           decoration: _inputDecoration(text: '이메일'),
+          onEditingComplete: () {
+            _submit();
+          },
         ),
       );
 

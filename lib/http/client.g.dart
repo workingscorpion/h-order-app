@@ -148,4 +148,22 @@ class _Client implements Client {
         .toList();
     return value;
   }
+
+  @override
+  Future<dynamic> deleteCard(objectId) async {
+    ArgumentError.checkNotNull(objectId, 'objectId');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'objectId': objectId};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request('/v1/device/paymentmethod',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    return value;
+  }
 }

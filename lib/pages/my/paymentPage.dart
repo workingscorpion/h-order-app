@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/components/cardsView.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/paymentDialog.dart';
 import 'package:h_order/constants/cardCompanies.dart';
+import 'package:h_order/http/client.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/store/paymentStore.dart';
 
@@ -159,7 +159,12 @@ class _PaymentPageState extends State<PaymentPage> {
                             _title(
                               text: '등록 카드',
                             ),
-                            CardsView(),
+                            CardsView(
+                              text: '삭제',
+                              onTap: (int) => Client.create().deleteCard(
+                                paymentStore.cards[int].objectId,
+                              ),
+                            ),
                           ],
                         ),
                       ),

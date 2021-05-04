@@ -48,4 +48,9 @@ abstract class Client {
 
   @GET("/v1/device/paymentmethod")
   Future<List<PaymentMethodModel>> cards();
+
+  @DELETE("/v1/device/paymentmethod")
+  Future deleteCard(
+    @Query("objectId") String objectId,
+  );
 }
