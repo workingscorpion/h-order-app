@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/login/requestLoginModel.dart';
+import 'package:h_order/http/types/payment/cardRegisterModel.dart';
+import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'client.g.dart';
 
-@RestApi(baseUrl: "http://192.168.0.104:5000/api")
+@RestApi(baseUrl: "http://192.168.0.11:5000/api")
 abstract class Client {
   factory Client.create() => _Client(
         Dio(
@@ -38,4 +40,12 @@ abstract class Client {
 
   @GET("/v1/device/service/{objectId}")
   Future<ServiceModel> service(@Path('objectId') String objectId);
+
+  @POST("/v1/device/paymentmethod/register")
+  Future<PaymentMethodModel> cardRegister(
+    @Body() CardRegisterModel card,
+  );
+
+  @GET("/v1/device/paymentmethod")
+  Future<List<PaymentMethodModel>> cards();
 }

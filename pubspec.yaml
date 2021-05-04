@@ -70,6 +70,7 @@ flutter:
     - assets/icons/home/
     - assets/icons/notice/
     - assets/icons/service/
+    - assets/cards/
     - assets/sample/
     - assets/sample/payment/
     - assets/sample/commontown/
