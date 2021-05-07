@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
 import 'package:h_order/constants/serviceStatus.dart';
@@ -22,10 +21,10 @@ class ServiceButton extends StatefulWidget {
   });
 
   @override
-  _ServiceButtonState createState() => _ServiceButtonState();
+  ServiceButtonState createState() => ServiceButtonState();
 }
 
-class _ServiceButtonState extends State<ServiceButton> {
+class ServiceButtonState extends State<ServiceButton> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -33,7 +32,17 @@ class _ServiceButtonState extends State<ServiceButton> {
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.all(Radius.circular(5)),
       child: InkWell(
-        onTap: _onTap,
+        onTap: () {
+          if (widget.onTap != null) {
+            widget.onTap();
+            return;
+          }
+
+          ServiceButtonState.openService(
+            context: context,
+            service: widget.service,
+          );
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,29 +86,6 @@ class _ServiceButtonState extends State<ServiceButton> {
     );
   }
 
-  _onTap() async {
-    if (widget.onTap != null) {
-      widget.onTap();
-      return;
-    }
-
-    final service = await Client.create().service(widget.service.objectId);
-
-    switch (widget.service.type) {
-      case 'Information':
-        AppRouter.toInformationPage(service: service);
-        return;
-
-      case 'Shop':
-        AppRouter.toShopPage(service: service);
-        return;
-
-      case 'Call':
-        _alert(service);
-        return;
-    }
-  }
-
   _serviceStatusText() {
     switch (widget.status) {
       case ServiceStatus.Call:
@@ -113,7 +99,31 @@ class _ServiceButtonState extends State<ServiceButton> {
     }
   }
 
-  _alert(ServiceModel service) async {
+  static openService({
+    BuildContext context,
+    ServiceModel service,
+  }) async {
+    final _service = await Client.create().service(service.objectId);
+
+    switch (_service.type) {
+      case 'Information':
+        AppRouter.toInformationPage(service: _service);
+        return;
+
+      case 'Shop':
+        AppRouter.toShopPage(service: _service);
+        return;
+
+      case 'Call':
+        alert(context: context, service: _service);
+        return;
+    }
+  }
+
+  static alert({
+    BuildContext context,
+    ServiceModel service,
+  }) async {
     await Fluttertoast.cancel();
 
     final result = await showDialog(
@@ -134,7 +144,7 @@ class _ServiceButtonState extends State<ServiceButton> {
     );
 
     if (result != null) {
-      final resultMessage = widget.service?.items
+      final resultMessage = service?.items
               ?.singleWhere(
                 (item) => item.type == 'resultMessage',
                 orElse: () => null,

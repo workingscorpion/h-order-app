@@ -92,12 +92,27 @@ class _HomeViewState extends State<HomeView>
 
     switch (layoutService.type) {
       case 'Group':
+        children = layoutService?.items
+                ?.map((item) => serviceMap[item.value])
+                ?.map((item) => MiniBanner(service: item))
+                ?.toList() ??
+            [];
         break;
 
       case 'Shop':
+        children = layoutService?.items
+                ?.where((item) => item.type == 'Group')
+                ?.map((item) => MiniBanner(item: item))
+                ?.toList() ??
+            [];
         break;
 
       case 'Information':
+        children = layoutService?.items
+                ?.where((item) => item.type == 'Image')
+                ?.map((item) => MiniBanner(item: item))
+                ?.toList() ??
+            [];
         break;
     }
 
@@ -113,8 +128,7 @@ class _HomeViewState extends State<HomeView>
           ),
           scrollDirection: Axis.horizontal,
           children: [
-            ...layoutService?.items
-                ?.map((item) => MiniBanner(service: layoutService)),
+            ...children,
           ],
         ),
       ),

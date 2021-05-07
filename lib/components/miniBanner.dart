@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/serviceButton.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
+import 'package:h_order/models/itemModel.dart';
 
 class MiniBanner extends StatefulWidget {
+  final ItemModel item;
   final ServiceModel service;
 
   MiniBanner({
+    this.item,
     this.service,
   }) : super();
 
@@ -14,26 +17,17 @@ class MiniBanner extends StatefulWidget {
 }
 
 class MiniBannerState extends State<MiniBanner> {
+  String get name {
+    return widget.service?.name;
+  }
+
+  String get image {
+    return widget.item != null ? widget.item?.value : widget.service?.image;
+  }
+
   @override
   void initState() {
     super.initState();
-
-    // final position = widget.service.items.singleWhere(
-    //     (element) => element.type == 'position',
-    //     orElse: () => null);
-
-    // final hashTags = position.children
-    //         ?.singleWhere((element) => element.type == 'hashTag',
-    //             orElse: () => null)
-    //         ?.children
-    //         ?.map((element) => element.value) ??
-    //     List();
-
-    // final businessPeriod = position.children
-    //         ?.singleWhere((element) => element.type == 'businessPeriod',
-    //             orElse: () => null)
-    //         ?.value ??
-    //     '';
   }
 
   @override
@@ -42,8 +36,13 @@ class MiniBannerState extends State<MiniBanner> {
         child: AspectRatio(
           aspectRatio: 1.413 / 1,
           child: InkWell(
-            onTap: () {
-              AppRouter.toShopPage(service: widget.service);
+            onTap: () async {
+              if (widget.service != null) {
+                ServiceButtonState.openService(
+                  context: context,
+                  service: widget.service,
+                );
+              }
             },
             child: Stack(
               children: [
@@ -54,10 +53,12 @@ class MiniBannerState extends State<MiniBanner> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                     ),
-                    child: Image.network(
-                      widget.service.image,
-                      fit: BoxFit.cover,
-                    ),
+                    child: (image?.isNotEmpty ?? false)
+                        ? Image.network(
+                            image,
+                            fit: BoxFit.cover,
+                          )
+                        : Container(),
                   ),
                 ),
                 FractionallySizedBox(
@@ -80,14 +81,12 @@ class MiniBannerState extends State<MiniBanner> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.service.name,
+                          name ?? '',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        // Text(hashTags.map((e) => '#$e').join(' ')),
-                        // Text(businessPeriod),
                       ],
                     ),
                   ),
