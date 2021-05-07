@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:h_order/models/itemModel.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -27,7 +28,11 @@ class CartItemModel {
   get key {
     final list = optionQuantity.entries.toList()
       ..sort((a, b) => a.key.compareTo(b.key));
-    final options = list.map((element) => '${element.key}=${element.value}');
+    final options = list.map((element) {
+      final _key = Uri.encodeComponent(element.key);
+      final _value = element.value.toString();
+      return '$_key=$_value';
+    });
 
     return '${product.objectId}?' + options.join('&');
   }

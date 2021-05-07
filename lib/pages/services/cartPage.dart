@@ -362,7 +362,7 @@ class _CartPageState extends State<CartPage>
 
     if (_parentMap.containsKey(option.objectId)) {
       final parent = _parentMap[option.objectId];
-      return _optionName(option: parent) + ' > ' + name;
+      return _optionName(option: parent) + ' / ' + name;
     }
 
     return name;
