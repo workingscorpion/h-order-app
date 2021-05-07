@@ -1,5 +1,4 @@
 import 'package:h_order/models/itemModel.dart';
-import 'package:h_order/models/productModel.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'cartItemModel.g.dart';
@@ -61,6 +60,7 @@ class CartItemModel {
         'both cart item optionAmount must be same.');
 
     final _quantity = quantity + item.quantity;
+
     return CartItemModel(
       quantity: _quantity,
       product: product,

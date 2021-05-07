@@ -5,7 +5,6 @@ import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/itemModel.dart';
-import 'package:h_order/models/productOptionModel.dart';
 import 'package:intl/intl.dart';
 
 class CartPage extends StatefulWidget {
@@ -21,24 +20,39 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage>
     with SingleTickerProviderStateMixin {
+  Map<String, ItemModel> _parentMap;
   Map<String, ItemModel> _optionMap;
 
   @override
   void initState() {
     super.initState();
 
+    _parentMap = Map();
     _optionMap = Map();
+
     widget.cart?.forEach((element) {
-      _initOptionsQuantity(element.product.items);
+      _initOptionsQuantity(items: element.product.items);
     });
   }
 
-  _initOptionsQuantity(List<ItemModel> options) {
-    options?.forEach((option) {
-      _optionMap[option.objectId] = option;
+  _initOptionsQuantity({
+    List<ItemModel> items,
+    ItemModel parent,
+  }) {
+    items.forEach((option) {
+      if (option.type == 'Group') {
+        if (option.items?.isNotEmpty ?? false) {
+          _initOptionsQuantity(
+            items: option.items,
+            parent: option,
+          );
+        }
+      } else {
+        if (parent != null) {
+          _parentMap[option.objectId] = parent;
+        }
 
-      if ((option.items?.length ?? 0) > 0) {
-        _initOptionsQuantity(option.items);
+        _optionMap[option.objectId] = option;
       }
     });
   }
@@ -188,8 +202,7 @@ class _CartPageState extends State<CartPage>
                               return _option(
                                 depth: 1,
                                 quantity: element.value,
-                                name: option.value,
-                                // name: _optionName(option: option),
+                                name: _optionName(option: option),
                                 price: option.price,
                               );
                             }),
@@ -347,10 +360,10 @@ class _CartPageState extends State<CartPage>
     final name =
         quantity != null ? '${option.value} ($quantity)' : '${option.value}';
 
-    // if (option.parentObjectId != null) {
-    //   final parent = _optionMap[option.parentObjectId];
-    //   return _optionName(option: parent) + ' > ' + name;
-    // }
+    if (_parentMap.containsKey(option.objectId)) {
+      final parent = _parentMap[option.objectId];
+      return _optionName(option: parent) + ' > ' + name;
+    }
 
     return name;
   }
