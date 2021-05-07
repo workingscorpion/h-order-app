@@ -4,10 +4,12 @@ import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/itemModel.dart';
 
 class MiniBanner extends StatefulWidget {
+  final BuildContext context;
   final ItemModel item;
   final ServiceModel service;
 
   MiniBanner({
+    this.context,
     this.item,
     this.service,
   }) : super();
@@ -39,7 +41,7 @@ class MiniBannerState extends State<MiniBanner> {
             onTap: () async {
               if (widget.service != null) {
                 ServiceButtonState.openService(
-                  context: context,
+                  context: widget.context,
                   service: widget.service,
                 );
               }

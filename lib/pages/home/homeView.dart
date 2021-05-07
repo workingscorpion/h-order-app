@@ -9,7 +9,11 @@ import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 
 class HomeView extends StatefulWidget {
-  HomeView();
+  final BuildContext context;
+
+  HomeView({
+    this.context,
+  });
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -94,7 +98,10 @@ class _HomeViewState extends State<HomeView>
       case 'Group':
         children = layoutService?.items
                 ?.map((item) => serviceMap[item.value])
-                ?.map((item) => MiniBanner(service: item))
+                ?.map((item) => MiniBanner(
+                      context: widget.context,
+                      service: item,
+                    ))
                 ?.toList() ??
             [];
         break;
@@ -102,7 +109,10 @@ class _HomeViewState extends State<HomeView>
       case 'Shop':
         children = layoutService?.items
                 ?.where((item) => item.type == 'Group')
-                ?.map((item) => MiniBanner(item: item))
+                ?.map((item) => MiniBanner(
+                      context: widget.context,
+                      item: item,
+                    ))
                 ?.toList() ??
             [];
         break;
@@ -110,7 +120,10 @@ class _HomeViewState extends State<HomeView>
       case 'Information':
         children = layoutService?.items
                 ?.where((item) => item.type == 'Image')
-                ?.map((item) => MiniBanner(item: item))
+                ?.map((item) => MiniBanner(
+                      context: widget.context,
+                      item: item,
+                    ))
                 ?.toList() ??
             [];
         break;

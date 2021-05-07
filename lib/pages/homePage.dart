@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage>
           physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: [
-            HomeView(),
+            HomeView(context: context),
             NoticeView(),
             HistoryView(),
             BillView(),
