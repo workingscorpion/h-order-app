@@ -13,6 +13,10 @@ ItemModel _$ItemModelFromJson(Map<String, dynamic> json) {
     value: json['value'] as String,
     max: json['max'] as int,
     price: json['price'] as int,
+    tags: (json['tags'] as List)
+        ?.map((e) =>
+            e == null ? null : TagModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
     items: (json['items'] as List)
         ?.map((e) =>
             e == null ? null : ItemModel.fromJson(e as Map<String, dynamic>))
@@ -26,5 +30,6 @@ Map<String, dynamic> _$ItemModelToJson(ItemModel instance) => <String, dynamic>{
       'value': instance.value,
       'max': instance.max,
       'price': instance.price,
+      'tags': instance.tags,
       'items': instance.items,
     };

@@ -90,7 +90,9 @@ class AppRouter {
       case RouteNames.Information:
         return MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => InformationPage(),
+          builder: (BuildContext context) => InformationPage(
+            service: settings.arguments as ServiceModel,
+          ),
         );
 
       case RouteNames.Settings:
@@ -208,8 +210,11 @@ class AppRouter {
     return Navigator.of(context).pushNamed(RouteNames.Board);
   }
 
-  static toInformationPage() {
-    return Navigator.of(context).pushNamed(RouteNames.Information);
+  static toInformationPage({
+    ServiceModel service,
+  }) {
+    return Navigator.of(context)
+        .pushNamed(RouteNames.Information, arguments: service);
   }
 
   static toSettingsPage() {

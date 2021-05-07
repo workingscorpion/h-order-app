@@ -54,7 +54,7 @@ class MiniBannerState extends State<MiniBanner> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                     ),
-                    child: Image.asset(
+                    child: Image.network(
                       widget.service.image,
                       fit: BoxFit.fitWidth,
                     ),

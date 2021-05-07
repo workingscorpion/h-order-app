@@ -33,25 +33,7 @@ class _ServiceButtonState extends State<ServiceButton> {
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.all(Radius.circular(5)),
       child: InkWell(
-        onTap: () async {
-          if (widget.onTap != null) {
-            widget.onTap();
-            return;
-          }
-
-          final service =
-              await Client.create().service(widget.service.objectId);
-
-          switch (widget.service.type) {
-            case 'Shop':
-              AppRouter.toShopPage(service: service);
-              return;
-
-            case 'Call':
-              _alert(service);
-              return;
-          }
-        },
+        onTap: _onTap,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,6 +75,29 @@ class _ServiceButtonState extends State<ServiceButton> {
         ),
       ),
     );
+  }
+
+  _onTap() async {
+    if (widget.onTap != null) {
+      widget.onTap();
+      return;
+    }
+
+    final service = await Client.create().service(widget.service.objectId);
+
+    switch (widget.service.type) {
+      case 'Information':
+        AppRouter.toInformationPage();
+        return;
+
+      case 'Shop':
+        AppRouter.toShopPage(service: service);
+        return;
+
+      case 'Call':
+        _alert(service);
+        return;
+    }
   }
 
   _serviceStatusText() {

@@ -1,9 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/categoryModel.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/models/itemModel.dart';
 
 class InformationPage extends StatefulWidget {
-  InformationPage({Key key}) : super(key: key);
+  final ServiceModel service;
+
+  InformationPage({
+    Key key,
+    this.service,
+  }) : super(key: key);
 
   @override
   _InformationPageState createState() => _InformationPageState();
@@ -14,30 +21,14 @@ class _InformationPageState extends State<InformationPage>
   GlobalKey _appBarKey;
   TabController _tabController;
 
-  List<CategoryModel> _categories;
-  List<String> _images;
+  List<ItemModel> _categories;
 
   @override
   void initState() {
     super.initState();
     _appBarKey = GlobalKey();
 
-    // _categories = List.generate(5, (i) {
-    //   return CategoryModel(
-    //     objectId: i,
-    //     name: 'Category ${i + 1}',
-    //   );
-    // });
-
-    _images = [
-      'assets/sample/1.jpg',
-      'assets/sample/2.jpg',
-      'assets/sample/3.jpg',
-      'assets/sample/4.jpg',
-      'assets/sample/5.jpg',
-      'assets/sample/6.jpg',
-      'assets/sample/7.jpg',
-    ];
+    _categories = widget.service.items.where((item) => item.type == 'Group');
 
     _tabController = TabController(
       length: _categories.length,
@@ -55,52 +46,60 @@ class _InformationPageState extends State<InformationPage>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          TabBar(
-            controller: _tabController,
-            isScrollable: true,
-            tabs: [
-              ..._categories.map(
-                (item) => Container(
-                  child: Text(
-                    item.name,
-                    style: TextStyle(fontSize: 40),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                ..._categories.map(
-                  (item) => LayoutBuilder(
-                    builder: (context, constraint) => CarouselSlider(
-                      options: CarouselOptions(
-                        viewportFraction: 1,
-                        height: constraint.maxHeight,
-                      ),
-                      items: _images
-                          .map(
-                            (item) => Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: Image.asset(
-                                item,
-                                fit: BoxFit.fitHeight,
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          _header(),
+          _body(),
         ],
       ),
     );
   }
+
+  _header() => (_categories?.isNotEmpty ?? false)
+      ? TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          tabs: [
+            ..._categories.map(
+              (item) => Container(
+                child: Text(
+                  item.value,
+                  style: TextStyle(fontSize: 40),
+                ),
+              ),
+            ),
+          ],
+        )
+      : Container();
+
+  _body() => Expanded(
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            ..._categories.map((category) => _carousel(category)),
+          ],
+        ),
+      );
+
+  _carousel(ItemModel category) => LayoutBuilder(
+        builder: (context, constraint) => CarouselSlider(
+          options: CarouselOptions(
+            viewportFraction: 1,
+            height: constraint.maxHeight,
+          ),
+          items: [
+            ...category.items
+                .where((child) => child.type == 'Image')
+                .map((child) => _image(child)),
+          ],
+        ),
+      );
+
+  _image(ItemModel item) => Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Image.asset(
+          item.value,
+          fit: BoxFit.fitHeight,
+        ),
+      );
 }

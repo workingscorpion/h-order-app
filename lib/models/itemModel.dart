@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:h_order/models/tagModel.dart';
 
 part 'itemModel.g.dart';
 
@@ -9,6 +10,7 @@ class ItemModel {
   final String value;
   final int max;
   final int price;
+  final List<TagModel> tags;
   final List<ItemModel> items;
 
   ItemModel({
@@ -17,6 +19,7 @@ class ItemModel {
     this.value,
     this.max,
     this.price,
+    this.tags,
     this.items,
   });
 
@@ -24,4 +27,22 @@ class ItemModel {
       _$ItemModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemModelToJson(this);
+
+  TagModel getTag(String key) {
+    if (tags?.isEmpty ?? true) {
+      return null;
+    }
+
+    return tags.singleWhere((t) => t.key == key, orElse: () => null);
+  }
+
+  String getTagMetadata(String key, String metadataKey) {
+    final tag = getTag(key);
+    return tag?.getMetadata(metadataKey);
+  }
+
+  bool getTagMetadataBoolean(String key, String metadataKey) {
+    final tag = getTag(key);
+    return tag?.getMetadataBoolean(metadataKey);
+  }
 }

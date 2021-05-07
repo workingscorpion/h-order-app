@@ -7,7 +7,6 @@ import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/itemModel.dart';
-import 'package:h_order/models/productOptionModel.dart';
 import 'package:intl/intl.dart';
 
 class ProductPage extends StatefulWidget {
@@ -29,10 +28,8 @@ class _ProductPageState extends State<ProductPage>
     with SingleTickerProviderStateMixin {
   int _quantity;
   Map<String, ItemModel> _optionMap;
-  Map<String, int> _selectedOption;
-
-  List<ItemModel> _required;
-  List<ItemModel> _optional;
+  Map<String, int> _selectedOptions;
+  Map<String, String> _radioMap;
 
   int get totalAmount {
     return amount * _quantity;
@@ -44,21 +41,39 @@ class _ProductPageState extends State<ProductPage>
 
   int get optionAmount {
     var optionPrice = 0;
-    final options = [...widget.product.items];
-    options.addAll([...widget.product.items].expand((e) => e.items));
 
-    _selectedOption.forEach((key, value) {
+    _selectedOptions.forEach((key, value) {
       if (value >= 1) {
-        optionPrice +=
-            options.singleWhere((element) => element.objectId == key).price *
-                value;
+        final price = _optionMap[key]?.price ?? 0;
+        optionPrice += price * value;
       }
     });
+
     return optionPrice;
   }
 
   List<ItemModel> get images {
     return widget.product.items.where((item) => item.type == 'Image').toList();
+  }
+
+  List<ItemModel> get options {
+    return widget.product.items
+        .where((item) => item.type == 'ProductOption' || item.type == 'Group')
+        .toList();
+  }
+
+  List<ItemModel> get requiredOptions {
+    return options
+        .where(
+            (item) => item.getTagMetadataBoolean('required', 'value') ?? false)
+        .toList();
+  }
+
+  List<ItemModel> get optionalOptions {
+    return options
+        .where((item) =>
+            !(item.getTagMetadataBoolean('required', 'value') ?? false))
+        .toList();
   }
 
   @override
@@ -67,26 +82,23 @@ class _ProductPageState extends State<ProductPage>
 
     _quantity = 1;
     _optionMap = Map();
-    _selectedOption = Map();
+    _selectedOptions = Map();
+    _radioMap = Map();
 
-    _initOptionsQuantity(widget.product.items);
-
-    _required = widget.product.items
-        // .where((element) => (element.isRequired ?? false))
-        .toList();
-
-    _optional = widget.product.items
-        // .where((element) => !(element.isRequired ?? false))
-        .toList();
+    _initOptionsQuantity(options);
   }
 
-  _initOptionsQuantity(List<ItemModel> options) {
-    options.forEach((option) {
-      _optionMap[option.objectId] = option;
-      _selectedOption[option.objectId] = 0;
+  _initOptionsQuantity(List<ItemModel> items) {
+    items.forEach((option) {
+      if (option.type == 'Group') {
+        if (option.items?.isNotEmpty ?? false) {
+          _initOptionsQuantity(option.items);
+        }
 
-      if ((option.items?.length ?? 0) > 0) {
-        _initOptionsQuantity(option.items);
+        _radioMap[option.objectId] = null;
+      } else {
+        _optionMap[option.objectId] = option;
+        _selectedOptions[option.objectId] = 0;
       }
     });
   }
@@ -107,35 +119,8 @@ class _ProductPageState extends State<ProductPage>
                     title: [widget.service.name, widget.category.value],
                     canBack: true,
                   ),
-                  _productSlider(),
-                  Expanded(
-                    flex: 8,
-                    child: DefaultTextStyle(
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.black,
-                      ),
-                      child: ListView(
-                        padding: EdgeInsets.symmetric(horizontal: 24),
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        children: [
-                          _card(
-                            child: _title(),
-                          ),
-                          ...List.generate(
-                            _optional.length,
-                            (index) => _card(
-                              child: _option(option: _optional[index]),
-                            ),
-                          ),
-                          _card(
-                            child: _productCount(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  _images(),
+                  _body(),
                   _saveButton(),
                 ],
               ),
@@ -145,6 +130,32 @@ class _ProductPageState extends State<ProductPage>
       ),
     );
   }
+
+  _body() => Expanded(
+        flex: 8,
+        child: DefaultTextStyle(
+          style: TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
+            children: [
+              _card(
+                child: _title(),
+              ),
+              ...(optionalOptions?.isNotEmpty ?? false)
+                  ? optionalOptions.map((item) => _option(option: item))
+                  : [],
+              _card(
+                child: _productCount(),
+              ),
+            ],
+          ),
+        ),
+      );
 
   _card({
     Widget child,
@@ -173,50 +184,70 @@ class _ProductPageState extends State<ProductPage>
               ),
             ),
             Spacer(),
-            Container(
-              margin: EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _countCalc(true),
-                  Container(
-                    width: 60,
-                    child: Text(
-                      '$_quantity',
-                      textAlign: TextAlign.center,
-                    ),
-                    alignment: Alignment.center,
-                  ),
-                  _countCalc(false),
-                ],
-              ),
-            ),
+            Text('${NumberFormat().format(amount)}원'),
+            _countCalc(),
           ],
         ),
       );
 
-  _countCalc(bool left) => Container(
-        width: 35,
-        height: 35,
-        decoration: BoxDecoration(
-          color: left && _quantity <= 0
-              ? CustomColors.aWhite
-              : CustomColors.subTextBlack,
-          borderRadius: left
-              ? BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  bottomLeft: Radius.circular(8),
-                )
-              : BorderRadius.only(
-                  topRight: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
-                ),
-        ),
-        child: IconButton(
-          iconSize: 16,
-          padding: EdgeInsets.zero,
-          onPressed: () {
-            if (left) {
+  _countCalc({
+    String key,
+  }) {
+    final value = key == null ? _quantity : _selectedOptions[key];
+
+    return Container(
+      margin: EdgeInsets.only(left: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _countCalcButton(
+            key: key,
+            subtract: true,
+          ),
+          Container(
+            width: 60,
+            child: Text(
+              '$value',
+              textAlign: TextAlign.center,
+            ),
+            alignment: Alignment.center,
+          ),
+          _countCalcButton(
+            key: key,
+            subtract: false,
+          ),
+        ],
+      ),
+    );
+  }
+
+  _countCalcButton({
+    String key,
+    bool subtract,
+  }) {
+    return Container(
+      width: 32,
+      height: 32,
+      decoration: BoxDecoration(
+        color: subtract && _quantity <= 0
+            ? CustomColors.aWhite
+            : CustomColors.subTextBlack,
+        borderRadius: subtract
+            ? BorderRadius.only(
+                topLeft: Radius.circular(8),
+                bottomLeft: Radius.circular(8),
+              )
+            : BorderRadius.only(
+                topRight: Radius.circular(8),
+                bottomRight: Radius.circular(8),
+              ),
+      ),
+      child: IconButton(
+        iconSize: 16,
+        padding: EdgeInsets.zero,
+        onPressed: () {
+          if (key?.isEmpty ?? true) {
+            if (subtract) {
               _quantity -= 1;
 
               if (_quantity < 1) {
@@ -225,15 +256,28 @@ class _ProductPageState extends State<ProductPage>
             } else {
               _quantity += 1;
             }
-            setState(() {});
-          },
-          icon: Icon(
-            left ? CupertinoIcons.minus : CupertinoIcons.plus,
-            size: 20,
-            color: Theme.of(context).textTheme.bodyText1.color,
-          ),
+          } else {
+            if (subtract) {
+              _selectedOptions[key] -= 1;
+
+              if (_selectedOptions[key] < 0) {
+                _selectedOptions[key] = 0;
+              }
+            } else {
+              _selectedOptions[key] += 1;
+            }
+          }
+
+          setState(() {});
+        },
+        icon: Icon(
+          subtract ? CupertinoIcons.minus : CupertinoIcons.plus,
+          size: 20,
+          color: Theme.of(context).textTheme.bodyText1.color,
         ),
-      );
+      ),
+    );
+  }
 
   _saveButton() => Expanded(
         flex: 1,
@@ -266,7 +310,7 @@ class _ProductPageState extends State<ProductPage>
         ),
       );
 
-  _productSlider() => Expanded(
+  _images() => Expanded(
         flex: 5,
         child: Container(
           margin: EdgeInsets.only(bottom: 20),
@@ -335,162 +379,209 @@ class _ProductPageState extends State<ProductPage>
                 thickness: .5,
               ),
             ),
-            Column(
-              children: _required.length > 0
-                  ? List.generate(
-                      _required.length * 2 - 1,
-                      (index) => index % 2 == 0
-                          ? _option(option: _required[(index / 2).floor()])
-                          : Container(height: 16),
-                    )
-                  : [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 20,
-                            height: 20,
-                            margin: EdgeInsets.only(right: 5),
-                            child: Radio(
-                              value: null,
-                              groupValue: null,
-                              onChanged: (value) {},
-                            ),
-                          ),
-                          Text('기본'),
-                          Spacer(),
-                          Text(
-                              '${NumberFormat().format(widget.product.price)}원')
-                        ],
-                      ),
-                    ],
-            ),
+            _requiredOptions(),
           ],
         ),
+      );
+
+  _requiredOptions() => Column(
+        children: (requiredOptions?.isNotEmpty ?? false)
+            ? List.generate(
+                requiredOptions.length * 2 - 1,
+                (index) => index % 2 == 0
+                    ? _option(option: requiredOptions[(index / 2).floor()])
+                    : Container(height: 16),
+              )
+            : [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 20,
+                      height: 20,
+                      margin: EdgeInsets.only(right: 5),
+                      child: Radio(
+                        value: null,
+                        groupValue: null,
+                        onChanged: (value) {},
+                      ),
+                    ),
+                    Text('기본'),
+                    Spacer(),
+                    Text(
+                        '${NumberFormat().format(widget?.product?.price ?? 0)}원')
+                  ],
+                ),
+              ],
       );
 
   _option({
     ItemModel option,
-  }) =>
-      Container(
-        child: Column(
-          children: [
-            IntrinsicHeight(
-              child: Container(
-                child: FractionallySizedBox(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(right: 8),
-                        child: Row(
-                          children: (option.items?.length ?? -1) == 0
-                              ? [
-                                  Container(
-                                    width: 20,
-                                    height: 20,
-                                    margin: EdgeInsets.only(right: 5),
-                                    child: Radio(
-                                      value: 1,
-                                      groupValue:
-                                          _selectedOption[option.objectId],
-                                      // toggleable: (option.multiple ?? false),
-                                      // onChanged: (value) {
-                                      //   if ((option.multiple ?? false)) {
-                                      //     _selectedOption[option.objectId] =
-                                      //         _selectedOption[
-                                      //                     option.objectId] ==
-                                      //                 1
-                                      //             ? 0
-                                      //             : 1;
-                                      //   } else {
-                                      //     if (option.isRequired ?? false) {
-                                      //       widget.product.options
-                                      //           .where((item) =>
-                                      //               (item.isRequired ?? false))
-                                      //           .forEach((item) {
-                                      //         _selectedOption[item.objectId] =
-                                      //             0;
-                                      //       });
-                                      //     } else {
-                                      //       _optionMap[option.parentObjectId]
-                                      //           .options
-                                      //           .forEach((item) {
-                                      //         _selectedOption[item.objectId] =
-                                      //             0;
-                                      //       });
-                                      //     }
+  }) {
+    final child = option.type == 'Group'
+        ? _optionGroup(option: option)
+        : _optionItem(option: option);
 
-                                      //     _selectedOption[option.objectId] = 1;
-                                      //   }
-                                      //   setState(() {});
-                                      // },
-                                    ),
-                                  ),
-                                  Text(
-                                    option.value,
-                                  ),
-                                ]
-                              : [
-                                  Text(
-                                    option.value,
-                                    style: TextStyle(
-                                      fontSize: 21,
-                                    ),
-                                  ),
-                                ],
-                        ),
-                      ),
-                      ...((option.max ?? 0) > 0)
-                          ? [
-                              Text(
-                                '(최대${option.max}개)',
-                              ),
-                            ]
-                          : [],
-                      Spacer(),
-                      Container(
-                        child: (option.price ?? 0) > 0
-                            ? Container(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  '${NumberFormat().format(option.price)}원',
-                                ),
-                              )
-                            : Container(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            // (option.options?.length ?? 0) > 0
-            //     ? Container(
-            //         margin: EdgeInsets.only(bottom: 16),
-            //         child: Divider(
-            //           color: Theme.of(context).accentColor,
-            //           height: 10,
-            //           thickness: .5,
-            //         ),
-            //       )
-            //     : Container(),
-            // ...(option.options?.length ?? 0) > 0
-            //     ? List.generate(
-            //         option.options.length * 2 - 1,
-            //         (index) => index % 2 == 0
-            //             ? _option(option: option.options[(index / 2).floor()])
-            //             : Container(height: 16),
-            //       )
-            //     : [],
+    return _card(child: child);
+  }
+
+  _optionGroup({
+    ItemModel option,
+  }) {
+    final children = option?.items
+            ?.where((item) => item.type == 'ProductOption')
+            ?.toList() ??
+        [];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          option.value,
+          style: TextStyle(
+            fontSize: 19,
+          ),
+        ),
+        Divider(
+          height: 10,
+          thickness: .5,
+          color: Theme.of(context).accentColor,
+        ),
+        Column(
+          children: [
+            ...(children?.isNotEmpty ?? false)
+                ? List.generate(
+                    children.length * 2,
+                    (index) {
+                      if (index % 2 == 0) {
+                        return Container(height: 10);
+                      }
+
+                      final item = children[(index / 2).floor()];
+                      final selectionType =
+                          option.getTagMetadata('selectionType', 'value');
+
+                      return _optionItem(
+                        group: option,
+                        option: item,
+                        selectionType: selectionType,
+                      );
+                    },
+                  )
+                : [],
           ],
         ),
-      );
+      ],
+    );
+  }
+
+  _optionItem({
+    ItemModel group,
+    ItemModel option,
+    String selectionType,
+  }) {
+    var children = <Widget>[
+      Text(option.value),
+      Spacer(),
+      Text('${NumberFormat().format(option?.price ?? 0)} 원'),
+    ];
+
+    switch (selectionType) {
+      case 'Single':
+        children = [
+          Container(
+            width: 40,
+            height: 40,
+            child: Radio(
+              groupValue: _radioMap[group.objectId],
+              value: option.objectId,
+              onChanged: (value) {
+                _radioMap[group.objectId] = value;
+                setState(() {});
+              },
+              activeColor: Colors.black,
+            ),
+          ),
+          ...children,
+        ];
+        break;
+
+      case 'Multi':
+        children = [
+          Container(
+            width: 40,
+            height: 40,
+            child: Checkbox(
+              value: _selectedOptions[option.objectId] == 1,
+              onChanged: (value) {
+                _selectedOptions[option.objectId] = value ? 1 : 0;
+                setState(() {});
+              },
+            ),
+          ),
+          ...children,
+        ];
+        break;
+
+      case 'Number':
+        children = [
+          Container(
+            width: 40,
+            height: 40,
+          ),
+          ...children,
+          _countCalc(key: option.objectId),
+        ];
+        break;
+
+      default:
+        children = [
+          ...children,
+          _countCalc(key: option.objectId),
+        ];
+        break;
+    }
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          switch (selectionType) {
+            case 'Single':
+              _radioMap[group.objectId] = option.objectId;
+              break;
+
+            case 'Multi':
+              _selectedOptions[option.objectId] =
+                  _selectedOptions[option.objectId] != 1 ? 1 : 0;
+              break;
+          }
+
+          setState(() {});
+        },
+        child: Container(
+          child: DefaultTextStyle(
+            style: TextStyle(
+              fontSize: 17,
+              color: Colors.black,
+            ),
+            child: Row(
+              children: [
+                ...children,
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   _save() async {
     final requiredOptions = widget.product.items;
     // .where((item) => item.isRequired ?? false);
+
     if (requiredOptions.length > 0) {
-      if (!requiredOptions.any((item) => _selectedOption[item.objectId] > 0)) {
+      if (!requiredOptions.any((item) => _selectedOptions[item.objectId] > 0)) {
         await Fluttertoast.cancel();
         await Fluttertoast.showToast(
           msg: '필수옵션을 선택해주세요.',
@@ -509,7 +600,7 @@ class _ProductPageState extends State<ProductPage>
       name: widget.product.value,
       amount: amount,
       optionAmount: optionAmount,
-      optionQuantity: _selectedOption,
+      optionQuantity: _selectedOptions,
       quantity: _quantity,
       product: widget.product,
     );
