@@ -56,7 +56,7 @@ class MiniBannerState extends State<MiniBanner> {
                     ),
                     child: Image.network(
                       widget.service.image,
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),

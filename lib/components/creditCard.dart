@@ -29,12 +29,12 @@ class CreditCard extends StatelessWidget {
                 ? DecorationImage(
                     alignment: Alignment.topCenter,
                     image: AssetImage(image),
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.cover,
                   )
                 : DecorationImage(
                     alignment: Alignment.topCenter,
                     image: AssetImage('assets/cards/etc.png'),
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.cover,
                   ),
           ),
           child: Stack(

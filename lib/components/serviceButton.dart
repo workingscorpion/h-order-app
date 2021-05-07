@@ -87,7 +87,7 @@ class _ServiceButtonState extends State<ServiceButton> {
 
     switch (widget.service.type) {
       case 'Information':
-        AppRouter.toInformationPage();
+        AppRouter.toInformationPage(service: widget.service);
         return;
 
       case 'Shop':
