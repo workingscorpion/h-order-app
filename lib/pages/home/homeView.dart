@@ -9,11 +9,7 @@ import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 
 class HomeView extends StatefulWidget {
-  final BuildContext context;
-
-  HomeView({
-    this.context,
-  });
+  HomeView();
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -39,8 +35,10 @@ class _HomeViewState extends State<HomeView>
   load() async {
     layout = await Client.create().layout();
     services = await Client.create().services();
-    serviceMap =
-        services.asMap().map((key, value) => MapEntry(value.objectId, value));
+    serviceMap = services
+            ?.asMap()
+            ?.map((key, value) => MapEntry(value.objectId, value)) ??
+        Map();
 
     setState(() {});
   }
@@ -87,7 +85,8 @@ class _HomeViewState extends State<HomeView>
     final layoutServices =
         serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
 
-    if (layoutServices?.first?.items?.isEmpty ?? true) {
+    if ((layoutServices?.isEmpty ?? true) ||
+        (layoutServices?.first?.items?.isEmpty ?? true)) {
       return Spacer(flex: 2);
     }
 
@@ -98,10 +97,7 @@ class _HomeViewState extends State<HomeView>
       case 'Group':
         children = layoutService?.items
                 ?.map((item) => serviceMap[item.value])
-                ?.map((item) => MiniBanner(
-                      context: widget.context,
-                      service: item,
-                    ))
+                ?.map((item) => MiniBanner(service: item))
                 ?.toList() ??
             [];
         break;
@@ -109,10 +105,7 @@ class _HomeViewState extends State<HomeView>
       case 'Shop':
         children = layoutService?.items
                 ?.where((item) => item.type == 'Group')
-                ?.map((item) => MiniBanner(
-                      context: widget.context,
-                      item: item,
-                    ))
+                ?.map((item) => MiniBanner(item: item))
                 ?.toList() ??
             [];
         break;
@@ -120,10 +113,7 @@ class _HomeViewState extends State<HomeView>
       case 'Information':
         children = layoutService?.items
                 ?.where((item) => item.type == 'Image')
-                ?.map((item) => MiniBanner(
-                      context: widget.context,
-                      item: item,
-                    ))
+                ?.map((item) => MiniBanner(item: item))
                 ?.toList() ??
             [];
         break;
@@ -153,7 +143,8 @@ class _HomeViewState extends State<HomeView>
     final layoutServices =
         serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
 
-    if (layoutServices?.first?.items?.isEmpty ?? true) {
+    if ((layoutServices?.isEmpty ?? true) ||
+        (layoutServices?.first?.items?.isEmpty ?? true)) {
       return AspectRatio(
         aspectRatio: 16 / 7,
         child: Container(),
