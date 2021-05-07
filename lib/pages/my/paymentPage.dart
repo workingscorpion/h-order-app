@@ -27,8 +27,7 @@ class _PaymentPageState extends State<PaymentPage> {
   load() async {
     await paymentStore.loadCards();
     primaryMethod = paymentStore.cards.length > 0
-        ? paymentStore.cards
-            .singleWhere((element) => element.isPrimary, orElse: null)
+        ? paymentStore.cards.where((element) => element.isPrimary).first
         : null;
     setState(() {});
   }
