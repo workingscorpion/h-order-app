@@ -6,6 +6,7 @@ part 'paymentMethodModel.g.dart';
 class PaymentMethodModel {
   final int index;
   final String userObjectId;
+  final String objectId;
   final bool isPrimary;
   final int order;
   final String bankCode;
@@ -15,6 +16,7 @@ class PaymentMethodModel {
   PaymentMethodModel({
     this.index,
     this.userObjectId,
+    this.objectId,
     this.isPrimary,
     this.order,
     this.bankCode,

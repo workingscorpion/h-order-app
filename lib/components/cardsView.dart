@@ -3,7 +3,10 @@ import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/store/paymentStore.dart';
 
 class CardsView extends StatelessWidget {
-  const CardsView({Key key}) : super(key: key);
+  CardsView({this.text, this.onTap});
+
+  final String text;
+  final Function(int) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +18,7 @@ class CardsView extends StatelessWidget {
         (index) => _card(
           item: PaymentModel(
             type: 'card',
+            index: index,
             image: CardCompanies
                 .cardImageByCode[paymentStore.cards[index].bankCode],
             name: CardCompanies
@@ -82,14 +86,14 @@ class CardsView extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(5)),
               color: Color(0xff606162),
               child: InkWell(
-                onTap: () {},
+                onTap: () => onTap(item.index),
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     vertical: 8,
                     horizontal: 16,
                   ),
                   child: Text(
-                    '삭제',
+                    text,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -106,11 +110,13 @@ class CardsView extends StatelessWidget {
 class PaymentModel {
   final String type;
   final String image;
+  final int index;
   final String name;
   final String numbers;
 
   PaymentModel({
     this.type,
+    this.index,
     this.image,
     this.name,
     this.numbers,
