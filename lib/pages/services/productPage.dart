@@ -65,14 +65,14 @@ class _ProductPageState extends State<ProductPage>
   List<ItemModel> get requiredOptions {
     return options
         .where(
-            (item) => item.getTagMetadataBoolean('required', 'value') ?? false)
+            (item) => item.getTagMetadata('selectionType', 'value') == 'Single')
         .toList();
   }
 
   List<ItemModel> get optionalOptions {
     return options
-        .where((item) =>
-            !(item.getTagMetadataBoolean('required', 'value') ?? false))
+        .where(
+            (item) => item.getTagMetadata('selectionType', 'value') != 'Single')
         .toList();
   }
 
@@ -147,7 +147,13 @@ class _ProductPageState extends State<ProductPage>
                 child: _title(),
               ),
               ...(optionalOptions?.isNotEmpty ?? false)
-                  ? optionalOptions.map((item) => _option(option: item))
+                  ? optionalOptions.map(
+                      (item) => _card(
+                        child: _option(
+                          option: item,
+                        ),
+                      ),
+                    )
                   : [],
               _card(
                 child: _productCount(),
@@ -422,7 +428,7 @@ class _ProductPageState extends State<ProductPage>
         ? _optionGroup(option: option)
         : _optionItem(option: option);
 
-    return _card(child: child);
+    return child;
   }
 
   _optionGroup({
@@ -492,14 +498,13 @@ class _ProductPageState extends State<ProductPage>
           Container(
             width: 40,
             height: 40,
-            child: Radio(
-              groupValue: _radioMap[group.objectId],
-              value: option.objectId,
-              onChanged: (value) {
-                _radioMap[group.objectId] = value;
-                setState(() {});
-              },
-              activeColor: Colors.black,
+            child: IgnorePointer(
+              child: Radio(
+                groupValue: _radioMap[group.objectId],
+                value: option.objectId,
+                onChanged: (value) {},
+                activeColor: Colors.black,
+              ),
             ),
           ),
           ...children,
@@ -511,12 +516,11 @@ class _ProductPageState extends State<ProductPage>
           Container(
             width: 40,
             height: 40,
-            child: Checkbox(
-              value: _selectedOptions[option.objectId] == 1,
-              onChanged: (value) {
-                _selectedOptions[option.objectId] = value ? 1 : 0;
-                setState(() {});
-              },
+            child: IgnorePointer(
+              child: Checkbox(
+                value: _selectedOptions[option.objectId] == 1,
+                onChanged: (value) {},
+              ),
             ),
           ),
           ...children,
@@ -548,6 +552,10 @@ class _ProductPageState extends State<ProductPage>
         onTap: () {
           switch (selectionType) {
             case 'Single':
+              group.items.forEach((item) {
+                _selectedOptions[item.objectId] =
+                    item.objectId == option.objectId ? 1 : 0;
+              });
               _radioMap[group.objectId] = option.objectId;
               break;
 
@@ -577,11 +585,9 @@ class _ProductPageState extends State<ProductPage>
   }
 
   _save() async {
-    final requiredOptions = widget.product.items;
-    // .where((item) => item.isRequired ?? false);
-
-    if (requiredOptions.length > 0) {
-      if (!requiredOptions.any((item) => _selectedOptions[item.objectId] > 0)) {
+    if (requiredOptions?.isNotEmpty ?? false) {
+      if (!requiredOptions.every((item) =>
+          item.items.any((child) => _selectedOptions[child.objectId] > 0))) {
         await Fluttertoast.cancel();
         await Fluttertoast.showToast(
           msg: '필수옵션을 선택해주세요.',
@@ -599,10 +605,10 @@ class _ProductPageState extends State<ProductPage>
     final result = CartItemModel(
       name: widget.product.value,
       amount: amount,
+      product: widget.product,
       optionAmount: optionAmount,
       optionQuantity: _selectedOptions,
       quantity: _quantity,
-      product: widget.product,
     );
 
     Navigator.of(context).pop(result);
