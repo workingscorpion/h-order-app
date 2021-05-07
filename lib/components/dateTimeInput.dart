@@ -43,7 +43,7 @@ class DateTimeInputState extends State<DateTimeInput> {
     _selectedTime = DateTime(0, 0, 0, hour, minute);
 
     _dates = List.generate(
-        100, (index) => DateTime.now().add(Duration(days: 50 - index)));
+        100, (index) => DateTime.now().subtract(Duration(days: 50 - index)));
     final selectedDate =
         DateFormat('yyyy-MM-dd').format(widget.selectedTime ?? DateTime.now());
     final dateIndex = _dates.indexWhere(
@@ -84,6 +84,7 @@ class DateTimeInputState extends State<DateTimeInput> {
     ScrollController controller,
     ValueChanged<int> onSelectedItemChanged,
     List<Widget> children,
+    bool loop = true,
   }) =>
       ListWheelScrollView.useDelegate(
         controller: controller,
@@ -91,9 +92,13 @@ class DateTimeInputState extends State<DateTimeInput> {
         physics: FixedExtentScrollPhysics(),
         itemExtent: _itemExtent,
         overAndUnderCenterOpacity: 0,
-        childDelegate: ListWheelChildLoopingListDelegate(
-          children: children,
-        ),
+        childDelegate: loop
+            ? ListWheelChildLoopingListDelegate(
+                children: children,
+              )
+            : ListWheelChildListDelegate(
+                children: children,
+              ),
       );
 
   _divider() => Container(
@@ -115,6 +120,7 @@ class DateTimeInputState extends State<DateTimeInput> {
             _divider(),
             Expanded(
               child: _listWheelScrollView(
+                loop: false,
                 controller: _dateListViewController,
                 onSelectedItemChanged: (value) {
                   _selectTime(date: _dates[value]);
