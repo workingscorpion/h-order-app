@@ -2,14 +2,11 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/miniBanner.dart';
 import 'package:h_order/components/serviceButton.dart';
-import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
-import 'package:h_order/models/homeModel.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -83,7 +80,26 @@ class _HomeViewState extends State<HomeView>
 
   _cards() {
     final serviceObjectIds = positions['3'] ?? [];
-    final layoutServices = serviceObjectIds?.map((e) => serviceMap[e]) ?? [];
+    final layoutServices =
+        serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
+
+    if (layoutServices?.first?.items?.isEmpty ?? true) {
+      return Spacer(flex: 2);
+    }
+
+    final layoutService = layoutServices.first;
+    var children = [];
+
+    switch (layoutService.type) {
+      case 'Group':
+        break;
+
+      case 'Shop':
+        break;
+
+      case 'Information':
+        break;
+    }
 
     return Expanded(
       flex: 2,
@@ -97,7 +113,8 @@ class _HomeViewState extends State<HomeView>
           ),
           scrollDirection: Axis.horizontal,
           children: [
-            ...layoutServices.map((item) => MiniBanner(service: item)),
+            ...layoutService?.items
+                ?.map((item) => MiniBanner(service: layoutService)),
           ],
         ),
       ),
@@ -106,7 +123,7 @@ class _HomeViewState extends State<HomeView>
 
   _carousel() {
     final serviceObjectIds = positions['4'] ?? [];
-    final List<ServiceModel> layoutServices =
+    final layoutServices =
         serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
 
     if (layoutServices?.first?.items?.isEmpty ?? true) {
@@ -116,12 +133,14 @@ class _HomeViewState extends State<HomeView>
       );
     }
 
+    final layoutService = layoutServices.first;
+
     return AspectRatio(
       aspectRatio: 16 / 7,
       child: LayoutBuilder(
         builder: (context, constraint) => CarouselSlider(
           items: [
-            ...layoutServices.first?.items?.map(
+            ...layoutService?.items?.map(
                   (item) => Container(
                     alignment: Alignment.center,
                     child: Image.network(
