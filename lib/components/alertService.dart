@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/dateTimeInput.dart';
+import 'package:h_order/http/client.dart';
+import 'package:h_order/http/types/service/actionModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/itemModel.dart';
 
@@ -167,10 +169,15 @@ class _AlertServiceState extends State<AlertService> {
                   ),
                   FlatButton(
                     minWidth: 140,
-                    onPressed: () {
-                      // FIXME
-                      Navigator.of(context).pop(true);
-                      // Navigator.of(context).pop(data);
+                    onPressed: () async {
+                      await Client.create().serviceAction(
+                        widget.service.objectId,
+                        'call',
+                        ActionModel(
+                          data: data.map(
+                              (key, value) => MapEntry(key, value.toString())),
+                        ),
+                      );
                     },
                     color: Colors.black,
                     child: Text(
@@ -264,7 +271,12 @@ class _AlertServiceState extends State<AlertService> {
   }) =>
       Container(
         padding: EdgeInsets.symmetric(horizontal: 80),
-        child: DateTimeInput(),
+        child: DateTimeInput(
+          onSelectTime: (value) {
+            data[item.objectId] = value;
+            setState(() {});
+          },
+        ),
       );
 
   _alertCountContent({
