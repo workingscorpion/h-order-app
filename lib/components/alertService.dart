@@ -178,6 +178,8 @@ class _AlertServiceState extends State<AlertService> {
                               (key, value) => MapEntry(key, value.toString())),
                         ),
                       );
+
+                      Navigator.of(context).pop(true);
                     },
                     color: Colors.black,
                     child: Text(
