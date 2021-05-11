@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/components/miniBanner.dart';
 import 'package:h_order/components/serviceButton.dart';
-import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/store/layoutStore.dart';
@@ -63,29 +62,32 @@ class _HomeViewState extends State<HomeView>
       );
 
   _menu() {
-    final serviceObjectIds = positions['2'] ?? [];
-    final layoutServices = serviceObjectIds?.map((e) => serviceMap[e]) ?? [];
-
     return Expanded(
       flex: 3,
       child: Container(
         child: Material(
           color: Colors.transparent,
           child: Observer(
-            builder: (context) => GridView.count(
-              padding: EdgeInsets.only(
-                top: 40,
-                bottom: 40,
-                left: 50,
-                right: 60,
-              ),
-              mainAxisSpacing: 20,
-              crossAxisCount: 5,
-              childAspectRatio: .9,
-              children: [
-                ...layoutServices.map((item) => ServiceButton(service: item)),
-              ],
-            ),
+            builder: (context) {
+              final serviceObjectIds = positions['2'] ?? [];
+              final layoutServices =
+                  serviceObjectIds?.map((e) => serviceMap[e]) ?? [];
+
+              GridView.count(
+                padding: EdgeInsets.only(
+                  top: 40,
+                  bottom: 40,
+                  left: 50,
+                  right: 60,
+                ),
+                mainAxisSpacing: 20,
+                crossAxisCount: 5,
+                childAspectRatio: .9,
+                children: [
+                  ...layoutServices.map((item) => ServiceButton(service: item)),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -93,112 +95,116 @@ class _HomeViewState extends State<HomeView>
   }
 
   _cards() {
-    final serviceObjectIds = positions['3'] ?? [];
-    final layoutServices =
-        serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
-
-    if ((layoutServices?.isEmpty ?? true) ||
-        (layoutServices?.first?.items?.isEmpty ?? true)) {
-      return Spacer(flex: 2);
-    }
-
-    final layoutService = layoutServices.first;
-    var children = [];
-
-    switch (layoutService.type) {
-      case 'Group':
-        children = layoutService?.items
-                ?.map((item) => serviceMap[item.value])
-                ?.map((item) => MiniBanner(service: item))
-                ?.toList() ??
-            [];
-        break;
-
-      case 'Shop':
-        children = layoutService?.items
-                ?.where((item) => item.type == 'Group')
-                ?.map((item) => MiniBanner(item: item))
-                ?.toList() ??
-            [];
-        break;
-
-      case 'Information':
-        children = layoutService?.items
-                ?.where((item) => item.type == 'Image')
-                ?.map((item) => MiniBanner(item: item))
-                ?.toList() ??
-            [];
-        break;
-    }
-
     return Expanded(
       flex: 2,
       child: Container(
         child: Observer(
-          builder: (context) => ListView(
-            padding: EdgeInsets.only(
-              top: 24,
-              bottom: 24,
-              left: 24,
-              right: 24,
-            ),
-            scrollDirection: Axis.horizontal,
-            children: [
-              ...children,
-            ],
-          ),
+          builder: (context) {
+            final serviceObjectIds = positions['3'] ?? [];
+            final layoutServices =
+                serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
+
+            if ((layoutServices?.isEmpty ?? true) ||
+                (layoutServices?.first?.items?.isEmpty ?? true)) {
+              return Spacer(flex: 2);
+            }
+
+            final layoutService = layoutServices.first;
+            var children = [];
+
+            switch (layoutService.type) {
+              case 'Group':
+                children = layoutService?.items
+                        ?.map((item) => serviceMap[item.value])
+                        ?.map((item) => MiniBanner(service: item))
+                        ?.toList() ??
+                    [];
+                break;
+
+              case 'Shop':
+                children = layoutService?.items
+                        ?.where((item) => item.type == 'Group')
+                        ?.map((item) => MiniBanner(item: item))
+                        ?.toList() ??
+                    [];
+                break;
+
+              case 'Information':
+                children = layoutService?.items
+                        ?.where((item) => item.type == 'Image')
+                        ?.map((item) => MiniBanner(item: item))
+                        ?.toList() ??
+                    [];
+                break;
+            }
+
+            return ListView(
+              padding: EdgeInsets.only(
+                top: 24,
+                bottom: 24,
+                left: 24,
+                right: 24,
+              ),
+              scrollDirection: Axis.horizontal,
+              children: [
+                ...children,
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
   _carousel() {
-    final serviceObjectIds = positions['4'] ?? [];
-    final layoutServices =
-        serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
-
-    if ((layoutServices?.isEmpty ?? true) ||
-        (layoutServices?.first?.items?.isEmpty ?? true)) {
-      return AspectRatio(
-        aspectRatio: 16 / 7,
-        child: Container(),
-      );
-    }
-
-    final layoutService = layoutServices.first;
-
     return AspectRatio(
       aspectRatio: 16 / 7,
-      child: LayoutBuilder(
-        builder: (context, constraint) => Observer(
-          builder: (context) => CarouselSlider(
-            items: [
-              ...layoutService?.items?.map(
-                    (item) => Container(
-                      alignment: Alignment.center,
-                      child: Image.network(
-                        item.value,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+      child: Observer(
+        builder: (context) {
+          final serviceObjectIds = positions['4'] ?? [];
+          final layoutServices =
+              serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
+
+          if ((layoutServices?.isEmpty ?? true) ||
+              (layoutServices?.first?.items?.isEmpty ?? true)) {
+            return AspectRatio(
+              aspectRatio: 16 / 7,
+              child: Container(),
+            );
+          }
+
+          final layoutService = layoutServices.first;
+
+          return LayoutBuilder(
+            builder: (context, constraint) => CarouselSlider(
+              items: [
+                ...layoutService?.items?.map(
+                      (item) => Container(
+                        alignment: Alignment.center,
+                        child: Image.network(
+                          item.value,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                  ) ??
-                  [],
-            ],
-            options: CarouselOptions(
-              height: constraint.maxHeight,
-              viewportFraction: 1,
-              initialPage: 0,
-              enableInfiniteScroll: true,
-              reverse: false,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 10),
-              autoPlayAnimationDuration: Duration(seconds: 1),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              scrollDirection: Axis.horizontal,
+                    ) ??
+                    [],
+              ],
+              options: CarouselOptions(
+                height: constraint.maxHeight,
+                viewportFraction: 1,
+                initialPage: 0,
+                enableInfiniteScroll: true,
+                reverse: false,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 10),
+                autoPlayAnimationDuration: Duration(seconds: 1),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                scrollDirection: Axis.horizontal,
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
