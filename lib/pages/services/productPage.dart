@@ -139,7 +139,7 @@ class _ProductPageState extends State<ProductPage>
             color: Colors.black,
           ),
           child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.all(24),
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
             children: [
