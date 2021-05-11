@@ -52,14 +52,20 @@ class _HomeViewState extends State<HomeView>
   }
 
   @override
-  Widget build(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _menu(),
-          _cards(),
-          _carousel(),
-        ],
-      );
+  Widget build(BuildContext context) {
+    if ((positions?.isEmpty ?? true) || (serviceMap?.isEmpty ?? true)) {
+      return Container();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _menu(),
+        _cards(),
+        _carousel(),
+      ],
+    );
+  }
 
   _menu() {
     return Expanded(
@@ -71,7 +77,7 @@ class _HomeViewState extends State<HomeView>
             builder: (context) {
               final serviceObjectIds = positions['2'] ?? [];
               final layoutServices =
-                  serviceObjectIds?.map((e) => serviceMap[e]) ?? [];
+                  serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
 
               return GridView.count(
                 padding: EdgeInsets.only(
