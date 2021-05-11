@@ -10,6 +10,8 @@ class ServiceModel {
   final String image;
   final String type;
   final bool enabled;
+  final bool processing;
+  final List<int> status;
   final List<ItemModel> items;
 
   ServiceModel({
@@ -18,6 +20,8 @@ class ServiceModel {
     this.image,
     this.type,
     this.enabled,
+    this.processing,
+    this.status,
     this.items,
   });
 

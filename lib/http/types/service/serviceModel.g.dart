@@ -13,6 +13,8 @@ ServiceModel _$ServiceModelFromJson(Map<String, dynamic> json) {
     image: json['image'] as String,
     type: json['type'] as String,
     enabled: json['enabled'] as bool,
+    processing: json['processing'] as bool,
+    status: (json['status'] as List)?.map((e) => e as int)?.toList(),
     items: (json['items'] as List)
         ?.map((e) =>
             e == null ? null : ItemModel.fromJson(e as Map<String, dynamic>))
@@ -27,5 +29,7 @@ Map<String, dynamic> _$ServiceModelToJson(ServiceModel instance) =>
       'image': instance.image,
       'type': instance.type,
       'enabled': instance.enabled,
+      'processing': instance.processing,
+      'status': instance.status,
       'items': instance.items,
     };

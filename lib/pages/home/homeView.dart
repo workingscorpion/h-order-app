@@ -71,6 +71,7 @@ class _HomeViewState extends State<HomeView>
             ),
             mainAxisSpacing: 20,
             crossAxisCount: 5,
+            childAspectRatio: .9,
             children: [
               ...layoutServices.map((item) => ServiceButton(service: item)),
             ],

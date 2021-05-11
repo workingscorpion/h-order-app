@@ -2,20 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
-import 'package:h_order/constants/serviceStatus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 
 class ServiceButton extends StatefulWidget {
   final ServiceModel service;
-  final ServiceStatus status;
   final GestureTapCallback onTap;
   final Color color;
 
   ServiceButton({
     this.service,
-    this.status,
     this.onTap,
     this.color,
   });
@@ -57,12 +54,30 @@ class ServiceButtonState extends State<ServiceButton> {
               width: 92,
               alignment: Alignment.center,
               margin: EdgeInsets.only(bottom: 10),
-              child: Container(
-                child: (widget.service.image?.isNotEmpty ?? false)
-                    ? Image.network(
-                        widget.service.image,
-                      )
-                    : Container(),
+              child: Stack(
+                children: [
+                  Container(
+                    child: (widget.service.image?.isNotEmpty ?? false)
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Image.network(
+                              widget.service.image,
+                            ),
+                          )
+                        : Container(),
+                  ),
+                  Positioned(
+                    child: Text(
+                      widget.service.processing ?? false
+                          ? '${widget.service.status?.length ?? 0}'
+                          : '',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Text(
@@ -71,32 +86,10 @@ class ServiceButtonState extends State<ServiceButton> {
                 fontSize: 18,
               ),
             ),
-            widget.status != null
-                ? Text(
-                    _serviceStatusText(),
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.red,
-                    ),
-                  )
-                : Container(),
           ],
         ),
       ),
     );
-  }
-
-  _serviceStatusText() {
-    switch (widget.status) {
-      case ServiceStatus.Call:
-        return '호출중';
-
-      case ServiceStatus.Doing:
-        return '처리중';
-
-      default:
-        return '기타';
-    }
   }
 
   static openService({

@@ -28,16 +28,13 @@ class _AlertServiceState extends State<AlertService> {
 
     data = widget.service.items?.asMap()?.map((key, value) {
           switch (value.type) {
-            case 'Date':
+            case 'DateTime':
               return MapEntry(value.objectId, DateTime.now());
-
-            case 'Time':
-              return MapEntry(value.objectId, null);
 
             case 'Number':
               return MapEntry(value.objectId, 0);
 
-            case 'input':
+            case 'Input':
               return MapEntry(value.objectId, '');
           }
 
