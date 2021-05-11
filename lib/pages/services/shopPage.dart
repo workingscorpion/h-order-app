@@ -5,19 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/dynamicHeightGridView.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
-import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/itemModel.dart';
-import 'package:h_order/models/productModel.dart';
+import 'package:h_order/store/serviceStore.dart';
 import 'package:intl/intl.dart';
 
 class ShopPage extends StatefulWidget {
-  final ServiceModel service;
+  final String serviceObjectId;
 
   ShopPage({
-    this.service,
+    this.serviceObjectId,
   });
 
   @override
@@ -35,6 +33,10 @@ class _ShopPageState extends State<ShopPage>
 
   List<CartItemModel> _cart;
   List<ItemModel> _categories;
+
+  ServiceModel get service {
+    return ServiceStore.instance.serviceMap[widget.serviceObjectId];
+  }
 
   int get quantity {
     return _cart.fold(
@@ -55,8 +57,7 @@ class _ShopPageState extends State<ShopPage>
 
     _cart = List();
 
-    _categories =
-        widget.service.items.where((item) => item.type == 'Group').toList();
+    _categories = service.items.where((item) => item.type == 'Group').toList();
 
     _tabController = TabController(
       length: _categories.length,
@@ -83,7 +84,7 @@ class _ShopPageState extends State<ShopPage>
         child: Column(
           children: [
             PageHeader(
-              title: [widget.service.name],
+              title: [service.name],
               canBack: true,
             ),
             Expanded(
@@ -309,7 +310,7 @@ class _ShopPageState extends State<ShopPage>
     ItemModel category,
   }) async {
     final result = await AppRouter.toProductPage(
-      service: widget.service,
+      service: service,
       category: category,
       product: product,
     );

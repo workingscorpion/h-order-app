@@ -5,12 +5,13 @@ import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/service/actionModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/itemModel.dart';
+import 'package:h_order/store/serviceStore.dart';
 
 class AlertService extends StatefulWidget {
-  final ServiceModel service;
+  final String serviceObjectId;
 
   AlertService({
-    this.service,
+    this.serviceObjectId,
   });
 
   @override
@@ -18,15 +19,18 @@ class AlertService extends StatefulWidget {
 }
 
 class _AlertServiceState extends State<AlertService> {
-  Map<String, dynamic> data = Map();
+  ServiceModel get service {
+    return ServiceStore.instance.serviceMap[widget.serviceObjectId];
+  }
 
-  final _textController = TextEditingController();
+  Map<String, dynamic> data = Map();
+  Map<String, TextEditingController> textControllers = Map();
 
   @override
   void initState() {
     super.initState();
 
-    data = widget.service.items?.asMap()?.map((key, value) {
+    data = service.items?.asMap()?.map((key, value) {
           switch (value.type) {
             case 'DateTime':
               return MapEntry(value.objectId, DateTime.now());
@@ -41,11 +45,26 @@ class _AlertServiceState extends State<AlertService> {
           return MapEntry(value.objectId, null);
         }) ??
         Map();
+
+    textControllers = service.items
+            ?.where((item) => item.type == 'Input')
+            ?.toList()
+            ?.asMap()
+            ?.map(
+              (key, value) => MapEntry(
+                value.objectId,
+                TextEditingController()
+                  ..addListener(() {
+                    data[value.objectId] = textControllers[value.objectId].text;
+                  }),
+              ),
+            ) ??
+        Map();
   }
 
   @override
   Widget build(BuildContext context) {
-    final children = widget.service.items
+    final children = service.items
             ?.where((item) => item.type != 'resultMessage')
             ?.map((item) => _alertContent(item: item))
             ?.toList() ??
@@ -75,7 +94,7 @@ class _AlertServiceState extends State<AlertService> {
                       Container(
                         padding: EdgeInsets.all(24),
                         child: Text(
-                          widget.service.name,
+                          service.name,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 24,
@@ -114,8 +133,8 @@ class _AlertServiceState extends State<AlertService> {
                           final i = (index / 2).floor();
                           if (index % 2 == 1) {
                             if (i + 1 < children.length) {
-                              if (widget.service.items[i].type !=
-                                  widget.service.items[i + 1].type) {
+                              if (service.items[i].type !=
+                                  service.items[i + 1].type) {
                                 return Container(
                                   height: 40,
                                 );
@@ -168,7 +187,7 @@ class _AlertServiceState extends State<AlertService> {
                     minWidth: 140,
                     onPressed: () async {
                       await Client.create().serviceAction(
-                        widget.service.objectId,
+                        service.objectId,
                         'call',
                         ActionModel(
                           data: data.map(
@@ -261,7 +280,7 @@ class _AlertServiceState extends State<AlertService> {
             ),
             hintText: item.value,
           ),
-          controller: _textController,
+          controller: textControllers[item.objectId],
         ),
       );
 

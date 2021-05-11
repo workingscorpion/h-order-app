@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
+import 'package:h_order/store/serviceStore.dart';
 
 class ServiceButton extends StatefulWidget {
   final ServiceModel service;
@@ -107,26 +107,26 @@ class ServiceButtonState extends State<ServiceButton> {
     BuildContext context,
     ServiceModel service,
   }) async {
-    final _service = await Client.create().service(service.objectId);
+    await ServiceStore.instance.loadSingle(service.objectId);
 
-    switch (_service.type) {
+    switch (service.type) {
       case 'Information':
-        AppRouter.toInformationPage(service: _service);
+        AppRouter.toInformationPage(serviceObjectId: service.objectId);
         return;
 
       case 'Shop':
-        AppRouter.toShopPage(service: _service);
+        AppRouter.toShopPage(serviceObjectId: service.objectId);
         return;
 
       case 'Call':
-        alert(context: context, service: _service);
+        alert(context: context, serviceObjectId: service.objectId);
         return;
     }
   }
 
   static alert({
     BuildContext context,
-    ServiceModel service,
+    String serviceObjectId,
   }) async {
     await Fluttertoast.cancel();
 
@@ -143,18 +143,20 @@ class ServiceButtonState extends State<ServiceButton> {
         contentPadding: EdgeInsets.zero,
         buttonPadding: EdgeInsets.zero,
         actionsPadding: EdgeInsets.zero,
-        content: AlertService(service: service),
+        content: AlertService(serviceObjectId: serviceObjectId),
       ),
     );
 
     if (result != null) {
-      final resultMessage = service?.items
-              ?.singleWhere(
-                (item) => item.type == 'resultMessage',
-                orElse: () => null,
-              )
-              ?.value ??
-          '신청되었습니다.';
+      // final resultMessage = service?.items
+      //         ?.singleWhere(
+      //           (item) => item.type == 'resultMessage',
+      //           orElse: () => null,
+      //         )
+      //         ?.value ??
+      //     '신청되었습니다.';
+
+      final resultMessage = '신청되었습니다.';
 
       await Fluttertoast.showToast(
         msg: "   $resultMessage   ",

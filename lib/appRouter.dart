@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/constants/routeNames.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
-import 'package:h_order/models/categoryModel.dart';
 import 'package:h_order/models/itemModel.dart';
-import 'package:h_order/models/productModel.dart';
 import 'package:h_order/pages/alarm/alarmPage.dart';
 import 'package:h_order/pages/homePage.dart';
 import 'package:h_order/pages/lockPage.dart';
@@ -50,7 +48,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) =>
-              ShopPage(service: settings.arguments as ServiceModel),
+              ShopPage(serviceObjectId: settings.arguments as String),
         );
 
       case RouteNames.Cart:
@@ -91,7 +89,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) => InformationPage(
-            service: settings.arguments as ServiceModel,
+            serviceObjectId: settings.arguments as String,
           ),
         );
 
@@ -159,9 +157,10 @@ class AppRouter {
   }
 
   static toShopPage({
-    ServiceModel service,
+    String serviceObjectId,
   }) {
-    return Navigator.of(context).pushNamed(RouteNames.Shop, arguments: service);
+    return Navigator.of(context)
+        .pushNamed(RouteNames.Shop, arguments: serviceObjectId);
   }
 
   static toCartPage(List<CartItemModel> cart) {
@@ -211,10 +210,10 @@ class AppRouter {
   }
 
   static toInformationPage({
-    ServiceModel service,
+    String serviceObjectId,
   }) {
     return Navigator.of(context)
-        .pushNamed(RouteNames.Information, arguments: service);
+        .pushNamed(RouteNames.Information, arguments: serviceObjectId);
   }
 
   static toSettingsPage() {
