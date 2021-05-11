@@ -33,7 +33,7 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
     options.forEach((option) {
       _optionMap[option.objectId] = option;
 
-      if ((option.items?.length ?? 0) > 0) {
+      if (option.items?.isNotEmpty ?? false) {
         _initOptionsQuantity(option.items);
       }
     });

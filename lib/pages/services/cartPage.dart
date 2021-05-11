@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/itemModel.dart';
+import 'package:h_order/models/paymentMethodModel.dart';
+import 'package:h_order/store/paymentStore.dart';
 import 'package:intl/intl.dart';
 
 class CartPage extends StatefulWidget {
@@ -23,6 +26,10 @@ class _CartPageState extends State<CartPage>
   Map<String, ItemModel> _parentMap;
   Map<String, ItemModel> _optionMap;
 
+  List<PaymentMethodModel> get cards {
+    return PaymentStore.instance.cards;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +40,14 @@ class _CartPageState extends State<CartPage>
     widget.cart?.forEach((element) {
       _initOptionsQuantity(items: element.product.items);
     });
+
+    load();
+  }
+
+  load() async {
+    await PaymentStore.instance.loadCards();
+
+    setState(() {});
   }
 
   _initOptionsQuantity({
@@ -86,6 +101,7 @@ class _CartPageState extends State<CartPage>
                       canBack: true,
                     ),
                     _cartItems(),
+                    _cardList(),
                     _amount(),
                     _payButton(),
                   ],
@@ -368,7 +384,28 @@ class _CartPageState extends State<CartPage>
     return name;
   }
 
+  _cardList() => Container(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        margin: EdgeInsets.only(bottom: 24),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Observer(
+            builder: (context) => (cards?.isNotEmpty ?? false)
+                ? ListView(
+                    children: [...cards?.map((e) => Text(e.bankCode)) ?? []],
+                  )
+                : Container(),
+          ),
+        ),
+      );
+
   _save() async {
+    final data = widget.cart;
+    if (data.isEmpty) {}
+
     AppRouter.toShoppingCompletePage(widget.cart);
   }
 }

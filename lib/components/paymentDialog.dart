@@ -273,10 +273,13 @@ class _PaymentDialogState extends State<PaymentDialog> {
               email: _emailController.text,
               phone: _phoneController.text,
             ));
+
             await paymentStore.loadCards();
+
             AppRouter.pop();
           } catch (ex) {
-            print(ex.toString());
+            print(ex);
+
             await Fluttertoast.showToast(
               msg: "카드를 등록할 수 없습니다.",
               toastLength: Toast.LENGTH_SHORT,

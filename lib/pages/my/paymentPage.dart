@@ -14,21 +14,24 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  PaymentStore paymentStore = PaymentStore.instance;
-
-  PaymentMethodModel primaryMethod;
+  PaymentMethodModel get primaryMethod {
+    return (PaymentStore.instance.cards?.isNotEmpty ?? false)
+        ? PaymentStore.instance.cards
+            .where((element) => element.isPrimary)
+            .first
+        : null;
+  }
 
   @override
   void initState() {
-    load();
     super.initState();
+
+    load();
   }
 
   load() async {
-    await paymentStore.loadCards();
-    primaryMethod = paymentStore.cards.length > 0
-        ? paymentStore.cards.where((element) => element.isPrimary).first
-        : null;
+    await PaymentStore.instance.loadCards();
+
     setState(() {});
   }
 
@@ -127,8 +130,6 @@ class _PaymentPageState extends State<PaymentPage> {
                                         showDialog(
                                           child: PaymentDialog(),
                                           context: context,
-                                          // builder: (BuildContext context) =>
-                                          //     _cardInputDialog(),
                                         );
                                       },
                                       child: Container(
@@ -160,8 +161,8 @@ class _PaymentPageState extends State<PaymentPage> {
                             ),
                             CardsView(
                               text: '삭제',
-                              onTap: (int) => Client.create().deleteCard(
-                                paymentStore.cards[int].objectId,
+                              onTap: (index) => Client.create().deleteCard(
+                                PaymentStore.instance.cards[index].objectId,
                               ),
                             ),
                           ],
