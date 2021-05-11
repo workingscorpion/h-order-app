@@ -43,9 +43,9 @@ abstract class ServiceStoreBase with Store {
   }
 
   @action
-  Future<ServiceModel> loadSingle(String objectId) async {
+  loadSingle(String objectId) async {
     if (loading) {
-      return null;
+      return;
     }
 
     try {
@@ -55,14 +55,12 @@ abstract class ServiceStoreBase with Store {
       final index = services.indexWhere((a) => a.objectId == item.objectId);
 
       if (index != -1) {
-        services.replaceRange(index, 1, [item]);
+        services.replaceRange(index, index + 1, [item]);
       } else {
         services.add(item);
       }
 
       serviceMap[item.objectId] = item;
-
-      return item;
     } finally {
       loading = false;
     }

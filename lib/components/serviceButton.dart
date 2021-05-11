@@ -166,6 +166,8 @@ class ServiceButtonState extends State<ServiceButton> {
         textColor: Theme.of(context).textTheme.bodyText1.color,
         fontSize: 17,
       );
+
+      await ServiceStore.instance.load();
     }
   }
 }
