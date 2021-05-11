@@ -73,7 +73,7 @@ class _HomeViewState extends State<HomeView>
               final layoutServices =
                   serviceObjectIds?.map((e) => serviceMap[e]) ?? [];
 
-              GridView.count(
+              return GridView.count(
                 padding: EdgeInsets.only(
                   top: 40,
                   bottom: 40,
