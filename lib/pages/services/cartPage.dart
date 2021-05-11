@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/cardsView.dart';
 import 'package:h_order/components/pageHeader.dart';
+import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/itemModel.dart';
@@ -388,6 +390,7 @@ class _CartPageState extends State<CartPage>
         padding: EdgeInsets.symmetric(horizontal: 24),
         margin: EdgeInsets.only(bottom: 24),
         child: Container(
+          height: 200,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
@@ -395,7 +398,32 @@ class _CartPageState extends State<CartPage>
           child: Observer(
             builder: (context) => (cards?.isNotEmpty ?? false)
                 ? ListView(
-                    children: [...cards?.map((e) => Text(e.bankCode)) ?? []],
+                    padding: EdgeInsets.all(24),
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      ...cards?.map((item) {
+                            final image =
+                                CardCompanies.cardImageByCode[item.bankCode];
+                            final name =
+                                CardCompanies.cardNameByCode[item.bankCode];
+
+                            return AspectRatio(
+                              aspectRatio: 8.56 / 5.398,
+                              child: Container(
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                margin: EdgeInsets.only(right: 12),
+                                child: Image.asset(
+                                  image,
+                                ),
+                              ),
+                            );
+                          }) ??
+                          []
+                    ],
                   )
                 : Container(),
           ),

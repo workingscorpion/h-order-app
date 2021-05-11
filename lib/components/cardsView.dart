@@ -4,10 +4,13 @@ import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/store/paymentStore.dart';
 
 class CardsView extends StatelessWidget {
-  CardsView({this.text, this.onTap});
-
   final String text;
   final Function(int) onTap;
+
+  CardsView({
+    this.text,
+    this.onTap,
+  });
 
   get cards {
     return PaymentStore.instance.cards;

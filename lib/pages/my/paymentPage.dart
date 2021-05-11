@@ -165,9 +165,11 @@ class _PaymentPageState extends State<PaymentPage> {
                             ),
                             CardsView(
                               text: '삭제',
-                              onTap: (index) => Client.create().deleteCard(
-                                PaymentStore.instance.cards[index].objectId,
-                              ),
+                              onTap: (index) {
+                                Client.create().deleteCard(
+                                  PaymentStore.instance.cards[index].objectId,
+                                );
+                              },
                             ),
                           ],
                         ),
