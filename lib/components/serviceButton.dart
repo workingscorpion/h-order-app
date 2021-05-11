@@ -45,11 +45,6 @@ class ServiceButtonState extends State<ServiceButton> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
               height: 92,
               width: 92,
               alignment: Alignment.center,
@@ -59,6 +54,11 @@ class ServiceButtonState extends State<ServiceButton> {
                   Container(
                     child: (widget.service.image?.isNotEmpty ?? false)
                         ? Container(
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
                             alignment: Alignment.center,
                             child: Image.network(
                               widget.service.image,
@@ -66,17 +66,28 @@ class ServiceButtonState extends State<ServiceButton> {
                           )
                         : Container(),
                   ),
-                  Positioned(
-                    child: Text(
-                      widget.service.processing ?? false
-                          ? '${widget.service.status?.length ?? 0}'
-                          : '',
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
+                  (widget.service.processing ?? false)
+                      ? Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 24,
+                            width: 24,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                            child: Text(
+                              '${widget.service.status?.length ?? 0}',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
             ),
