@@ -69,13 +69,6 @@ class _ProductPageState extends State<ProductPage>
         .toList();
   }
 
-  List<ItemModel> get optionalOptions {
-    return options
-        .where(
-            (item) => item.getTagMetadata('selectionType', 'value') != 'Single')
-        .toList();
-  }
-
   @override
   void initState() {
     super.initState();
@@ -146,8 +139,8 @@ class _ProductPageState extends State<ProductPage>
               _card(
                 child: _title(),
               ),
-              ...(optionalOptions?.isNotEmpty ?? false)
-                  ? optionalOptions.map(
+              ...(options?.isNotEmpty ?? false)
+                  ? options.map(
                       (item) => _card(
                         child: _option(
                           option: item,
@@ -377,48 +370,8 @@ class _ProductPageState extends State<ProductPage>
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 16),
-              child: Divider(
-                color: Theme.of(context).accentColor,
-                height: 10,
-                thickness: .5,
-              ),
-            ),
-            _requiredOptions(),
           ],
         ),
-      );
-
-  _requiredOptions() => Column(
-        children: (requiredOptions?.isNotEmpty ?? false)
-            ? List.generate(
-                requiredOptions.length * 2 - 1,
-                (index) => index % 2 == 0
-                    ? _option(option: requiredOptions[(index / 2).floor()])
-                    : Container(height: 16),
-              )
-            : [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 20,
-                      height: 20,
-                      margin: EdgeInsets.only(right: 5),
-                      child: Radio(
-                        value: null,
-                        groupValue: null,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    Text('기본'),
-                    Spacer(),
-                    Text(
-                        '${NumberFormat().format(widget?.product?.price ?? 0)}원')
-                  ],
-                ),
-              ],
       );
 
   _option({
@@ -438,15 +391,30 @@ class _ProductPageState extends State<ProductPage>
             ?.where((item) => item.type == 'ProductOption')
             ?.toList() ??
         [];
+    final selectionType = option.getTagMetadata('selectionType', 'value');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          option.value,
-          style: TextStyle(
-            fontSize: 19,
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              option.value,
+              style: TextStyle(
+                fontSize: 19,
+              ),
+            ),
+            Spacer(),
+            selectionType == 'Single'
+                ? Text(
+                    '필수선택',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  )
+                : Container(),
+          ],
         ),
         Divider(
           height: 10,
@@ -464,8 +432,6 @@ class _ProductPageState extends State<ProductPage>
                       }
 
                       final item = children[(index / 2).floor()];
-                      final selectionType =
-                          option.getTagMetadata('selectionType', 'value');
 
                       return _optionItem(
                         group: option,
