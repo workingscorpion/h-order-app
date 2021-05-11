@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
@@ -15,7 +16,6 @@ class PaymentDialog extends StatefulWidget {
 }
 
 class _PaymentDialogState extends State<PaymentDialog> {
-  PaymentStore paymentStore = PaymentStore.instance;
   TextEditingController _cardNumberController = TextEditingController();
   TextEditingController _expireMonthController = TextEditingController();
   TextEditingController _expireYearController = TextEditingController();
@@ -274,14 +274,20 @@ class _PaymentDialogState extends State<PaymentDialog> {
               phone: _phoneController.text,
             ));
 
-            await paymentStore.loadCards();
+            await PaymentStore.instance.loadCards();
 
             AppRouter.pop();
           } catch (ex) {
-            print(ex);
+            var message = '카드를 등록할 수 없습니다.';
+
+            if (ex is DioError) {
+              if (ex.response.statusCode == 409) {
+                message = '이미 등록된 카드입니다.';
+              }
+            }
 
             await Fluttertoast.showToast(
-              msg: "카드를 등록할 수 없습니다.",
+              msg: message,
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),

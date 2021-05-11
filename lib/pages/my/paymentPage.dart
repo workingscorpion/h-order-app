@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/components/cardsView.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/paymentDialog.dart';
@@ -56,35 +57,38 @@ class _PaymentPageState extends State<PaymentPage> {
                             _title(
                               text: '주 결제 수단',
                             ),
-                            Container(
-                              padding: EdgeInsets.all(32),
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                              ),
-                              child: DefaultTextStyle(
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
+                            Observer(
+                              builder: (context) => Container(
+                                padding: EdgeInsets.all(32),
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
                                 ),
-                                child: primaryMethod != null
-                                    ? Row(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(right: 10),
-                                            child: Text(
-                                              CardCompanies.cardNameByCode[
-                                                  primaryMethod.bankCode],
+                                child: DefaultTextStyle(
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                  ),
+                                  child: primaryMethod != null
+                                      ? Row(
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 10),
+                                              child: Text(
+                                                CardCompanies.cardNameByCode[
+                                                    primaryMethod.bankCode],
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                              '**** - **** - **** - ${primaryMethod.cardLastNumber}'),
-                                          Spacer(),
-                                          _button(text: '수정'),
-                                        ],
-                                      )
-                                    : Text('미설정'),
+                                            Text(
+                                                '**** - **** - **** - ${primaryMethod.cardLastNumber}'),
+                                            Spacer(),
+                                            _button(text: '수정'),
+                                          ],
+                                        )
+                                      : Text('미설정'),
+                                ),
                               ),
                             ),
                             Container(height: 12),

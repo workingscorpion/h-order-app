@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/store/paymentStore.dart';
 
@@ -8,22 +9,24 @@ class CardsView extends StatelessWidget {
   final String text;
   final Function(int) onTap;
 
+  get cards {
+    return PaymentStore.instance.cards;
+  }
+
   @override
   Widget build(BuildContext context) {
-    PaymentStore paymentStore = PaymentStore.instance;
-
-    return Column(
-      children: List.generate(
-        paymentStore.cards.length,
-        (index) => _card(
-          item: PaymentModel(
-            type: 'card',
-            index: index,
-            image: CardCompanies
-                .cardImageByCode[paymentStore.cards[index].bankCode],
-            name: CardCompanies
-                .cardNameByCode[paymentStore.cards[index].bankCode],
-            numbers: paymentStore.cards[index].cardLastNumber,
+    return Observer(
+      builder: (context) => Column(
+        children: List.generate(
+          cards?.length ?? 0,
+          (index) => _card(
+            item: PaymentModel(
+              type: 'card',
+              index: index,
+              image: CardCompanies.cardImageByCode[cards[index].bankCode],
+              name: CardCompanies.cardNameByCode[cards[index].bankCode],
+              numbers: cards[index].cardLastNumber,
+            ),
           ),
         ),
       ),

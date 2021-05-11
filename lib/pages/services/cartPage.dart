@@ -404,7 +404,9 @@ class _CartPageState extends State<CartPage>
 
   _save() async {
     final data = widget.cart;
-    if (data.isEmpty) {}
+    if (data.isEmpty) {
+      return;
+    }
 
     AppRouter.toShoppingCompletePage(widget.cart);
   }
