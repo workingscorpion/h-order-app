@@ -185,7 +185,9 @@ class _SplashPageState extends State<SplashPage>
                 ),
                 FlatButton(
                   onPressed: () async {
-                    Navigator.of(context).pop(_textEditingController.text);
+                    final value = _textEditingController.text;
+                    final result = await DeviceInfo.writeSerialNumber(value);
+                    Navigator.of(context).pop(result);
                   },
                   child: Text(
                     '확인',

@@ -1,21 +1,26 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/login/requestLoginModel.dart';
 import 'package:h_order/http/types/pagination/pageModel.dart';
 import 'package:h_order/http/types/payment/cardRegisterModel.dart';
 import 'package:h_order/http/types/service/actionModel.dart';
-import 'package:h_order/models/noticeModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'client.g.dart';
 
-@RestApi(baseUrl: "http://jinjoosoft.io:49233/api")
+const baseUrl = kDebugMode
+    ? "http://192.168.50.11:5000/api"
+    : "http://jinjoosoft.io:49233/api";
+
+@RestApi()
 abstract class Client {
   factory Client.create() => _Client(
         Dio(
           BaseOptions(
+            baseUrl: baseUrl,
             headers: token != null
                 ? {
                     "Authorization": 'Bearer $token',

@@ -9,7 +9,6 @@ part of 'client.dart';
 class _Client implements Client {
   _Client(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://jinjoosoft.io:49233/api';
   }
 
   final Dio _dio;
