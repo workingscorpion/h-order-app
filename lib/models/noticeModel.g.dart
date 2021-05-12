@@ -8,23 +8,23 @@ part of 'noticeModel.dart';
 
 NoticeModel _$NoticeModelFromJson(Map<String, dynamic> json) {
   return NoticeModel(
+    objectId: json['objectId'] as String,
     index: json['index'] as int,
     writer: json['writer'] as String,
     title: json['title'] as String,
-    content: json['content'] as String,
+    contents: json['contents'] as String,
     createdTime: json['createdTime'] == null
         ? null
         : DateTime.parse(json['createdTime'] as String),
-    isRead: json['isRead'] as bool,
   );
 }
 
 Map<String, dynamic> _$NoticeModelToJson(NoticeModel instance) =>
     <String, dynamic>{
+      'objectId': instance.objectId,
       'index': instance.index,
       'title': instance.title,
       'writer': instance.writer,
-      'content': instance.content,
+      'contents': instance.contents,
       'createdTime': instance.createdTime?.toIso8601String(),
-      'isRead': instance.isRead,
     };

@@ -4,20 +4,20 @@ part 'noticeModel.g.dart';
 
 @JsonSerializable()
 class NoticeModel {
+  final String objectId;
   final int index;
   final String title;
   final String writer;
-  final String content;
+  final String contents;
   final DateTime createdTime;
-  final bool isRead;
 
   NoticeModel({
+    this.objectId,
     this.index,
     this.writer,
     this.title,
-    this.content,
+    this.contents,
     this.createdTime,
-    this.isRead,
   });
 
   factory NoticeModel.fromJson(Map<String, dynamic> json) =>
