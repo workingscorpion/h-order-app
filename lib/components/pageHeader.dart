@@ -44,8 +44,8 @@ class PageHeader extends StatelessWidget {
                         color: Colors.black,
                         width: 24,
                         thickness: .5,
-                        indent: 9,
-                        endIndent: 6,
+                        indent: 28,
+                        endIndent: 28,
                       );
                     },
                   ),

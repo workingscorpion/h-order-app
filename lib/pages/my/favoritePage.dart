@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/serviceButton.dart';
-import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
+import 'package:h_order/store/layoutStore.dart';
+import 'package:h_order/store/serviceStore.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -12,22 +14,36 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  List<ServiceModel> list;
-  List<ServiceModel> favoriteList;
+  LayoutModel get layout {
+    return LayoutStore.instance.layout;
+  }
+
+  List<ServiceModel> get list {
+    final serviceObjectIds = layout?.positions['2'] ?? [];
+    final layoutServices = serviceObjectIds
+            ?.map((e) => ServiceStore.instance.serviceMap[e])
+            ?.toList() ??
+        [];
+
+    return layoutServices;
+  }
+
+  List<ServiceModel> favoriteList = List();
 
   @override
   void initState() {
     super.initState();
 
-    list = SampleData.services()
-        .where((item) =>
-            item.items
-                .singleWhere((element) => element.type == 'position',
-                    orElse: () => null)
-                ?.value !=
-            "bottom")
-        .toList();
-    favoriteList = List();
+    load();
+  }
+
+  load() async {
+    await Future.wait([
+      ServiceStore.instance.load(),
+      LayoutStore.instance.load(),
+    ]);
+
+    setState(() {});
   }
 
   @override

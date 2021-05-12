@@ -13,8 +13,7 @@ class PaymentStore extends PaymentStoreBase with _$PaymentStore {
 }
 
 abstract class PaymentStoreBase with Store {
-  @observable
-  List<PaymentMethodModel> cards = List();
+  ObservableList<PaymentMethodModel> cards = ObservableList();
 
   @observable
   bool loading = false;
@@ -27,10 +26,12 @@ abstract class PaymentStoreBase with Store {
 
     try {
       loading = true;
-      cards = await Client.create().cards();
-    } catch (e) {
-      print(e);
-      loading = false;
+
+      final list = await Client.create().cards();
+
+      cards
+        ..clear()
+        ..addAll(list);
     } finally {
       loading = false;
     }

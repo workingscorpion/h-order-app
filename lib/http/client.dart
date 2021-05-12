@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/login/requestLoginModel.dart';
 import 'package:h_order/http/types/payment/cardRegisterModel.dart';
+import 'package:h_order/http/types/service/actionModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:retrofit/retrofit.dart';
@@ -52,5 +53,12 @@ abstract class Client {
   @DELETE("/v1/device/paymentmethod")
   Future deleteCard(
     @Query("objectId") String objectId,
+  );
+
+  @POST("/v1/device/service/{objectId}/{type}")
+  Future serviceAction(
+    @Path('objectId') String objectId,
+    @Path('type') String type,
+    @Body() ActionModel data,
   );
 }

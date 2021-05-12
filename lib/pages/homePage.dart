@@ -55,24 +55,27 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: WillPopScope(
-          onWillPop: _onWillPop,
-          child: SafeArea(
-            child: Column(
-              children: [
-                _info(),
-                _body(),
-              ],
-            ),
+      body: WillPopScope(
+        onWillPop: _onWillPop,
+        child: SafeArea(
+          child: Column(
+            children: [
+              _info(),
+              _body(),
+            ],
           ),
         ),
-        floatingActionButton: HomeFloatingButton(
+      ),
+      floatingActionButton: AnimatedOpacity(
+        duration: Duration(milliseconds: 200),
+        opacity: _tabController.index != 0 ? 1 : 0,
+        child: HomeFloatingButton(
           callback: () {
             _tabController.animateTo(0);
             setState(() {});
           },
         ),
-      );
+      ));
 
   _info() => Container(
       color: Theme.of(context).primaryColor,

@@ -2,20 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/alertService.dart';
-import 'package:h_order/constants/serviceStatus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
+import 'package:h_order/store/serviceStore.dart';
 
 class ServiceButton extends StatefulWidget {
   final ServiceModel service;
-  final ServiceStatus status;
   final GestureTapCallback onTap;
   final Color color;
 
   ServiceButton({
     this.service,
-    this.status,
     this.onTap,
     this.color,
   });
@@ -48,21 +45,50 @@ class ServiceButtonState extends State<ServiceButton> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
               height: 92,
               width: 92,
               alignment: Alignment.center,
               margin: EdgeInsets.only(bottom: 10),
-              child: Container(
-                child: (widget.service.image?.isNotEmpty ?? false)
-                    ? Image.network(
-                        widget.service.image,
-                      )
-                    : Container(),
+              child: Stack(
+                children: [
+                  Container(
+                    child: (widget.service.image?.isNotEmpty ?? false)
+                        ? Container(
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            alignment: Alignment.center,
+                            child: Image.network(
+                              widget.service.image,
+                            ),
+                          )
+                        : Container(),
+                  ),
+                  (widget.service.processing ?? false)
+                      ? Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 24,
+                            width: 24,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                            child: Text(
+                              '${widget.service.status?.length ?? 0}',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ],
               ),
             ),
             Text(
@@ -71,58 +97,36 @@ class ServiceButtonState extends State<ServiceButton> {
                 fontSize: 18,
               ),
             ),
-            widget.status != null
-                ? Text(
-                    _serviceStatusText(),
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.red,
-                    ),
-                  )
-                : Container(),
           ],
         ),
       ),
     );
   }
 
-  _serviceStatusText() {
-    switch (widget.status) {
-      case ServiceStatus.Call:
-        return '호출중';
-
-      case ServiceStatus.Doing:
-        return '처리중';
-
-      default:
-        return '기타';
-    }
-  }
-
   static openService({
     BuildContext context,
     ServiceModel service,
   }) async {
-    final _service = await Client.create().service(service.objectId);
+    await ServiceStore.instance.loadSingle(service.objectId);
 
-    switch (_service.type) {
+    switch (service.type) {
       case 'Information':
-        AppRouter.toInformationPage(service: _service);
+        AppRouter.toInformationPage(serviceObjectId: service.objectId);
         return;
 
       case 'Shop':
-        AppRouter.toShopPage(service: _service);
+        AppRouter.toShopPage(serviceObjectId: service.objectId);
         return;
 
       case 'Call':
-        alert(context: context, service: _service);
+        alert(context: context, serviceObjectId: service.objectId);
         return;
     }
   }
 
   static alert({
     BuildContext context,
-    ServiceModel service,
+    String serviceObjectId,
   }) async {
     await Fluttertoast.cancel();
 
@@ -139,18 +143,20 @@ class ServiceButtonState extends State<ServiceButton> {
         contentPadding: EdgeInsets.zero,
         buttonPadding: EdgeInsets.zero,
         actionsPadding: EdgeInsets.zero,
-        content: AlertService(service: service),
+        content: AlertService(serviceObjectId: serviceObjectId),
       ),
     );
 
     if (result != null) {
-      final resultMessage = service?.items
-              ?.singleWhere(
-                (item) => item.type == 'resultMessage',
-                orElse: () => null,
-              )
-              ?.value ??
-          '신청되었습니다.';
+      // final resultMessage = service?.items
+      //         ?.singleWhere(
+      //           (item) => item.type == 'resultMessage',
+      //           orElse: () => null,
+      //         )
+      //         ?.value ??
+      //     '신청되었습니다.';
+
+      final resultMessage = '신청되었습니다.';
 
       await Fluttertoast.showToast(
         msg: "   $resultMessage   ",
@@ -160,6 +166,8 @@ class ServiceButtonState extends State<ServiceButton> {
         textColor: Theme.of(context).textTheme.bodyText1.color,
         fontSize: 17,
       );
+
+      await ServiceStore.instance.load();
     }
   }
 }

@@ -166,4 +166,25 @@ class _Client implements Client {
     final value = _result.data;
     return value;
   }
+
+  @override
+  Future<dynamic> serviceAction(objectId, type, data) async {
+    ArgumentError.checkNotNull(objectId, 'objectId');
+    ArgumentError.checkNotNull(type, 'type');
+    ArgumentError.checkNotNull(data, 'data');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(data?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request('/v1/device/service/$objectId/$type',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    return value;
+  }
 }

@@ -3,13 +3,14 @@ import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/models/itemModel.dart';
+import 'package:h_order/store/serviceStore.dart';
 
 class InformationPage extends StatefulWidget {
-  final ServiceModel service;
+  final String serviceObjectId;
 
   InformationPage({
     Key key,
-    this.service,
+    this.serviceObjectId,
   }) : super(key: key);
 
   @override
@@ -18,20 +19,20 @@ class InformationPage extends StatefulWidget {
 
 class _InformationPageState extends State<InformationPage>
     with SingleTickerProviderStateMixin {
-  GlobalKey _appBarKey;
-  TabController _tabController;
+  ServiceModel get service {
+    return ServiceStore.instance.serviceMap[widget.serviceObjectId];
+  }
 
+  TabController _tabController;
   List<ItemModel> _categories;
 
   @override
   void initState() {
     super.initState();
-    _appBarKey = GlobalKey();
 
-    _categories = widget.service?.items
-            ?.where((item) => item.type == 'Group')
-            ?.toList() ??
-        List();
+    _categories =
+        service?.items?.where((item) => item.type == 'Group')?.toList() ??
+            List();
 
     if (_categories?.isNotEmpty ?? false) {
       _tabController = TabController(
@@ -48,7 +49,7 @@ class _InformationPageState extends State<InformationPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PageHeader(
-            title: [widget.service.name],
+            title: [service.name],
             canBack: true,
           ),
           ..._tabController != null
@@ -58,7 +59,7 @@ class _InformationPageState extends State<InformationPage>
                 ]
               : [
                   Expanded(
-                    child: _carousel(widget.service.items),
+                    child: _carousel(service.items),
                   ),
                 ]
         ],

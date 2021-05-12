@@ -3,12 +3,12 @@ import 'package:intl/intl.dart';
 
 class DateTimeInput extends StatefulWidget {
   final DateTime selectedTime;
-  final void Function(DateTime) onAdd;
+  final void Function(DateTime) onSelectTime;
 
   DateTimeInput({
     Key key,
     this.selectedTime,
-    this.onAdd,
+    this.onSelectTime,
   }) : super(key: key);
 
   @override
@@ -306,6 +306,8 @@ class DateTimeInputState extends State<DateTimeInput> {
           break;
       }
     }
+
+    widget.onSelectTime(_selectedTime);
 
     setState(() {});
   }

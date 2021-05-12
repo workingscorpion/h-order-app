@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/components/cardsView.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/paymentDialog.dart';
@@ -14,21 +15,24 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  PaymentStore paymentStore = PaymentStore.instance;
-
-  PaymentMethodModel primaryMethod;
+  PaymentMethodModel get primaryMethod {
+    return (PaymentStore.instance.cards?.isNotEmpty ?? false)
+        ? PaymentStore.instance.cards
+            .where((element) => element.isPrimary)
+            .first
+        : null;
+  }
 
   @override
   void initState() {
-    load();
     super.initState();
+
+    load();
   }
 
   load() async {
-    await paymentStore.loadCards();
-    primaryMethod = paymentStore.cards.length > 0
-        ? paymentStore.cards.where((element) => element.isPrimary).first
-        : null;
+    await PaymentStore.instance.loadCards();
+
     setState(() {});
   }
 
@@ -53,35 +57,38 @@ class _PaymentPageState extends State<PaymentPage> {
                             _title(
                               text: '주 결제 수단',
                             ),
-                            Container(
-                              padding: EdgeInsets.all(32),
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                              ),
-                              child: DefaultTextStyle(
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
+                            Observer(
+                              builder: (context) => Container(
+                                padding: EdgeInsets.all(32),
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
                                 ),
-                                child: primaryMethod != null
-                                    ? Row(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(right: 10),
-                                            child: Text(
-                                              CardCompanies.cardNameByCode[
-                                                  primaryMethod.bankCode],
+                                child: DefaultTextStyle(
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                  ),
+                                  child: primaryMethod != null
+                                      ? Row(
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 10),
+                                              child: Text(
+                                                CardCompanies.cardNameByCode[
+                                                    primaryMethod.bankCode],
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                              '**** - **** - **** - ${primaryMethod.cardLastNumber}'),
-                                          Spacer(),
-                                          _button(text: '수정'),
-                                        ],
-                                      )
-                                    : Text('미설정'),
+                                            Text(
+                                                '**** - **** - **** - ${primaryMethod.cardLastNumber}'),
+                                            Spacer(),
+                                            _button(text: '수정'),
+                                          ],
+                                        )
+                                      : Text('미설정'),
+                                ),
                               ),
                             ),
                             Container(height: 12),
@@ -127,8 +134,6 @@ class _PaymentPageState extends State<PaymentPage> {
                                         showDialog(
                                           child: PaymentDialog(),
                                           context: context,
-                                          // builder: (BuildContext context) =>
-                                          //     _cardInputDialog(),
                                         );
                                       },
                                       child: Container(
@@ -160,9 +165,11 @@ class _PaymentPageState extends State<PaymentPage> {
                             ),
                             CardsView(
                               text: '삭제',
-                              onTap: (int) => Client.create().deleteCard(
-                                paymentStore.cards[int].objectId,
-                              ),
+                              onTap: (index) {
+                                Client.create().deleteCard(
+                                  PaymentStore.instance.cards[index].objectId,
+                                );
+                              },
                             ),
                           ],
                         ),

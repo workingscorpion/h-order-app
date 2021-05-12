@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/itemModel.dart';
-import 'package:h_order/models/productOptionModel.dart';
 
 class ShoppingCompletePage extends StatefulWidget {
   final List<CartItemModel> cart;
@@ -34,7 +33,7 @@ class _ShoppingCompletePageState extends State<ShoppingCompletePage>
     options.forEach((option) {
       _optionMap[option.objectId] = option;
 
-      if ((option.items?.length ?? 0) > 0) {
+      if (option.items?.isNotEmpty ?? false) {
         _initOptionsQuantity(option.items);
       }
     });

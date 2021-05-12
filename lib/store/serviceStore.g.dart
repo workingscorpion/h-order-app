@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'paymentStore.dart';
+part of 'serviceStore.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'paymentStore.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$PaymentStore on PaymentStoreBase, Store {
-  final _$loadingAtom = Atom(name: 'PaymentStoreBase.loading');
+mixin _$ServiceStore on ServiceStoreBase, Store {
+  final _$loadingAtom = Atom(name: 'ServiceStoreBase.loading');
 
   @override
   bool get loading {
@@ -24,11 +24,18 @@ mixin _$PaymentStore on PaymentStoreBase, Store {
     });
   }
 
-  final _$loadCardsAsyncAction = AsyncAction('PaymentStoreBase.loadCards');
+  final _$loadAsyncAction = AsyncAction('ServiceStoreBase.load');
 
   @override
-  Future loadCards() {
-    return _$loadCardsAsyncAction.run(() => super.loadCards());
+  Future load() {
+    return _$loadAsyncAction.run(() => super.load());
+  }
+
+  final _$loadSingleAsyncAction = AsyncAction('ServiceStoreBase.loadSingle');
+
+  @override
+  Future loadSingle(String objectId) {
+    return _$loadSingleAsyncAction.run(() => super.loadSingle(objectId));
   }
 
   @override
