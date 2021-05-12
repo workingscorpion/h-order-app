@@ -22,6 +22,7 @@ class CreditCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Center(
         child: Container(
+          margin: EdgeInsets.only(bottom: 10),
           width: 600,
           height: 400,
           decoration: BoxDecoration(

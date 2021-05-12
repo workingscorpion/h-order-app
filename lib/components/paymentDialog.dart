@@ -60,8 +60,8 @@ class _PaymentDialogState extends State<PaymentDialog> {
 
   _contentBox() => Container(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
+          shrinkWrap: true,
           children: [
             InkWell(
               onTap: () => AppRouter.pop(),
@@ -70,68 +70,79 @@ class _PaymentDialogState extends State<PaymentDialog> {
                 alignment: Alignment.centerRight,
               ),
             ),
-            CreditCard(
-              cardNumber: _cardNumber,
-              expireYear: _expireYear,
-              expireMonth: _expireMonth,
-              name: _name,
-              image: CardGenHelper.getCardImage(
-                text: CardGenHelper.cardCompanyByCardNumber(_cardNumber),
-              ),
-            ),
             Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: Row(
+              padding: EdgeInsets.symmetric(horizontal: 50),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(
-                    flex: 3,
-                    child: _cardNumberInput(),
+                  CreditCard(
+                    cardNumber: _cardNumber,
+                    expireYear: _expireYear,
+                    expireMonth: _expireMonth,
+                    name: _name,
+                    image: CardGenHelper.getCardImage(
+                      text: CardGenHelper.cardCompanyByCardNumber(_cardNumber),
+                    ),
                   ),
                   Container(
-                    width: 50,
+                    margin: EdgeInsets.only(bottom: 40),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: _cardNumberInput(),
+                        ),
+                        Container(
+                          width: 50,
+                        ),
+                        Expanded(
+                          child: _expireMonthAndYear(),
+                        ),
+                      ],
+                    ),
                   ),
-                  Expanded(
-                    child: _expireMonthAndYear(),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 40),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: _cardPassword(),
+                        ),
+                        Container(
+                          width: 50,
+                        ),
+                        Expanded(
+                          child: _birth(),
+                        ),
+                      ],
+                    ),
                   ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 40),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: _phone(),
+                        ),
+                        Container(
+                          width: 50,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: _nameInput(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 50),
+                    child: _email(),
+                  ),
+                  _submit(),
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: _cardPassword(),
-                  ),
-                  Container(
-                    width: 50,
-                  ),
-                  Expanded(
-                    child: _birth(),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: _phone(),
-                  ),
-                  Container(
-                    width: 50,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: _nameInput(),
-                  ),
-                ],
-              ),
-            ),
-            _email(),
-            _submit(),
           ],
         ),
       );
@@ -194,7 +205,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
               ),
             ),
             Container(
-              width: 60,
+              width: 50,
               child: _expireYearInput(),
             ),
           ],
