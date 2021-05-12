@@ -142,8 +142,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
         ),
       );
 
-  _inputDecoration({String text}) => InputDecoration(
+  _inputDecoration({String text, String hint}) => InputDecoration(
         labelText: text,
+        hintText: hint ?? '',
         labelStyle: TextStyle(
           fontSize: 18,
           color: Colors.black,
@@ -179,6 +180,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
   _expireMonthAndYear() => Container(
         decoration: _underlineBoxDecoration(),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               width: 60,
@@ -188,7 +190,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
               margin: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
                 '/',
-                style: TextStyle(fontSize: 20, height: 2),
+                style: TextStyle(fontSize: 20, height: 2.5),
               ),
             ),
             Container(
@@ -202,7 +204,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
   _expireMonthInput() => TextFormField(
         focusNode: _expireMonthFocusNode,
         controller: _expireMonthController,
-        decoration: _inputDecoration(text: '유효기간'),
+        decoration: _inputDecoration(text: '유효기간', hint: 'MM'),
         maxLengthEnforced: true,
         style: TextStyle(letterSpacing: 3.0),
         textAlign: TextAlign.center,
@@ -220,7 +222,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
   _expireYearInput() => TextFormField(
         focusNode: _expireYearFocusNode,
         controller: _expireYearController,
-        decoration: _inputDecoration(text: ''),
+        decoration: _inputDecoration(text: '', hint: 'YY'),
         maxLengthEnforced: true,
         style: TextStyle(letterSpacing: 3.0),
         textAlign: TextAlign.center,
