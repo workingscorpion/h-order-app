@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
@@ -58,10 +59,17 @@ class _PaymentDialogState extends State<PaymentDialog> {
   }
 
   _contentBox() => Container(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            InkWell(
+              onTap: () => AppRouter.pop(),
+              child: Container(
+                child: Icon(CupertinoIcons.xmark),
+                alignment: Alignment.centerRight,
+              ),
+            ),
             CreditCard(
               cardNumber: _cardNumber,
               expireYear: _expireYear,
@@ -75,41 +83,85 @@ class _PaymentDialogState extends State<PaymentDialog> {
               margin: EdgeInsets.only(bottom: 20),
               child: Row(
                 children: [
-                  _cardNumberInput(),
-                  Spacer(),
-                  _expireMonthAndYear(),
+                  Expanded(
+                    flex: 3,
+                    child: _cardNumberInput(),
+                  ),
+                  Container(
+                    width: 50,
+                  ),
+                  Expanded(
+                    child: _expireMonthAndYear(),
+                  ),
                 ],
               ),
             ),
-            _cardPassword(),
-            _birth(),
-            _phone(),
-            _nameInput(),
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _cardPassword(),
+                  ),
+                  Container(
+                    width: 50,
+                  ),
+                  Expanded(
+                    child: _birth(),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: _phone(),
+                  ),
+                  Container(
+                    width: 50,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: _nameInput(),
+                  ),
+                ],
+              ),
+            ),
             _email(),
             _submit(),
           ],
         ),
       );
 
-  _inputDecoration({String text}) => InputDecoration(
-        hintText: text,
-        counterText: '',
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-        ),
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
+  _underlineBoxDecoration() => BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.black, width: 1),
         ),
       );
 
+  _inputDecoration({String text}) => InputDecoration(
+        labelText: text,
+        labelStyle: TextStyle(
+          fontSize: 18,
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+          height: .8,
+          letterSpacing: 0,
+        ),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        counterText: '',
+        border: InputBorder.none,
+      );
+
   _cardNumberInput() => Container(
+        decoration: _underlineBoxDecoration(),
         margin: EdgeInsets.only(right: 10),
-        width: 500,
-        child: TextField(
+        child: TextFormField(
           focusNode: _cardNumberFocusNode,
+          style: TextStyle(letterSpacing: 3.0),
           controller: _cardNumberController,
           decoration: _inputDecoration(text: '카드번호'),
           maxLength: 16,
@@ -125,10 +177,11 @@ class _PaymentDialogState extends State<PaymentDialog> {
       );
 
   _expireMonthAndYear() => Container(
+        decoration: _underlineBoxDecoration(),
         child: Row(
           children: [
             Container(
-              width: 30,
+              width: 60,
               child: _expireMonthInput(),
             ),
             Container(
@@ -139,18 +192,20 @@ class _PaymentDialogState extends State<PaymentDialog> {
               ),
             ),
             Container(
-              width: 30,
+              width: 60,
               child: _expireYearInput(),
             ),
           ],
         ),
       );
 
-  _expireMonthInput() => TextField(
+  _expireMonthInput() => TextFormField(
         focusNode: _expireMonthFocusNode,
         controller: _expireMonthController,
-        decoration: _inputDecoration(text: '월'),
+        decoration: _inputDecoration(text: '유효기간'),
         maxLengthEnforced: true,
+        style: TextStyle(letterSpacing: 3.0),
+        textAlign: TextAlign.center,
         maxLength: 2,
         onChanged: (String text) {
           _expireMonth = text;
@@ -162,11 +217,13 @@ class _PaymentDialogState extends State<PaymentDialog> {
         },
       );
 
-  _expireYearInput() => TextField(
+  _expireYearInput() => TextFormField(
         focusNode: _expireYearFocusNode,
         controller: _expireYearController,
-        decoration: _inputDecoration(text: '연'),
+        decoration: _inputDecoration(text: ''),
         maxLengthEnforced: true,
+        style: TextStyle(letterSpacing: 3.0),
+        textAlign: TextAlign.center,
         maxLength: 2,
         onChanged: (String text) {
           _expireYear = text;
@@ -178,10 +235,12 @@ class _PaymentDialogState extends State<PaymentDialog> {
       );
 
   _cardPassword() => Container(
+        decoration: _underlineBoxDecoration(),
         margin: EdgeInsets.only(bottom: 20),
-        child: TextField(
+        child: TextFormField(
           obscureText: true,
           focusNode: _cardPasswordFocusNode,
+          style: TextStyle(letterSpacing: 3.0),
           controller: _cardPasswordController,
           decoration: _inputDecoration(text: '비밀번호'),
           maxLengthEnforced: true,
@@ -193,11 +252,13 @@ class _PaymentDialogState extends State<PaymentDialog> {
       );
 
   _birth() => Container(
+        decoration: _underlineBoxDecoration(),
         margin: EdgeInsets.only(bottom: 20),
-        child: TextField(
+        child: TextFormField(
           focusNode: _birthFocusNode,
+          style: TextStyle(letterSpacing: 3.0),
           controller: _birthController,
-          decoration: _inputDecoration(text: '생일(6자리)'),
+          decoration: _inputDecoration(text: '생년월일(6자리)'),
           maxLengthEnforced: true,
           maxLength: 6,
           onEditingComplete: () {
@@ -207,11 +268,13 @@ class _PaymentDialogState extends State<PaymentDialog> {
       );
 
   _phone() => Container(
+        decoration: _underlineBoxDecoration(),
         margin: EdgeInsets.only(bottom: 20),
-        child: TextField(
+        child: TextFormField(
           focusNode: _phoneFocusNode,
+          style: TextStyle(letterSpacing: 3.0),
           controller: _phoneController,
-          decoration: _inputDecoration(text: '핸드폰'),
+          decoration: _inputDecoration(text: '휴대폰번호'),
           maxLengthEnforced: true,
           maxLength: 11,
           onEditingComplete: () {
@@ -221,8 +284,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
       );
 
   _nameInput() => Container(
+        decoration: _underlineBoxDecoration(),
         margin: EdgeInsets.only(bottom: 20),
-        child: TextField(
+        child: TextFormField(
           focusNode: _nameFocusNode,
           controller: _nameController,
           decoration: _inputDecoration(text: '이름'),
@@ -237,8 +301,9 @@ class _PaymentDialogState extends State<PaymentDialog> {
       );
 
   _email() => Container(
+        decoration: _underlineBoxDecoration(),
         margin: EdgeInsets.only(bottom: 20),
-        child: TextField(
+        child: TextFormField(
           focusNode: _emailFocusNode,
           controller: _emailController,
           decoration: _inputDecoration(text: '이메일'),
