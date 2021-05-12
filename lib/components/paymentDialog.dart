@@ -328,6 +328,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
 
   _submit() => InkWell(
         child: Container(
+          margin: EdgeInsets.only(bottom: 30),
           height: 70,
           decoration: BoxDecoration(
             color: Colors.black,
