@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/components/webViewContent.dart';
 import 'package:h_order/constants/customColors.dart';
-import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/http/client.dart';
 import 'package:h_order/models/noticeModel.dart';
 import 'package:intl/intl.dart';
 
@@ -23,7 +23,13 @@ class _NoticeViewState extends State<NoticeView> {
   void initState() {
     super.initState();
 
-    list = [...SampleData.notices()];
+    load();
+  }
+
+  load() async {
+    final result = await Client.create().notices();
+    list = result.list.map((e) => NoticeModel.fromJson(e)).toList();
+    setState(() {});
   }
 
   @override
@@ -116,18 +122,18 @@ class _NoticeViewState extends State<NoticeView> {
                                       ),
                                       Row(
                                         children: [
-                                          Container(
-                                              child: item.isRead == true
-                                                  ? Container()
-                                                  : Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 10),
-                                                      child: SvgPicture.asset(
-                                                        'assets/icons/notice/new.svg',
-                                                        width: 25,
-                                                        height: 25,
-                                                      ),
-                                                    )),
+                                          // Container(
+                                          //     child: item.isRead == true
+                                          //         ? Container()
+                                          //         : Container(
+                                          //             margin: EdgeInsets.only(
+                                          //                 right: 10),
+                                          //             child: SvgPicture.asset(
+                                          //               'assets/icons/notice/new.svg',
+                                          //               width: 25,
+                                          //               height: 25,
+                                          //             ),
+                                          //           )),
                                           Flexible(
                                             child: Text(
                                               '${item.title}',
@@ -148,7 +154,7 @@ class _NoticeViewState extends State<NoticeView> {
                                         textAlign: TextAlign.center,
                                       ),
                                     ],
-                                    content: item.content,
+                                    content: item.contents,
                                   ),
                                 ),
                               ],

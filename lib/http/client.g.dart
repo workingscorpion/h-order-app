@@ -90,6 +90,41 @@ class _Client implements Client {
   }
 
   @override
+  Future<PageModel> notices() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/v1/device/notice',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = PageModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<PageModel> bills() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>('/v1/device/bill',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = PageModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<ServiceModel> service(objectId) async {
     ArgumentError.checkNotNull(objectId, 'objectId');
     const _extra = <String, dynamic>{};
