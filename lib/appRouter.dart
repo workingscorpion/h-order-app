@@ -13,6 +13,7 @@ import 'package:h_order/pages/services/billDetailPage.dart';
 import 'package:h_order/pages/services/callPage.dart';
 import 'package:h_order/pages/services/boardPage.dart';
 import 'package:h_order/pages/services/cartPage.dart';
+import 'package:h_order/pages/services/noticeDetailPage.dart';
 import 'package:h_order/pages/services/productPage.dart';
 import 'package:h_order/pages/services/settingsPage.dart';
 import 'package:h_order/pages/services/shopPage.dart';
@@ -76,7 +77,17 @@ class AppRouter {
       case RouteNames.BillDetail:
         return MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => BillDetailPage(),
+          builder: (BuildContext context) => BillDetailPage(
+            contents: settings.arguments as String,
+          ),
+        );
+
+      case RouteNames.NoticeDetail:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => NoticeDetailPage(
+            contents: settings.arguments as String,
+          ),
         );
 
       case RouteNames.Board:
@@ -201,8 +212,14 @@ class AppRouter {
     return Navigator.of(context).pushNamed(RouteNames.Call);
   }
 
-  static toBillDetailPage() {
-    return Navigator.of(context).pushNamed(RouteNames.BillDetail);
+  static toNoticeDetailPage(String contents) {
+    return Navigator.of(context)
+        .pushNamed(RouteNames.NoticeDetail, arguments: contents);
+  }
+
+  static toBillDetailPage(String contents) {
+    return Navigator.of(context)
+        .pushNamed(RouteNames.BillDetail, arguments: contents);
   }
 
   static toBoardPage() {

@@ -7,7 +7,6 @@ class RouteNames {
   static const String Shop = '/shop';
   static const String Product = '/product';
   static const String Call = '/call';
-  static const String BillDetail = '/billDetail';
   static const String Board = '/board';
   static const String Information = '/information';
   static const String Settings = '/settings';
@@ -15,7 +14,9 @@ class RouteNames {
   static const String ShoppingComplete = '/shoppingComplete';
 
   static const String Notice = '/notice';
+  static const String NoticeDetail = '/notice/detail';
   static const String History = '/history';
+  static const String BillDetail = '/bill/detail';
   static const String Bill = '/bill';
 
   static const String My = '/my';

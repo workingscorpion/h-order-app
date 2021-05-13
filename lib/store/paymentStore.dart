@@ -13,6 +13,7 @@ class PaymentStore extends PaymentStoreBase with _$PaymentStore {
 }
 
 abstract class PaymentStoreBase with Store {
+  @observable
   ObservableList<PaymentMethodModel> cards = ObservableList();
 
   @observable

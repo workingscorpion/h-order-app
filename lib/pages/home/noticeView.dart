@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/viewHeader.dart';
-import 'package:h_order/components/webViewContent.dart';
-import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/models/noticeModel.dart';
 import 'package:intl/intl.dart';
@@ -153,7 +152,7 @@ class _NoticeViewState extends State<NoticeView> {
                                         textAlign: TextAlign.center,
                                       ),
                                     ],
-                                    content: item.contents,
+                                    contents: item.contents,
                                   ),
                                 ),
                               ],
@@ -207,31 +206,17 @@ class _NoticeViewState extends State<NoticeView> {
   _item({
     List<int> flex,
     List<Widget> children,
-    String content,
+    String contents,
   }) =>
       Collapsible(
-        header: _row(
-          flex: flex,
-          children: children,
-          color: Colors.transparent,
-        ),
-        body: Container(
-          padding: EdgeInsets.all(26),
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            border: Border(
-              top: BorderSide(
-                color: CustomColors.tableInnerBorder,
-              ),
-            ),
-          ),
-          child: Container(
-            // FIXME: 내부 사이즈에 맞춰 height size fix
-            height: 2000,
-            child: WebViewContent(
-              contents: content,
-            ),
+        header: InkWell(
+          onTap: () => AppRouter.toNoticeDetailPage(contents),
+          child: _row(
+            flex: flex,
+            children: children,
+            color: Colors.transparent,
           ),
         ),
+        body: null,
       );
 }
