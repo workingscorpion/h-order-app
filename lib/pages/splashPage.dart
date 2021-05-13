@@ -31,6 +31,8 @@ class _SplashPageState extends State<SplashPage>
     NavigationStore.instance.appKey.currentState.initialized = value;
   }
 
+  TextEditingController _textEditingController;
+
   AnimationController _controller;
   Tween<Alignment> _tween = Tween(
     begin: FractionalOffset(0, 0),
@@ -51,6 +53,8 @@ class _SplashPageState extends State<SplashPage>
     );
     _controller.repeat(reverse: true);
     _animation = _tween.animate(_controller);
+
+    _textEditingController = TextEditingController();
 
     initialize();
   }
@@ -171,11 +175,34 @@ class _SplashPageState extends State<SplashPage>
         context: context,
         child: AlertDialog(
           title: Text('발견된 시리얼 번호 없음'),
+          content: Container(
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _textEditingController,
+                  ),
+                ),
+                FlatButton(
+                  onPressed: () async {
+                    final value = _textEditingController.text;
+                    final result = await DeviceInfo.writeSerialNumber(value);
+                    Navigator.of(context).pop(result);
+                  },
+                  child: Text(
+                    '확인',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           actions: [
             FlatButton(
               onPressed: () async {
                 final result = await DeviceInfo.scanSerialNumber();
-                print('####### $result');
                 Navigator.of(context).pop(result);
               },
               child: Text(

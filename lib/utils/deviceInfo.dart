@@ -38,33 +38,37 @@ class DeviceInfo {
   }
 
   static Future<String> scanSerialNumber() async {
-    if (Platform.isAndroid) {
-      if (!await _checkPermission(Permission.storage)) {
-        throw 'permission denied';
-      }
-
-      final path = await ExtStorage.getExternalStoragePublicDirectory(
-          ExtStorage.DIRECTORY_DOCUMENTS);
-      final file = File('$path/serial_number');
-
-      if (await file.exists()) {
-        await file.delete();
-      }
-
-      if (!await _checkPermission(Permission.camera)) {
-        throw 'permission denied';
-      }
-
-      final code = await FlutterBarcodeScanner.scanBarcode(
-          '#ffffff', '취소', false, ScanMode.BARCODE);
-
-      final newFile = await file.create(recursive: true);
-      await newFile.writeAsString(code);
-
-      return code;
+    if (!await _checkPermission(Permission.camera)) {
+      throw 'permission denied';
     }
 
-    throw 'non-android device is not supported.';
+    final code = await FlutterBarcodeScanner.scanBarcode(
+        '#ffffff', '취소', false, ScanMode.BARCODE);
+
+    return await writeSerialNumber(code);
+  }
+
+  static Future<String> writeSerialNumber(String value) async {
+    if (!Platform.isAndroid) {
+      throw 'non-android device is not supported.';
+    }
+
+    if (!await _checkPermission(Permission.storage)) {
+      throw 'permission denied';
+    }
+
+    final path = await ExtStorage.getExternalStoragePublicDirectory(
+        ExtStorage.DIRECTORY_DOCUMENTS);
+    final file = File('$path/serial_number');
+
+    if (await file.exists()) {
+      await file.delete();
+    }
+
+    final newFile = await file.create(recursive: true);
+    await newFile.writeAsString(value);
+
+    return value;
   }
 
   static Future<bool> _checkPermission(Permission permission) async {

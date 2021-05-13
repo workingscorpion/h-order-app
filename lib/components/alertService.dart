@@ -24,7 +24,7 @@ class _AlertServiceState extends State<AlertService> {
   }
 
   Map<String, dynamic> data = Map();
-  Map<String, TextEditingController> textControllers = Map();
+  Map<String, TextEditingController> textEditingControllers = Map();
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _AlertServiceState extends State<AlertService> {
         }) ??
         Map();
 
-    textControllers = service.items
+    textEditingControllers = service.items
             ?.where((item) => item.type == 'Input')
             ?.toList()
             ?.asMap()
@@ -55,7 +55,8 @@ class _AlertServiceState extends State<AlertService> {
                 value.objectId,
                 TextEditingController()
                   ..addListener(() {
-                    data[value.objectId] = textControllers[value.objectId].text;
+                    data[value.objectId] =
+                        textEditingControllers[value.objectId].text;
                   }),
               ),
             ) ??
@@ -280,7 +281,7 @@ class _AlertServiceState extends State<AlertService> {
             ),
             hintText: item.value,
           ),
-          controller: textControllers[item.objectId],
+          controller: textEditingControllers[item.objectId],
         ),
       );
 
