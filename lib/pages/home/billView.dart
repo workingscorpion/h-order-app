@@ -1,12 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/viewHeader.dart';
-import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/models/billModel.dart';
+import 'package:h_order/store/billStore.dart';
 import 'package:intl/intl.dart';
 
 class BillView extends StatefulWidget {
@@ -17,6 +16,8 @@ class BillView extends StatefulWidget {
 }
 
 class _BillViewState extends State<BillView> {
+  BillStore billStore = BillStore.instance;
+
   List<int> ratio = [1, 2, 2, 2, 2, 1, 1];
 
   List<String> headers = [
@@ -33,53 +34,14 @@ class _BillViewState extends State<BillView> {
   String _account = '12345-78-9101112';
   String _accountOwner = '리베토코리아';
 
-  List<BillModel> list;
-
   @override
   void initState() {
     super.initState();
-
-    final home = SampleData.home();
-    final start = home.contractStartDate;
-
-    final diff = (DateTime.now().year * 12 + DateTime.now().month) -
-        (start.year * 12 + start.month) +
-        1;
-
-    final random = Random();
-
-    list = List.generate(
-      diff,
-      (index) => BillModel(
-        index: diff - index,
-        title: '${_calcExpiredDate(index).month}월분 고지서',
-        expiredDate: _calcExpiredDate(index),
-        paymentDate: DateTime(
-          DateTime.now().year,
-          DateTime.now().month - index,
-          1 + random.nextInt(10),
-        ),
-        amount: 100000 +
-            random.nextInt(4) * 10000 +
-            random.nextInt(9) * 1000 +
-            random.nextInt(9) * 100 +
-            random.nextInt(9) * 10,
-        status: diff - index >= diff ? false : true,
-      ),
-    );
+    load();
   }
 
-  _calcExpiredDate(int index) {
-    return DateTime(
-      DateTime.now().year,
-      DateTime.now().month + 1 - index,
-      DateTime.now().day - 1,
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+  load() async {
+    await billStore.load();
   }
 
   @override
@@ -193,67 +155,74 @@ class _BillViewState extends State<BillView> {
       );
 
   _billBody() => Expanded(
-        child: ListView(
-          children: [
-            ...list.map(
-              (item) => _item(
-                children: [
-                  Text(
-                    '${item.index}',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    item.title,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    '${DateFormat('yyyy-MM-dd').format(item.expiredDate)}',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    item.status
-                        ? '${DateFormat('yyyy-MM-dd').format(item.paymentDate)}'
-                        : "-",
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    '${NumberFormat().format(item.amount)}원',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    item.status ? '납부' : '미납',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color:
-                          item.status ? Color(0xff21d021) : Color(0xffe02020),
-                    ),
-                  ),
-                  Container(
-                    height: 24,
-                    child: FlatButton(
-                      color: Theme.of(context).accentColor,
-                      onPressed: () {
-                        AppRouter.toBillDetailPage();
-                      },
-                      child: Text(
-                        '고지서',
+        child: Observer(
+          builder: (BuildContext context) {
+            return ListView(
+              children: [
+                ...(billStore.bills ?? [])?.map(
+                  (item) => _item(
+                    children: [
+                      Text(
+                        '${item.index}',
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        item.title,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        '${DateFormat('yyyy-MM-dd').format(item.deadline)}',
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        item.paymentDate != null
+                            ? '${DateFormat('yyyy-MM-dd').format(item.paymentDate)}'
+                            : "-",
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        item.amount != null
+                            ? '${NumberFormat().format(item.amount)}원'
+                            : '-',
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        item.paymentDate != null ? '납부' : '미납',
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
+                          color: item.paymentDate != null
+                              ? Color(0xff21d021)
+                              : Color(0xffe02020),
                         ),
                       ),
-                    ),
+                      Container(
+                        height: 24,
+                        child: FlatButton(
+                          color: Theme.of(context).accentColor,
+                          onPressed: () {
+                            AppRouter.toBillDetailPage(item.contents);
+                          },
+                          child: Text(
+                            '고지서',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          },
         ),
       );
 

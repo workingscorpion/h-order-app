@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/components/webViewContent.dart';
 
-class BillDetailPage extends StatefulWidget {
-  BillDetailPage({this.contents});
+class NoticeDetailPage extends StatefulWidget {
+  NoticeDetailPage({this.contents});
 
   final String contents;
 
   @override
-  _BillDetailPageState createState() => _BillDetailPageState();
+  _NoticeDetailPageState createState() => _NoticeDetailPageState();
 }
 
-class _BillDetailPageState extends State<BillDetailPage> {
+class _NoticeDetailPageState extends State<NoticeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
           PageHeader(
-            title: ['관리비 내역', '고지서'],
+            title: ['공지사항', '상세보기'],
             canBack: true,
           ),
           Expanded(

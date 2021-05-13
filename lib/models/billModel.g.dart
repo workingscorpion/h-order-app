@@ -8,24 +8,38 @@ part of 'billModel.dart';
 
 BillModel _$BillModelFromJson(Map<String, dynamic> json) {
   return BillModel(
+    objectId: json['objectId'] as String,
     index: json['index'] as int,
     title: json['title'] as String,
-    expiredDate: json['expiredDate'] == null
+    writer: json['writer'] as String,
+    contents: json['contents'] as String,
+    amount: json['amount'] as int,
+    userObjectId: json['userObjectId'] as String,
+    createdTime: json['createdTime'] == null
         ? null
-        : DateTime.parse(json['expiredDate'] as String),
+        : DateTime.parse(json['createdTime'] as String),
+    selectedMonth: json['selectedMonth'] == null
+        ? null
+        : DateTime.parse(json['selectedMonth'] as String),
+    deadline: json['deadline'] == null
+        ? null
+        : DateTime.parse(json['deadline'] as String),
     paymentDate: json['paymentDate'] == null
         ? null
         : DateTime.parse(json['paymentDate'] as String),
-    amount: json['amount'] as int,
-    status: json['status'] as bool,
   );
 }
 
 Map<String, dynamic> _$BillModelToJson(BillModel instance) => <String, dynamic>{
+      'objectId': instance.objectId,
       'index': instance.index,
       'title': instance.title,
-      'expiredDate': instance.expiredDate?.toIso8601String(),
-      'paymentDate': instance.paymentDate?.toIso8601String(),
+      'writer': instance.writer,
+      'contents': instance.contents,
       'amount': instance.amount,
-      'status': instance.status,
+      'userObjectId': instance.userObjectId,
+      'createdTime': instance.createdTime?.toIso8601String(),
+      'selectedMonth': instance.selectedMonth?.toIso8601String(),
+      'deadline': instance.deadline?.toIso8601String(),
+      'paymentDate': instance.paymentDate?.toIso8601String(),
     };
