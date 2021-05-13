@@ -150,7 +150,7 @@ class _Client implements Client {
     final _data = <String, dynamic>{};
     _data.addAll(card?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>(
-        '/v1/device/paymentmethod/register',
+        '/v1/device/paymentMethod/register',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -168,7 +168,7 @@ class _Client implements Client {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<List<dynamic>>(
-        '/v1/device/paymentmethod',
+        '/v1/device/paymentMethod',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -189,7 +189,7 @@ class _Client implements Client {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'objectId': objectId};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request('/v1/device/paymentmethod',
+    final _result = await _dio.request('/v1/device/paymentMethod',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'DELETE',

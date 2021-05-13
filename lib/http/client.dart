@@ -12,7 +12,7 @@ import 'package:retrofit/retrofit.dart';
 part 'client.g.dart';
 
 const baseUrl = kDebugMode
-    ? "http://192.168.50.11:5000/api"
+    ? "http://192.168.0.103:5000/api"
     : "http://jinjoosoft.io:49233/api";
 
 @RestApi()
@@ -55,15 +55,15 @@ abstract class Client {
   @GET("/v1/device/service/{objectId}")
   Future<ServiceModel> service(@Path('objectId') String objectId);
 
-  @POST("/v1/device/paymentmethod/register")
+  @POST("/v1/device/paymentMethod/register")
   Future<PaymentMethodModel> cardRegister(
     @Body() CardRegisterModel card,
   );
 
-  @GET("/v1/device/paymentmethod")
+  @GET("/v1/device/paymentMethod")
   Future<List<PaymentMethodModel>> cards();
 
-  @DELETE("/v1/device/paymentmethod")
+  @DELETE("/v1/device/paymentMethod")
   Future deleteCard(
     @Query("objectId") String objectId,
   );
