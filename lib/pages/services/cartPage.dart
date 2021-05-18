@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/cardsView.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/constants/customColors.dart';
@@ -25,8 +24,12 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage>
     with SingleTickerProviderStateMixin {
+  int selectedCard;
+
   Map<String, ItemModel> _parentMap;
   Map<String, ItemModel> _optionMap;
+
+  ScrollController controller;
 
   List<PaymentMethodModel> get cards {
     return PaymentStore.instance.cards;
@@ -38,6 +41,8 @@ class _CartPageState extends State<CartPage>
 
     _parentMap = Map();
     _optionMap = Map();
+
+    controller = FixedExtentScrollController();
 
     widget.cart?.forEach((element) {
       _initOptionsQuantity(items: element.product.items);
@@ -390,44 +395,70 @@ class _CartPageState extends State<CartPage>
         padding: EdgeInsets.symmetric(horizontal: 24),
         margin: EdgeInsets.only(bottom: 24),
         child: Container(
-          height: 200,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Observer(
-            builder: (context) => (cards?.isNotEmpty ?? false)
-                ? ListView(
-                    padding: EdgeInsets.all(24),
-                    scrollDirection: Axis.horizontal,
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: RotatedBox(
+              quarterTurns: 3,
+              child: Observer(
+                builder: (context) => ListWheelScrollView.useDelegate(
+                  controller: controller,
+                  physics: FixedExtentScrollPhysics(),
+                  onSelectedItemChanged: (value) {
+                    selectedCard = value;
+                    setState(() {});
+                  },
+                  itemExtent: 200,
+                  diameterRatio: 100,
+                  childDelegate: ListWheelChildListDelegate(
                     children: [
-                      ...cards?.map((item) {
-                            final image =
-                                CardCompanies.cardImageByCode[item.bankCode];
-                            final name =
-                                CardCompanies.cardNameByCode[item.bankCode];
+                      ...(cards?.isNotEmpty ?? false)
+                          ? List.generate(cards.length, (index) {
+                              final item = cards[index];
+                              final image =
+                                  CardCompanies.cardImageByCode[item.bankCode];
+                              final name =
+                                  CardCompanies.cardNameByCode[item.bankCode];
 
-                            return AspectRatio(
-                              aspectRatio: 8.56 / 5.398,
-                              child: Container(
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                              return AnimatedContainer(
+                                duration: Duration(milliseconds: 125),
+                                color: selectedCard == index
+                                    ? Colors.black12
+                                    : Colors.black12.withOpacity(0),
+                                child: RotatedBox(
+                                  quarterTurns: 1,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: AspectRatio(
+                                          aspectRatio: 8.56 / 5.398,
+                                          child: Container(
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Image.asset(
+                                              image,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Text('$name (${item.cardLastNumber})'),
+                                      Container(height: 24),
+                                    ],
+                                  ),
                                 ),
-                                margin: EdgeInsets.only(right: 12),
-                                child: Image.asset(
-                                  image,
-                                ),
-                              ),
-                            );
-                          }) ??
-                          []
+                              );
+                            })
+                          : [],
                     ],
-                  )
-                : Container(),
-          ),
-        ),
+                  ),
+                ),
+              ),
+            )),
       );
 
   _save() async {
