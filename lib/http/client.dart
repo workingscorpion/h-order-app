@@ -8,12 +8,13 @@ import 'package:h_order/http/types/service/actionModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
 part 'client.g.dart';
 
-const baseUrl = kDebugMode
-    ? "http://192.168.0.103:5000/api"
-    : "http://jinjoosoft.io:49233/api";
+const protocol = kDebugMode ? 'http' : 'https';
+const host = kDebugMode ? '192.168.0.11' : 'jinjoosoft.io';
+const port = kDebugMode ? '5000' : '49233';
 
 @RestApi()
 abstract class Client {
@@ -29,6 +30,16 @@ abstract class Client {
           ),
         ),
       );
+
+  static CookieJar cookieJar = CookieJar();
+
+  static get baseUrl {
+    return "$protocol://$host:$port/api";
+  }
+
+  static get signalRUrl {
+    return "$protocol://$host:$port/notification";
+  }
 
   static String token;
 
