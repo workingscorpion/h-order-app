@@ -42,7 +42,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               ),
                               child: Row(
                                 children: [
-                                  Text('김웅신 계좌'),
+                                  Text('김태림 계좌'),
                                   Text('kb국민은행'),
                                   Text('123456*****1235'),
                                   Spacer(),
