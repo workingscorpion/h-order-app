@@ -5,8 +5,10 @@ import 'package:h_order/http/types/login/requestLoginModel.dart';
 import 'package:h_order/http/types/pagination/pageModel.dart';
 import 'package:h_order/http/types/payment/cardRegisterModel.dart';
 import 'package:h_order/http/types/service/actionModel.dart';
+import 'package:h_order/models/historyModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
+import 'package:h_order/http/types/service/orderModel.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
@@ -38,7 +40,7 @@ abstract class Client {
   }
 
   static get signalRUrl {
-    return "$protocol://$host:$port/notification";
+    return "$protocol://$host:$port/signal";
   }
 
   static String token;
@@ -69,6 +71,11 @@ abstract class Client {
   @POST("/v1/device/paymentMethod/register")
   Future<PaymentMethodModel> cardRegister(
     @Body() CardRegisterModel card,
+  );
+
+  @POST("/v1/device/history")
+  Future<HistoryModel> order(
+    @Body() OrderModel order,
   );
 
   @GET("/v1/device/paymentMethod")

@@ -51,13 +51,14 @@ abstract class DeviceStoreBase with Store {
 
     hubConnection.on('notified', (json) {
       final map = json.first as Map;
-      if (map['type'] != null) {
-        final type = map['type'] as int;
-        final targetObjectId = map['targetObjectId'] as String;
+      print(map.toString());
+      // if (map['type'] != null) {
+      //   final type = map['type'] as int;
+      //   final targetObjectId = map['targetObjectId'] as String;
 
-        print(type.toString());
-        print(targetObjectId);
-      }
+      //   print(type.toString());
+      //   print(targetObjectId);
+      // }
     });
 
     await hubConnection.start();

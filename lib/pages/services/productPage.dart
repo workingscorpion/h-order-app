@@ -570,6 +570,7 @@ class _ProductPageState extends State<ProductPage>
 
     final result = CartItemModel(
       name: widget.product.value,
+      serviceObjectId: widget.service.objectId,
       amount: amount,
       product: widget.product,
       optionAmount: optionAmount,

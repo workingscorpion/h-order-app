@@ -6,6 +6,8 @@ import 'package:h_order/components/cardsView.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/http/client.dart';
+import 'package:h_order/http/types/service/orderModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
@@ -430,12 +432,24 @@ class _CartPageState extends State<CartPage>
         ),
       );
 
+  get serviceObjectId {
+    return widget.cart.first.serviceObjectId;
+  }
+
+  get amount {
+    return widget.cart.fold<int>(0, (p, e) => p + e.amount);
+  }
+
   _save() async {
     final data = widget.cart;
     if (data.isEmpty) {
       return;
     }
 
+    final order = OrderModel(serviceObjectId: serviceObjectId, price: amount);
+    final result = await Client.create().order(order);
+
+    print(result.toString());
     AppRouter.toShoppingCompletePage(widget.cart);
   }
 }
