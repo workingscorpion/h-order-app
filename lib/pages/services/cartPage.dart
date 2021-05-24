@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/pageHeader.dart';
 import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/http/client.dart';
+import 'package:h_order/http/types/service/actionModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
@@ -12,9 +17,11 @@ import 'package:h_order/store/paymentStore.dart';
 import 'package:intl/intl.dart';
 
 class CartPage extends StatefulWidget {
+  final String serviceObjectId;
   final List<CartItemModel> cart;
 
   CartPage({
+    this.serviceObjectId,
     this.cart,
   });
 
@@ -24,7 +31,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage>
     with SingleTickerProviderStateMixin {
-  int selectedCard;
+  int selectedCard = 0;
 
   Map<String, ItemModel> _parentMap;
   Map<String, ItemModel> _optionMap;
@@ -42,7 +49,7 @@ class _CartPageState extends State<CartPage>
     _parentMap = Map();
     _optionMap = Map();
 
-    controller = FixedExtentScrollController();
+    controller = ScrollController();
 
     widget.cart?.forEach((element) {
       _initOptionsQuantity(items: element.product.items);
@@ -395,78 +402,140 @@ class _CartPageState extends State<CartPage>
         padding: EdgeInsets.symmetric(horizontal: 24),
         margin: EdgeInsets.only(bottom: 24),
         child: Container(
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: RotatedBox(
-              quarterTurns: 3,
-              child: Observer(
-                builder: (context) => ListWheelScrollView.useDelegate(
-                  controller: controller,
-                  physics: FixedExtentScrollPhysics(),
-                  onSelectedItemChanged: (value) {
-                    selectedCard = value;
-                    setState(() {});
-                  },
-                  itemExtent: 200,
-                  diameterRatio: 100,
-                  childDelegate: ListWheelChildListDelegate(
-                    children: [
-                      ...(cards?.isNotEmpty ?? false)
-                          ? List.generate(cards.length, (index) {
-                              final item = cards[index];
-                              final image =
-                                  CardCompanies.cardImageByCode[item.bankCode];
-                              final name =
-                                  CardCompanies.cardNameByCode[item.bankCode];
-
-                              return AnimatedContainer(
-                                duration: Duration(milliseconds: 125),
-                                color: selectedCard == index
-                                    ? Colors.black12
-                                    : Colors.black12.withOpacity(0),
-                                child: RotatedBox(
-                                  quarterTurns: 1,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: AspectRatio(
-                                          aspectRatio: 8.56 / 5.398,
-                                          child: Container(
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Image.asset(
-                                              image,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Text('$name (${item.cardLastNumber})'),
-                                      Container(height: 24),
-                                    ],
-                                  ),
-                                ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                child: Text('결제카드 선택'),
+              ),
+              Container(
+                height: 200,
+                child: Observer(
+                  builder: (context) => (cards?.isNotEmpty ?? false)
+                      ? ListView(
+                          controller: controller,
+                          physics: PageScrollPhysics(),
+                          itemExtent: 200,
+                          clipBehavior: Clip.none,
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            ...List.generate(cards?.length ?? 0, (index) {
+                              return _card(
+                                index: index,
+                                item: cards[index],
                               );
-                            })
-                          : [],
-                    ],
-                  ),
+                            }),
+                          ],
+                        )
+                      : Container(),
                 ),
               ),
-            )),
+            ],
+          ),
+        ),
       );
 
-  _save() async {
-    final data = widget.cart;
-    if (data.isEmpty) {
-      return;
-    }
+  _card({
+    int index,
+    PaymentMethodModel item,
+  }) {
+    final image = CardCompanies.cardImageByCode[item.bankCode];
+    final name = CardCompanies.cardNameByCode[item.bankCode];
 
-    AppRouter.toShoppingCompletePage(widget.cart);
+    return InkWell(
+      onTap: () {
+        selectedCard = index;
+        setState(() {});
+      },
+      child: Container(
+        padding: EdgeInsets.all(12),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 125),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              width: 1,
+              color:
+                  selectedCard == index ? Colors.black12 : Colors.transparent,
+            ),
+            color: selectedCard == index ? Colors.black12 : Colors.transparent,
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Text('$name (${item.cardLastNumber})'),
+              Container(height: 24),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<Map<String, String>> _serialize() async {
+    try {
+      final data = widget.cart;
+      if (data?.isEmpty ?? true) {
+        throw '장바구니가 비어있습니다.';
+      }
+
+      final card = cards[selectedCard];
+      if (card == null) {
+        throw '결제수단을 선택해주세요.';
+      }
+
+      return {
+        'cart': jsonEncode(data.map((e) => e.toJson()).toList()),
+        'card': jsonEncode(card.toJson()),
+      };
+    } catch (ex) {
+      print(ex);
+
+      await Fluttertoast.showToast(
+        msg: ex,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+        textColor: Theme.of(context).textTheme.bodyText1.color,
+        fontSize: 17,
+      );
+
+      return null;
+    }
+  }
+
+  _save() async {
+    try {
+      final data = await _serialize();
+      if (data == null) {
+        return;
+      }
+
+      await Client.create().serviceAction(
+          widget.serviceObjectId, 'Payment', ActionModel(data: data));
+
+      AppRouter.toShoppingCompletePage();
+    } catch (ex) {
+      print(ex);
+
+      await Fluttertoast.showToast(
+        msg: '결제에 실패하였습니다. 다시 한 번 시도해주세요.',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+        textColor: Theme.of(context).textTheme.bodyText1.color,
+        fontSize: 17,
+      );
+    }
   }
 }

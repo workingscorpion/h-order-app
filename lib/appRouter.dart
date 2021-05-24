@@ -53,10 +53,12 @@ class AppRouter {
         );
 
       case RouteNames.Cart:
+        final arguments = settings.arguments as List;
         return MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) => CartPage(
-            cart: settings.arguments as List<CartItemModel>,
+            serviceObjectId: arguments[0] as String,
+            cart: arguments[1] as List<CartItemModel>,
           ),
         );
 
@@ -113,9 +115,7 @@ class AppRouter {
       case RouteNames.ShoppingComplete:
         return MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => ShoppingCompletePage(
-            cart: settings.arguments as List<CartItemModel>,
-          ),
+          builder: (BuildContext context) => ShoppingCompletePage(),
         );
 
       case RouteNames.Alarm:
@@ -174,18 +174,17 @@ class AppRouter {
         .pushNamed(RouteNames.Shop, arguments: serviceObjectId);
   }
 
-  static toCartPage(List<CartItemModel> cart) {
+  static toCartPage(String serviceObjectId, List<CartItemModel> cart) {
     return Navigator.of(context).pushNamed(
       RouteNames.Cart,
-      arguments: cart,
+      arguments: [serviceObjectId, cart],
     );
   }
 
-  static toShoppingCompletePage(List<CartItemModel> cart) {
+  static toShoppingCompletePage() {
     return Navigator.of(context).pushNamedAndRemoveUntil(
       RouteNames.ShoppingComplete,
       (route) => route.settings.name == RouteNames.Home,
-      arguments: cart,
     );
   }
 

@@ -9,21 +9,6 @@ part of 'paymentStore.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PaymentStore on PaymentStoreBase, Store {
-  final _$cardsAtom = Atom(name: 'PaymentStoreBase.cards');
-
-  @override
-  ObservableList<PaymentMethodModel> get cards {
-    _$cardsAtom.reportRead();
-    return super.cards;
-  }
-
-  @override
-  set cards(ObservableList<PaymentMethodModel> value) {
-    _$cardsAtom.reportWrite(value, super.cards, () {
-      super.cards = value;
-    });
-  }
-
   final _$loadingAtom = Atom(name: 'PaymentStoreBase.loading');
 
   @override
@@ -49,7 +34,6 @@ mixin _$PaymentStore on PaymentStoreBase, Store {
   @override
   String toString() {
     return '''
-cards: ${cards},
 loading: ${loading}
     ''';
   }

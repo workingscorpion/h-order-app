@@ -268,7 +268,7 @@ class _ShopPageState extends State<ShopPage>
           child: FloatingActionButton(
             key: _floatingButtonKey,
             onPressed: () {
-              AppRouter.toCartPage(_cart);
+              AppRouter.toCartPage(widget.serviceObjectId, _cart);
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -7,7 +7,6 @@ part 'cartItemModel.g.dart';
 class CartItemModel {
   static const minQuantity = 1;
 
-  final int index;
   final ItemModel product;
   final String name;
   final int amount;
@@ -37,7 +36,6 @@ class CartItemModel {
   }
 
   CartItemModel({
-    this.index,
     this.product,
     this.name,
     int quantity,
