@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/login/requestLoginModel.dart';
+import 'package:h_order/store/deviceStore.dart';
 import 'package:h_order/store/navigationStore.dart';
 import 'package:h_order/utils/deviceInfo.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -229,6 +230,8 @@ class _SplashPageState extends State<SplashPage>
         deviceId: _deviceId,
         deviceToken: null,
       ));
+
+      DeviceStore.instance.connectHub();
 
       Client.token = userInfo['token'];
 

@@ -163,6 +163,26 @@ class _Client implements Client {
   }
 
   @override
+  Future<HistoryModel> order(order) async {
+    ArgumentError.checkNotNull(order, 'order');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(order?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/v1/device/history',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = HistoryModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<List<PaymentMethodModel>> cards() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

@@ -166,21 +166,6 @@ class _HomePageState extends State<HomePage>
               ),
             ),
             Container(height: 20),
-            FlatButton(
-              height: 36,
-              color: Theme.of(context).accentColor,
-              onPressed: () {
-                AppRouter.toAlarmPage();
-              },
-              child: Text(
-                '알람 설정',
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
             _infoButtons(),
           ],
         ),
@@ -189,82 +174,8 @@ class _HomePageState extends State<HomePage>
   _rightPanel() => Expanded(
         child: Column(
           children: [
-            Spacer(),
             _infoHeader(),
-            _weather(),
-          ],
-        ),
-      );
-
-  _weather() => Container(
-        decoration: _weatherGradient(),
-        padding: EdgeInsets.all(24),
-        child: DefaultTextStyle(
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1
-              .copyWith(fontWeight: FontWeight.normal),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                    child: Text('오늘, 어제보다 2℃ 높아요'),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            alignment: Alignment.bottomCenter,
-                            height: 60,
-                            child: Text('18',
-                                style: TextStyle(fontSize: 70, height: 1)),
-                          ),
-                          Text(
-                            '℃',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        '/8℃ 약간 흐림',
-                        style: TextStyle(fontSize: 17),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Container(
-                width: 100,
-                height: 100,
-                child: SvgPicture.asset(
-                  'assets/icons/home/weather_cloudsun.svg',
-                  alignment: Alignment.bottomCenter,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  _weatherGradient() => BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [
-            0.1,
-            0.8,
-          ],
-          colors: [
-            Color(0xff197fff),
-            Color(0xff3fb6de),
+            Spacer(),
           ],
         ),
       );
