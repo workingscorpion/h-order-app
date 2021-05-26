@@ -12,37 +12,10 @@ class ShoppingCompletePage extends StatefulWidget {
 
 class _ShoppingCompletePageState extends State<ShoppingCompletePage>
     with SingleTickerProviderStateMixin {
-  Map<String, ItemModel> _optionMap;
-
   @override
   void initState() {
     super.initState();
-
-    _optionMap = Map();
-    // widget.cart.forEach((element) {
-    //   _initOptionsQuantity(element.product.items);
-    // });
   }
-
-  // _initOptionsQuantity(List<ItemModel> options) {
-  //   options.forEach((option) {
-  //     _optionMap[option.objectId] = option;
-
-  //     if (option.items?.isNotEmpty ?? false) {
-  //       _initOptionsQuantity(option.items);
-  //     }
-  //   });
-  // }
-
-  // int get totalAmount {
-  //   return widget.cart.fold(
-  //       0, (previousValue, element) => previousValue + element.totalAmount);
-  // }
-
-  // int get quantity {
-  //   return widget.cart
-  //       .fold(0, (previousValue, element) => previousValue + element.quantity);
-  // }
 
   @override
   Widget build(BuildContext context) {
