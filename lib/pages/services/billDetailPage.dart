@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
 
 class BillDetailPage extends StatefulWidget {
-  BillDetailPage({Key key}) : super(key: key);
+  // BillDetailPage({Key key}) : super(key: key);
+  BillDetailPage({this.status});
+
+  final bool status;
 
   @override
   _BillDetailPageState createState() => _BillDetailPageState();
@@ -25,7 +28,9 @@ class _BillDetailPageState extends State<BillDetailPage> {
                   direction: Axis.vertical,
                   children: [
                     Image.asset(
-                      'assets/sample/billSample.png',
+                      widget.status
+                          ? 'assets/sample/billSample.png'
+                          : 'assets/sample/billSample_none.png',
                       fit: BoxFit.contain,
                     ),
                   ],

@@ -239,7 +239,7 @@ class _BillViewState extends State<BillView> {
                     child: FlatButton(
                       color: Theme.of(context).accentColor,
                       onPressed: () {
-                        AppRouter.toBillDetailPage();
+                        AppRouter.toBillDetailPage(item.status);
                       },
                       child: Text(
                         '고지서',

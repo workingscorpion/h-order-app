@@ -77,7 +77,9 @@ class AppRouter {
       case RouteNames.BillDetail:
         return MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => BillDetailPage(),
+          builder: (BuildContext context) => BillDetailPage(
+            status: settings.arguments as bool,
+          ),
         );
 
       case RouteNames.Board:
@@ -199,8 +201,9 @@ class AppRouter {
     return Navigator.of(context).pushNamed(RouteNames.Call);
   }
 
-  static toBillDetailPage() {
-    return Navigator.of(context).pushNamed(RouteNames.BillDetail);
+  static toBillDetailPage(bool status) {
+    return Navigator.of(context)
+        .pushNamed(RouteNames.BillDetail, arguments: status);
   }
 
   static toBoardPage() {
