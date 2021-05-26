@@ -446,10 +446,14 @@ class _CartPageState extends State<CartPage>
       return;
     }
 
-    final order = OrderModel(serviceObjectId: serviceObjectId, price: amount);
-    final result = await Client.create().order(order);
-
-    print(result.toString());
-    AppRouter.toShoppingCompletePage(widget.cart);
+    try {
+      final order = OrderModel(serviceObjectId: serviceObjectId, price: amount);
+      final result = await Client.create().order(order);
+      print(result.toString());
+    } catch (e) {
+      print('');
+    } finally {
+      AppRouter.toShoppingCompletePage(widget.cart);
+    }
   }
 }
