@@ -32,11 +32,11 @@ class _ProductPageState extends State<ProductPage>
   Map<String, String> _radioMap;
 
   int get totalAmount {
-    return amount * _quantity;
+    return (amount + optionAmount) * _quantity;
   }
 
   int get amount {
-    return widget.product.price + optionAmount;
+    return widget.product.price;
   }
 
   int get optionAmount {
@@ -183,7 +183,7 @@ class _ProductPageState extends State<ProductPage>
               ),
             ),
             Spacer(),
-            Text('${NumberFormat().format(amount)}원'),
+            Text('${NumberFormat().format(amount + optionAmount)}원'),
             _countCalc(),
           ],
         ),

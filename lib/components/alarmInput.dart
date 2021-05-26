@@ -228,7 +228,7 @@ class AlarmInputState extends State<AlarmInput> {
         ),
       );
 
-  _divier() => Container(
+  _divider() => Container(
         width: 40,
         decoration: BoxDecoration(
           border: Border(
@@ -243,7 +243,7 @@ class AlarmInputState extends State<AlarmInput> {
           children: [
             Positioned(
               top: 90,
-              child: _divier(),
+              child: _divider(),
             ),
             _listWheelScrollView(
               controller: _hourListViewController,
@@ -265,7 +265,7 @@ class AlarmInputState extends State<AlarmInput> {
             ),
             Positioned(
               bottom: 90,
-              child: _divier(),
+              child: _divider(),
             ),
           ],
         ),
@@ -277,7 +277,7 @@ class AlarmInputState extends State<AlarmInput> {
           children: [
             Positioned(
               top: 90,
-              child: _divier(),
+              child: _divider(),
             ),
             _listWheelScrollView(
               controller: _minuteListViewController,
@@ -299,7 +299,7 @@ class AlarmInputState extends State<AlarmInput> {
             ),
             Positioned(
               bottom: 90,
-              child: _divier(),
+              child: _divider(),
             ),
           ],
         ),
@@ -311,7 +311,7 @@ class AlarmInputState extends State<AlarmInput> {
           children: [
             Positioned(
               top: 90,
-              child: _divier(),
+              child: _divider(),
             ),
             _listWheelScrollView(
               controller: _noonListViewController,
@@ -333,7 +333,7 @@ class AlarmInputState extends State<AlarmInput> {
             ),
             Positioned(
               bottom: 90,
-              child: _divier(),
+              child: _divider(),
             ),
           ],
         ),
