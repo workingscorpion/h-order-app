@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
 import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
