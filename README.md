@@ -1,16 +1,47 @@
-# h_order
+# h_order_app
 
-A new Flutter project.
+H Order Room App - 입주민용 패드 앱
 
-## Getting Started
+## Environment(Language & Framework)
 
-This project is a starting point for a Flutter application.
+- Dart 2.10.5
+- `flutter 1.22.6(Channel Stable)`
 
-A few resources to get you started if this is your first Flutter project:
+## IDE
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- VSCode (Recommanded)
+- Android Studio
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Command
+
+1. get library(pubspec.yaml)
+
+```
+~~\h-order-app> flutter pub get
+```
+
+2. code generate
+
+```
+~~\h-order-app> flutter pub run build_runner build
+```
+
+3. build
+
+```
+~~\h-order-app> flutter build apk
+```
+
+## Repository
+
+```
+https://gitlab.com/global-order/h-order/h-order-app.git
+```
+
+계정 혹은 권한이 없을경우, 관리자(전현철 팀장)에게 문의
+
+## Additional Information
+
+- LDPlayer4
+
+## Detail
