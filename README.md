@@ -40,6 +40,8 @@ https://gitlab.com/global-order/h-order/h-order-app.git
 
 계정 혹은 권한이 없을경우, 관리자(전현철 팀장)에게 문의
 
+- gitKraken
+
 ## Additional Information
 
 - LDPlayer4
