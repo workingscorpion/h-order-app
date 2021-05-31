@@ -12,6 +12,14 @@ H Order Room App - 입주민용 패드 앱
 - VSCode (Recommanded)
 - Android Studio
 
+## How to Connect to Server(client.dart)
+
+- retrofit
+
+- 본인 pc 접속의 경우, client.dart `host, port를 본인 pc의 사설 ip, port로 변경`
+
+- 워크스테이션(테스트 서버)로 접속할 경우, client.dart `host, port를 jinjoosoft.io, [해당포트]로 변경`
+
 ## Command
 
 1. get library(pubspec.yaml)
