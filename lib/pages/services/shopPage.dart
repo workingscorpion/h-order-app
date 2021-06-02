@@ -244,7 +244,7 @@ class _ShopPageState extends State<ShopPage>
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    '${NumberFormat().format(product.price)} ₩',
+                    '₩ ${NumberFormat().format(product.price)}',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 17,
