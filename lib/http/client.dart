@@ -14,7 +14,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 
 part 'client.g.dart';
 
-const protocol = kDebugMode ? 'http' : 'https';
+const protocol = kDebugMode ? 'http' : 'http';
 const host = kDebugMode ? '192.168.0.11' : 'jinjoosoft.io';
 const port = kDebugMode ? '5000' : '49233';
 

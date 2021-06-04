@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage>
               '입주민 공지',
               '이용내역',
               '관리비 내역',
-              '마이페이지',
+              '설정',
             ]
                 .asMap()
                 .map(
