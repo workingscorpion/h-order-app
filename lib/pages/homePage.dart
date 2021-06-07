@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
 import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
@@ -200,7 +198,7 @@ class _HomePageState extends State<HomePage>
               '입주민 공지',
               '이용내역',
               '관리비 내역',
-              '마이페이지',
+              '설정',
             ]
                 .asMap()
                 .map(

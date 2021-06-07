@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/models/itemModel.dart';
 
 class ShoppingCompletePage extends StatefulWidget {
   ShoppingCompletePage();
