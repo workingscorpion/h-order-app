@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/viewHeader.dart';
-import 'package:h_order/constants/sampleData.dart';
 import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
 import 'package:h_order/models/keyValueModel.dart';
@@ -54,7 +53,6 @@ class _HistoryViewState extends State<HistoryView> {
   void initState() {
     super.initState();
 
-    list = SampleData.histories();
     visibleList = List.of(list);
   }
 

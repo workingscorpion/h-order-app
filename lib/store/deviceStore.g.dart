@@ -9,6 +9,21 @@ part of 'deviceStore.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$DeviceStore on DeviceStoreBase, Store {
+  final _$deviceAtom = Atom(name: 'DeviceStoreBase.device');
+
+  @override
+  DeviceModel get device {
+    _$deviceAtom.reportRead();
+    return super.device;
+  }
+
+  @override
+  set device(DeviceModel value) {
+    _$deviceAtom.reportWrite(value, super.device, () {
+      super.device = value;
+    });
+  }
+
   final _$loadingAtom = Atom(name: 'DeviceStoreBase.loading');
 
   @override
@@ -69,6 +84,13 @@ mixin _$DeviceStore on DeviceStoreBase, Store {
     });
   }
 
+  final _$getDeviceAsyncAction = AsyncAction('DeviceStoreBase.getDevice');
+
+  @override
+  Future getDevice() {
+    return _$getDeviceAsyncAction.run(() => super.getDevice());
+  }
+
   final _$connectHubAsyncAction = AsyncAction('DeviceStoreBase.connectHub');
 
   @override
@@ -79,6 +101,7 @@ mixin _$DeviceStore on DeviceStoreBase, Store {
   @override
   String toString() {
     return '''
+device: ${device},
 loading: ${loading},
 hubConnection: ${hubConnection},
 isConnected: ${isConnected},

@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
-import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
-import 'package:h_order/models/homeModel.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
+import 'package:h_order/store/deviceStore.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'home/billView.dart';
 import 'home/historyView.dart';
@@ -28,15 +29,12 @@ class _HomePageState extends State<HomePage>
   DateTime currentBackPressTime;
   bool isOpened = false;
 
-  HomeModel home;
   LayoutModel layout;
 
   @override
   void initState() {
     super.initState();
-
-    home = SampleData.home();
-
+    load();
     currentBackPressTime = null;
 
     _tabController = TabController(
@@ -49,6 +47,10 @@ class _HomePageState extends State<HomePage>
   @override
   void dispose() {
     super.dispose();
+  }
+
+  load() async {
+    await DeviceStore.instance.getDevice();
   }
 
   @override
@@ -128,44 +130,50 @@ class _HomePageState extends State<HomePage>
       );
 
   _leftPanel() => Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(height: 10),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '${home.room}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    '${home.name} 님',
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                          fontSize: 32,
-                        ),
+        child: Observer(
+          builder: (BuildContext context) => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '${DeviceStore.instance.device?.name ?? '방번호'}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              flex: 1,
-              child: Text(
-                '${home.address}',
-                softWrap: true,
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      // TODO:
+                      '입주민님',
+                      // '${device.name} 님',
+                      style: Theme.of(context).textTheme.headline2.copyWith(
+                            fontSize: 32,
+                          ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Container(height: 20),
-            _infoButtons(),
-          ],
+              Expanded(
+                flex: 1,
+                // TODO: 주소
+                // child: Text(
+                //   '${device.address}',
+                //   softWrap: true,
+                //   style: TextStyle(
+                //     fontSize: 20,
+                //   ),
+                // ),
+                child: Text('주소'),
+              ),
+              Container(height: 20),
+              _infoButtons(),
+            ],
+          ),
         ),
       );
 

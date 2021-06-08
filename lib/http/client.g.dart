@@ -52,6 +52,24 @@ class _Client implements Client {
   }
 
   @override
+  Future<DeviceModel> device() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/v1/device/device',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DeviceModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<LayoutModel> layout() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
