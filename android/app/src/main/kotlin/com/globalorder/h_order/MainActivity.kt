@@ -35,7 +35,6 @@ class MainActivity: FlutterActivity() {
 
         "getSerialNumber" -> {
           val serialNumber = getSerialNumber()
-
           if (serialNumber != "") {
             result.success(serialNumber)
           } else {
@@ -63,9 +62,29 @@ class MainActivity: FlutterActivity() {
   }
 
   private fun getSerialNumber(): String {
-    return Build.SERIAL;
-    // return Settings.Secure.getString(applicationContext.contentResolver, Settings.Secure.ANDROID_ID);
+    var serialNumber = ""
+
+    val c = Class.forName("android.os.SystemProperties")
+    val get = c.getMethod("get", String::class.java)
+
+    serialNumber = get.invoke(c, "ril.serialnumber") as String
+    if (serialNumber == "") {
+      serialNumber = get.invoke(c, "gsm.sn1") as String
+    }
+    if (serialNumber == "") {
+      serialNumber = get.invoke(c, "ro.serialno") as String
+    }
+    if (serialNumber == "") {
+      serialNumber = get.invoke(c, "sys.serialnumber") as String
+    }
+    if (serialNumber == "") {
+      serialNumber = Build.SERIAL
+    } else {
+        // val test: String = Build.getSerial()
+    }
+    return serialNumber
   }
+
   private fun getBatteryLevel(): Int {
     if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
       val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
