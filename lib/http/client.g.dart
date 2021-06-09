@@ -125,6 +125,24 @@ class _Client implements Client {
   }
 
   @override
+  Future<PageModel> histories() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/v1/device/history',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = PageModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<PageModel> bills() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

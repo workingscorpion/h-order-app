@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
-import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';

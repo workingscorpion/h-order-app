@@ -5,7 +5,9 @@ import 'package:h_order/http/types/login/requestLoginModel.dart';
 import 'package:h_order/http/types/pagination/pageModel.dart';
 import 'package:h_order/http/types/payment/cardRegisterModel.dart';
 import 'package:h_order/http/types/service/actionModel.dart';
+import 'package:h_order/models/billModel.dart';
 import 'package:h_order/models/historyModel.dart';
+import 'package:h_order/models/noticeModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/http/types/service/orderModel.dart';
@@ -65,6 +67,9 @@ abstract class Client {
 
   @GET("/v1/device/notice")
   Future<PageModel> notices();
+
+  @GET("/v1/device/history")
+  Future<PageModel> histories();
 
   @GET("/v1/device/bill")
   Future<PageModel> bills();
