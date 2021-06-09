@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
@@ -128,6 +129,19 @@ class _HistoryViewState extends State<HistoryView> {
         ),
       );
 
+  String _getFirstMenu(HistoryModel history) {
+    var menuName = '-';
+    try {
+      if (history.data != null) {
+        final data = jsonDecode(history.data);
+        if (data['cart'] != null) {
+          menuName = jsonDecode(data['cart'])?.first['name'] ?? '-';
+        }
+      }
+    } catch (e) {}
+    return menuName;
+  }
+
   _historiesBody() => Expanded(
         child: ListView(
           children: [
@@ -145,7 +159,9 @@ class _HistoryViewState extends State<HistoryView> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    item.summary != null ? '${item.summary}' : '-',
+                    _getFirstMenu(item) != null
+                        ? '${_getFirstMenu(item)}'
+                        : '-',
                     maxLines: 1,
                     textAlign: TextAlign.center,
                   ),
