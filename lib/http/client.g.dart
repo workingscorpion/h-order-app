@@ -240,12 +240,12 @@ class _Client implements Client {
   }
 
   @override
-  Future<dynamic> deleteCard(objectId) async {
-    ArgumentError.checkNotNull(objectId, 'objectId');
+  Future<dynamic> deleteCard(index) async {
+    ArgumentError.checkNotNull(index, 'index');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'objectId': objectId};
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request('/v1/device/paymentMethod',
+    final _result = await _dio.request('/v1/device/paymentMethod/$index',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'DELETE',
