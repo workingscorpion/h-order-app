@@ -18,23 +18,27 @@ class DeviceInfo {
   }
 
   static Future<String> serialNumber() async {
-    if (Platform.isAndroid) {
-      if (!await _checkPermission(Permission.storage)) {
-        throw 'permission denied';
-      }
+    // if (Platform.isAndroid) {
+    //   if (!await _checkPermission(Permission.storage)) {
+    //     throw 'permission denied';
+    //   }
 
-      final path = await ExtStorage.getExternalStoragePublicDirectory(
-          ExtStorage.DIRECTORY_DOCUMENTS);
-      final file = File('$path/serial_number');
+    //   final path = await ExtStorage.getExternalStoragePublicDirectory(
+    //       ExtStorage.DIRECTORY_DOCUMENTS);
+    //   final file = File('$path/serial_number');
 
-      if (!await file.exists()) {
-        return '';
-      }
+    //   if (!await file.exists()) {
+    //     return '';
+    //   }
 
-      return await file.readAsString();
-    }
+    //   return await file.readAsString();
+    // }
 
-    throw 'non-android device is not supported.';
+    // throw 'non-android device is not supported.';
+    final a = await _platform.invokeMethod('getSerialNumber');
+    print(a);
+
+    return a;
   }
 
   static Future<String> scanSerialNumber() async {

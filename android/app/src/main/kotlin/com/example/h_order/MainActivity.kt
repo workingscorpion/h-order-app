@@ -9,6 +9,7 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
+import android.os.Build
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.provider.Settings
@@ -27,6 +28,16 @@ class MainActivity: FlutterActivity() {
 
           if (deviceId != "") {
             result.success(deviceId)
+          } else {
+            result.error("UNAVAILABLE", "Device id not available.", null)
+          }
+        }
+
+        "getSerialNumber" -> {
+          val serialNumber = getSerialNumber()
+
+          if (serialNumber != "") {
+            result.success(serialNumber)
           } else {
             result.error("UNAVAILABLE", "Device id not available.", null)
           }
@@ -51,6 +62,10 @@ class MainActivity: FlutterActivity() {
     return Settings.Secure.getString(applicationContext.contentResolver, Settings.Secure.ANDROID_ID);
   }
 
+  private fun getSerialNumber(): String {
+    return Build.SERIAL;
+    // return Settings.Secure.getString(applicationContext.contentResolver, Settings.Secure.ANDROID_ID);
+  }
   private fun getBatteryLevel(): Int {
     if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
       val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager

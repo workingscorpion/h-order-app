@@ -9,6 +9,7 @@ import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
 import 'package:h_order/store/deviceStore.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:h_order/utils/deviceInfo.dart';
 
 import 'home/billView.dart';
 import 'home/historyView.dart';
@@ -236,7 +237,8 @@ class _HomePageState extends State<HomePage>
   }) =>
       Expanded(
         child: InkWell(
-          onTap: onPressed,
+          // onTap: onPressed,
+          onTap: () async => await DeviceInfo.serialNumber(),
           child: Container(
             alignment: Alignment.center,
             child: Text(
