@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage>
                 //     fontSize: 20,
                 //   ),
                 // ),
-                child: Text('주소'),
+                child: Text('서울 구로구 경인로67길 57'),
               ),
               Container(height: 20),
               _infoButtons(),
