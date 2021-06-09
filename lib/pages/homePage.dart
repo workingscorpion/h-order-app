@@ -9,7 +9,6 @@ import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
 import 'package:h_order/store/deviceStore.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:h_order/utils/deviceInfo.dart';
 
 import 'home/billView.dart';
 import 'home/historyView.dart';
@@ -139,7 +138,7 @@ class _HomePageState extends State<HomePage>
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '${DeviceStore.instance.device?.name ?? '방번호'}',
+                    '${DeviceStore.instance.device?.name?.split("/")?.first ?? '방번호'}',
                     style: Theme.of(context)
                         .textTheme
                         .headline1
@@ -149,7 +148,7 @@ class _HomePageState extends State<HomePage>
                     margin: EdgeInsets.only(bottom: 10),
                     child: Text(
                       // TODO:
-                      '입주민님',
+                      '${DeviceStore.instance.device?.name?.split("/")?.last ?? '입주민'}',
                       // '${device.name} 님',
                       style: Theme.of(context).textTheme.headline2.copyWith(
                             fontSize: 32,
@@ -237,8 +236,7 @@ class _HomePageState extends State<HomePage>
   }) =>
       Expanded(
         child: InkWell(
-          // onTap: onPressed,
-          onTap: () async => await DeviceInfo.serialNumber(),
+          onTap: onPressed,
           child: Container(
             alignment: Alignment.center,
             child: Text(
