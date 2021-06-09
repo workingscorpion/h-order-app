@@ -1,4 +1,4 @@
-package com.example.h_order
+package kr.co.horder
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
