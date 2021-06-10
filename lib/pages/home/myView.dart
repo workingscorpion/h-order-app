@@ -31,30 +31,30 @@ class _MyViewState extends State<MyView> {
                 AppRouter.toInfoPage();
               },
             ),
-            _item(
-              title: '결제수단 관리',
-              onTap: () {
-                AppRouter.toPaymentPage();
-              },
-            ),
-            _item(
-              title: '즐겨찾기',
-              onTap: () {
-                AppRouter.toFavoritePage();
-              },
-            ),
-            _item(
-              title: '화면 설정',
-              onTap: () {
-                AppRouter.toScreenPage();
-              },
-            ),
-            _item(
-              title: '알람 설정',
-              onTap: () {
-                AppRouter.toAlarmPage();
-              },
-            ),
+            // _item(
+            //   title: '결제수단 관리',
+            //   onTap: () {
+            //     AppRouter.toPaymentPage();
+            //   },
+            // ),
+            // _item(
+            //   title: '즐겨찾기',
+            //   onTap: () {
+            //     AppRouter.toFavoritePage();
+            //   },
+            // ),
+            // _item(
+            //   title: '화면 설정',
+            //   onTap: () {
+            //     AppRouter.toScreenPage();
+            //   },
+            // ),
+            // _item(
+            //   title: '알람 설정',
+            //   onTap: () {
+            //     AppRouter.toAlarmPage();
+            //   },
+            // ),
           ],
         ),
       );

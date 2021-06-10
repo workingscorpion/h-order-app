@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage>
                     margin: EdgeInsets.only(bottom: 10),
                     child: Text(
                       // TODO:
-                      '(${DeviceStore.instance.device?.name?.split("/")?.last ?? '입주민'}님 님)',
+                      '(${DeviceStore.instance.device?.name?.split("/")?.last ?? '입주민'} 님)',
                       // '${device.name} 님',
                       style: Theme.of(context).textTheme.headline2.copyWith(
                             fontSize: 25,
