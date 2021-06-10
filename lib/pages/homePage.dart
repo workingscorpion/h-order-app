@@ -7,6 +7,7 @@ import 'package:h_order/components/homeFloatingButton.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/store/deviceStore.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -99,9 +100,7 @@ class _HomePageState extends State<HomePage>
   _infoHeader() => Container(
         margin: EdgeInsets.only(bottom: 10),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Spacer(),
             Text(
               '관리비납부현황',
               style: Theme.of(context).textTheme.bodyText2.copyWith(
@@ -129,6 +128,7 @@ class _HomePageState extends State<HomePage>
       );
 
   _leftPanel() => Expanded(
+        flex: 3,
         child: Observer(
           builder: (BuildContext context) => Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -148,17 +148,16 @@ class _HomePageState extends State<HomePage>
                     margin: EdgeInsets.only(bottom: 10),
                     child: Text(
                       // TODO:
-                      '${DeviceStore.instance.device?.name?.split("/")?.last ?? '입주민'}',
+                      '(${DeviceStore.instance.device?.name?.split("/")?.last ?? '입주민'}님 님)',
                       // '${device.name} 님',
                       style: Theme.of(context).textTheme.headline2.copyWith(
-                            fontSize: 32,
+                            fontSize: 25,
                           ),
                     ),
                   ),
                 ],
               ),
               Expanded(
-                flex: 1,
                 // TODO: 주소
                 // child: Text(
                 //   '${device.address}',
@@ -167,66 +166,122 @@ class _HomePageState extends State<HomePage>
                 //     fontSize: 20,
                 //   ),
                 // ),
-                child: Text('서울 구로구 경인로67길 57'),
+                child: Text(
+                  '서울 구로구 경인로67길 57',
+                  style: TextStyle(
+                    color: CustomColors.addressBlack,
+                  ),
+                ),
               ),
               Container(height: 20),
-              _infoButtons(),
+              _infoHeader(),
+              Container(height: 20),
+              // _infoButtons(),
             ],
           ),
         ),
       );
 
   _rightPanel() => Expanded(
-        child: Column(
-          children: [
-            _infoHeader(),
-            Spacer(),
-          ],
-        ),
+        flex: 4,
+        child: _infoButtons(),
       );
 
-  _verticalDivider() => Container(
-        height: 15,
-        child: VerticalDivider(
-          color: Theme.of(context).accentColor,
-          thickness: 1,
-          width: 10,
-          indent: 14,
-          endIndent: 11,
-        ),
-      );
+  // _verticalDivider() => Container(
+  //       height: 15,
+  //       child: VerticalDivider(
+  //         color: Theme.of(context).accentColor,
+  //         thickness: 1,
+  //         width: 10,
+  //         indent: 14,
+  //         endIndent: 11,
+  //       ),
+  //     );
 
   _infoButtons() => Container(
-        height: 36,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ...[
-              '입주민 공지',
-              '이용내역',
-              '관리비 내역',
-              '설정',
-            ]
-                .asMap()
-                .map(
-                  (index, text) => MapEntry(
-                    index,
-                    _infoTextButton(
-                      onPressed: () {
-                        _tabController.animateTo(index + 1);
-                        setState(() {});
-                      },
-                      text: text,
-                      selected: _tabController.index == (index + 1),
-                    ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: [
+                  _infoTextButton(
+                    onPressed: () {
+                      _tabController.animateTo(1);
+                      setState(() {});
+                    },
+                    text: '입주민 공지',
+                    selected: _tabController.index == 1,
                   ),
-                )
-                .entries
-                .expand((item) => item.key != 0
-                    ? [_verticalDivider(), item.value]
-                    : [item.value]),
+                  Container(
+                    width: 20,
+                  ),
+                  _infoTextButton(
+                    onPressed: () {
+                      _tabController.animateTo(2);
+                      setState(() {});
+                    },
+                    text: '이용내역',
+                    selected: _tabController.index == 2,
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                _infoTextButton(
+                  onPressed: () {
+                    _tabController.animateTo(3);
+                    setState(() {});
+                  },
+                  text: '관리비 내역',
+                  selected: _tabController.index == 3,
+                ),
+                Container(
+                  width: 20,
+                ),
+                _infoTextButton(
+                  onPressed: () {
+                    _tabController.animateTo(4);
+                    setState(() {});
+                  },
+                  text: '설정',
+                  selected: _tabController.index == 4,
+                ),
+              ],
+            ),
           ],
         ),
+        // child: Row(
+        //   crossAxisAlignment: CrossAxisAlignment.stretch,
+        //   children: [
+        //     ...[
+        //       '입주민 공지',
+        //       '이용내역',
+        //       '관리비 내역',
+        //       '설정',
+        //     ]
+        //         .asMap()
+        //         .map(
+        //           (index, text) => MapEntry(
+        //             index,
+        //             _infoTextButton(
+        //               onPressed: () {
+        //                 _tabController.animateTo(index + 1);
+        //                 setState(() {});
+        //               },
+        //               text: text,
+        //               selected: _tabController.index == (index + 1),
+        //             ),
+        //           ),
+        //         )
+        //         .entries
+        //         .expand((item) => item.key != 0
+        //             ? [_verticalDivider(), item.value]
+        //             : [item.value]),
+        //   ],
+        // ),
       );
 
   _infoTextButton({
@@ -238,14 +293,21 @@ class _HomePageState extends State<HomePage>
         child: InkWell(
           onTap: onPressed,
           child: Container(
+            height: 80,
             alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: selected
+                  ? CustomColors.selectedButton
+                  : CustomColors.backgroundLightGrey,
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: Text(
               text,
               maxLines: 1,
               style: Theme.of(context).textTheme.headline2.copyWith(
                     letterSpacing: -1,
                     fontSize: 16,
-                    color: selected ? Colors.black : Color(0xff606162),
+                    color: selected ? Colors.white : Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
               textAlign: TextAlign.center,
