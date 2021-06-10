@@ -10,6 +10,7 @@ import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/service/actionModel.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
@@ -42,6 +43,8 @@ class _CartPageState extends State<CartPage>
     return PaymentStore.instance.cards;
   }
 
+  ServiceModel service;
+
   @override
   void initState() {
     super.initState();
@@ -60,7 +63,7 @@ class _CartPageState extends State<CartPage>
 
   load() async {
     await PaymentStore.instance.loadCards();
-
+    service = await Client.create().service(widget.serviceObjectId);
     setState(() {});
   }
 
@@ -111,7 +114,9 @@ class _CartPageState extends State<CartPage>
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     PageHeader(
+                      // TODO
                       title: ['심플리오'],
+                      // title: [service.name],
                       canBack: true,
                     ),
                     _cartItems(),
