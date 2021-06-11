@@ -9,21 +9,6 @@ part of 'billStore.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BillStore on BillStoreBase, Store {
-  final _$billsAtom = Atom(name: 'BillStoreBase.bills');
-
-  @override
-  List<BillModel> get bills {
-    _$billsAtom.reportRead();
-    return super.bills;
-  }
-
-  @override
-  set bills(List<BillModel> value) {
-    _$billsAtom.reportWrite(value, super.bills, () {
-      super.bills = value;
-    });
-  }
-
   final _$totalAtom = Atom(name: 'BillStoreBase.total');
 
   @override
@@ -64,7 +49,6 @@ mixin _$BillStore on BillStoreBase, Store {
   @override
   String toString() {
     return '''
-bills: ${bills},
 total: ${total},
 loading: ${loading}
     ''';

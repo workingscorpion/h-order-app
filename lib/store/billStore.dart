@@ -13,8 +13,7 @@ class BillStore extends BillStoreBase with _$BillStore {
 }
 
 abstract class BillStoreBase with Store {
-  @observable
-  List<BillModel> bills;
+  ObservableList<BillModel> bills = ObservableList<BillModel>();
 
   @observable
   int total;
