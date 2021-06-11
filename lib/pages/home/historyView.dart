@@ -9,6 +9,7 @@ import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
 import 'package:h_order/models/keyValueModel.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HistoryView extends StatefulWidget {
   HistoryView();
@@ -143,55 +144,73 @@ class _HistoryViewState extends State<HistoryView> {
   }
 
   _historiesBody() => Expanded(
-        child: ListView(
-          children: [
-            ...visibleList.map(
-              (item) => _item(
+        child: visibleList.length > 0
+            ? ListView(
                 children: [
-                  Text(
-                    '${item.index}',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    item.serviceName != null ? '${item.serviceName}' : '-',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    _getFirstMenu(item) != null
-                        ? '${_getFirstMenu(item)}'
-                        : '-',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    item.amount != null && item.amount > 0
-                        ? '${NumberFormat().format(item.amount)}원'
-                        : '-',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    orderStatus[item.status].name,
-                    maxLines: 1,
-                    style: TextStyle(
-                      color: orderStatus[item.status].color,
+                  ...visibleList.map(
+                    (item) => _item(
+                      children: [
+                        Text(
+                          '${item.index}',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          item.serviceName != null
+                              ? '${item.serviceName}'
+                              : '-',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          _getFirstMenu(item) != null
+                              ? '${_getFirstMenu(item)}'
+                              : '-',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          item.amount != null && item.amount > 0
+                              ? '${NumberFormat().format(item.amount)}원'
+                              : '-',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          orderStatus[item.status].name,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: orderStatus[item.status].color,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                      content: null,
+                      // content: item.detail,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ],
-                content: null,
-                // content: item.detail,
+              )
+            : Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/common/empty.svg',
+                      height: 200,
+                    ),
+                    // Container(
+                    //   margin: EdgeInsets.only(top: 30),
+                    //   child: Text('데이터가 없습니다.'),
+                    // ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
       );
 
   _row({
