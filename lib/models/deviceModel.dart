@@ -6,7 +6,8 @@ part 'deviceModel.g.dart';
 class DeviceModel {
   // final String deviceName;
   final String name;
-  // final String address;
+  final String boundaryAddress;
+  final String boundaryName;
 
   // final String phone;
   // final String cellPhone;
@@ -26,6 +27,8 @@ class DeviceModel {
   DeviceModel({
     // this.deviceName,
     this.name,
+    this.boundaryAddress,
+    this.boundaryName,
     // this.address,
     // this.phone,
     // this.cellPhone,

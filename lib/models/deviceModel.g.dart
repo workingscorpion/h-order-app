@@ -9,10 +9,14 @@ part of 'deviceModel.dart';
 DeviceModel _$DeviceModelFromJson(Map<String, dynamic> json) {
   return DeviceModel(
     name: json['name'] as String,
+    boundaryAddress: json['boundaryAddress'] as String,
+    boundaryName: json['boundaryName'] as String,
   );
 }
 
 Map<String, dynamic> _$DeviceModelToJson(DeviceModel instance) =>
     <String, dynamic>{
       'name': instance.name,
+      'boundaryAddress': instance.boundaryAddress,
+      'boundaryName': instance.boundaryName,
     };

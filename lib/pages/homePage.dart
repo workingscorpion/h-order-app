@@ -158,17 +158,11 @@ class _HomePageState extends State<HomePage>
                 ],
               ),
               Expanded(
-                // TODO: 주소
-                // child: Text(
-                //   '${device.address}',
-                //   softWrap: true,
-                //   style: TextStyle(
-                //     fontSize: 20,
-                //   ),
-                // ),
                 child: Text(
-                  '서울 구로구 경인로67길 57',
+                  '${DeviceStore.instance.device?.boundaryAddress} ${DeviceStore.instance.device?.boundaryName}',
+                  softWrap: true,
                   style: TextStyle(
+                    fontSize: 20,
                     color: CustomColors.addressBlack,
                   ),
                 ),
