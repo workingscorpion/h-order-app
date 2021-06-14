@@ -53,8 +53,8 @@ class _HomeViewState extends State<HomeView>
 
   @override
   Widget build(BuildContext context) {
-    if ((positions?.isEmpty ?? true)) {
-      // if ((positions?.isEmpty ?? true) || (serviceMap?.isEmpty ?? true)) {
+    // if ((positions?.isEmpty ?? true)) {
+    if ((positions?.isEmpty ?? true) || (serviceMap?.isEmpty ?? true)) {
       return Container();
     }
 
@@ -80,8 +80,11 @@ class _HomeViewState extends State<HomeView>
           child: Observer(
             builder: (context) {
               final serviceObjectIds = positions['2'] ?? [];
-              final layoutServices =
-                  serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
+              final layoutServices = serviceObjectIds
+                      ?.map((e) => serviceMap[e])
+                      ?.where((e) => e != null)
+                      ?.toList() ??
+                  [];
 
               return GridView.count(
                 padding: EdgeInsets.only(
