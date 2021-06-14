@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage>
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '${DeviceStore.instance.device?.name?.split("/")?.first ?? '방번호'}',
+                    '${DeviceStore.instance.device?.name?.split("/")?.first ?? ''}',
                     style: Theme.of(context)
                         .textTheme
                         .headline1
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage>
               ),
               Expanded(
                 child: Text(
-                  '${DeviceStore.instance.device?.boundaryAddress} ${DeviceStore.instance.device?.boundaryName}',
+                  '${DeviceStore.instance.device?.boundaryAddress ?? ''} ${DeviceStore.instance.device?.boundaryName ?? ''}',
                   softWrap: true,
                   style: TextStyle(
                     fontSize: 20,
