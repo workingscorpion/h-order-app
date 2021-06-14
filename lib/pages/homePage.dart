@@ -31,6 +31,13 @@ class _HomePageState extends State<HomePage>
 
   LayoutModel layout;
 
+  List<String> _infoButtonTitlte = [
+    '입주민 공지',
+    '이용내역',
+    '관리비 내역',
+    '설정',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -94,12 +101,14 @@ class _HomePageState extends State<HomePage>
               ],
             ),
           ),
+          _infoButtons()
         ],
       ));
 
   _infoHeader() => Container(
         margin: EdgeInsets.only(bottom: 10),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
               '관리비납부현황',
@@ -155,20 +164,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ],
               ),
-              Expanded(
-                child: Text(
-                  '${DeviceStore.instance.device?.boundaryAddress ?? ''} ${DeviceStore.instance.device?.boundaryName ?? ''}',
-                  softWrap: true,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: CustomColors.addressBlack,
-                  ),
-                ),
-              ),
               Container(height: 20),
-              _infoHeader(),
-              Container(height: 20),
-              // _infoButtons(),
             ],
           ),
         ),
@@ -176,131 +172,78 @@ class _HomePageState extends State<HomePage>
 
   _rightPanel() => Expanded(
         flex: 4,
-        child: _infoButtons(),
-      );
-
-  // _verticalDivider() => Container(
-  //       height: 15,
-  //       child: VerticalDivider(
-  //         color: Theme.of(context).accentColor,
-  //         thickness: 1,
-  //         width: 10,
-  //         indent: 14,
-  //         endIndent: 11,
-  //       ),
-  //     );
-
-  _infoButtons() => Container(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: [
-                  _infoTextButton(
-                    onPressed: () {
-                      _tabController.animateTo(1);
-                      setState(() {});
-                    },
-                    text: '입주민 공지',
-                    selected: _tabController.index == 1,
-                  ),
-                  Container(
-                    width: 20,
-                  ),
-                  _infoTextButton(
-                    onPressed: () {
-                      _tabController.animateTo(2);
-                      setState(() {});
-                    },
-                    text: '이용내역',
-                    selected: _tabController.index == 2,
-                  ),
-                ],
+            _infoHeader(),
+            Text(
+              '${DeviceStore.instance.device?.boundaryAddress ?? ''} ${DeviceStore.instance.device?.boundaryName ?? ''}',
+              softWrap: true,
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontSize: 20,
+                color: CustomColors.addressBlack,
               ),
-            ),
-            Row(
-              children: [
-                _infoTextButton(
-                  onPressed: () {
-                    _tabController.animateTo(3);
-                    setState(() {});
-                  },
-                  text: '관리비 내역',
-                  selected: _tabController.index == 3,
-                ),
-                Container(
-                  width: 20,
-                ),
-                _infoTextButton(
-                  onPressed: () {
-                    _tabController.animateTo(4);
-                    setState(() {});
-                  },
-                  text: '설정',
-                  selected: _tabController.index == 4,
-                ),
-              ],
             ),
           ],
         ),
-        // child: Row(
-        //   crossAxisAlignment: CrossAxisAlignment.stretch,
-        //   children: [
-        //     ...[
-        //       '입주민 공지',
-        //       '이용내역',
-        //       '관리비 내역',
-        //       '설정',
-        //     ]
-        //         .asMap()
-        //         .map(
-        //           (index, text) => MapEntry(
-        //             index,
-        //             _infoTextButton(
-        //               onPressed: () {
-        //                 _tabController.animateTo(index + 1);
-        //                 setState(() {});
-        //               },
-        //               text: text,
-        //               selected: _tabController.index == (index + 1),
-        //             ),
-        //           ),
-        //         )
-        //         .entries
-        //         .expand((item) => item.key != 0
-        //             ? [_verticalDivider(), item.value]
-        //             : [item.value]),
-        //   ],
-        // ),
+      );
+
+  _infoButtons() => Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            _infoButtonTitlte.length,
+            (index) => _infoTextButton(
+              onPressed: () {
+                _tabController.animateTo(index + 1);
+                setState(() {});
+              },
+              text: _infoButtonTitlte[index],
+              selected: _tabController.index == index + 1,
+              index: index,
+            ),
+          ),
+        ),
       );
 
   _infoTextButton({
     VoidCallback onPressed,
     String text,
     bool selected = false,
+    int index,
   }) =>
       Expanded(
         child: InkWell(
           onTap: onPressed,
           child: Container(
-            height: 80,
+            margin: EdgeInsets.symmetric(horizontal: 8),
+            height: 60,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: selected
                   ? CustomColors.selectedButton
                   : CustomColors.backgroundLightGrey,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 7,
+                  offset: Offset(1, 3),
+                ),
+              ],
             ),
             child: Text(
               text,
               maxLines: 1,
               style: Theme.of(context).textTheme.headline2.copyWith(
                     letterSpacing: -1,
-                    fontSize: 16,
+                    fontSize: 20,
                     color: selected ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
               textAlign: TextAlign.center,
             ),
