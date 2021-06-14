@@ -104,7 +104,7 @@ class _NoticeViewState extends State<NoticeView> {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(),
-                            child: list?.length > 0
+                            child: list.length > 0
                                 ? ListView(
                                     children: [
                                       ...list.map(
