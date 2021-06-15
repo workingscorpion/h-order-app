@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/pageHeader.dart';
-import 'package:h_order/constants/sampleData.dart';
-import 'package:h_order/models/homeModel.dart';
-import 'package:intl/intl.dart';
+import 'package:h_order/models/deviceModel.dart';
 
 class InfoPage extends StatefulWidget {
   @override
@@ -12,12 +10,12 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   List<InfoModel> list = List();
-  HomeModel home;
+  DeviceModel device;
 
   @override
   void initState() {
     super.initState();
-    home = SampleData.home();
+    // device = SampleData.home();
   }
 
   @override
@@ -46,7 +44,8 @@ class _InfoPageState extends State<InfoPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: _card(text: home.name),
+                                child: _card(text: 'device.name'),
+                                // child: _card(text: device.name),
                               ),
                               Container(width: 32),
                               Spacer(flex: 2),
@@ -57,18 +56,21 @@ class _InfoPageState extends State<InfoPage> {
                             children: [
                               Expanded(
                                 child: _card(
-                                    label: '휴대폰 번호', text: '${home.cellPhone}'),
+                                    label: '휴대폰 번호', text: '{home.cellPhone}'),
+                                // label: '휴대폰 번호', text: '${home.cellPhone}'),
                               ),
                               Container(width: 16),
                               Expanded(
-                                child: _card(
-                                    label: '유선 번호', text: '${home.phone}'),
+                                child:
+                                    _card(label: '유선 번호', text: '{home.phone}'),
+                                // label: '유선 번호', text: '${home.phone}'),
                               ),
                               Container(width: 16),
                               Expanded(
                                 child: _card(
                                     label: '비상 연락망',
-                                    text: '${home.emergencyPhone}'),
+                                    text: '{home.emergencyPhone}'),
+                                // text: '${home.emergencyPhone}'),
                               ),
                             ],
                           ),
@@ -78,7 +80,8 @@ class _InfoPageState extends State<InfoPage> {
                               Expanded(
                                 child: _card(
                                   text:
-                                      '${DateFormat('yyyy-MM-dd').format(home.contractStartDate)} ~ ${DateFormat('yyyy-MM-dd').format(home.contractEndDate)} ${(home.contractEndDate.difference(home.contractStartDate).inDays / 30).floor()}개월',
+                                      '{DateFormat("yyyy-MM-dd").format(home.contractStartDate)} ~ {DateFormat("yyyy-MM-dd").format(home.contractEndDate)} {(home.contractEndDate.difference(home.contractStartDate).inDays / 30).floor()}개월',
+                                  // '${DateFormat('yyyy-MM-dd').format(home.contractStartDate)} ~ ${DateFormat('yyyy-MM-dd').format(home.contractEndDate)} ${(home.contractEndDate.difference(home.contractStartDate).inDays / 30).floor()}개월',
                                 ),
                               ),
                               Container(width: 16),
@@ -93,7 +96,8 @@ class _InfoPageState extends State<InfoPage> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     _header(text: '입주 호실'),
-                                    _card(text: '${home.roomDetail}'),
+                                    _card(text: '{home.roomDetail}'),
+                                    // _card(text: '${home.roomDetail}'),
                                   ],
                                 ),
                               ),
@@ -104,14 +108,16 @@ class _InfoPageState extends State<InfoPage> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     _header(text: '입주 형태'),
-                                    _card(text: '${home.contractType}'),
+                                    _card(text: '{home.contractType}'),
+                                    // _card(text: '${home.contractType}'),
                                   ],
                                 ),
                               ),
                             ],
                           ),
                           _header(text: '지급 물품 현황'),
-                          _card(text: home.items.join('\n')),
+                          _card(text: '123123123'),
+                          // _card(text: home.items.join('\n')),
                         ],
                       ),
                     ),

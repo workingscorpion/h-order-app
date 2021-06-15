@@ -52,6 +52,24 @@ class _Client implements Client {
   }
 
   @override
+  Future<DeviceModel> device() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/v1/device/device',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DeviceModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<LayoutModel> layout() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -95,6 +113,24 @@ class _Client implements Client {
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
         '/v1/device/notice',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = PageModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<PageModel> histories() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/v1/device/history',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -204,12 +240,12 @@ class _Client implements Client {
   }
 
   @override
-  Future<dynamic> deleteCard(objectId) async {
-    ArgumentError.checkNotNull(objectId, 'objectId');
+  Future<dynamic> deleteCard(index) async {
+    ArgumentError.checkNotNull(index, 'index');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'objectId': objectId};
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request('/v1/device/paymentMethod',
+    final _result = await _dio.request('/v1/device/paymentMethod/$index',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'DELETE',

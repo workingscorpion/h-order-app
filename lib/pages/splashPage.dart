@@ -12,6 +12,7 @@ import 'package:h_order/store/navigationStore.dart';
 import 'package:h_order/utils/deviceInfo.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:app_settings/app_settings.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage();
@@ -124,6 +125,17 @@ class _SplashPageState extends State<SplashPage>
                       style: TextStyle(
                         color: Colors.white54,
                       ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () => AppSettings.openWIFISettings(),
+                    child: Container(
+                      child: Text(
+                        'Wifi',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      margin: EdgeInsets.symmetric(vertical: 10),
                     ),
                   ),
                 ],

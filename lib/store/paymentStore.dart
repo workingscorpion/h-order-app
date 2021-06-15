@@ -36,4 +36,14 @@ abstract class PaymentStoreBase with Store {
       loading = false;
     }
   }
+
+  // @action
+  // deleteCard(int index) async {
+  //   await Client.create().deleteCard(
+  //     PaymentStore.instance.cards[index].index.toString(),
+  //   );
+  //   // cards
+  //   //   ..clear()
+  //   //   ..addAll(cards.where((element) => element.index != index).toList());
+  // }
 }

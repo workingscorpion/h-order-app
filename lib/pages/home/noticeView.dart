@@ -6,6 +6,7 @@ import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/models/noticeModel.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NoticeView extends StatefulWidget {
   NoticeView();
@@ -103,60 +104,78 @@ class _NoticeViewState extends State<NoticeView> {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(),
-                            child: ListView(
-                              children: [
-                                ...list.map(
-                                  (item) => _item(
-                                    flex: [1, 5, 2, 2],
+                            child: list.length > 0
+                                ? ListView(
                                     children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        child: Text(
-                                          '${item.index}',
-                                          maxLines: 1,
-                                          textAlign: TextAlign.right,
+                                      ...list.map(
+                                        (item) => _item(
+                                          flex: [1, 5, 2, 2],
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              child: Text(
+                                                '${item.index}',
+                                                maxLines: 1,
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                // Container(
+                                                //     child: item.isRead == true
+                                                //         ? Container()
+                                                //         : Container(
+                                                //             margin: EdgeInsets.only(
+                                                //                 right: 10),
+                                                //             child: SvgPicture.asset(
+                                                //               'assets/icons/notice/new.svg',
+                                                //               width: 25,
+                                                //               height: 25,
+                                                //             ),
+                                                //           )),
+                                                Flexible(
+                                                  child: Text(
+                                                    '${item.title}',
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            Text(
+                                              '${item.writer}',
+                                              maxLines: 1,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            Text(
+                                              '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
+                                              maxLines: 1,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                          contents: item.contents,
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          // Container(
-                                          //     child: item.isRead == true
-                                          //         ? Container()
-                                          //         : Container(
-                                          //             margin: EdgeInsets.only(
-                                          //                 right: 10),
-                                          //             child: SvgPicture.asset(
-                                          //               'assets/icons/notice/new.svg',
-                                          //               width: 25,
-                                          //               height: 25,
-                                          //             ),
-                                          //           )),
-                                          Flexible(
-                                            child: Text(
-                                              '${item.title}',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Text(
-                                        '${item.writer}',
-                                        maxLines: 1,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      Text(
-                                        '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
-                                        maxLines: 1,
-                                        textAlign: TextAlign.center,
-                                      ),
                                     ],
-                                    contents: item.contents,
+                                  )
+                                : Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/common/empty.svg',
+                                          height: 200,
+                                        ),
+                                        // Container(
+                                        //   margin: EdgeInsets.only(top: 30),
+                                        //   child: Text('데이터가 없습니다.'),
+                                        // ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
                           ),
                         ),
                       ],

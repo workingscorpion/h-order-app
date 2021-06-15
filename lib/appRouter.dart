@@ -9,6 +9,8 @@ import 'package:h_order/pages/my/favoritePage.dart';
 import 'package:h_order/pages/my/infoPage.dart';
 import 'package:h_order/pages/my/paymentPage.dart';
 import 'package:h_order/pages/my/screenPage.dart';
+import 'package:h_order/pages/my/termsPage.dart';
+import 'package:h_order/pages/my/businessPage.dart';
 import 'package:h_order/pages/services/billDetailPage.dart';
 import 'package:h_order/pages/services/callPage.dart';
 import 'package:h_order/pages/services/boardPage.dart';
@@ -148,6 +150,18 @@ class AppRouter {
           builder: (BuildContext context) => ScreenPage(),
         );
 
+      case RouteNames.Terms:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => TermsPage(),
+        );
+
+      case RouteNames.Business:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => BusinessPage(),
+        );
+
       default:
         return MaterialPageRoute(
           settings: settings,
@@ -261,5 +275,13 @@ class AppRouter {
 
   static toAlarmPage() {
     return Navigator.of(context).pushNamed(RouteNames.Alarm);
+  }
+
+  static toTermsPage() {
+    return Navigator.of(context).pushNamed(RouteNames.Terms);
+  }
+
+  static toBusinessPage() {
+    return Navigator.of(context).pushNamed(RouteNames.Business);
   }
 }

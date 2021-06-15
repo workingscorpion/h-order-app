@@ -6,6 +6,7 @@ import 'package:signalr_core/signalr_core.dart';
 import 'package:http/http.dart' hide Client;
 import 'package:http/io_client.dart';
 import 'package:h_order/utils/lazy.dart';
+import 'package:h_order/models/deviceModel.dart';
 
 part 'deviceStore.g.dart';
 
@@ -18,6 +19,9 @@ class DeviceStore extends DeviceStoreBase with _$DeviceStore {
 
 abstract class DeviceStoreBase with Store {
   @observable
+  DeviceModel device;
+
+  @observable
   bool loading = false;
 
   @observable
@@ -29,6 +33,11 @@ abstract class DeviceStoreBase with Store {
   @observable
   Stream<PushNotificationModel> stream =
       Stream<PushNotificationModel>.empty().asBroadcastStream();
+
+  @action
+  getDevice() async {
+    device = await Client.create().device();
+  }
 
   @action
   connectHub() async {

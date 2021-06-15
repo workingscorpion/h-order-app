@@ -11,6 +11,7 @@ import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/http/types/service/orderModel.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:h_order/models/deviceModel.dart';
 
 part 'client.g.dart';
 
@@ -53,6 +54,9 @@ abstract class Client {
   @POST("/v1/auth/logout")
   Future logout();
 
+  @GET("/v1/device/device")
+  Future<DeviceModel> device();
+
   @GET("/v1/device/layout")
   Future<LayoutModel> layout();
 
@@ -61,6 +65,9 @@ abstract class Client {
 
   @GET("/v1/device/notice")
   Future<PageModel> notices();
+
+  @GET("/v1/device/history")
+  Future<PageModel> histories();
 
   @GET("/v1/device/bill")
   Future<PageModel> bills();
@@ -81,9 +88,9 @@ abstract class Client {
   @GET("/v1/device/paymentMethod")
   Future<List<PaymentMethodModel>> cards();
 
-  @DELETE("/v1/device/paymentMethod")
+  @DELETE("/v1/device/paymentMethod/{index}")
   Future deleteCard(
-    @Query("objectId") String objectId,
+    @Path("index") String index,
   );
 
   @POST("/v1/device/service/{objectId}/{type}")

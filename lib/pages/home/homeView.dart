@@ -53,6 +53,7 @@ class _HomeViewState extends State<HomeView>
 
   @override
   Widget build(BuildContext context) {
+    // if ((positions?.isEmpty ?? true)) {
     if ((positions?.isEmpty ?? true) || (serviceMap?.isEmpty ?? true)) {
       return Container();
     }
@@ -60,14 +61,17 @@ class _HomeViewState extends State<HomeView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _menu(),
+        _services(),
         _cards(),
-        _carousel(),
+        _banner(),
+        // positions['2'].length > 0 ? _services() : Container(),
+        // positions['3'].length > 0 ? _cards() : Container(),
+        // positions['4'].length > 0 ? _banner() : Container(),
       ],
     );
   }
 
-  _menu() {
+  _services() {
     return Expanded(
       flex: 3,
       child: Container(
@@ -76,8 +80,11 @@ class _HomeViewState extends State<HomeView>
           child: Observer(
             builder: (context) {
               final serviceObjectIds = positions['2'] ?? [];
-              final layoutServices =
-                  serviceObjectIds?.map((e) => serviceMap[e])?.toList() ?? [];
+              final layoutServices = serviceObjectIds
+                      ?.map((e) => serviceMap[e])
+                      ?.where((e) => e != null)
+                      ?.toList() ??
+                  [];
 
               return GridView.count(
                 padding: EdgeInsets.only(
@@ -162,7 +169,7 @@ class _HomeViewState extends State<HomeView>
     );
   }
 
-  _carousel() {
+  _banner() {
     return AspectRatio(
       aspectRatio: 16 / 7,
       child: Observer(
@@ -190,7 +197,7 @@ class _HomeViewState extends State<HomeView>
                         child: Image.network(
                           item.value,
                           width: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ) ??

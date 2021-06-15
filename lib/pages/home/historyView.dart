@@ -1,12 +1,15 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/viewHeader.dart';
-import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/constants/constants.dart';
+import 'package:h_order/http/client.dart';
 import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
 import 'package:h_order/models/keyValueModel.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HistoryView extends StatefulWidget {
   HistoryView();
@@ -18,8 +21,8 @@ class HistoryView extends StatefulWidget {
 class _HistoryViewState extends State<HistoryView> {
   FocusNode focusNode;
 
-  List<HistoryModel> list;
-  List<HistoryModel> visibleList;
+  List<HistoryModel> list = List();
+  List<HistoryModel> visibleList = List();
 
   List<int> ratio = [1, 2, 2, 2, 2, 2];
 
@@ -32,21 +35,11 @@ class _HistoryViewState extends State<HistoryView> {
     '상태',
   ];
 
-  final List<Color> _statusColors = [
-    Color(0xfff9b300),
-    Color(0xff197fff),
-    Color(0xff21d021),
-    Color(0xffe02020),
-    Color(0xfff9b300),
-  ];
+  final List<String> statusTexts =
+      orderStatus.values.map((e) => e.name).toList();
 
-  final List<String> _statusText = [
-    '신청',
-    '접수',
-    '완료',
-    '취소',
-    '거절',
-  ];
+  final List<Color> statusColors =
+      orderStatus.values.map((e) => e.color).toList();
 
   String _selectedPopupMenu = '전체';
 
@@ -54,8 +47,14 @@ class _HistoryViewState extends State<HistoryView> {
   void initState() {
     super.initState();
 
-    list = SampleData.histories();
+    load();
+  }
+
+  load() async {
+    final res = await Client.create().histories();
+    list = res.list.map((e) => HistoryModel.fromJson(e)).toList();
     visibleList = List.of(list);
+    setState(() {});
   }
 
   @override
@@ -131,53 +130,87 @@ class _HistoryViewState extends State<HistoryView> {
         ),
       );
 
+  String _getFirstMenu(HistoryModel history) {
+    var menuName = '-';
+    try {
+      if (history.data != null) {
+        final data = jsonDecode(history.data);
+        if (data['cart'] != null) {
+          menuName = jsonDecode(data['cart'])?.first['name'] ?? '-';
+        }
+      }
+    } catch (e) {}
+    return menuName;
+  }
+
   _historiesBody() => Expanded(
-        child: ListView(
-          children: [
-            ...visibleList.map(
-              (item) => _item(
+        child: visibleList.length > 0
+            ? ListView(
                 children: [
-                  Text(
-                    '${item.index}',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    item.serviceName != null ? '${item.serviceName}' : '-',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    item.summary != null ? '${item.summary}' : '-',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    item.amount != null && item.amount > 0
-                        ? '${NumberFormat().format(item.amount)}원'
-                        : '-',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    _statusText[item.status],
-                    maxLines: 1,
-                    style: TextStyle(
-                      color: _statusColors[item.status],
+                  ...visibleList.map(
+                    (item) => _item(
+                      children: [
+                        Text(
+                          '${item.index}',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          item.serviceName != null
+                              ? '${item.serviceName}'
+                              : '-',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          _getFirstMenu(item) != null
+                              ? '${_getFirstMenu(item)}'
+                              : '-',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          item.amount != null && item.amount > 0
+                              ? '${NumberFormat().format(item.amount)}원'
+                              : '-',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          orderStatus[item.status].name,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: orderStatus[item.status].color,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                      content: null,
+                      // content: item.detail,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ],
-                content: item.detail,
+              )
+            : Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/common/empty.svg',
+                      height: 200,
+                    ),
+                    // Container(
+                    //   margin: EdgeInsets.only(top: 30),
+                    //   child: Text('데이터가 없습니다.'),
+                    // ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
       );
 
   _row({
@@ -221,7 +254,8 @@ class _HistoryViewState extends State<HistoryView> {
         header: _row(
           children: children,
         ),
-        body: _collapsibleBody(content),
+        body: null,
+        // body: _collapsibleBody(content),
       );
 
   _collapsibleBody(HistoryDetailModel content) => Container(
@@ -235,7 +269,7 @@ class _HistoryViewState extends State<HistoryView> {
             Container(
               margin: EdgeInsets.only(bottom: 20),
               child: Text(
-                content.title,
+                content?.title ?? '-',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -243,20 +277,22 @@ class _HistoryViewState extends State<HistoryView> {
             ),
             Container(
               margin: EdgeInsets.only(bottom: 20),
-              child: Flex(
-                direction: Axis.vertical,
-                children: List.generate(
-                  content.detail.length,
-                  (index) => _detailItem(
-                    content.detail[index],
+              child: Text('asdf'
+                  // direction: Axis.vertical,
+                  // children: List.generate(
+                  //   content.detail.length,
+                  //   (index) => _detailItem(
+                  //     content.detail[index],
+                  //   ),
+                  // ),
                   ),
-                ),
-              ),
             ),
             Text(
-              DateFormat('HH:mm').format(content.reservedTime),
+              '시간시간',
+              // DateFormat('HH:mm').format(content.reservedTime),
             ),
-            Text(content.request),
+            Text('1241234'),
+            // Text(content.request),
             Divider(
               height: 50,
               color: Colors.grey,
@@ -383,12 +419,12 @@ class _HistoryViewState extends State<HistoryView> {
                     ),
                   ),
                   ...List.generate(
-                    _statusText.length,
+                    orderStatus.length,
                     (index) => PopupMenuItem(
-                      value: _statusText[index],
+                      value: orderStatus[index],
                       child: Container(
                         child: Text(
-                          _statusText[index],
+                          statusTexts[index],
                           style: TextStyle(
                             fontSize: 17,
                             color: Colors.black,
@@ -401,7 +437,7 @@ class _HistoryViewState extends State<HistoryView> {
                 ],
                 onSelected: (value) {
                   _selectedPopupMenu = value;
-                  final index = _statusText.indexOf(value);
+                  final index = statusTexts.indexOf(value);
                   visibleList = list
                       .where((h) => index == -1 || h.status == index)
                       .toList();

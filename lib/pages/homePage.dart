@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
-import 'package:h_order/constants/sampleData.dart';
+import 'package:h_order/components/termDialog.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
-import 'package:h_order/models/homeModel.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
+import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/store/deviceStore.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'home/billView.dart';
 import 'home/historyView.dart';
@@ -28,15 +30,19 @@ class _HomePageState extends State<HomePage>
   DateTime currentBackPressTime;
   bool isOpened = false;
 
-  HomeModel home;
   LayoutModel layout;
+
+  List<String> _infoButtonTitlte = [
+    '입주민 공지',
+    '이용내역',
+    '관리비 내역',
+    '설정',
+  ];
 
   @override
   void initState() {
     super.initState();
-
-    home = SampleData.home();
-
+    load();
     currentBackPressTime = null;
 
     _tabController = TabController(
@@ -49,6 +55,20 @@ class _HomePageState extends State<HomePage>
   @override
   void dispose() {
     super.dispose();
+  }
+
+  load() async {
+    await DeviceStore.instance.getDevice();
+    if (DeviceStore.instance.device.terms != true) {
+      openTermsDialog();
+    }
+  }
+
+  openTermsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => TermDialog(),
+    );
   }
 
   @override
@@ -92,6 +112,7 @@ class _HomePageState extends State<HomePage>
               ],
             ),
           ),
+          _infoButtons()
         ],
       ));
 
@@ -100,7 +121,6 @@ class _HomePageState extends State<HomePage>
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Spacer(),
             Text(
               '관리비납부현황',
               style: Theme.of(context).textTheme.bodyText2.copyWith(
@@ -115,110 +135,102 @@ class _HomePageState extends State<HomePage>
                 width: 20,
               ),
             ),
-            Text(
-              '납부완료',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Color(0xff21d021),
+            // FIXME
+            InkWell(
+              onTap: () => openTermsDialog(),
+              child: Text(
+                '납부완료',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Color(0xff21d021),
+                ),
               ),
             ),
+            // Text(
+            //   '납부완료',
+            //   style: TextStyle(
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 20,
+            //     color: Color(0xff21d021),
+            //   ),
+            // ),
           ],
         ),
       );
 
   _leftPanel() => Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(height: 10),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '${home.room}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    '${home.name} 님',
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                          fontSize: 32,
-                        ),
+        flex: 3,
+        child: Observer(
+          builder: (BuildContext context) => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '${DeviceStore.instance.device?.name?.split("/")?.first ?? ''}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              flex: 1,
-              child: Text(
-                '${home.address}',
-                softWrap: true,
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      '(${DeviceStore.instance.device?.name?.split("/")?.last ?? '입주민'} 님)',
+                      style: Theme.of(context).textTheme.headline2.copyWith(
+                            fontSize: 25,
+                          ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Container(height: 20),
-            _infoButtons(),
-          ],
+              Container(height: 20),
+            ],
+          ),
         ),
       );
 
   _rightPanel() => Expanded(
+        flex: 4,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _infoHeader(),
-            Spacer(),
+            Observer(
+              builder: (BuildContext context) => Text(
+                '${DeviceStore.instance.device?.boundaryAddress ?? ''} ${DeviceStore.instance.device?.boundaryName ?? ''}',
+                softWrap: true,
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: CustomColors.addressBlack,
+                ),
+              ),
+            ),
           ],
-        ),
-      );
-
-  _verticalDivider() => Container(
-        height: 15,
-        child: VerticalDivider(
-          color: Theme.of(context).accentColor,
-          thickness: 1,
-          width: 10,
-          indent: 14,
-          endIndent: 11,
         ),
       );
 
   _infoButtons() => Container(
-        height: 36,
+        margin: EdgeInsets.only(bottom: 20),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ...[
-              '입주민 공지',
-              '이용내역',
-              '관리비 내역',
-              '설정',
-            ]
-                .asMap()
-                .map(
-                  (index, text) => MapEntry(
-                    index,
-                    _infoTextButton(
-                      onPressed: () {
-                        _tabController.animateTo(index + 1);
-                        setState(() {});
-                      },
-                      text: text,
-                      selected: _tabController.index == (index + 1),
-                    ),
-                  ),
-                )
-                .entries
-                .expand((item) => item.key != 0
-                    ? [_verticalDivider(), item.value]
-                    : [item.value]),
-          ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            _infoButtonTitlte.length,
+            (index) => _infoTextButton(
+              onPressed: () {
+                _tabController.animateTo(index + 1);
+                setState(() {});
+              },
+              text: _infoButtonTitlte[index],
+              selected: _tabController.index == index + 1,
+              index: index,
+            ),
+          ),
         ),
       );
 
@@ -226,20 +238,37 @@ class _HomePageState extends State<HomePage>
     VoidCallback onPressed,
     String text,
     bool selected = false,
+    int index,
   }) =>
       Expanded(
         child: InkWell(
           onTap: onPressed,
           child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 8),
+            height: 60,
             alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: selected
+                  ? CustomColors.selectedButton
+                  : CustomColors.backgroundLightGrey,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 7,
+                  offset: Offset(1, 3),
+                ),
+              ],
+            ),
             child: Text(
               text,
               maxLines: 1,
               style: Theme.of(context).textTheme.headline2.copyWith(
                     letterSpacing: -1,
-                    fontSize: 16,
-                    color: selected ? Colors.black : Color(0xff606162),
-                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: selected ? Colors.white : Colors.black,
+                    fontWeight: FontWeight.w500,
                   ),
               textAlign: TextAlign.center,
             ),
