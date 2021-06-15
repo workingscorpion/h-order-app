@@ -24,6 +24,8 @@ class RouteNames {
   static const String Payment = '/my/payment';
   static const String Favorite = '/my/favorite';
   static const String Screen = '/my/screen';
+  static const String Terms = '/my/terms';
+  static const String Business = '/my/business';
 
   static const String Alarm = '/alarm';
   static const String AlarmDetail = '/alarm/detail';

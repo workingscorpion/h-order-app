@@ -25,12 +25,12 @@ class _MyViewState extends State<MyView> {
         child: ListView(
           padding: EdgeInsets.all(24),
           children: [
-            _item(
-              title: '내 정보',
-              onTap: () {
-                AppRouter.toInfoPage();
-              },
-            ),
+            // _item(
+            //   title: '내 정보',
+            //   onTap: () {
+            //     AppRouter.toInfoPage();
+            //   },
+            // ),
             // _item(
             //   title: '결제수단 관리',
             //   onTap: () {
@@ -55,6 +55,18 @@ class _MyViewState extends State<MyView> {
             //     AppRouter.toAlarmPage();
             //   },
             // ),
+            _item(
+              title: '약관',
+              onTap: () {
+                AppRouter.toTermsPage();
+              },
+            ),
+            _item(
+              title: '사업자 정보',
+              onTap: () {
+                AppRouter.toBusinessPage();
+              },
+            ),
           ],
         ),
       );
