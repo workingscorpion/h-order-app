@@ -248,12 +248,48 @@ class _TermDialogState extends State<TermDialog> {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
+                  onTap: () {},
                   child: Container(
+                    width: 360,
+                    height: 70,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: CustomColors.selectedButton,
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '동의',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 23,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: 360,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: CustomColors.dialogBg,
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '거부',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 23,
+                        ),
+                      ),
                     ),
                   ),
                 ),
