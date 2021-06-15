@@ -177,13 +177,15 @@ class _HomePageState extends State<HomePage>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _infoHeader(),
-            Text(
-              '${DeviceStore.instance.device?.boundaryAddress ?? ''} ${DeviceStore.instance.device?.boundaryName ?? ''}',
-              softWrap: true,
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontSize: 20,
-                color: CustomColors.addressBlack,
+            Observer(
+              builder: (BuildContext context) => Text(
+                '${DeviceStore.instance.device?.boundaryAddress ?? ''} ${DeviceStore.instance.device?.boundaryName ?? ''}',
+                softWrap: true,
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: CustomColors.addressBlack,
+                ),
               ),
             ),
           ],
