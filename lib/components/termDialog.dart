@@ -249,53 +249,48 @@ class _TermDialogState extends State<TermDialog> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    width: 360,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: CustomColors.selectedButton,
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '동의',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 23,
+              children: ['동의', '거부']
+                  .map((e) {
+                    if (e == '동의') {
+                      return [
+                        _button(e),
+                        Container(
+                          width: 20,
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    width: 360,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: CustomColors.dialogBg,
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '거부',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 23,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                      ];
+                    } else {
+                      return [_button(e)];
+                    }
+                  })
+                  .expand((element) => element)
+                  .toList(),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _button(String title) {
+    return Expanded(
+      child: InkWell(
+        onTap: () {},
+        child: Container(
+          height: 60,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: title == '동의'
+                ? CustomColors.selectedButton
+                : CustomColors.dialogBg,
+          ),
+          child: Text(
+            title,
+            style: TextStyle(
+              color: title == '동의' ? Colors.white : Colors.black,
+              fontSize: 23,
+            ),
+          ),
         ),
       ),
     );
