@@ -11,6 +11,8 @@ class CustomColors {
   static const Color tableOuterBorder = Color(0xFF111111);
   static const Color addressBlack = Color(0xFF959595);
   static const Color selectedButton = Color(0xFF696D7F);
+  static const Color dialogBg = Color(0xFFe7e7e7);
+  static const Color dialogText = Color(0xFF4e4e4e);
 
   static const Color denyColor = Color(0xff333333);
   static const Color waitAcceptColor = Color(0xffff5371);

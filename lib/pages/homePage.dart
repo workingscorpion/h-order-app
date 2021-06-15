@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/components/homeFloatingButton.dart';
+import 'package:h_order/components/termDialog.dart';
 import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/pages/home/myView.dart';
 import 'package:h_order/pages/home/noticeView.dart';
@@ -58,6 +59,16 @@ class _HomePageState extends State<HomePage>
 
   load() async {
     await DeviceStore.instance.getDevice();
+    if (DeviceStore.instance.device.terms != true) {
+      openTermsDialog();
+    }
+  }
+
+  openTermsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => TermDialog(),
+    );
   }
 
   @override
@@ -124,14 +135,26 @@ class _HomePageState extends State<HomePage>
                 width: 20,
               ),
             ),
-            Text(
-              '납부완료',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Color(0xff21d021),
+            // FIXME
+            InkWell(
+              onTap: () => openTermsDialog(),
+              child: Text(
+                '납부완료',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Color(0xff21d021),
+                ),
               ),
             ),
+            // Text(
+            //   '납부완료',
+            //   style: TextStyle(
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 20,
+            //     color: Color(0xff21d021),
+            //   ),
+            // ),
           ],
         ),
       );
