@@ -8,6 +8,7 @@ class DeviceModel {
   final String name;
   final String boundaryAddress;
   final String boundaryName;
+  final bool terms;
 
   // final String phone;
   // final String cellPhone;
@@ -29,6 +30,7 @@ class DeviceModel {
     this.name,
     this.boundaryAddress,
     this.boundaryName,
+    this.terms,
     // this.address,
     // this.phone,
     // this.cellPhone,
