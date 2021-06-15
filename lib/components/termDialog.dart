@@ -254,9 +254,7 @@ class _TermDialogState extends State<TermDialog> {
                     if (e == '동의') {
                       return [
                         _button(e),
-                        Container(
-                          width: 20,
-                        ),
+                        Container(width: 20),
                       ];
                     } else {
                       return [_button(e)];
