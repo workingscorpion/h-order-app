@@ -12,6 +12,7 @@ import 'package:h_order/http/types/service/orderModel.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:h_order/models/deviceModel.dart';
+import 'package:h_order/http/types/login/requestTermsModel.dart';
 
 part 'client.g.dart';
 
@@ -98,5 +99,10 @@ abstract class Client {
     @Path('objectId') String objectId,
     @Path('type') String type,
     @Body() ActionModel data,
+  );
+
+  @PUT("/v1/device/device")
+  Future termsUpdate(
+    @Body() RequestTermsModel device,
   );
 }

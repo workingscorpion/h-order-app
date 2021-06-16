@@ -277,4 +277,23 @@ class _Client implements Client {
     final value = _result.data;
     return value;
   }
+
+  @override
+  Future<dynamic> termsUpdate(device) async {
+    ArgumentError.checkNotNull(device, 'device');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(device?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request('/v1/device/device',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    return value;
+  }
 }
