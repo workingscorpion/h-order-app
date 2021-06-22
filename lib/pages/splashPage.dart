@@ -257,8 +257,7 @@ class _SplashPageState extends State<SplashPage>
 
   loadInfo() async {
     try {
-      //TODO
-      // AppRouter.toHomePage();
+      AppRouter.toHomePage();
     } catch (ex) {
       // AppRouter.toHotelSelectPage();
     }
