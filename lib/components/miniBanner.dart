@@ -61,13 +61,6 @@ class MiniBannerState extends State<MiniBanner> {
                         : Container(),
                   ),
                 ),
-                FractionallySizedBox(
-                  widthFactor: 1,
-                  heightFactor: 1,
-                  child: Container(
-                    color: Colors.black38,
-                  ),
-                ),
                 Positioned(
                   bottom: 24,
                   left: 24,
