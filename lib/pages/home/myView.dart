@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:package_info/package_info.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MyView extends StatefulWidget {
   MyView();
@@ -10,8 +12,11 @@ class MyView extends StatefulWidget {
 }
 
 class _MyViewState extends State<MyView> {
+  String versionNumber = '';
+
   @override
   void initState() {
+    _getVersion();
     super.initState();
   }
 
@@ -20,52 +25,72 @@ class _MyViewState extends State<MyView> {
     super.dispose();
   }
 
+  _getVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    versionNumber = packageInfo.version;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) => Container(
-        child: ListView(
-          padding: EdgeInsets.all(24),
+        child: Stack(
           children: [
-            // _item(
-            //   title: '내 정보',
-            //   onTap: () {
-            //     AppRouter.toInfoPage();
-            //   },
-            // ),
-            // _item(
-            //   title: '결제수단 관리',
-            //   onTap: () {
-            //     AppRouter.toPaymentPage();
-            //   },
-            // ),
-            // _item(
-            //   title: '즐겨찾기',
-            //   onTap: () {
-            //     AppRouter.toFavoritePage();
-            //   },
-            // ),
-            // _item(
-            //   title: '화면 설정',
-            //   onTap: () {
-            //     AppRouter.toScreenPage();
-            //   },
-            // ),
-            // _item(
-            //   title: '알람 설정',
-            //   onTap: () {
-            //     AppRouter.toAlarmPage();
-            //   },
-            // ),
-            _item(
-              title: '약관',
-              onTap: () {
-                AppRouter.toTermsPage();
-              },
+            ListView(
+              padding: EdgeInsets.all(24),
+              children: [
+                _item(
+                  title: '내 정보',
+                  onTap: () {
+                    // AppRouter.toInfoPage();
+                    showToast();
+                  },
+                ),
+                _item(
+                  title: '결제수단 관리',
+                  onTap: () {
+                    // AppRouter.toPaymentPage();
+                    showToast();
+                  },
+                ),
+                _item(
+                  title: '즐겨찾기',
+                  onTap: () {
+                    // AppRouter.toFavoritePage();
+                    showToast();
+                  },
+                ),
+                _item(
+                  title: '화면 설정',
+                  onTap: () {
+                    // AppRouter.toScreenPage();
+                    showToast();
+                  },
+                ),
+                _item(
+                  title: '알람 설정',
+                  onTap: () {
+                    // AppRouter.toAlarmPage();
+                    showToast();
+                  },
+                ),
+                _item(
+                  title: '약관',
+                  onTap: () {
+                    AppRouter.toTermsPage();
+                  },
+                ),
+                _item(
+                  title: '사업자 정보',
+                  onTap: () {
+                    AppRouter.toBusinessPage();
+                  },
+                ),
+              ],
             ),
-            _item(
-              title: '사업자 정보',
-              onTap: () {
-                AppRouter.toBusinessPage();
-              },
+            Positioned(
+              bottom: 20,
+              left: 20,
+              child: Text('Version: $versionNumber'),
             ),
           ],
         ),
@@ -103,4 +128,15 @@ class _MyViewState extends State<MyView> {
           ),
         ),
       );
+
+  showToast() async {
+    await Fluttertoast.showToast(
+      msg: '준비 중입니다.',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+      textColor: Theme.of(context).textTheme.bodyText1.color,
+      fontSize: 17,
+    );
+  }
 }
