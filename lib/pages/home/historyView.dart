@@ -37,17 +37,25 @@ class _HistoryViewState extends State<HistoryView> {
     '상태',
   ];
 
-  final List<String> statusTexts =
-      orderStatus.values.map((e) => e.name).toList();
+  Map<int, OrderStatusModel> newOrderStatus = {
+    -2: OrderStatusModel(
+      name: '전체',
+      color: Colors.black,
+    ),
+  };
 
-  final List<Color> statusColors =
-      orderStatus.values.map((e) => e.color).toList();
+  List<String> statusTexts;
+
+  List<Color> statusColors;
 
   String _selectedPopupMenu = '전체';
 
   @override
   void initState() {
     loading = true;
+    newOrderStatus.addAll(orderStatus);
+    statusTexts = newOrderStatus.values.map((e) => e.name).toList();
+    statusColors = newOrderStatus.values.map((e) => e.color).toList();
     super.initState();
 
     load();
@@ -410,44 +418,30 @@ class _HistoryViewState extends State<HistoryView> {
                   vertical: 12,
                 ),
                 offset: Offset(0, 100),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: "전체",
-                    child: Container(
-                      child: Text(
-                        '전체',
-                        style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                        ),
-                      ),
-                      width: 100,
-                    ),
-                  ),
-                  ...List.generate(
-                    orderStatus.length,
-                    (index) => PopupMenuItem(
-                      value: orderStatus[index],
-                      child: Container(
-                        child: Text(
-                          statusTexts[index],
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.black,
+                itemBuilder: (context) => newOrderStatus.entries
+                    .map(
+                      (e) => PopupMenuItem(
+                        value: e.key,
+                        child: Container(
+                          child: Text(
+                            e.value.name,
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black,
+                            ),
                           ),
+                          width: 100,
                         ),
-                        width: 100,
                       ),
-                    ),
-                  ),
-                ],
+                    )
+                    .toList(),
                 onSelected: (value) {
-                  _selectedPopupMenu = value;
-                  final index = statusTexts.indexOf(value);
-                  visibleList = list
-                      .where((h) => index == -1 || h.status == index)
-                      .toList();
-
+                  _selectedPopupMenu = newOrderStatus[value].name;
+                  if (value != -2) {
+                    visibleList = list.where((h) => h.status == value).toList();
+                  } else {
+                    visibleList = list;
+                  }
                   setState(() {});
                 },
               ),
