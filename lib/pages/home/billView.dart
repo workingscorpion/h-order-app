@@ -5,6 +5,7 @@ import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/spin.dart';
 import 'package:h_order/components/viewHeader.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/store/billStore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -49,20 +50,45 @@ class _BillViewState extends State<BillView> {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.only(top: 20),
+        // padding: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.only(bottom: 100),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _accountInfo(),
-            DefaultTextStyle(
-              style: TextStyle(
-                fontSize: 17,
-                color: Colors.black,
+            SvgPicture.asset(
+              'assets/icons/commontown.svg',
+              height: 50,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 70, bottom: 50),
+              child: Text(
+                '커먼타운 앱에서 확인해주세요.',
+                style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
               ),
-              child: _histories(),
+            ),
+            Text(
+              "커먼타운 앱 내 'MY' >> '계약/결제' >> '월별 청구서 조회'",
+              style: TextStyle(
+                fontSize: 23,
+                color: CustomColors.addtionalInformationColor,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
+        // child: Column(
+        //   crossAxisAlignment: CrossAxisAlignment.stretch,
+        //   children: [
+        //     _accountInfo(),
+        //     DefaultTextStyle(
+        //       style: TextStyle(
+        //         fontSize: 17,
+        //         color: Colors.black,
+        //       ),
+        //       child: _histories(),
+        //     ),
+        //   ],
+        // ),
       );
 
   _accountInfo() => DefaultTextStyle(

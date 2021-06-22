@@ -23,4 +23,6 @@ class CustomColors {
 
   static const Color gradientTopColor = Color(0xFF47b89b);
   static const Color gradientBottomColor = Color(0xFFc6e3c9);
+
+  static const Color addtionalInformationColor = Color(0xFF7d7d7d);
 }
