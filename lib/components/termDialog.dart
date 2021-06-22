@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/http/client.dart';
+import 'package:h_order/http/types/login/requestTermsModel.dart';
 
 class TermDialog extends StatefulWidget {
   TermDialog({
@@ -272,7 +274,9 @@ class _TermDialogState extends State<TermDialog> {
   Widget _button(String title) {
     return Expanded(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          _termsUpdate(title);
+        },
         child: Container(
           height: 60,
           alignment: Alignment.center,
@@ -288,6 +292,68 @@ class _TermDialogState extends State<TermDialog> {
               color: title == '동의' ? Colors.white : Colors.black,
               fontSize: 23,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _termsUpdate(title) async {
+    if (title == '동의') {
+      final terms = RequestTermsModel(terms: true);
+      await Client.create().termsUpdate(terms);
+
+      Navigator.of(context).pop();
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => _popUp(context),
+      );
+    }
+  }
+
+  _popUp(context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        constraints: BoxConstraints(maxWidth: 500),
+        child: IntrinsicHeight(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  '원활한 서비스 사용을 위해\n 약관 및 방침에 동의해주세요.',
+                  style: TextStyle(
+                    fontSize: 23,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              InkWell(
+                onTap: () => Navigator.of(context).pop(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ),
+                    color: CustomColors.selectedButton,
+                  ),
+                  height: 60,
+                  alignment: Alignment.center,
+                  child: Text(
+                    '닫기',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

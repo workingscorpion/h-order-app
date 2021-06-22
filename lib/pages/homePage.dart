@@ -135,26 +135,14 @@ class _HomePageState extends State<HomePage>
                 width: 20,
               ),
             ),
-            // FIXME
-            InkWell(
-              onTap: () => openTermsDialog(),
-              child: Text(
-                '납부완료',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Color(0xff21d021),
-                ),
+            Text(
+              '납부완료',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Color(0xff21d021),
               ),
             ),
-            // Text(
-            //   '납부완료',
-            //   style: TextStyle(
-            //     fontWeight: FontWeight.bold,
-            //     fontSize: 20,
-            //     color: Color(0xff21d021),
-            //   ),
-            // ),
           ],
         ),
       );
