@@ -42,12 +42,12 @@ class _TermDialogState extends State<TermDialog> {
             Container(
               height: 700,
               margin: EdgeInsets.symmetric(vertical: 40),
-              padding: EdgeInsets.all(30),
               decoration: BoxDecoration(
                 color: CustomColors.dialogBg,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: ListView(
+                padding: EdgeInsets.all(30),
                 children: [
                   Text(
                     ''' 

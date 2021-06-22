@@ -40,7 +40,7 @@ class DateTimeInputState extends State<DateTimeInput> {
     final hour = time.hour;
     final minute = (time.minute / _minuteStep).round() * _minuteStep;
 
-    _selectedTime = DateTime(0, 0, 0, hour, minute);
+    _selectedTime = DateTime(time.year, time.month, time.day, hour, minute);
 
     _dates = List.generate(
         100, (index) => DateTime.now().subtract(Duration(days: 50 - index)));
