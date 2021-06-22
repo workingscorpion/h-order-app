@@ -56,6 +56,7 @@ class _HistoryViewState extends State<HistoryView> {
   load() async {
     final res = await Client.create().histories();
     list = res.list.map((e) => HistoryModel.fromJson(e)).toList();
+    list.sort((a, b) => a.createdTime.isAfter(b.createdTime) ? -1 : 1);
     visibleList = List.of(list);
     loading = false;
     setState(() {});
