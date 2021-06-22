@@ -31,7 +31,9 @@ abstract class BillStoreBase with Store {
       loading = true;
 
       PageModel result = await Client.create().bills();
-      bills = result.list.map((e) => BillModel.fromJson(e)).toList();
+      bills = ObservableList<BillModel>.of(
+        result.list.map((e) => BillModel.fromJson(e)),
+      );
       total = result.total;
     } finally {
       loading = false;

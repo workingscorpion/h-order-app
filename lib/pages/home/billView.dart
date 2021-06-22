@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/collapsible.dart';
+import 'package:h_order/components/spin.dart';
 import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/store/billStore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mobx/mobx.dart';
 
 class BillView extends StatefulWidget {
   BillView();
@@ -42,6 +44,7 @@ class _BillViewState extends State<BillView> {
 
   load() async {
     await billStore.load();
+    setState(() {});
   }
 
   @override
@@ -157,87 +160,93 @@ class _BillViewState extends State<BillView> {
   _billBody() => Expanded(
         child: Observer(
           builder: (BuildContext context) {
-            return billStore.bills.length > 0
-                ? ListView(
-                    children: [
-                      ...(billStore.bills ?? [])?.map(
-                        (item) => _item(
-                          children: [
-                            Text(
-                              '${item.index}',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              item.title,
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              '${DateFormat('yyyy-MM-dd').format(item.deadline)}',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              item.paymentDate != null
-                                  ? '${DateFormat('yyyy-MM-dd').format(item.paymentDate)}'
-                                  : "-",
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              item.amount != null
-                                  ? '${NumberFormat().format(item.amount)}원'
-                                  : '-',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              item.paymentDate != null ? '납부' : '미납',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: item.paymentDate != null
-                                    ? Color(0xff21d021)
-                                    : Color(0xffe02020),
-                              ),
-                            ),
-                            Container(
-                              height: 24,
-                              child: FlatButton(
-                                color: Theme.of(context).accentColor,
-                                onPressed: () {
-                                  AppRouter.toBillDetailPage(item.contents);
-                                },
-                                child: Text(
-                                  '고지서',
+            return billStore.loading
+                ? Center(
+                    child: Spin(
+                      size: 30,
+                    ),
+                  )
+                : billStore.bills.length > 0
+                    ? ListView(
+                        children: [
+                          ...(billStore.bills ?? ObservableList())?.map(
+                            (item) => _item(
+                              children: [
+                                Text(
+                                  '${item.index}',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  item.title,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  '${DateFormat('yyyy-MM-dd').format(item.deadline)}',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  item.paymentDate != null
+                                      ? '${DateFormat('yyyy-MM-dd').format(item.paymentDate)}'
+                                      : "-",
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  item.amount != null
+                                      ? '${NumberFormat().format(item.amount)}원'
+                                      : '-',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  item.paymentDate != null ? '납부' : '미납',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
+                                    color: item.paymentDate != null
+                                        ? Color(0xff21d021)
+                                        : Color(0xffe02020),
                                   ),
                                 ),
-                              ),
+                                Container(
+                                  height: 24,
+                                  child: FlatButton(
+                                    color: Theme.of(context).accentColor,
+                                    onPressed: () {
+                                      AppRouter.toBillDetailPage(item.contents);
+                                    },
+                                    child: Text(
+                                      '고지서',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+                          ),
+                        ],
+                      )
+                    : Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/common/empty.svg',
+                              height: 200,
+                            ),
+                            // Container(
+                            //   margin: EdgeInsets.only(top: 30),
+                            //   child: Text('데이터가 없습니다.'),
+                            // ),
                           ],
                         ),
-                      ),
-                    ],
-                  )
-                : Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/common/empty.svg',
-                          height: 200,
-                        ),
-                        // Container(
-                        //   margin: EdgeInsets.only(top: 30),
-                        //   child: Text('데이터가 없습니다.'),
-                        // ),
-                      ],
-                    ),
-                  );
+                      );
           },
         ),
       );
