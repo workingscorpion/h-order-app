@@ -1,4 +1,4 @@
-import 'package:h_order/models/productModel.dart';
+import 'package:h_order/models/itemModel.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'cartItemModel.g.dart';
@@ -7,12 +7,11 @@ part 'cartItemModel.g.dart';
 class CartItemModel {
   static const minQuantity = 1;
 
-  final int index;
-  final ProductModel product;
+  final ItemModel product;
   final String name;
   final int amount;
   final int optionAmount;
-  final Map<int, int> optionQuantity;
+  final Map<String, int> optionQuantity;
 
   int get totalAmount {
     return _quantity * (amount + optionAmount);
@@ -26,14 +25,17 @@ class CartItemModel {
 
   get key {
     final list = optionQuantity.entries.toList()
-      ..sort((a, b) => a.key > b.key ? 1 : -1);
-    final options = list.map((element) => '${element.key}=${element.value}');
+      ..sort((a, b) => a.key.compareTo(b.key));
+    final options = list.map((element) {
+      final _key = Uri.encodeComponent(element.key);
+      final _value = element.value.toString();
+      return '$_key=$_value';
+    });
 
-    return '${product.index}?' + options.join('&');
+    return '${product.objectId}?' + options.join('&');
   }
 
   CartItemModel({
-    this.index,
     this.product,
     this.name,
     int quantity,
@@ -60,6 +62,7 @@ class CartItemModel {
         'both cart item optionAmount must be same.');
 
     final _quantity = quantity + item.quantity;
+
     return CartItemModel(
       quantity: _quantity,
       product: product,

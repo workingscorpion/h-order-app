@@ -1,13 +1,20 @@
 import 'dart:async';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/clock.dart';
-import 'package:h_order/store/navigationStore.dart';
+import 'package:h_order/components/homeFloatingButton.dart';
+import 'package:h_order/components/termDialog.dart';
+import 'package:h_order/http/types/layout/layoutModel.dart';
+import 'package:h_order/pages/home/myView.dart';
+import 'package:h_order/pages/home/noticeView.dart';
+import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/store/deviceStore.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
+import 'home/billView.dart';
+import 'home/historyView.dart';
+import 'home/homeView.dart';
 
 class HomePage extends StatefulWidget {
   HomePage();
@@ -18,16 +25,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<InnerDrawerState> innerDrawerKey =
-      GlobalKey<InnerDrawerState>();
+  TabController _tabController;
 
   DateTime currentBackPressTime;
   bool isOpened = false;
 
+  LayoutModel layout;
+
+  List<String> _infoButtonTitlte = [
+    '입주민 공지',
+    '이용내역',
+    '관리비 내역',
+    '설정',
+  ];
+
   @override
   void initState() {
     super.initState();
+    load();
     currentBackPressTime = null;
+
+    _tabController = TabController(
+      vsync: this,
+      initialIndex: 0,
+      length: 5,
+    );
   }
 
   @override
@@ -35,60 +57,235 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 
+  load() async {
+    await DeviceStore.instance.getDevice();
+    if (DeviceStore.instance.device.terms != true) {
+      openTermsDialog();
+    }
+  }
+
+  openTermsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => TermDialog(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: WillPopScope(
-          onWillPop: _onWillPop,
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: WillPopScope(
+        onWillPop: _onWillPop,
+        child: SafeArea(
+          child: Column(
+            children: [
+              _info(),
+              _body(),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: AnimatedOpacity(
+        duration: Duration(milliseconds: 200),
+        opacity: _tabController.index != 0 ? 1 : 0,
+        child: HomeFloatingButton(
+          callback: () {
+            _tabController.animateTo(0);
+            setState(() {});
+          },
+        ),
+      ));
+
+  _info() => Container(
+      color: Theme.of(context).primaryColor,
+      padding: EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 24,
+      ),
+      child: Column(
+        children: [
+          IntrinsicHeight(
+            child: Row(
               children: [
-                _status(),
-                _info(),
-                _menu(),
-                _cards(),
-                _carousel(),
+                _leftPanel(),
+                SizedBox(width: 24),
+                _rightPanel(),
               ],
             ),
           ),
+          _infoButtons()
+        ],
+      ));
+
+  _infoHeader() => Container(
+        margin: EdgeInsets.only(bottom: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              '관리비납부현황',
+              style: Theme.of(context).textTheme.bodyText2.copyWith(
+                    fontSize: 20,
+                  ),
+            ),
+            Container(
+              height: 15,
+              child: VerticalDivider(
+                color: Colors.black,
+                thickness: 1,
+                width: 20,
+              ),
+            ),
+            Text(
+              '납부완료',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Color(0xff21d021),
+              ),
+            ),
+          ],
         ),
       );
 
-  _serviceItem({
-    IconData icon,
-    String text,
-    GestureTapCallback onTap,
-  }) =>
-      Material(
-        color: Colors.transparent,
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+  _leftPanel() => Expanded(
+        flex: 3,
+        child: Observer(
+          builder: (BuildContext context) => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 12),
-                child: Icon(
-                  icon,
-                  size: 64,
-                ),
+              Container(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '${DeviceStore.instance.device?.name?.split("/")?.first ?? ''}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      '(${DeviceStore.instance.device?.name?.split("/")?.last ?? '입주민'} 님)',
+                      style: Theme.of(context).textTheme.headline2.copyWith(
+                            fontSize: 25,
+                          ),
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                text ?? '',
-                style: TextStyle(
-                  fontSize: 22,
-                ),
-              ),
+              Container(height: 20),
             ],
           ),
         ),
       );
 
+  _rightPanel() => Expanded(
+        flex: 4,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _infoHeader(),
+            Observer(
+              builder: (BuildContext context) => Text(
+                '${DeviceStore.instance.device?.boundaryAddress ?? ''} ${DeviceStore.instance.device?.boundaryName ?? ''}',
+                softWrap: true,
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: CustomColors.addressBlack,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  _infoButtons() => Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            _infoButtonTitlte.length,
+            (index) => _infoTextButton(
+              onPressed: () {
+                _tabController.animateTo(index + 1);
+                setState(() {});
+              },
+              text: _infoButtonTitlte[index],
+              selected: _tabController.index == index + 1,
+              index: index,
+            ),
+          ),
+        ),
+      );
+
+  _infoTextButton({
+    VoidCallback onPressed,
+    String text,
+    bool selected = false,
+    int index,
+  }) =>
+      Expanded(
+        child: InkWell(
+          onTap: onPressed,
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 8),
+            height: 60,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: selected
+                  ? CustomColors.selectedButton
+                  : CustomColors.backgroundLightGrey,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 7,
+                  offset: Offset(1, 3),
+                ),
+              ],
+            ),
+            child: Text(
+              text,
+              maxLines: 1,
+              style: Theme.of(context).textTheme.headline2.copyWith(
+                    letterSpacing: -1,
+                    fontSize: 20,
+                    color: selected ? Colors.white : Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      );
+
+  _body() => Expanded(
+        child: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: [
+            HomeView(),
+            NoticeView(),
+            HistoryView(),
+            BillView(),
+            MyView(),
+          ],
+        ),
+      );
+
   Future<bool> _onWillPop() async {
     try {
+      if (_tabController.index != 0) {
+        _tabController.animateTo(0);
+        setState(() {});
+        return false;
+      }
+
       final now = DateTime.now();
 
       if (currentBackPressTime != null &&
@@ -98,12 +295,14 @@ class _HomePageState extends State<HomePage>
 
       currentBackPressTime = now;
 
+      await Fluttertoast.cancel();
       await Fluttertoast.showToast(
         msg: '뒤로가기를 한 번 더 누르면 종료 됩니다.',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 2,
-        fontSize: 14,
+        backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+        textColor: Theme.of(context).textTheme.bodyText1.color,
+        fontSize: 17,
       );
 
       return false;
@@ -111,273 +310,4 @@ class _HomePageState extends State<HomePage>
       return false;
     }
   }
-
-  _status() => Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 24,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Clock(
-              fontSize: 24,
-            ),
-            Text(
-              '진주오피스텔 A동 102호',
-              style: TextStyle(
-                fontSize: 24,
-              ),
-            ),
-          ],
-        ),
-      );
-
-  _info() => Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-        padding: EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '202호',
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-                Text(
-                  '2월분 납부완료',
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              '서울특별시 구로구 구로동 3-25, 신도림 커먼타운 (우: 12345)',
-              style: TextStyle(
-                fontSize: 24,
-              ),
-            ),
-            Divider(
-              height: 30,
-            ),
-            Container(
-              height: 54,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ...[
-                    _infoButton(
-                      onPressed: () {},
-                      text: '빌라정보',
-                    ),
-                    _infoButton(
-                      onPressed: () {},
-                      text: '신청내역',
-                    ),
-                    _infoButton(
-                      // onPressed: () {},
-                      text: '관리비내역',
-                    ),
-                    _infoButton(
-                      // onPressed: () {},
-                      text: '마이페이지',
-                    ),
-                    _infoButton(
-                      onPressed: () {
-                        NavigationStore.instance.appKey.currentState
-                            .toLockPage();
-                      },
-                      text: '잠금화면',
-                    ),
-                  ].asMap().entries.expand((item) => item.key != 0
-                      ? [Container(width: 12), item.value]
-                      : [item.value]),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-  _infoButton({
-    VoidCallback onPressed,
-    String text,
-  }) =>
-      Expanded(
-        child: FlatButton(
-          onPressed: onPressed,
-          child: Text(text),
-        ),
-      );
-
-  _carousel() => Expanded(
-        flex: 1,
-        child: LayoutBuilder(
-          builder: (context, constraint) => CarouselSlider(
-            items: [
-              ...[1, 2, 3, 4, 5, 6].map(
-                (item) => Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/splash/splash.png',
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
-            options: CarouselOptions(
-              height: constraint.maxHeight,
-              viewportFraction: 1,
-              initialPage: 0,
-              enableInfiniteScroll: true,
-              reverse: false,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 10),
-              autoPlayAnimationDuration: Duration(seconds: 1),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              scrollDirection: Axis.horizontal,
-            ),
-          ),
-        ),
-      );
-
-  _menu() => Expanded(
-        flex: 1,
-        child: Container(
-          padding: EdgeInsets.all(12),
-          child: Material(
-            color: Colors.transparent,
-            child: GridView.count(
-              padding: EdgeInsets.zero,
-              crossAxisCount: 4,
-              children: [
-                ...[
-                  _serviceItem(
-                    icon: CupertinoIcons.hammer,
-                    text: '시설보수',
-                    // onTap: () {},
-                  ),
-                  _serviceItem(
-                    icon: CupertinoIcons.sparkles,
-                    text: '청소',
-                    // onTap: () {},
-                  ),
-                  _serviceItem(
-                    icon: CupertinoIcons.tornado,
-                    text: '세탁',
-                    // onTap: () {},
-                  ),
-                  _serviceItem(
-                    icon: CupertinoIcons.car_detailed,
-                    text: '출차',
-                    // onTap: () {},
-                  ),
-                ],
-                ...[
-                  _serviceItem(
-                    icon: CupertinoIcons.exclamationmark_bubble,
-                    text: '관리실호출',
-                    // onTap: () {},
-                  ),
-                  _serviceItem(
-                    icon: CupertinoIcons.tag,
-                    text: '딜리버리',
-                    onTap: () {
-                      AppRouter.toShopPage();
-                    },
-                  ),
-                  _serviceItem(
-                    icon: CupertinoIcons.paw,
-                    text: '팻케어',
-                    // onTap: () {},
-                  ),
-                  _serviceItem(
-                    icon: CupertinoIcons.cube_box,
-                    text: '택배',
-                    // onTap: () {},
-                  ),
-                ],
-                ...[
-                  _serviceItem(
-                    icon: CupertinoIcons.arrow_3_trianglepath,
-                    text: '분리수거',
-                    // onTap: () {},
-                  ),
-                  _serviceItem(
-                    icon: CupertinoIcons.trash,
-                    text: '종량제봉투',
-                    // onTap: () {},
-                  ),
-                  _serviceItem(
-                    icon: CupertinoIcons.paintbrush,
-                    text: '인테리어',
-                    // onTap: () {},
-                  ),
-                  _serviceItem(
-                    icon: CupertinoIcons.archivebox,
-                    text: '이사',
-                    // onTap: () {},
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ),
-      );
-
-  _cards() => Expanded(
-        flex: 1,
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24,
-                ),
-                child: Text(
-                  'asdf',
-                  style: TextStyle(
-                    fontSize: 32,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 24,
-                  ),
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    ...List.generate(
-                      10,
-                      (index) => Container(
-                        margin: EdgeInsets.only(right: 12),
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: FlatButton(
-                            onPressed: () {},
-                            child: Text('Service $index'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
 }

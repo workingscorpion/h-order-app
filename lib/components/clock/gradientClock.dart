@@ -15,28 +15,38 @@ class GradientClock extends StatefulWidget {
 }
 
 class _GradientClockState extends State<GradientClock> {
+  Timer _timer;
   String _timeString;
-  int hours;
-  int minutes;
+  int hour;
+  String timeString;
+  bool isAfterNoon;
 
   @override
   void initState() {
-    _timeString = _formatDateTime(DateTime.now());
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
     super.initState();
+    _timeString = _formatDateTime(DateTime.now());
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }
 
   void _getTime() {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
-    setState(() {
-      _timeString = formattedDateTime;
-    });
+    if (mounted) {
+      setState(() {
+        _timeString = formattedDateTime;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   String _formatDateTime(DateTime dateTime) {
-    hours = dateTime.hour;
-    minutes = dateTime.minute;
+    timeString = DateFormat('hh:mm').format(dateTime);
+    isAfterNoon = dateTime.hour > 12;
     return DateFormat('yyyy년 MM월 dd일').format(dateTime);
   }
 
@@ -73,7 +83,7 @@ class _GradientClockState extends State<GradientClock> {
           shape: BoxShape.circle,
           color: Colors.transparent,
           border: Border.all(
-            width: 10,
+            width: 11,
             color: Colors.white,
           ),
         ),
@@ -82,11 +92,22 @@ class _GradientClockState extends State<GradientClock> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _clockTemperature(),
-              _clockTexts(hours > 12 ? "PM" : "AM", 40, 50),
               _clockTexts(
-                  hours > 12 ? "${hours - 12}:$minutes" : "$hours:$minutes",
-                  120),
-              _clockTexts(_timeString, 30)
+                text: isAfterNoon ? "PM" : "AM",
+                margin: EdgeInsets.only(top: 50),
+                fontSize: 36,
+              ),
+              _clockTexts(
+                text: '$timeString',
+                margin: EdgeInsets.only(top: 10),
+                fontSize: 124,
+                fontWeight: FontWeight.w100,
+              ),
+              _clockTexts(
+                text: _timeString,
+                margin: EdgeInsets.only(top: 30),
+                fontSize: 28,
+              ),
             ],
           ),
         ),
@@ -94,28 +115,41 @@ class _GradientClockState extends State<GradientClock> {
 
   _clockTemperature() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
             '서울 / 28℃',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 40,
+              fontSize: 34,
             ),
           ),
-          Icon(
-            CupertinoIcons.cloud_sun,
-            size: 56,
+          Container(
+            margin: EdgeInsets.only(left: 20),
+            child: Icon(
+              CupertinoIcons.cloud_sun,
+              size: 74,
+              color: Colors.white,
+            ),
           ),
         ],
       );
 
-  _clockTexts(String value, double size, [double topMargin]) => Container(
-        margin: topMargin != null ? EdgeInsets.only(top: topMargin) : null,
+  _clockTexts({
+    String text,
+    double fontSize,
+    EdgeInsets margin,
+    FontWeight fontWeight,
+  }) =>
+      Container(
+        margin: margin,
         child: Text(
-          value,
+          text,
           style: TextStyle(
+            height: 1,
             color: Colors.white,
-            fontSize: size,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
           ),
         ),
       );

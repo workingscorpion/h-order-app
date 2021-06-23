@@ -1,15 +1,22 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:h_order/components/pageHeader.dart';
+import 'package:h_order/constants/customColors.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
-import 'package:h_order/models/productModel.dart';
-import 'package:h_order/models/productOptionModel.dart';
+import 'package:h_order/models/itemModel.dart';
 import 'package:intl/intl.dart';
 
 class ProductPage extends StatefulWidget {
-  final ProductModel product;
+  final ServiceModel service;
+  final ItemModel category;
+  final ItemModel product;
 
   ProductPage({
+    this.service,
+    this.category,
     this.product,
   });
 
@@ -19,26 +26,47 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage>
     with SingleTickerProviderStateMixin {
-  static const int minQuantity = 1;
-
   int _quantity;
-  Map<int, ProductOptionModel> _optionMap;
-  Map<int, int> _optionQuantityMap;
+  Map<String, ItemModel> _optionMap;
+  Map<String, int> _selectedOptions;
+  Map<String, String> _radioMap;
 
   int get totalAmount {
-    return _quantity * amount;
+    return (amount + optionAmount) * _quantity;
   }
 
   int get amount {
-    return widget.product.price + optionAmount;
+    return widget.product.price;
   }
 
   int get optionAmount {
-    return _optionQuantityMap.entries.fold(
-        0,
-        (previousValue, element) =>
-            previousValue +
-            element.value * (_optionMap[element.key]?.price ?? 0));
+    var optionPrice = 0;
+
+    _selectedOptions.forEach((key, value) {
+      if (value >= 1) {
+        final price = _optionMap[key]?.price ?? 0;
+        optionPrice += price * value;
+      }
+    });
+
+    return optionPrice;
+  }
+
+  List<ItemModel> get images {
+    return widget.product.items.where((item) => item.type == 'Image').toList();
+  }
+
+  List<ItemModel> get options {
+    return widget.product.items
+        .where((item) => item.type == 'ProductOption' || item.type == 'Group')
+        .toList();
+  }
+
+  List<ItemModel> get requiredOptions {
+    return options
+        .where(
+            (item) => item.getTagMetadata('selectionType', 'value') == 'Single')
+        .toList();
   }
 
   @override
@@ -47,18 +75,23 @@ class _ProductPageState extends State<ProductPage>
 
     _quantity = 1;
     _optionMap = Map();
-    _optionQuantityMap = Map();
+    _selectedOptions = Map();
+    _radioMap = Map();
 
-    _initOptionsQuantity(widget.product.options);
+    _initOptionsQuantity(options);
   }
 
-  _initOptionsQuantity(List<ProductOptionModel> options) {
-    options.forEach((option) {
-      _optionMap[option.index] = option;
-      _optionQuantityMap[option.index] = 0;
+  _initOptionsQuantity(List<ItemModel> items) {
+    items.forEach((option) {
+      if (option.type == 'Group') {
+        if (option.items?.isNotEmpty ?? false) {
+          _initOptionsQuantity(option.items);
+        }
 
-      if ((option.options?.length ?? 0) > 0) {
-        _initOptionsQuantity(option.options);
+        _radioMap[option.objectId] = null;
+      } else {
+        _optionMap[option.objectId] = option;
+        _selectedOptions[option.objectId] = 0;
       }
     });
   }
@@ -66,55 +99,23 @@ class _ProductPageState extends State<ProductPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('상점'),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             flex: 8,
-            child: Hero(
-              tag: widget.product.index,
-              child: Container(
-                height: MediaQuery.of(context).size.width * .5,
-                child: Image.asset(
-                  widget.product.image,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: _title(),
-          ),
-          Expanded(
-            flex: 8,
-            child: ListView(
-              children: [
-                ...widget.product.options
-                        ?.expand((option) => _option(option: option)) ??
-                    [],
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: FlatButton(
-                onPressed: () {
-                  _save();
-                },
-                color: Colors.blueGrey,
-                child: Text(
-                  '장바구니 담기 (${NumberFormat().format(totalAmount)} ₩)',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  PageHeader(
+                    title: [widget.service.name, widget.category.value],
+                    canBack: true,
                   ),
-                ),
+                  _images(),
+                  _body(),
+                  _saveButton(),
+                ],
               ),
             ),
           ),
@@ -123,289 +124,469 @@ class _ProductPageState extends State<ProductPage>
     );
   }
 
-  _title() => Material(
-        color: Colors.transparent,
-        child: Container(
-          height: 50,
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Colors.white10,
+  _body() => Expanded(
+        flex: 8,
+        child: DefaultTextStyle(
+          style: TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
+          child: ListView(
+            padding: EdgeInsets.all(24),
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
+            children: [
+              _card(
+                child: _title(),
+              ),
+              ...(options?.isNotEmpty ?? false)
+                  ? options.map(
+                      (item) => _card(
+                        child: _option(
+                          option: item,
+                        ),
+                      ),
+                    )
+                  : [],
+              _card(
+                child: _productCount(),
+              ),
+            ],
+          ),
+        ),
+      );
+
+  _card({
+    Widget child,
+  }) =>
+      Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 24,
+          horizontal: 24,
+        ),
+        margin: EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: child,
+      );
+
+  _productCount() => Container(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              '수량',
+              style: TextStyle(
+                fontSize: 19,
               ),
             ),
+            Spacer(),
+            Text('${NumberFormat().format(amount + optionAmount)}원'),
+            _countCalc(),
+          ],
+        ),
+      );
+
+  _countCalc({
+    String key,
+  }) {
+    final value = key == null ? _quantity : _selectedOptions[key];
+
+    return Container(
+      margin: EdgeInsets.only(left: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _countCalcButton(
+            key: key,
+            subtract: true,
           ),
-          child: FractionallySizedBox(
-            heightFactor: .6,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  widget.product.name,
-                  style: TextStyle(
-                    fontSize: 18,
+          Container(
+            width: 60,
+            child: Text(
+              '$value',
+              textAlign: TextAlign.center,
+            ),
+            alignment: Alignment.center,
+          ),
+          _countCalcButton(
+            key: key,
+            subtract: false,
+          ),
+        ],
+      ),
+    );
+  }
+
+  _countCalcButton({
+    String key,
+    bool subtract,
+  }) {
+    return Container(
+      width: 32,
+      height: 32,
+      decoration: BoxDecoration(
+        color: subtract && _quantity <= 0
+            ? CustomColors.aWhite
+            : CustomColors.subTextBlack,
+        borderRadius: subtract
+            ? BorderRadius.only(
+                topLeft: Radius.circular(8),
+                bottomLeft: Radius.circular(8),
+              )
+            : BorderRadius.only(
+                topRight: Radius.circular(8),
+                bottomRight: Radius.circular(8),
+              ),
+      ),
+      child: IconButton(
+        iconSize: 16,
+        padding: EdgeInsets.zero,
+        onPressed: () {
+          if (key?.isEmpty ?? true) {
+            if (subtract) {
+              _quantity -= 1;
+
+              if (_quantity < 1) {
+                _quantity = 1;
+              }
+            } else {
+              _quantity += 1;
+            }
+          } else {
+            if (subtract) {
+              _selectedOptions[key] -= 1;
+
+              if (_selectedOptions[key] < 0) {
+                _selectedOptions[key] = 0;
+              }
+            } else {
+              _selectedOptions[key] += 1;
+            }
+          }
+
+          setState(() {});
+        },
+        icon: Icon(
+          subtract ? CupertinoIcons.minus : CupertinoIcons.plus,
+          size: 20,
+          color: Theme.of(context).textTheme.bodyText1.color,
+        ),
+      ),
+    );
+  }
+
+  _saveButton() => Expanded(
+        flex: 1,
+        child: Material(
+          color: Theme.of(context).accentColor,
+          child: InkWell(
+            onTap: () {
+              _save();
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 34),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Text(
+                    '장바구니 담기',
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 12),
-                  child: Text(
-                    '${NumberFormat().format(amount)} ₩',
-                    style: TextStyle(
-                      fontSize: 14,
+                  Positioned(
+                    right: 0,
+                    child: Text(
+                      '${NumberFormat().format(totalAmount)}원',
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
-                ),
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: IconButton(
-                    iconSize: 16,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      _quantity -= 1;
-                      if (_quantity < minQuantity) {
-                        _quantity = minQuantity;
-                      }
-                      setState(() {});
-                    },
-                    icon: Icon(
-                      CupertinoIcons.minus,
-                      size: 16,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  child: Text(
-                    '$_quantity',
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: IconButton(
-                    iconSize: 16,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      _quantity = _quantity + 1;
-                      setState(() {});
-                    },
-                    icon: FractionallySizedBox(
-                      widthFactor: .5,
-                      heightFactor: .5,
-                      child: Icon(
-                        CupertinoIcons.add,
-                        size: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       );
 
-  _option({
-    ProductOptionModel option,
-    double depth = 1,
-  }) =>
-      <Widget>[
-        ...depth == 1
-            ? [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        width: 1,
-                        color: Colors.white10,
-                      ),
-                    ),
-                  ),
-                )
-              ]
-            : [],
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            child: Container(
-              height: MediaQuery.of(context).size.height / 20,
-              padding: EdgeInsets.only(
-                left: 12 +
-                    MediaQuery.of(context).size.height / 20 / 3 * (depth - 1),
-                right: 12,
-              ),
-              child: FractionallySizedBox(
-                heightFactor: .6,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 8),
-                      child: Text(
-                        option.name,
-                        style: TextStyle(
-                          fontSize: 16 - depth * 2,
+  _images() => Expanded(
+        flex: 5,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: CarouselSlider(
+            options: CarouselOptions(
+              enableInfiniteScroll: false,
+              enlargeCenterPage: true,
+              viewportFraction: 0.5,
+            ),
+            items: [
+              ...(images?.isNotEmpty ?? false)
+                  ? images
+                      .asMap()
+                      .map(
+                        (index, item) => MapEntry(
+                          index,
+                          index == 0
+                              ? Hero(
+                                  tag: widget.product.objectId,
+                                  child: _productSliderItem(image: item.value),
+                                )
+                              : _productSliderItem(image: item.value),
                         ),
-                      ),
-                    ),
-                    ...((option.max ?? 0) > 0)
-                        ? [
-                            Text(
-                              '(최대${option.max}개)',
-                              style: TextStyle(
-                                fontSize: 12 - depth * 2,
-                                color: Colors.white38,
-                              ),
-                            ),
-                          ]
-                        : [],
-                    Expanded(
-                      child: Container(),
-                    ),
-                    ...(option.options?.length ?? 0) == 0
-                        ? [
-                            Container(
-                              alignment: Alignment.centerRight,
-                              margin: EdgeInsets.only(right: 12),
-                              child: Text(
-                                '${NumberFormat().format(option.price)} ₩',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                          ]
-                        : [],
-                    ...(option.options?.length ?? 0) == 0
-                        ? option.multiple
-                            ? [
-                                Container(
-                                  width: 16,
-                                  child: IconButton(
-                                    iconSize: 16,
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      _optionQuantityMap[option.index] -= 1;
-                                      if (_optionQuantityMap[option.index] <
-                                          0) {
-                                        _optionQuantityMap[option.index] = 0;
-                                      }
-                                      setState(() {});
-                                    },
-                                    icon: Icon(
-                                      CupertinoIcons.minus,
-                                      size: 16,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 12),
-                                  child: Text(
-                                    '${_optionQuantityMap[option.index]}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 16,
-                                  child: IconButton(
-                                    iconSize: 16,
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      _optionQuantityMap[option.index] += 1;
-                                      setState(() {});
-                                    },
-                                    icon: Icon(
-                                      CupertinoIcons.add,
-                                      size: 16,
-                                    ),
-                                  ),
-                                ),
-                              ]
-                            : [
-                                AspectRatio(
-                                  aspectRatio: 1,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      final checked =
-                                          _optionQuantityMap[option.index] == 1;
+                      )
+                      .values
+                  : [],
+            ],
+          ),
+        ),
+      );
 
-                                      _changeSelect(
-                                        option: option,
-                                        value: checked,
-                                      );
-                                    },
-                                    icon: Container(
-                                      child:
-                                          _optionQuantityMap[option.index] == 1
-                                              ? Icon(CupertinoIcons.check_mark)
-                                              : Container(),
-                                    ),
-                                  ),
-                                ),
-                              ]
-                        : [],
-                  ],
+  _productSliderItem({
+    String image,
+  }) =>
+      AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+          ),
+          child: Image.network(
+            image,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+
+  _title() => Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              child: Text(
+                widget.product.value,
+                style: TextStyle(
+                  fontSize: 21,
                 ),
               ),
             ),
+          ],
+        ),
+      );
+
+  _option({
+    ItemModel option,
+  }) {
+    final child = option.type == 'Group'
+        ? _optionGroup(option: option)
+        : _optionItem(option: option);
+
+    return child;
+  }
+
+  _optionGroup({
+    ItemModel option,
+  }) {
+    final children = option?.items
+            ?.where((item) => item.type == 'ProductOption')
+            ?.toList() ??
+        [];
+    final selectionType = option.getTagMetadata('selectionType', 'value');
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              option.value,
+              style: TextStyle(
+                fontSize: 19,
+              ),
+            ),
+            Spacer(),
+            selectionType == 'Single'
+                ? Text(
+                    '필수선택',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
+        Divider(
+          height: 10,
+          thickness: .5,
+          color: Theme.of(context).accentColor,
+        ),
+        Column(
+          children: [
+            ...(children?.isNotEmpty ?? false)
+                ? List.generate(
+                    children.length * 2,
+                    (index) {
+                      if (index % 2 == 0) {
+                        return Container(height: 10);
+                      }
+
+                      final item = children[(index / 2).floor()];
+
+                      return _optionItem(
+                        group: option,
+                        option: item,
+                        selectionType: selectionType,
+                      );
+                    },
+                  )
+                : [],
+          ],
+        ),
+      ],
+    );
+  }
+
+  _optionItem({
+    ItemModel group,
+    ItemModel option,
+    String selectionType,
+  }) {
+    var children = <Widget>[
+      Text(option.value),
+      Spacer(),
+      Text('${NumberFormat().format(option?.price ?? 0)} 원'),
+    ];
+
+    switch (selectionType) {
+      case 'Single':
+        children = [
+          Container(
+            width: 40,
+            height: 40,
+            child: IgnorePointer(
+              child: Radio(
+                groupValue: _radioMap[group.objectId],
+                value: option.objectId,
+                onChanged: (value) {},
+                activeColor: Colors.black,
+              ),
+            ),
+          ),
+          ...children,
+        ];
+        break;
+
+      case 'Multi':
+        children = [
+          Container(
+            width: 40,
+            height: 40,
+            child: IgnorePointer(
+              child: Checkbox(
+                value: _selectedOptions[option.objectId] == 1,
+                onChanged: (value) {},
+              ),
+            ),
+          ),
+          ...children,
+        ];
+        break;
+
+      case 'Number':
+        children = [
+          Container(
+            width: 40,
+            height: 40,
+          ),
+          ...children,
+          _countCalc(key: option.objectId),
+        ];
+        break;
+
+      default:
+        children = [
+          ...children,
+          _countCalc(key: option.objectId),
+        ];
+        break;
+    }
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          switch (selectionType) {
+            case 'Single':
+              group.items.forEach((item) {
+                _selectedOptions[item.objectId] =
+                    item.objectId == option.objectId ? 1 : 0;
+              });
+              _radioMap[group.objectId] = option.objectId;
+              break;
+
+            case 'Multi':
+              _selectedOptions[option.objectId] =
+                  _selectedOptions[option.objectId] != 1 ? 1 : 0;
+              break;
+          }
+
+          setState(() {});
+        },
+        child: Container(
+          child: DefaultTextStyle(
+            style: TextStyle(
+              fontSize: 17,
+              color: Colors.black,
+            ),
+            child: Row(
+              children: [
+                ...children,
+              ],
+            ),
           ),
         ),
-        ...(option.options?.length ?? 0) > 0
-            ? option.options
-                .expand((sub) => _option(option: sub, depth: depth + 1))
-            : [],
-      ];
+      ),
+    );
+  }
 
-  _changeSelect({
-    ProductOptionModel option,
-    bool value,
-  }) async {
-    if (value && option.parent != null) {
-      final parent = _optionMap[option.parent];
+  _save() async {
+    if (requiredOptions?.isNotEmpty ?? false) {
+      if (!requiredOptions.every((item) =>
+          item.items.any((child) => _selectedOptions[child.objectId] > 0))) {
+        await Fluttertoast.cancel();
+        await Fluttertoast.showToast(
+          msg: '필수옵션을 선택해주세요.',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+          textColor: Theme.of(context).textTheme.bodyText1.color,
+          fontSize: 17,
+        );
 
-      if ((parent.max ?? 0) > 0) {
-        final count = parent.options
-            .where((element) => _optionQuantityMap[element.index] == 1)
-            .length;
-
-        if (parent.max <= count) {
-          await Fluttertoast.cancel();
-          await Fluttertoast.showToast(
-            msg: '옵션 최대개수를 초과하여 선택 할 수 없습니다. (최대 ${parent.max}개)',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 2,
-            fontSize: 14,
-          );
-
-          return;
-        }
+        return;
       }
     }
 
-    _optionQuantityMap[option.index] = value ? 1 : 0;
-    setState(() {});
-  }
-
-  _save() {
     final result = CartItemModel(
-      name: widget.product.name,
+      name: widget.product.value,
       amount: amount,
-      optionAmount: optionAmount,
-      optionQuantity: _optionQuantityMap,
-      quantity: _quantity,
       product: widget.product,
+      optionAmount: optionAmount,
+      optionQuantity: _selectedOptions,
+      quantity: _quantity,
     );
 
     Navigator.of(context).pop(result);
+
+    await Fluttertoast.cancel();
+    await Fluttertoast.showToast(
+      msg: '선택하신 상품이 장바구니에 추가되었습니다.',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),
+      textColor: Theme.of(context).textTheme.bodyText1.color,
+      fontSize: 17,
+    );
   }
 }

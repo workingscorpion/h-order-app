@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <circle cx="11.5" cy="11.5" r="11.5" fill="#E02020"/>
+                <text fill="#FFF" font-family="CookieRunOTF-Bold, CookieRunOTF" font-size="13" font-weight="bold">
+                    <tspan x="7" y="16">N</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

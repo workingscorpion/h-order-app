@@ -5,17 +5,17 @@ part 'productModel.g.dart';
 
 @JsonSerializable()
 class ProductModel {
-  final int index;
-  final int categoryIndex;
-  final String image;
+  final String objectId;
+  final String categoryObjectId;
+  final List<String> images;
   final String name;
   final int price;
   final List<ProductOptionModel> options;
 
   ProductModel({
-    this.index,
-    this.categoryIndex,
-    this.image,
+    this.objectId,
+    this.categoryObjectId,
+    this.images,
     this.name,
     this.price,
     this.options,

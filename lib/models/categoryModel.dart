@@ -5,12 +5,14 @@ part 'categoryModel.g.dart';
 
 @JsonSerializable()
 class CategoryModel {
-  final int index;
+  final String objectId;
+  final String serviceObjectId;
   final String name;
   final List<ProductModel> products;
 
   CategoryModel({
-    this.index,
+    this.objectId,
+    this.serviceObjectId,
     this.name,
     this.products,
   });

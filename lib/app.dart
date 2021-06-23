@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:h_order/appRouter.dart';
+import 'package:h_order/components/statusBar.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/constants/routeNames.dart';
 import 'package:h_order/store/navigationStore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatefulWidget {
   App({
@@ -19,75 +22,24 @@ class App extends StatefulWidget {
 class AppState extends State<App> with WidgetsBindingObserver {
   static const _setMainDuration = Duration(minutes: 5);
 
+  bool initialized = false;
+
   Future _future;
   StreamSubscription _setMainSubscription;
 
-  ThemeMode _themeMode = ThemeMode.dark;
-  Brightness _brightness = Brightness.dark;
+  ThemeMode _themeMode = ThemeMode.light;
+  Brightness _brightness = Brightness.light;
 
-  final iconTheme = IconThemeData(
-    color: Colors.white,
-  );
-
-  final textTheme = TextTheme(
-    headline1: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    headline2: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    headline3: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    headline4: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    headline5: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    headline6: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    bodyText1: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    bodyText2: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    subtitle1: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    subtitle2: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    button: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    caption: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-    overline: TextStyle(
-      fontSize: 22,
-      color: Colors.white,
-    ),
-  );
+  void setInitialized() {
+    initialized = true;
+  }
 
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIOverlays([]);
     WidgetsBinding.instance.addObserver(this);
+    initTheme();
     resetSetMain();
   }
 
@@ -97,9 +49,93 @@ class AppState extends State<App> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  setTheme(bool isDark) {
-    _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
-    _brightness = isDark ? Brightness.dark : Brightness.light;
+  initTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isLightMode = prefs.getBool('LightMode') ?? true;
+    setThemes(isLightMode);
+  }
+
+  setThemes(bool isLightMode) {
+    _themeMode = isLightMode ? ThemeMode.light : ThemeMode.dark;
+    _brightness = isLightMode ? Brightness.light : Brightness.dark;
+    setState(() {});
+  }
+
+  setTheme(bool isLightMode) async {
+    final prefs = await SharedPreferences.getInstance();
+    setThemes(isLightMode);
+    prefs.setBool('LightMode', isLightMode);
+  }
+
+  Future<bool> isLightMode() async {
+    return _themeMode == ThemeMode.light;
+  }
+
+  _iconTheme(bool isLightMode) => IconThemeData(
+        color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
+      );
+
+  _textTheme(bool isLightMode) {
+    final textColor = isLightMode ? CustomColors.aBlack : CustomColors.aWhite;
+    final subTextColor1 =
+        isLightMode ? CustomColors.subTextBlack : CustomColors.aWhite;
+    final subTextColor2 =
+        isLightMode ? CustomColors.textBlack : CustomColors.aWhite;
+
+    return TextTheme(
+      headline1: TextStyle(
+        fontSize: 60,
+        color: textColor,
+      ),
+      headline2: TextStyle(
+        fontSize: 20,
+        color: subTextColor1,
+      ),
+      headline3: TextStyle(
+        fontSize: 20,
+        color: isLightMode ? CustomColors.aWhite : CustomColors.subTextBlack,
+      ),
+      headline4: TextStyle(
+        fontSize: 20,
+        color: subTextColor2,
+      ),
+      headline5: TextStyle(
+        fontSize: 20,
+        color: subTextColor2,
+      ),
+      headline6: TextStyle(
+        fontSize: 20,
+        color: subTextColor2,
+      ),
+      bodyText1: TextStyle(
+        fontSize: 20,
+        color: isLightMode ? CustomColors.aWhite : CustomColors.aBlack,
+      ),
+      bodyText2: TextStyle(
+        fontSize: 20,
+        color: isLightMode ? CustomColors.aBlack : CustomColors.aWhite,
+      ),
+      subtitle1: TextStyle(
+        fontSize: 20,
+        color: subTextColor2,
+      ),
+      subtitle2: TextStyle(
+        fontSize: 20,
+        color: subTextColor2,
+      ),
+      button: TextStyle(
+        fontSize: 20,
+        color: subTextColor2,
+      ),
+      caption: TextStyle(
+        fontSize: 20,
+        color: subTextColor2,
+      ),
+      overline: TextStyle(
+        fontSize: 20,
+        color: subTextColor2,
+      ),
+    );
   }
 
   disposeSetMain() {
@@ -126,6 +162,10 @@ class AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (!initialized) {
+      return;
+    }
+
     if (state == AppLifecycleState.inactive) {
       toLockPage();
     }
@@ -140,125 +180,258 @@ class AppState extends State<App> with WidgetsBindingObserver {
       child: MaterialApp(
         title: 'H Order',
         themeMode: _themeMode,
-        darkTheme: ThemeData(
-          materialTapTargetSize: MaterialTapTargetSize.padded,
-          accentColor: Colors.white,
-          backgroundColor: CustomColors.backgroundGrey,
-          dialogBackgroundColor: CustomColors.backgroundGrey,
-          scaffoldBackgroundColor: CustomColors.backgroundGrey,
-          splashColor: Colors.transparent,
-          textTheme: textTheme,
-          primaryTextTheme: textTheme,
-          accentTextTheme: textTheme,
-          iconTheme: iconTheme,
-          primaryIconTheme: iconTheme,
-          accentIconTheme: iconTheme,
-          buttonColor: Colors.blueGrey,
-          colorScheme: ColorScheme(
-            primary: Colors.white,
-            primaryVariant: Colors.white,
-            secondary: Colors.white,
-            secondaryVariant: Colors.white,
-            surface: Colors.white,
-            background: Colors.white,
-            error: Colors.white,
-            onPrimary: Colors.white,
-            onSecondary: Colors.white,
-            onSurface: Colors.white,
-            onBackground: Colors.white,
-            onError: Colors.white,
-            brightness: _brightness,
-          ),
-          tooltipTheme: TooltipThemeData(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              color: Colors.black87,
-            ),
-            textStyle: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          dividerTheme: DividerThemeData(
-            thickness: 1,
-            color: Colors.white24,
-          ),
-          buttonTheme: ButtonThemeData(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              side: BorderSide(
-                width: 1,
-                color: Colors.white,
-              ),
-            ),
-            padding: EdgeInsets.zero,
-            splashColor: Colors.transparent,
-          ),
-          buttonBarTheme: ButtonBarThemeData(
-            buttonPadding: EdgeInsets.zero,
-            alignment: MainAxisAlignment.center,
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.zero,
-              elevation: 0,
-              textStyle: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: OutlinedButton.styleFrom(
-              side: BorderSide(
-                width: 1,
-                color: Colors.white,
-              ),
-              padding: EdgeInsets.zero,
-              elevation: 0,
-              textStyle: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              padding: EdgeInsets.zero,
-              elevation: 0,
-              textStyle: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: Colors.blueGrey,
-          ),
-          tabBarTheme: TabBarTheme(
-            labelPadding: EdgeInsets.symmetric(horizontal: 22),
-            labelColor: Colors.white,
-            labelStyle: TextStyle(
-              fontSize: 22,
-              color: Colors.white,
-            ),
-            unselectedLabelColor: Colors.white,
-            unselectedLabelStyle: TextStyle(
-              fontSize: 22,
-              color: Colors.white,
-            ),
-          ),
-          appBarTheme: AppBarTheme(
-            color: CustomColors.backgroundGrey,
-            elevation: 0,
-            centerTitle: true,
-            shadowColor: Colors.transparent,
-            textTheme: textTheme,
-            iconTheme: iconTheme,
-            actionsIconTheme: iconTheme,
-            brightness: _brightness,
-          ),
-        ),
+        theme: _lightTheme(),
+        darkTheme: _darkTheme(),
         navigatorKey: NavigationStore.instance.navigatorKey,
         onGenerateRoute: AppRouter.generateRoute,
         initialRoute: RouteNames.Splash,
+        builder: (context, child) => Column(
+          children: [
+            StatusBar(),
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }
+
+  _lightTheme() => ThemeData(
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        accentColor: Colors.black,
+        primaryColor: Colors.white,
+        backgroundColor: CustomColors.backgroundLightGrey,
+        dialogBackgroundColor: CustomColors.backgroundLightGrey,
+        scaffoldBackgroundColor: CustomColors.backgroundLightGrey,
+        splashColor: Colors.transparent,
+        textTheme: _textTheme(true),
+        primaryTextTheme: _textTheme(true),
+        accentTextTheme: _textTheme(true),
+        iconTheme: _iconTheme(true),
+        primaryIconTheme: _iconTheme(true),
+        bottomAppBarColor: CustomColors.tableInnerBorder,
+        accentIconTheme: _iconTheme(true),
+        buttonColor: Colors.blueGrey,
+        colorScheme: ColorScheme(
+          primary: CustomColors.aWhite,
+          primaryVariant: CustomColors.backgroundLightGrey,
+          secondary: Colors.blue,
+          secondaryVariant: CustomColors.backgroundLightGrey,
+          surface: CustomColors.backgroundLightGrey,
+          background: CustomColors.backgroundLightGrey,
+          error: Colors.red,
+          onPrimary: CustomColors.backgroundLightGrey,
+          onSecondary: CustomColors.aWhite,
+          onSurface: CustomColors.aWhite,
+          onBackground: CustomColors.aWhite,
+          onError: Colors.red,
+          brightness: _brightness,
+        ),
+        tooltipTheme: TooltipThemeData(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            color: Colors.black87,
+          ),
+          textStyle: TextStyle(
+            color: CustomColors.aWhite,
+          ),
+        ),
+        dividerTheme: DividerThemeData(
+          thickness: 1,
+          color: Colors.white24,
+        ),
+        buttonTheme: ButtonThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            side: BorderSide(
+              width: 1,
+            ),
+          ),
+          padding: EdgeInsets.zero,
+          splashColor: Colors.transparent,
+          buttonColor: CustomColors.aBlack,
+        ),
+        buttonBarTheme: ButtonBarThemeData(
+          buttonPadding: EdgeInsets.zero,
+          alignment: MainAxisAlignment.center,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            elevation: 0,
+            textStyle: TextStyle(
+              color: CustomColors.aBlack,
+            ),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: CustomColors.aBlack,
+            side: BorderSide(
+              width: 1,
+              color: CustomColors.aWhite,
+            ),
+            padding: EdgeInsets.zero,
+            elevation: 0,
+            textStyle: TextStyle(
+              color: CustomColors.aBlack,
+            ),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            padding: EdgeInsets.zero,
+            elevation: 0,
+            textStyle: TextStyle(
+              color: CustomColors.aBlack,
+            ),
+          ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: CustomColors.backgroundDarkGrey,
+          foregroundColor: CustomColors.aWhite,
+        ),
+        tabBarTheme: TabBarTheme(
+          labelPadding: EdgeInsets.symmetric(horizontal: 20),
+          labelColor: CustomColors.aWhite,
+          labelStyle: TextStyle(
+            fontSize: 20,
+            color: CustomColors.aBlack,
+          ),
+          unselectedLabelColor: CustomColors.aWhite,
+          unselectedLabelStyle: TextStyle(
+            fontSize: 20,
+            color: CustomColors.aBlack,
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          color: CustomColors.backgroundLightGrey,
+          elevation: 0,
+          centerTitle: true,
+          shadowColor: Colors.transparent,
+          textTheme: _textTheme(true),
+          iconTheme: _iconTheme(true),
+          actionsIconTheme: _iconTheme(true),
+          brightness: _brightness,
+        ),
+      );
+
+  _darkTheme() => ThemeData(
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        accentColor: CustomColors.aWhite,
+        primaryColor: Colors.black,
+        backgroundColor: CustomColors.backgroundDarkGrey,
+        dialogBackgroundColor: CustomColors.backgroundDarkGrey,
+        scaffoldBackgroundColor: CustomColors.backgroundDarkGrey,
+        splashColor: Colors.transparent,
+        textTheme: _textTheme(false),
+        primaryTextTheme: _textTheme(false),
+        accentTextTheme: _textTheme(false),
+        iconTheme: _iconTheme(false),
+        primaryIconTheme: _iconTheme(false),
+        accentIconTheme: _iconTheme(false),
+        bottomAppBarColor: CustomColors.tableInnerBorder,
+        buttonColor: Colors.blueGrey,
+        colorScheme: ColorScheme(
+          primary: CustomColors.aWhite,
+          primaryVariant: CustomColors.backgroundDarkGrey,
+          secondary: Colors.blue,
+          secondaryVariant: CustomColors.backgroundDarkGrey,
+          surface: CustomColors.backgroundDarkGrey,
+          background: CustomColors.backgroundDarkGrey,
+          error: Colors.red,
+          onPrimary: CustomColors.backgroundDarkGrey,
+          onSecondary: CustomColors.aWhite,
+          onSurface: CustomColors.aWhite,
+          onBackground: CustomColors.aWhite,
+          onError: Colors.red,
+          brightness: _brightness,
+        ),
+        tooltipTheme: TooltipThemeData(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            color: Colors.black87,
+          ),
+          textStyle: TextStyle(
+            color: CustomColors.aWhite,
+          ),
+        ),
+        dividerTheme: DividerThemeData(
+          thickness: 1,
+          color: Colors.white24,
+        ),
+        buttonTheme: ButtonThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            side: BorderSide(
+              width: 1,
+              color: CustomColors.aWhite,
+            ),
+          ),
+          padding: EdgeInsets.zero,
+          splashColor: Colors.transparent,
+        ),
+        buttonBarTheme: ButtonBarThemeData(
+          buttonPadding: EdgeInsets.zero,
+          alignment: MainAxisAlignment.center,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            elevation: 0,
+            textStyle: TextStyle(
+              color: CustomColors.aWhite,
+            ),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            side: BorderSide(
+              width: 1,
+              color: CustomColors.aWhite,
+            ),
+            padding: EdgeInsets.zero,
+            elevation: 0,
+            textStyle: TextStyle(
+              color: CustomColors.aWhite,
+            ),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            elevation: 0,
+            textStyle: TextStyle(
+              color: CustomColors.aWhite,
+            ),
+          ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: CustomColors.backgroundLightGrey,
+          foregroundColor: CustomColors.aBlack,
+        ),
+        tabBarTheme: TabBarTheme(
+          labelPadding: EdgeInsets.symmetric(horizontal: 20),
+          labelColor: CustomColors.aWhite,
+          labelStyle: TextStyle(
+            fontSize: 20,
+            color: CustomColors.aWhite,
+          ),
+          unselectedLabelColor: CustomColors.aWhite,
+          unselectedLabelStyle: TextStyle(
+            fontSize: 20,
+            color: CustomColors.aWhite,
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          color: CustomColors.backgroundDarkGrey,
+          elevation: 0,
+          centerTitle: true,
+          shadowColor: Colors.transparent,
+          textTheme: _textTheme(false),
+          iconTheme: _iconTheme(false),
+          actionsIconTheme: _iconTheme(false),
+          brightness: _brightness,
+        ),
+      );
 }

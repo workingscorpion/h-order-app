@@ -1,17 +1,23 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/ballScreen.dart';
+import 'package:h_order/components/dynamicHeightGridView.dart';
+import 'package:h_order/components/pageHeader.dart';
+import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
-import 'package:h_order/models/categoryModel.dart';
-import 'package:h_order/models/productModel.dart';
-import 'package:h_order/models/productOptionModel.dart';
+import 'package:h_order/models/itemModel.dart';
+import 'package:h_order/store/serviceStore.dart';
 import 'package:intl/intl.dart';
 
 class ShopPage extends StatefulWidget {
+  final String serviceObjectId;
+
+  ShopPage({
+    this.serviceObjectId,
+  });
+
   @override
   _ShopPageState createState() => _ShopPageState();
 }
@@ -21,15 +27,16 @@ class _ShopPageState extends State<ShopPage>
   final StreamController _streamController = StreamController.broadcast();
   StreamSubscription _streamSubscription;
 
-  GlobalKey _appBarKey;
   GlobalKey _floatingButtonKey;
-  Map<int, GlobalKey> _buttonKeys;
-  GlobalKey<BallScreenState> _ballScreenKey;
 
   TabController _tabController;
 
   List<CartItemModel> _cart;
-  List<CategoryModel> _categories;
+  List<ItemModel> _categories;
+
+  ServiceModel get service {
+    return ServiceStore.instance.serviceMap[widget.serviceObjectId];
+  }
 
   int get quantity {
     return _cart.fold(
@@ -46,72 +53,20 @@ class _ShopPageState extends State<ShopPage>
       }
     });
 
-    _appBarKey = GlobalKey();
     _floatingButtonKey = GlobalKey();
-    _buttonKeys = Map();
-    _ballScreenKey = GlobalKey<BallScreenState>();
 
     _cart = List();
 
-    final random = Random();
-    var count = 0;
-
-    _categories = List.generate(10, (i) {
-      final index = count++;
-
-      return CategoryModel(
-        index: index,
-        name: 'Category $index',
-        products: List.generate(15, (_i) {
-          final _index = count++;
-
-          return ProductModel(
-            index: _index,
-            categoryIndex: index,
-            image: 'assets/sample/${random.nextInt(9) + 1}.jpg',
-            name: 'Product $_index',
-            price: (random.nextInt(15) + 5) * 1000,
-            options: List.generate(random.nextInt(5) + 5, (__i) {
-              final __index = count++;
-              final hasSubOption = random.nextBool();
-              final subOptionLength =
-                  hasSubOption ? (random.nextInt(3) + 1) : 0;
-              final max = hasSubOption ? random.nextInt(subOptionLength) : 0;
-
-              return ProductOptionModel(
-                index: __index,
-                name: 'Option $__index',
-                price: hasSubOption ? 0 : (random.nextInt(15) + 5) * 100,
-                multiple: hasSubOption && random.nextBool(),
-                max: max,
-                options: hasSubOption
-                    ? List.generate(subOptionLength, (___i) {
-                        final ___index = count++;
-
-                        return ProductOptionModel(
-                          parent: __index,
-                          index: ___index,
-                          name: 'Sub Option $___index',
-                          price: (random.nextInt(15) + 5) * 100,
-                          multiple: max > 0 ? false : random.nextBool(),
-                        );
-                      })
-                    : [],
-              );
-            }),
-          );
-        }),
-      );
-    });
-
-    _categories.expand((element) => element.products).forEach((product) {
-      _buttonKeys[product.index] = GlobalKey();
-    });
+    _categories = service.items.where((item) => item.type == 'Group').toList();
 
     _tabController = TabController(
       length: _categories.length,
       vsync: this,
     );
+
+    _tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -124,183 +79,225 @@ class _ShopPageState extends State<ShopPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        key: _appBarKey,
-        title: Text('상점'),
-      ),
       floatingActionButton: _floatingActionButton(),
-      body: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                tabs: [
-                  ..._categories.map((item) => Tab(text: item.name)),
-                ],
-              ),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
+      body: Container(
+        child: Column(
+          children: [
+            PageHeader(
+              title: [service.name],
+              canBack: true,
+            ),
+            Expanded(
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ..._categories.map(
-                      (category) => GridView.count(
-                        padding: EdgeInsets.all(5),
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5,
-                        crossAxisCount: 3,
+                    Container(
+                      height: 50,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         children: [
-                          ...category.products
-                              .map((product) => _product(product: product)),
+                          ..._categories
+                              .asMap()
+                              .map(
+                                (index, item) => MapEntry(
+                                  index,
+                                  Container(
+                                    margin: (index < _categories.length - 1)
+                                        ? EdgeInsets.only(right: 10)
+                                        : EdgeInsets.zero,
+                                    child: Material(
+                                      child: InkWell(
+                                        onTap: () {
+                                          _tabController.animateTo(index);
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 52,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: _tabController.index == index
+                                                ? Colors.black
+                                                : Colors.white,
+                                            border: Border.all(
+                                              width: 1,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            item.value,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2
+                                                .copyWith(
+                                                  color: _tabController.index ==
+                                                          index
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .values,
+                        ],
+                      ),
+                    ),
+                    Container(height: 24),
+                    Expanded(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          ..._categories.map(
+                            (category) => DynamicHeightGridView(
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 50,
+                              crossAxisCount: 3,
+                              padding: EdgeInsets.only(
+                                left: 24,
+                                right: 24,
+                                bottom: 24,
+                              ),
+                              children: [
+                                ...category.items.map(
+                                  (product) => _product(
+                                    category: category,
+                                    product: product,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-          BallScreen(
-            key: _ballScreenKey,
-            streamController: _streamController,
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   _product({
-    ProductModel product,
-  }) =>
-      Material(
-        color: Colors.transparent,
-        child: Container(
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    flex: 8,
-                    child: Hero(
-                      tag: product.index,
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: Image.asset(
-                          product.image,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      product.name,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      '${NumberFormat().format(product.price)} ₩',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: () {
-                  _detail(product: product);
-                },
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .1,
+    ItemModel category,
+    ItemModel product,
+  }) {
+    final images = product.items.where((item) => item.type == 'Image');
+
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        child: InkWell(
+          onTap: () {
+            _detail(
+              category: category,
+              product: product,
+            );
+          },
+          child: IntrinsicHeight(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Hero(
+                  tag: product.objectId,
                   child: AspectRatio(
                     aspectRatio: 1,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      key: _buttonKeys[product.index],
-                      icon: Icon(
-                        CupertinoIcons.cart_badge_plus,
-                        size: 18,
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        color: Colors.white,
                       ),
-                      onPressed: () {
-                        _throwBall(
-                          data: CartItemModel(
-                            product: product,
-                            name: product.name,
-                            amount: product.price,
-                            quantity: 1,
-                            optionAmount: 0,
-                            optionQuantity: Map(),
-                          ),
-                        );
-                      },
+                      child: (images?.isNotEmpty ?? false)
+                          ? Image.network(
+                              images.first.value,
+                              fit: BoxFit.cover,
+                            )
+                          : Container(),
                     ),
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(top: 10),
+                  child: Text(
+                    product.value,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 21,
+                    ),
+                  ),
+                ),
+                Divider(
+                  height: 10,
+                  thickness: .5,
+                  color: Colors.black26,
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    '₩ ${NumberFormat().format(product.price)}',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Color(0xff666666),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   _floatingActionButton() => Container(
-        width: MediaQuery.of(context).size.width * .1,
-        child: FloatingActionButton(
-          key: _floatingButtonKey,
-          onPressed: () {
-            AppRouter.toCartPage(_cart);
-          },
-          child: Container(
-            child: Stack(
-              overflow: Overflow.visible,
+        height: MediaQuery.of(context).size.width * .12,
+        width: MediaQuery.of(context).size.width * .12,
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: FloatingActionButton(
+            key: _floatingButtonKey,
+            onPressed: () {
+              AppRouter.toCartPage(widget.serviceObjectId, _cart);
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
+                  transform: Matrix4.translationValues(-1, 0, 0),
+                  width: 22,
+                  height: 22,
                   alignment: Alignment.center,
                   child: Icon(
                     CupertinoIcons.cart,
+                    size: 22,
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: quantity < 10
-                      ? 0
-                      : quantity < 99
-                          ? -2
-                          : -6,
-                  child: _cart.isNotEmpty
-                      ? Container(
-                          width: quantity < 10
-                              ? 18
-                              : quantity < 99
-                                  ? 22
-                                  : 28,
-                          height: 18,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          child: Text(
-                            quantity < 99 ? '$quantity' : '99+',
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                        )
-                      : Container(),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Text(
+                    quantity < 99 ? '$quantity' : '99+',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -309,32 +306,20 @@ class _ShopPageState extends State<ShopPage>
       );
 
   _detail({
-    ProductModel product,
+    ItemModel product,
+    ItemModel category,
   }) async {
-    final CartItemModel result =
-        await AppRouter.toProductPage(product: product);
+    final result = await AppRouter.toProductPage(
+      service: service,
+      category: category,
+      product: product,
+    );
 
     if (result == null) {
       return;
     }
 
-    _throwBall(data: result);
-  }
-
-  _throwBall({
-    CartItemModel data,
-  }) {
-    final RenderBox appBarRenderBox =
-        _appBarKey.currentContext.findRenderObject();
-    final appBarHeight = appBarRenderBox.size.height;
-    final local = Offset(0, -appBarHeight);
-
-    _ballScreenKey.currentState.create(
-      data: data,
-      local: local,
-      from: _buttonKeys[data.product.index],
-      to: _floatingButtonKey,
-    );
+    _addCartItem(cartItem: result as CartItemModel);
   }
 
   _addCartItem({
