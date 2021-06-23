@@ -16,9 +16,8 @@ import 'package:h_order/http/types/login/requestTermsModel.dart';
 
 part 'client.g.dart';
 
-const protocol = kDebugMode ? 'http' : 'http';
-const host = kDebugMode ? '192.168.0.11' : 'jinjoosoft.io';
-const port = kDebugMode ? '5000' : '49233';
+const protocol = kDebugMode ? 'http' : 'https';
+const host = kDebugMode ? '192.168.0.11:5000' : 'horders.co.kr';
 
 @RestApi()
 abstract class Client {
@@ -38,11 +37,11 @@ abstract class Client {
   static CookieJar cookieJar = CookieJar();
 
   static get baseUrl {
-    return "$protocol://$host:$port/api";
+    return "$protocol://$host/api";
   }
 
   static get signalRUrl {
-    return "$protocol://$host:$port/signal";
+    return "$protocol://$host/signal";
   }
 
   static String token;
