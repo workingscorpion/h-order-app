@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/components/collapsible.dart';
+import 'package:h_order/components/spin.dart';
 import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/constants/constants.dart';
 import 'package:h_order/http/client.dart';
@@ -19,6 +20,7 @@ class HistoryView extends StatefulWidget {
 }
 
 class _HistoryViewState extends State<HistoryView> {
+  bool loading;
   FocusNode focusNode;
 
   List<HistoryModel> list = List();
@@ -35,16 +37,25 @@ class _HistoryViewState extends State<HistoryView> {
     '상태',
   ];
 
-  final List<String> statusTexts =
-      orderStatus.values.map((e) => e.name).toList();
+  Map<int, OrderStatusModel> newOrderStatus = {
+    -2: OrderStatusModel(
+      name: '전체',
+      color: Colors.black,
+    ),
+  };
 
-  final List<Color> statusColors =
-      orderStatus.values.map((e) => e.color).toList();
+  List<String> statusTexts;
+
+  List<Color> statusColors;
 
   String _selectedPopupMenu = '전체';
 
   @override
   void initState() {
+    loading = true;
+    newOrderStatus.addAll(orderStatus);
+    statusTexts = newOrderStatus.values.map((e) => e.name).toList();
+    statusColors = newOrderStatus.values.map((e) => e.color).toList();
     super.initState();
 
     load();
@@ -53,13 +64,10 @@ class _HistoryViewState extends State<HistoryView> {
   load() async {
     final res = await Client.create().histories();
     list = res.list.map((e) => HistoryModel.fromJson(e)).toList();
+    list.sort((a, b) => a.createdTime.isAfter(b.createdTime) ? -1 : 1);
     visibleList = List.of(list);
+    loading = false;
     setState(() {});
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -144,73 +152,79 @@ class _HistoryViewState extends State<HistoryView> {
   }
 
   _historiesBody() => Expanded(
-        child: visibleList.length > 0
-            ? ListView(
-                children: [
-                  ...visibleList.map(
-                    (item) => _item(
+        child: loading != false
+            ? Center(
+                child: Spin(
+                  size: 30,
+                ),
+              )
+            : visibleList.length > 0
+                ? ListView(
+                    children: [
+                      ...visibleList.map(
+                        (item) => _item(
+                          children: [
+                            Text(
+                              '${item.index}',
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              item.serviceName != null
+                                  ? '${item.serviceName}'
+                                  : '-',
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              _getFirstMenu(item) != null
+                                  ? '${_getFirstMenu(item)}'
+                                  : '-',
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              item.amount != null && item.amount > 0
+                                  ? '${NumberFormat().format(item.amount)}원'
+                                  : '-',
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              orderStatus[item.status].name,
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: orderStatus[item.status].color,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                          content: null,
+                          // content: item.detail,
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          '${item.index}',
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
+                        SvgPicture.asset(
+                          'assets/common/empty.svg',
+                          height: 200,
                         ),
-                        Text(
-                          item.serviceName != null
-                              ? '${item.serviceName}'
-                              : '-',
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          _getFirstMenu(item) != null
-                              ? '${_getFirstMenu(item)}'
-                              : '-',
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          '${DateFormat('yyyy/MM/dd').format(item.createdTime)}',
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          item.amount != null && item.amount > 0
-                              ? '${NumberFormat().format(item.amount)}원'
-                              : '-',
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          orderStatus[item.status].name,
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: orderStatus[item.status].color,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                        // Container(
+                        //   margin: EdgeInsets.only(top: 30),
+                        //   child: Text('데이터가 없습니다.'),
+                        // ),
                       ],
-                      content: null,
-                      // content: item.detail,
                     ),
                   ),
-                ],
-              )
-            : Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/common/empty.svg',
-                      height: 200,
-                    ),
-                    // Container(
-                    //   margin: EdgeInsets.only(top: 30),
-                    //   child: Text('데이터가 없습니다.'),
-                    // ),
-                  ],
-                ),
-              ),
       );
 
   _row({
@@ -404,44 +418,30 @@ class _HistoryViewState extends State<HistoryView> {
                   vertical: 12,
                 ),
                 offset: Offset(0, 100),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: "전체",
-                    child: Container(
-                      child: Text(
-                        '전체',
-                        style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                        ),
-                      ),
-                      width: 100,
-                    ),
-                  ),
-                  ...List.generate(
-                    orderStatus.length,
-                    (index) => PopupMenuItem(
-                      value: orderStatus[index],
-                      child: Container(
-                        child: Text(
-                          statusTexts[index],
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.black,
+                itemBuilder: (context) => newOrderStatus.entries
+                    .map(
+                      (e) => PopupMenuItem(
+                        value: e.key,
+                        child: Container(
+                          child: Text(
+                            e.value.name,
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black,
+                            ),
                           ),
+                          width: 100,
                         ),
-                        width: 100,
                       ),
-                    ),
-                  ),
-                ],
+                    )
+                    .toList(),
                 onSelected: (value) {
-                  _selectedPopupMenu = value;
-                  final index = statusTexts.indexOf(value);
-                  visibleList = list
-                      .where((h) => index == -1 || h.status == index)
-                      .toList();
-
+                  _selectedPopupMenu = newOrderStatus[value].name;
+                  if (value != -2) {
+                    visibleList = list.where((h) => h.status == value).toList();
+                  } else {
+                    visibleList = list;
+                  }
                   setState(() {});
                 },
               ),

@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/collapsible.dart';
+import 'package:h_order/components/spin.dart';
 import 'package:h_order/components/viewHeader.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/store/billStore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mobx/mobx.dart';
 
 class BillView extends StatefulWidget {
   BillView();
@@ -42,24 +45,50 @@ class _BillViewState extends State<BillView> {
 
   load() async {
     await billStore.load();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.only(top: 20),
+        // padding: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.only(bottom: 100),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _accountInfo(),
-            DefaultTextStyle(
-              style: TextStyle(
-                fontSize: 17,
-                color: Colors.black,
+            SvgPicture.asset(
+              'assets/icons/commontown.svg',
+              height: 50,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 70, bottom: 50),
+              child: Text(
+                '커먼타운 앱에서 확인해주세요.',
+                style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
               ),
-              child: _histories(),
+            ),
+            Text(
+              "커먼타운 앱 내 'MY' >> '계약/결제' >> '월별 청구서 조회'",
+              style: TextStyle(
+                fontSize: 23,
+                color: CustomColors.addtionalInformationColor,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
+        // child: Column(
+        //   crossAxisAlignment: CrossAxisAlignment.stretch,
+        //   children: [
+        //     _accountInfo(),
+        //     DefaultTextStyle(
+        //       style: TextStyle(
+        //         fontSize: 17,
+        //         color: Colors.black,
+        //       ),
+        //       child: _histories(),
+        //     ),
+        //   ],
+        // ),
       );
 
   _accountInfo() => DefaultTextStyle(
@@ -157,87 +186,93 @@ class _BillViewState extends State<BillView> {
   _billBody() => Expanded(
         child: Observer(
           builder: (BuildContext context) {
-            return billStore.bills.length > 0
-                ? ListView(
-                    children: [
-                      ...(billStore.bills ?? [])?.map(
-                        (item) => _item(
-                          children: [
-                            Text(
-                              '${item.index}',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              item.title,
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              '${DateFormat('yyyy-MM-dd').format(item.deadline)}',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              item.paymentDate != null
-                                  ? '${DateFormat('yyyy-MM-dd').format(item.paymentDate)}'
-                                  : "-",
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              item.amount != null
-                                  ? '${NumberFormat().format(item.amount)}원'
-                                  : '-',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              item.paymentDate != null ? '납부' : '미납',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: item.paymentDate != null
-                                    ? Color(0xff21d021)
-                                    : Color(0xffe02020),
-                              ),
-                            ),
-                            Container(
-                              height: 24,
-                              child: FlatButton(
-                                color: Theme.of(context).accentColor,
-                                onPressed: () {
-                                  AppRouter.toBillDetailPage(item.contents);
-                                },
-                                child: Text(
-                                  '고지서',
+            return billStore.loading
+                ? Center(
+                    child: Spin(
+                      size: 30,
+                    ),
+                  )
+                : billStore.bills.length > 0
+                    ? ListView(
+                        children: [
+                          ...(billStore.bills ?? ObservableList())?.map(
+                            (item) => _item(
+                              children: [
+                                Text(
+                                  '${item.index}',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  item.title,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  '${DateFormat('yyyy-MM-dd').format(item.deadline)}',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  item.paymentDate != null
+                                      ? '${DateFormat('yyyy-MM-dd').format(item.paymentDate)}'
+                                      : "-",
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  item.amount != null
+                                      ? '${NumberFormat().format(item.amount)}원'
+                                      : '-',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  item.paymentDate != null ? '납부' : '미납',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
+                                    color: item.paymentDate != null
+                                        ? Color(0xff21d021)
+                                        : Color(0xffe02020),
                                   ),
                                 ),
-                              ),
+                                Container(
+                                  height: 24,
+                                  child: FlatButton(
+                                    color: Theme.of(context).accentColor,
+                                    onPressed: () {
+                                      AppRouter.toBillDetailPage(item.contents);
+                                    },
+                                    child: Text(
+                                      '고지서',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+                          ),
+                        ],
+                      )
+                    : Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/common/empty.svg',
+                              height: 200,
+                            ),
+                            // Container(
+                            //   margin: EdgeInsets.only(top: 30),
+                            //   child: Text('데이터가 없습니다.'),
+                            // ),
                           ],
                         ),
-                      ),
-                    ],
-                  )
-                : Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/common/empty.svg',
-                          height: 200,
-                        ),
-                        // Container(
-                        //   margin: EdgeInsets.only(top: 30),
-                        //   child: Text('데이터가 없습니다.'),
-                        // ),
-                      ],
-                    ),
-                  );
+                      );
           },
         ),
       );
