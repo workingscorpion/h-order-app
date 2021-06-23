@@ -22,10 +22,8 @@ class _NoticeDetailPageState extends State<NoticeDetailPage> {
             canBack: true,
           ),
           Expanded(
-            child: IntrinsicHeight(
-              child: WebViewContent(
-                contents: widget.contents,
-              ),
+            child: WebViewContent(
+              contents: widget.contents,
             ),
           ),
         ],
