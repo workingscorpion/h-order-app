@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/login/requestTermsModel.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TermDialog extends StatefulWidget {
   TermDialog({
@@ -34,6 +35,14 @@ class _TermDialogState extends State<TermDialog> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.only(bottom: 20),
+              child: SvgPicture.asset(
+                'assets/icons/h_logo.svg',
+                height: 50,
+              ),
+            ),
             Text(
               '이용약관',
               style: TextStyle(
