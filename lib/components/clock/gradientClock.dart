@@ -91,15 +91,15 @@ class _GradientClockState extends State<GradientClock> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _clockTemperature(),
+              // _clockTemperature(),
               _clockTexts(
                 text: isAfterNoon ? "PM" : "AM",
-                margin: EdgeInsets.only(top: 50),
+                margin: EdgeInsets.only(bottom: 50),
                 fontSize: 36,
               ),
               _clockTexts(
                 text: '$timeString',
-                margin: EdgeInsets.only(top: 10),
+                margin: EdgeInsets.only(bottom: 30),
                 fontSize: 124,
                 fontWeight: FontWeight.w100,
               ),
