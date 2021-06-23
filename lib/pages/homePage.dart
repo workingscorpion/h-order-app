@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage>
               ),
             ),
             Text(
-              '납부완료',
+              '준비중',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
