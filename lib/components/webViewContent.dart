@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _WebViewContentState extends State<WebViewContent> {
   @override
   void initState() {
     super.initState();
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     final html = _html();
     final data = base64.encode(utf8.encode(html));
     url = 'data:text/html;base64,$data';
@@ -29,7 +31,7 @@ class _WebViewContentState extends State<WebViewContent> {
 
   String _html() {
     final padding = EdgeInsets.only(
-      top: 0,
+      top: 10,
       left: 20,
       right: 20,
       bottom: 100,
