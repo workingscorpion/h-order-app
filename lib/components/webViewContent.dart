@@ -29,7 +29,7 @@ class _WebViewContentState extends State<WebViewContent> {
 
   String _html() {
     final padding = EdgeInsets.only(
-      top: 0,
+      top: 10,
       left: 20,
       right: 20,
       bottom: 100,
