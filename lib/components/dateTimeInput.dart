@@ -25,10 +25,10 @@ class DateTimeInputState extends State<DateTimeInput> {
       List.generate((60 / _minuteStep).round(), (value) => value * _minuteStep);
   final _noons = ['오전', '오후'];
 
-  ScrollController _dateListViewController;
-  ScrollController _hourListViewController;
-  ScrollController _minuteListViewController;
-  ScrollController _noonListViewController;
+  FixedExtentScrollController _dateListViewController;
+  FixedExtentScrollController _hourListViewController;
+  FixedExtentScrollController _minuteListViewController;
+  FixedExtentScrollController _noonListViewController;
 
   DateTime _selectedTime;
 
@@ -153,7 +153,10 @@ class DateTimeInputState extends State<DateTimeInput> {
               child: _listWheelScrollView(
                 controller: _hourListViewController,
                 onSelectedItemChanged: (value) {
-                  _selectTime(hour: _hours[value]);
+                  _selectTime(
+                    hour: _hours[value],
+                    noon: _noons[_noonListViewController.selectedItem],
+                  );
                 },
                 children: [
                   ..._hours.map(
@@ -213,7 +216,10 @@ class DateTimeInputState extends State<DateTimeInput> {
               child: _listWheelScrollView(
                 controller: _noonListViewController,
                 onSelectedItemChanged: (value) {
-                  _selectTime(noon: _noons[value]);
+                  _selectTime(
+                    hour: _hours[_hourListViewController.selectedItem],
+                    noon: _noons[value],
+                  );
                 },
                 children: [
                   ..._noons.map(
