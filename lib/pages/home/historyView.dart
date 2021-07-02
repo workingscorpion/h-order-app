@@ -26,10 +26,7 @@ class _HistoryViewState extends State<HistoryView> {
   List<HistoryModel> list = List();
   List<HistoryModel> visibleList = List();
 
-  List<int> ratio = [1, 2, 2, 2, 2, 2];
-
   final List<String> headers = [
-    'No.',
     '서비스명',
     '상세항목',
     '이용일자',
@@ -165,11 +162,6 @@ class _HistoryViewState extends State<HistoryView> {
                         (item) => _item(
                           children: [
                             Text(
-                              '${item.index}',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
                               item.serviceName != null
                                   ? '${item.serviceName}'
                                   : '-',
@@ -245,7 +237,7 @@ class _HistoryViewState extends State<HistoryView> {
                   (index, item) => MapEntry(
                     index,
                     Expanded(
-                      flex: ratio[index],
+                      flex: 2,
                       child: Container(
                         padding: index < children.length - 1
                             ? EdgeInsets.only(right: 10)
