@@ -5,6 +5,7 @@ import 'package:h_order/components/alertService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/store/serviceStore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ServiceButton extends StatefulWidget {
   final ServiceModel service;
@@ -121,6 +122,9 @@ class ServiceButtonState extends State<ServiceButton> {
       case 'Call':
         alert(context: context, serviceObjectId: service.objectId);
         return;
+
+      case 'Link':
+        openLink(service.items.first.value);
     }
   }
 
@@ -168,6 +172,14 @@ class ServiceButtonState extends State<ServiceButton> {
       );
 
       await ServiceStore.instance.load();
+    }
+  }
+
+  static openLink(String link) async {
+    if (await canLaunch(link)) {
+      await launch(link);
+    } else {
+      throw '페이지를 열 수 없습니다';
     }
   }
 }
