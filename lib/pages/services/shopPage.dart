@@ -57,7 +57,10 @@ class _ShopPageState extends State<ShopPage>
 
     _cart = List();
 
-    _categories = service.items.where((item) => item.type == 'Group').toList();
+    _categories = service.items
+        .where((item) =>
+            item.type == 'Group' && item.tags.first.metadata['value'] == "true")
+        .toList();
 
     _tabController = TabController(
       length: _categories.length,
