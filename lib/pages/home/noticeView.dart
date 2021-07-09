@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/spin.dart';
 import 'package:h_order/components/viewHeader.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/models/noticeModel.dart';
 import 'package:intl/intl.dart';
@@ -236,8 +236,16 @@ class _NoticeViewState extends State<NoticeView> {
     List<Widget> children,
     String contents,
   }) =>
-      Collapsible(
-        header: InkWell(
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              color: CustomColors.tableInnerBorder,
+            ),
+          ),
+        ),
+        child: InkWell(
           onTap: () => AppRouter.toNoticeDetailPage(contents),
           child: _row(
             flex: flex,
@@ -245,6 +253,5 @@ class _NoticeViewState extends State<NoticeView> {
             color: Colors.transparent,
           ),
         ),
-        body: null,
       );
 }
