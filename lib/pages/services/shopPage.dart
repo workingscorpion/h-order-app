@@ -59,7 +59,8 @@ class _ShopPageState extends State<ShopPage>
 
     _categories = service.items
         .where((item) =>
-            item.type == 'Group' && item.tags.first.metadata['value'] == "true")
+            item.type == 'Group' &&
+            (item.getTagMetadataBoolean("visible", "value") ?? true))
         .toList();
 
     _tabController = TabController(
@@ -167,12 +168,17 @@ class _ShopPageState extends State<ShopPage>
                                 bottom: 24,
                               ),
                               children: [
-                                ...category.items.map(
-                                  (product) => _product(
-                                    category: category,
-                                    product: product,
-                                  ),
-                                ),
+                                ...category.items
+                                    .where((item) =>
+                                        item.getTagMetadataBoolean(
+                                            "visible", "value") ??
+                                        true)
+                                    .map(
+                                      (product) => _product(
+                                        category: category,
+                                        product: product,
+                                      ),
+                                    ),
                               ],
                             ),
                           ),
