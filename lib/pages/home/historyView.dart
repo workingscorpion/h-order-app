@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/spin.dart';
 import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/constants/constants.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
@@ -256,12 +256,18 @@ class _HistoryViewState extends State<HistoryView> {
     List<Widget> children,
     HistoryDetailModel content,
   }) =>
-      Collapsible(
-        header: _row(
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              color: CustomColors.tableInnerBorder,
+            ),
+          ),
+        ),
+        child: _row(
           children: children,
         ),
-        body: null,
-        // body: _collapsibleBody(content),
       );
 
   _collapsibleBody(HistoryDetailModel content) => Container(
