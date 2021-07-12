@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage>
   openTermsDialog() {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) => TermDialog(),
     );
   }

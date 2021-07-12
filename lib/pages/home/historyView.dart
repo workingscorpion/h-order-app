@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/spin.dart';
 import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/constants/constants.dart';
+import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/models/historyDetailModel.dart';
 import 'package:h_order/models/historyModel.dart';
@@ -26,10 +26,7 @@ class _HistoryViewState extends State<HistoryView> {
   List<HistoryModel> list = List();
   List<HistoryModel> visibleList = List();
 
-  List<int> ratio = [1, 2, 2, 2, 2, 2];
-
   final List<String> headers = [
-    'No.',
     '서비스명',
     '상세항목',
     '이용일자',
@@ -165,11 +162,6 @@ class _HistoryViewState extends State<HistoryView> {
                         (item) => _item(
                           children: [
                             Text(
-                              '${item.index}',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
                               item.serviceName != null
                                   ? '${item.serviceName}'
                                   : '-',
@@ -245,7 +237,7 @@ class _HistoryViewState extends State<HistoryView> {
                   (index, item) => MapEntry(
                     index,
                     Expanded(
-                      flex: ratio[index],
+                      flex: 2,
                       child: Container(
                         padding: index < children.length - 1
                             ? EdgeInsets.only(right: 10)
@@ -264,12 +256,18 @@ class _HistoryViewState extends State<HistoryView> {
     List<Widget> children,
     HistoryDetailModel content,
   }) =>
-      Collapsible(
-        header: _row(
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              color: CustomColors.tableInnerBorder,
+            ),
+          ),
+        ),
+        child: _row(
           children: children,
         ),
-        body: null,
-        // body: _collapsibleBody(content),
       );
 
   _collapsibleBody(HistoryDetailModel content) => Container(

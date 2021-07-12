@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:h_order/appRouter.dart';
-import 'package:h_order/components/collapsible.dart';
 import 'package:h_order/components/spin.dart';
 import 'package:h_order/components/viewHeader.dart';
 import 'package:h_order/constants/customColors.dart';
@@ -311,10 +310,17 @@ class _BillViewState extends State<BillView> {
   _item({
     List<Widget> children,
   }) =>
-      Collapsible(
-        header: _row(
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              color: CustomColors.tableInnerBorder,
+            ),
+          ),
+        ),
+        child: _row(
           children: children,
         ),
-        body: null,
       );
 }

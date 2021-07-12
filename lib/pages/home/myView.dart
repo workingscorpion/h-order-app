@@ -41,36 +41,31 @@ class _MyViewState extends State<MyView> {
                 _item(
                   title: '내 정보',
                   onTap: () {
-                    // AppRouter.toInfoPage();
-                    showToast();
+                    AppRouter.toInfoPage();
                   },
                 ),
                 _item(
                   title: '결제수단 관리',
                   onTap: () {
-                    // AppRouter.toPaymentPage();
-                    showToast();
+                    AppRouter.toPaymentPage();
                   },
                 ),
                 _item(
                   title: '즐겨찾기',
                   onTap: () {
-                    // AppRouter.toFavoritePage();
-                    showToast();
+                    AppRouter.toFavoritePage();
                   },
                 ),
                 _item(
                   title: '화면 설정',
                   onTap: () {
-                    // AppRouter.toScreenPage();
-                    showToast();
+                    AppRouter.toScreenPage();
                   },
                 ),
                 _item(
                   title: '알람 설정',
                   onTap: () {
-                    // AppRouter.toAlarmPage();
-                    showToast();
+                    AppRouter.toAlarmPage();
                   },
                 ),
                 _item(
