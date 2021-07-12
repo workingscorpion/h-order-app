@@ -18,13 +18,29 @@ class TermDialog extends StatefulWidget {
 class _TermDialogState extends State<TermDialog> {
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.topRight,
+            height: 100,
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(''),
+            ),
+          ),
+          Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            elevation: 0,
+            backgroundColor: Colors.white,
+            child: contentBox(context),
+          ),
+        ],
       ),
-      elevation: 0,
-      backgroundColor: Colors.white,
-      child: contentBox(context),
     );
   }
 

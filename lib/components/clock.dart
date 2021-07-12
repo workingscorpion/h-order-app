@@ -58,7 +58,7 @@ class _ClockState extends State<Clock> {
     final now = DateTime.now();
     setState(() {
       _text = _dateFormat.format(now);
-      _isAfterNoon = now.hour > 12 ? true : false;
+      _isAfterNoon = now.hour > 11 ? true : false;
     });
   }
 }

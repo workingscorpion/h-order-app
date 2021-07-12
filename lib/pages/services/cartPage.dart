@@ -6,14 +6,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:h_order/appRouter.dart';
 import 'package:h_order/components/pageHeader.dart';
+import 'package:h_order/components/spin.dart';
 import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/service/actionModel.dart';
-import 'package:h_order/http/types/service/serviceModel.dart';
 import 'package:h_order/models/cartItemModel.dart';
 import 'package:h_order/models/itemModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
+import 'package:h_order/store/cartStore.dart';
 import 'package:h_order/store/paymentStore.dart';
 import 'package:intl/intl.dart';
 
@@ -34,6 +35,8 @@ class _CartPageState extends State<CartPage>
     with SingleTickerProviderStateMixin {
   int selectedCard = 0;
 
+  CartStore cartStore = CartStore.instance;
+
   Map<String, ItemModel> _parentMap;
   Map<String, ItemModel> _optionMap;
 
@@ -42,8 +45,6 @@ class _CartPageState extends State<CartPage>
   List<PaymentMethodModel> get cards {
     return PaymentStore.instance.cards;
   }
-
-  ServiceModel service;
 
   @override
   void initState() {
@@ -58,13 +59,11 @@ class _CartPageState extends State<CartPage>
       _initOptionsQuantity(items: element.product.items);
     });
 
-    load();
+    load(widget.serviceObjectId);
   }
 
-  load() async {
-    await PaymentStore.instance.loadCards();
-    service = await Client.create().service(widget.serviceObjectId);
-    setState(() {});
+  load(serviceObjectId) async {
+    await cartStore.load(serviceObjectId);
   }
 
   _initOptionsQuantity({
@@ -108,23 +107,31 @@ class _CartPageState extends State<CartPage>
         child: Column(
           children: [
             Expanded(
-              child: Container(
-                color: CustomColors.backgroundLightGrey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    PageHeader(
-                      // TODO
-                      title: ['심플리오'],
-                      // title: [service.name],
-                      canBack: true,
-                    ),
-                    _cartItems(),
-                    _cardList(),
-                    _amount(),
-                    _payButton(),
-                  ],
-                ),
+              child: Observer(
+                builder: (BuildContext context) {
+                  return cartStore.loading
+                      ? Center(
+                          child: Spin(
+                            size: 30,
+                          ),
+                        )
+                      : Container(
+                          color: CustomColors.backgroundLightGrey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              PageHeader(
+                                title: [cartStore.service.name],
+                                canBack: true,
+                              ),
+                              _cartItems(),
+                              _cardList(),
+                              _amount(),
+                              _payButton(),
+                            ],
+                          ),
+                        );
+                },
               ),
             ),
           ],

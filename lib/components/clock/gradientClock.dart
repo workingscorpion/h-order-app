@@ -46,7 +46,7 @@ class _GradientClockState extends State<GradientClock> {
 
   String _formatDateTime(DateTime dateTime) {
     timeString = DateFormat('hh:mm').format(dateTime);
-    isAfterNoon = dateTime.hour > 12;
+    isAfterNoon = dateTime.hour > 11;
     return DateFormat('yyyy년 MM월 dd일').format(dateTime);
   }
 
