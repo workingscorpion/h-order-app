@@ -17,6 +17,7 @@ import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/store/cartStore.dart';
 import 'package:h_order/store/paymentStore.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CartPage extends StatefulWidget {
   final String serviceObjectId;
@@ -118,13 +119,13 @@ class _CartPageState extends State<CartPage>
                       : Container(
                           color: CustomColors.backgroundLightGrey,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               PageHeader(
                                 title: [cartStore.service.name],
                                 canBack: true,
                               ),
-                              _cartItems(),
+                              widget.cart.isEmpty ? _emptyCart() : _cartItems(),
                               _cardList(),
                               _amount(),
                               _payButton(),
@@ -139,6 +140,35 @@ class _CartPageState extends State<CartPage>
       ),
     );
   }
+
+  _emptyCart() => Expanded(
+        child: Container(
+          margin: EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/common/empty.svg',
+                height: 200,
+              ),
+              Container(
+                height: 30,
+              ),
+              Text(
+                '장바구니가 비어있습니다.',
+                style: TextStyle(
+                  fontSize: 30,
+                  color: CustomColors.addressBlack,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 
   _cartItems() => Expanded(
         child: DefaultTextStyle(
