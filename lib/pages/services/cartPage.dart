@@ -103,6 +103,8 @@ class _CartPageState extends State<CartPage>
 
   @override
   Widget build(BuildContext context) {
+    final _cartFilled = [_cartItems(), _cardList(), _amount(), _payButton()];
+
     return Scaffold(
       body: Container(
         child: Column(
@@ -125,11 +127,8 @@ class _CartPageState extends State<CartPage>
                                 title: [cartStore.service.name],
                                 canBack: true,
                               ),
-                              widget.cart.isEmpty ? _emptyCart() : _cartItems(),
-                              _cardList(),
-                              _amount(),
-                              _payButton(),
-                            ],
+                              widget.cart.isEmpty ? _emptyCart() : _cartFilled
+                            ].expand((element) => element).toList(),
                           ),
                         );
                 },
@@ -143,10 +142,10 @@ class _CartPageState extends State<CartPage>
 
   _emptyCart() => Expanded(
         child: Container(
-          margin: EdgeInsets.all(30),
+          margin: EdgeInsets.all(24),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -161,7 +160,7 @@ class _CartPageState extends State<CartPage>
               Text(
                 '장바구니가 비어있습니다.',
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 25,
                   color: CustomColors.addressBlack,
                 ),
               ),
