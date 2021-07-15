@@ -116,36 +116,30 @@ class _CartPageState extends State<CartPage>
                             size: 30,
                           ),
                         )
-                      : widget.cart.isEmpty
-                          ? Container(
-                              color: CustomColors.backgroundLightGrey,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  PageHeader(
-                                    title: [cartStore.service.name],
-                                    canBack: true,
-                                  ),
-                                  _emptyCart()
-                                ],
-                              ),
-                            )
-                          : Container(
-                              color: CustomColors.backgroundLightGrey,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  PageHeader(
-                                    title: [cartStore.service.name],
-                                    canBack: true,
-                                  ),
-                                  _cartItems(),
-                                  _cardList(),
-                                  _amount(),
-                                  _payButton()
-                                ],
-                              ),
-                            );
+                      : Container(
+                          color: CustomColors.backgroundLightGrey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: widget.cart.isEmpty
+                                ? [
+                                    PageHeader(
+                                      title: [cartStore.service.name],
+                                      canBack: true,
+                                    ),
+                                    _emptyCart()
+                                  ]
+                                : [
+                                    PageHeader(
+                                      title: [cartStore.service.name],
+                                      canBack: true,
+                                    ),
+                                    _cartItems(),
+                                    _cardList(),
+                                    _amount(),
+                                    _payButton()
+                                  ],
+                          ),
+                        );
                 },
               ),
             ),
