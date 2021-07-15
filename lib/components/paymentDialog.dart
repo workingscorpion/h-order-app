@@ -89,7 +89,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
                     child: Row(
                       children: [
                         Expanded(
-                          flex: 3,
+                          flex: 2,
                           child: _cardNumberInput(),
                         ),
                         Container(
