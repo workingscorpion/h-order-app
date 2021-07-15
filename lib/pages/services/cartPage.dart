@@ -103,7 +103,12 @@ class _CartPageState extends State<CartPage>
 
   @override
   Widget build(BuildContext context) {
-    final _cartFilled = [_cartItems(), _cardList(), _amount(), _payButton()];
+    final List<Widget> _cartFilled = [
+      _cartItems(),
+      _cardList(),
+      _amount(),
+      _payButton()
+    ];
 
     return Scaffold(
       body: Container(
@@ -123,11 +128,13 @@ class _CartPageState extends State<CartPage>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              PageHeader(
-                                title: [cartStore.service.name],
-                                canBack: true,
-                              ),
-                              widget.cart.isEmpty ? _emptyCart() : _cartFilled
+                              [
+                                PageHeader(
+                                  title: [cartStore.service.name],
+                                  canBack: true,
+                                )
+                              ],
+                              widget.cart.isEmpty ? [_emptyCart()] : _cartFilled
                             ].expand((element) => element).toList(),
                           ),
                         );
@@ -140,7 +147,7 @@ class _CartPageState extends State<CartPage>
     );
   }
 
-  _emptyCart() => Expanded(
+  Widget _emptyCart() => Expanded(
         child: Container(
           margin: EdgeInsets.all(24),
           decoration: BoxDecoration(
