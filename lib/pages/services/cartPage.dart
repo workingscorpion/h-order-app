@@ -103,13 +103,6 @@ class _CartPageState extends State<CartPage>
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _cartFilled = [
-      _cartItems(),
-      _cardList(),
-      _amount(),
-      _payButton()
-    ];
-
     return Scaffold(
       body: Container(
         child: Column(
@@ -123,21 +116,36 @@ class _CartPageState extends State<CartPage>
                             size: 30,
                           ),
                         )
-                      : Container(
-                          color: CustomColors.backgroundLightGrey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              [
-                                PageHeader(
-                                  title: [cartStore.service.name],
-                                  canBack: true,
-                                )
-                              ],
-                              widget.cart.isEmpty ? [_emptyCart()] : _cartFilled
-                            ].expand((element) => element).toList(),
-                          ),
-                        );
+                      : widget.cart.isEmpty
+                          ? Container(
+                              color: CustomColors.backgroundLightGrey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  PageHeader(
+                                    title: [cartStore.service.name],
+                                    canBack: true,
+                                  ),
+                                  _emptyCart()
+                                ],
+                              ),
+                            )
+                          : Container(
+                              color: CustomColors.backgroundLightGrey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  PageHeader(
+                                    title: [cartStore.service.name],
+                                    canBack: true,
+                                  ),
+                                  _cartItems(),
+                                  _cardList(),
+                                  _amount(),
+                                  _payButton()
+                                ],
+                              ),
+                            );
                 },
               ),
             ),
