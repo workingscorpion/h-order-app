@@ -8,6 +8,7 @@ import 'package:h_order/constants/cardCompanies.dart';
 import 'package:h_order/http/client.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
 import 'package:h_order/store/paymentStore.dart';
+import 'package:h_order/components/paymentPinDialog.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -101,7 +102,13 @@ class _PaymentPageState extends State<PaymentPage> {
                                         BorderRadius.all(Radius.circular(5)),
                                     color: Colors.white,
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              PaymentPinDialog(),
+                                        );
+                                      },
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(
