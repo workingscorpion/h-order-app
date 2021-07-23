@@ -196,7 +196,9 @@ class _PaymentPageState extends State<PaymentPage> {
         borderRadius: BorderRadius.all(Radius.circular(5)),
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            PaymentStore.instance.changeMode = true;
+          },
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(
