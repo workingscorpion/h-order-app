@@ -60,25 +60,33 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
                 color: CustomColors.aWhite,
               ),
             ),
-            Text('입력한 비번 들어갈 자리'),
-            ..._numbers.map((e) {
-              return _numberButtons(e);
-            })
+            Text(
+              '입력한 비번 들어갈 자리',
+              style: TextStyle(
+                color: CustomColors.aWhite,
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 900,
+                child: _numberButtons(),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _numberButtons(String number) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.generate(
-          _numbers.length,
-          (index) => _numberButton(
-            _numbers[index],
-          ),
+  Widget _numberButtons() {
+    return GridView.count(
+      // physics: NeverScrollableScrollPhysics(),
+      crossAxisCount: 3,
+      mainAxisSpacing: 10,
+      children: List.generate(
+        _numbers.length,
+        (index) => _numberButton(
+          _numbers[index],
         ),
       ),
     );
@@ -88,7 +96,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
         child: InkWell(
           onTap: () {},
           child: Container(
-            height: 60,
+            height: 20,
             alignment: Alignment.center,
             child: Text(
               number,
