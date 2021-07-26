@@ -16,6 +16,9 @@ abstract class PaymentStoreBase with Store {
   ObservableList<PaymentMethodModel> cards = ObservableList();
 
   @observable
+  bool changeMode = false;
+
+  @observable
   bool loading = false;
 
   @action
@@ -37,13 +40,10 @@ abstract class PaymentStoreBase with Store {
     }
   }
 
-  // @action
-  // deleteCard(int index) async {
-  //   await Client.create().deleteCard(
-  //     PaymentStore.instance.cards[index].index.toString(),
-  //   );
-  //   // cards
-  //   //   ..clear()
-  //   //   ..addAll(cards.where((element) => element.index != index).toList());
-  // }
+  @action
+  updatePrimary(String index) async {
+    changeMode = false;
+    await Client.create().updatePrimary(index);
+    loadCards();
+  }
 }

@@ -240,6 +240,25 @@ class _Client implements Client {
   }
 
   @override
+  Future<dynamic> updatePrimary(index) async {
+    ArgumentError.checkNotNull(index, 'index');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request(
+        '/v1/device/paymentMethod/primary/$index',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    return value;
+  }
+
+  @override
   Future<dynamic> deleteCard(index) async {
     ArgumentError.checkNotNull(index, 'index');
     const _extra = <String, dynamic>{};

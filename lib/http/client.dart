@@ -88,6 +88,11 @@ abstract class Client {
   @GET("/v1/device/paymentMethod")
   Future<List<PaymentMethodModel>> cards();
 
+  @PUT("/v1/device/paymentMethod/primary/{index}")
+  Future updatePrimary(
+    @Path('index') String index,
+  );
+
   @DELETE("/v1/device/paymentMethod/{index}")
   Future deleteCard(
     @Path("index") String index,
