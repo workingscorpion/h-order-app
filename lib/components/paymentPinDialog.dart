@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:h_order/constants/customColors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:h_order/http/client.dart';
+import 'package:h_order/http/types/payment/paymentPinModel.dart';
 
 class PaymentPinDialog extends StatefulWidget {
   PaymentPinDialog();
@@ -26,6 +28,13 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
   String pinNumber = '';
 
   @override
+  void initState() {
+    _numbers.shuffle();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -33,109 +42,107 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
       ),
       elevation: 0,
       backgroundColor: CustomColors.backgroundDarkGrey,
-      child: passwordInput(context),
+      child: contents(context),
     );
   }
 
-  passwordInput(context) {
-    return IntrinsicHeight(
-      child: Container(
-        padding: EdgeInsets.all(30),
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.all(10),
-              child: Text(
-                '결제 비밀번호 6자리를 입력해주세요',
-                style: TextStyle(
-                  color: CustomColors.aWhite,
-                  fontSize: 25,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Text(
-                pinNumber.isEmpty ? 'O O O O O O' : pinNumber,
-                style: TextStyle(
-                  color: CustomColors.aWhite,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            // Container(
-            //   alignment: Alignment.center,
-            //   child: TextButton(
-            //     onPressed: () {},
-            //     child: Text(
-            //       '비밀번호를 잊었어요',
-            //       style: TextStyle(
-            //         color: CustomColors.aWhite,
-            //         decoration: TextDecoration.underline,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            Expanded(
-              child: SizedBox(
-                height: 800,
-                child: _numberButtons(),
-              ),
-            ),
-            Container(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                onPressed: () {
-                  pinNumber.isEmpty
-                      ? Navigator.of(context).pop()
-                      : pinNumber =
-                          pinNumber.substring(0, pinNumber.length - 1);
-                  setState(() {});
-                },
-                child: Text(
-                  pinNumber.isEmpty ? '취소' : '삭제',
-                  style: TextStyle(
-                    color: CustomColors.aWhite,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-          ],
+  contents(BuildContext context) => IntrinsicHeight(
+        child: Container(
+          child: Column(
+            children: [
+              title(),
+              password(),
+              _numberButtons(),
+              actions(),
+            ],
+          ),
+        ),
+      );
+
+  title() => Container(
+        margin: EdgeInsets.only(
+          top: 50,
+        ),
+        child: Text(
+          '결제 비밀번호 6자리를 입력해주세요',
+          style: TextStyle(
+            color: CustomColors.aWhite,
+            fontSize: 25,
+          ),
+        ),
+      );
+
+  password() => Container(
+        margin: EdgeInsets.only(top: 40),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            6,
+            (index) => _blankContainer(5 - index),
+          ),
+        ),
+      );
+
+  _blankContainer(index) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.only(
+        bottom: 3,
+        left: 5,
+        right: 5,
+      ),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: CustomColors.aWhite,
+            width: 1.0,
+          ),
+        ),
+      ),
+      child: Text(
+        5 - pinNumber.split('').length < index ? '*' : ' ',
+        style: TextStyle(
+          color: CustomColors.aWhite,
+          fontSize: 30,
+          letterSpacing: 15,
         ),
       ),
     );
   }
 
   Widget _numberButtons() {
-    return GridView.count(
-      padding: EdgeInsets.only(
-        top: 30,
-      ),
-      physics: NeverScrollableScrollPhysics(),
-      crossAxisCount: 3,
-      mainAxisSpacing: 10,
-      crossAxisSpacing: 10,
-      childAspectRatio: 3 / 2,
-      children: List.generate(
-        _numbers.length,
-        (index) => _numberButton(
-          _numbers[index],
+    return Container(
+      height: 600,
+      child: GridView.count(
+        padding: EdgeInsets.only(
+          top: 60,
+        ),
+        physics: NeverScrollableScrollPhysics(),
+        crossAxisCount: 3,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 4 / 2,
+        children: List.generate(
+          _numbers.length,
+          (index) => _numberButton(
+            _numbers[index],
+          ),
         ),
       ),
     );
   }
 
   _numberButton(String number) => InkWell(
-        onTap: () {
+        onTap: () async {
           if (pinNumber.length < 6) {
             pinNumber = pinNumber + number;
 
             setState(() {});
           }
+
           if (pinNumber.length == 6) {
-            // TODO : API 연결 필요
-            print('pinNumber 저장하는 API 호출');
+            final pin = PaymentPinModel(pinNumber: pinNumber);
+            await Client.create().pinRegister(pin);
             Navigator.of(context).pop();
             showToast();
           }
@@ -152,6 +159,46 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
         ),
       );
 
+  actions() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: EdgeInsets.only(
+              left: 30,
+              bottom: 10,
+            ),
+            alignment: Alignment.center,
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                '비밀번호를 잊었어요',
+                style: TextStyle(
+                  color: CustomColors.aWhite,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(
+              right: 30,
+              bottom: 10,
+            ),
+            alignment: Alignment.bottomRight,
+            child: TextButton(
+              onPressed: () => delete(),
+              child: Text(
+                pinNumber.isEmpty ? '취소' : '삭제',
+                style: TextStyle(
+                  color: CustomColors.aWhite,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+
   showToast() async {
     await Fluttertoast.showToast(
       msg: '결제 비밀번호가 저장되었습니다.',
@@ -161,5 +208,10 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
       textColor: Theme.of(context).textTheme.bodyText1.color,
       fontSize: 17,
     );
+  }
+
+  delete() {
+    pinNumber = (pinNumber.split("")..removeLast()).join('');
+    setState(() {});
   }
 }

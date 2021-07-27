@@ -9,6 +9,7 @@ class DeviceModel {
   final String boundaryAddress;
   final String boundaryName;
   final bool terms;
+  final String pinNumber;
 
   // final String phone;
   // final String cellPhone;
@@ -31,6 +32,8 @@ class DeviceModel {
     this.boundaryAddress,
     this.boundaryName,
     this.terms,
+    this.pinNumber,
+
     // this.address,
     // this.phone,
     // this.cellPhone,

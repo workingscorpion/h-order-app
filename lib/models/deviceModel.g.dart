@@ -12,6 +12,7 @@ DeviceModel _$DeviceModelFromJson(Map<String, dynamic> json) {
     boundaryAddress: json['boundaryAddress'] as String,
     boundaryName: json['boundaryName'] as String,
     terms: json['terms'] as bool,
+    pinNumber: json['pinNumber'] as String,
   );
 }
 
@@ -21,4 +22,5 @@ Map<String, dynamic> _$DeviceModelToJson(DeviceModel instance) =>
       'boundaryAddress': instance.boundaryAddress,
       'boundaryName': instance.boundaryName,
       'terms': instance.terms,
+      'pinNumber': instance.pinNumber,
     };
