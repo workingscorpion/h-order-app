@@ -25,7 +25,10 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
     '9',
   ];
 
+  String titleText = '결제 비밀번호 6자리를 입력해주세요';
   String pinNumber = '';
+  String pinInput = '';
+  bool isSecond = false;
 
   @override
   void initState() {
@@ -64,7 +67,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
           top: 50,
         ),
         child: Text(
-          '결제 비밀번호 6자리를 입력해주세요',
+          titleText,
           style: TextStyle(
             color: CustomColors.aWhite,
             fontSize: 25,
@@ -140,11 +143,39 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
             setState(() {});
           }
 
-          if (pinNumber.length == 6) {
-            final pin = PaymentPinModel(pinNumber: pinNumber);
-            await Client.create().pinRegister(pin);
-            Navigator.of(context).pop();
-            showToast();
+          if (pinNumber.length == 6 && !isSecond) {
+            pinInput = pinNumber;
+            pinNumber = '';
+            isSecond = true;
+
+            setState(
+              () {
+                titleText = '결제 비밀번호 6자리를 다시 입력해주세요';
+                _numbers.shuffle();
+              },
+            );
+          }
+
+          if (pinNumber.length == 6 && isSecond) {
+            if (pinInput == pinNumber) {
+              final pin = PaymentPinModel(pinNumber: pinNumber);
+              await Client.create().pinRegister(pin);
+              Navigator.of(context).pop();
+
+              showToast('결제 비밀번호가 저장되었습니다.');
+            } else {
+              showToast('비밀번호가 일치하지 않습니다');
+
+              pinNumber = '';
+              pinInput = '';
+
+              setState(
+                () {
+                  titleText = '결제 비밀번호 6자리를 입력해주세요';
+                  _numbers.shuffle();
+                },
+              );
+            }
           }
         },
         child: Container(
@@ -199,9 +230,9 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
         ],
       );
 
-  showToast() async {
+  showToast(String msg) async {
     await Fluttertoast.showToast(
-      msg: '결제 비밀번호가 저장되었습니다.',
+      msg: msg,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       backgroundColor: Theme.of(context).accentColor.withOpacity(0.66),

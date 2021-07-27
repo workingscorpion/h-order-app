@@ -4,6 +4,7 @@ import 'package:h_order/http/types/layout/layoutModel.dart';
 import 'package:h_order/http/types/login/requestLoginModel.dart';
 import 'package:h_order/http/types/pagination/pageModel.dart';
 import 'package:h_order/http/types/payment/cardRegisterModel.dart';
+import 'package:h_order/http/types/payment/paymentPinModel.dart';
 import 'package:h_order/http/types/service/actionModel.dart';
 import 'package:h_order/models/historyModel.dart';
 import 'package:h_order/models/paymentMethodModel.dart';
@@ -103,5 +104,10 @@ abstract class Client {
   @PUT("/v1/device/device")
   Future termsUpdate(
     @Body() RequestTermsModel device,
+  );
+
+  @PUT("/v1/device/device/paymentpin")
+  Future pinRegister(
+    @Body() PaymentPinModel device,
   );
 }
