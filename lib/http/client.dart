@@ -108,6 +108,11 @@ abstract class Client {
 
   @PUT("/v1/device/device/paymentpin")
   Future pinRegister(
-    @Body() PaymentPinModel device,
+    @Body() PaymentPinModel pinModel,
+  );
+
+  @POST("/v1/device/device/pincheck")
+  Future pinCheck(
+    @Body() PaymentPinModel pinModel,
   );
 }

@@ -298,16 +298,35 @@ class _Client implements Client {
   }
 
   @override
-  Future<dynamic> pinRegister(device) async {
-    ArgumentError.checkNotNull(device, 'device');
+  Future<dynamic> pinRegister(pinModel) async {
+    ArgumentError.checkNotNull(pinModel, 'pinModel');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(device?.toJson() ?? <String, dynamic>{});
+    _data.addAll(pinModel?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.request('/v1/device/device/paymentpin',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> pinCheck(pinModel) async {
+    ArgumentError.checkNotNull(pinModel, 'pinModel');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(pinModel?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request('/v1/device/device/pincheck',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
             headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),

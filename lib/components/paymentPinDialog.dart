@@ -5,7 +5,11 @@ import 'package:h_order/http/client.dart';
 import 'package:h_order/http/types/payment/paymentPinModel.dart';
 
 class PaymentPinDialog extends StatefulWidget {
-  PaymentPinDialog();
+  final bool routeFrom;
+
+  PaymentPinDialog({
+    this.routeFrom,
+  });
 
   @override
   _PaymentPinDialogState createState() => _PaymentPinDialogState();
@@ -157,47 +161,8 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
       );
 
   _numberButton(String number) => InkWell(
-        onTap: () async {
-          if (pinNumber.length < 6) {
-            pinNumber = pinNumber + number;
-
-            setState(() {});
-          }
-
-          if (pinNumber.length == 6 && !isSecond) {
-            pinInput = pinNumber;
-            pinNumber = '';
-            isSecond = true;
-
-            setState(
-              () {
-                titleText = '결제 비밀번호 6자리를 다시 입력해주세요';
-                _numbers.shuffle();
-              },
-            );
-          }
-
-          if (pinNumber.length == 6 && isSecond) {
-            if (pinInput == pinNumber) {
-              final pin = PaymentPinModel(pinNumber: pinNumber);
-              await Client.create().pinRegister(pin);
-              Navigator.of(context).pop();
-
-              showToast('결제 비밀번호가 저장되었습니다.');
-            } else {
-              showToast('비밀번호가 일치하지 않습니다');
-
-              pinNumber = '';
-              pinInput = '';
-
-              setState(
-                () {
-                  titleText = '결제 비밀번호 6자리를 입력해주세요';
-                  _numbers.shuffle();
-                },
-              );
-            }
-          }
+        onTap: () {
+          widget.routeFrom ? _pinRegister(number) : _pinCheck(number);
         },
         child: Container(
           alignment: Alignment.center,
@@ -210,6 +175,71 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
           ),
         ),
       );
+
+  _pinRegister(String number) async {
+    if (pinNumber.length < 6) {
+      pinNumber = pinNumber + number;
+
+      setState(() {});
+    }
+
+    if (pinNumber.length == 6 && !isSecond) {
+      pinInput = pinNumber;
+      pinNumber = '';
+      isSecond = true;
+
+      setState(
+        () {
+          titleText = '결제 비밀번호 6자리를 다시 입력해주세요';
+          _numbers.shuffle();
+        },
+      );
+    }
+
+    if (pinNumber.length == 6 && isSecond) {
+      if (pinInput == pinNumber) {
+        final pin = PaymentPinModel(pinNumber: pinNumber);
+        await Client.create().pinRegister(pin);
+        Navigator.of(context).pop();
+
+        showToast('결제 비밀번호가 저장되었습니다.');
+      } else {
+        showToast('비밀번호가 일치하지 않습니다');
+
+        pinNumber = '';
+        pinInput = '';
+
+        setState(
+          () {
+            titleText = '결제 비밀번호 6자리를 입력해주세요';
+            _numbers.shuffle();
+          },
+        );
+      }
+    }
+  }
+
+  _pinCheck(String number) async {
+    try {
+      if (pinNumber.length < 6) {
+        pinNumber = pinNumber + number;
+
+        setState(() {});
+      }
+
+      if (pinNumber.length == 6) {
+        final pin = PaymentPinModel(pinNumber: pinNumber);
+        await Client.create().pinCheck(pin);
+
+        Navigator.of(context).pop(true);
+      }
+    } catch (ex) {
+      showToast('비밀번호가 일치하지 않습니다.');
+      pinNumber = '';
+
+      setState(() {});
+    }
+  }
 
   actions() => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

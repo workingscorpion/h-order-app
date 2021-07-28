@@ -18,6 +18,8 @@ import 'package:h_order/store/cartStore.dart';
 import 'package:h_order/store/paymentStore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:h_order/components/paymentPinDialog.dart';
+import 'package:h_order/store/deviceStore.dart';
 
 class CartPage extends StatefulWidget {
   final String serviceObjectId;
@@ -43,6 +45,8 @@ class _CartPageState extends State<CartPage>
 
   ScrollController controller;
 
+  bool pinExist = false;
+
   List<PaymentMethodModel> get cards {
     return PaymentStore.instance.cards;
   }
@@ -65,6 +69,13 @@ class _CartPageState extends State<CartPage>
 
   load(serviceObjectId) async {
     await cartStore.load(serviceObjectId);
+    await DeviceStore.instance.getDevice();
+
+    if (DeviceStore.instance.device.pinNumber == null) {
+      return;
+    } else {
+      pinExist = true;
+    }
   }
 
   _initOptionsQuantity({
@@ -197,42 +208,141 @@ class _CartPageState extends State<CartPage>
       );
 
   _payButton() => Material(
-        color: Theme.of(context).accentColor,
-        child: InkWell(
-          onTap: () {
-            _save();
-          },
-          child: Container(
-            height: 80,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(247, 181, 0, 1),
-                    borderRadius: BorderRadius.circular(8),
+      color: Theme.of(context).accentColor,
+      child: InkWell(
+        onTap: pinExist
+            ? () async {
+                bool result = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) => PaymentPinDialog(
+                    routeFrom: false,
                   ),
-                  child: Text(
-                    '${widget.cart.length}건',
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
+                );
+
+                if (result) {
+                  _save();
+                }
+              }
+            : () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => _popUp(context),
+                );
+              },
+        child: Container(
+          height: 80,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 20),
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(247, 181, 0, 1),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                Text(
-                  '${NumberFormat().format(totalAmount)}원 결제하기',
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        fontSize: 21,
+                child: Text(
+                  '${widget.cart.length}건',
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
                       ),
                 ),
-              ],
+              ),
+              Text(
+                '${NumberFormat().format(totalAmount)}원 결제하기',
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      fontSize: 21,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      ));
+
+  _popUp(context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        constraints: BoxConstraints(maxWidth: 500),
+        child: IntrinsicHeight(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(40),
+                child: Text(
+                  '등록된 결제비밀번호가 없습니다.\n 결제비밀번호를 등록하시겠습니까?',
+                  style: TextStyle(
+                    fontSize: 23,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Row(
+                children: [
+                  _button('등록'),
+                  _button('취소'),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _button(String title) {
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          _pinRegister(title);
+        },
+        child: Container(
+          height: 60,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                bottomLeft: title == '등록' ? Radius.zero : Radius.circular(8),
+                bottomRight: title == '취소' ? Radius.circular(8) : Radius.zero),
+            color: title == '등록'
+                ? CustomColors.selectedButton
+                : CustomColors.dialogBg,
+          ),
+          child: Text(
+            title,
+            style: TextStyle(
+              color: title == '등록' ? Colors.white : Colors.black,
+              fontSize: 20,
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _pinRegister(title) async {
+    if (title == '등록') {
+      Navigator.of(context).pop();
+
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => PaymentPinDialog(
+          routeFrom: true,
+        ),
       );
+
+      pinExist = true;
+
+      setState(() {});
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
 
   _cartItem({
     CartItemModel cartItem,
@@ -549,8 +659,6 @@ class _CartPageState extends State<CartPage>
         'card': jsonEncode(card.toJson()),
       };
     } catch (ex) {
-      print(ex);
-
       await Fluttertoast.showToast(
         msg: ex,
         toastLength: Toast.LENGTH_SHORT,
@@ -576,8 +684,6 @@ class _CartPageState extends State<CartPage>
 
       AppRouter.toShoppingCompletePage();
     } catch (ex) {
-      print(ex);
-
       await Fluttertoast.showToast(
         msg: '결제에 실패하였습니다. 다시 한 번 시도해주세요.',
         toastLength: Toast.LENGTH_SHORT,

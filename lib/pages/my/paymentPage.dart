@@ -106,7 +106,9 @@ class _PaymentPageState extends State<PaymentPage> {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) =>
-                                              PaymentPinDialog(),
+                                              PaymentPinDialog(
+                                            routeFrom: true,
+                                          ),
                                         );
                                       },
                                       child: Container(
