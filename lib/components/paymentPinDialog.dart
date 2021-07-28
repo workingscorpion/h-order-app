@@ -22,7 +22,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
     '6',
     '7',
     '8',
-    '9',
+    '9'
   ];
 
   String titleText = '결제 비밀번호 6자리를 입력해주세요';
@@ -126,14 +126,35 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
         crossAxisSpacing: 10,
         childAspectRatio: 4 / 2,
         children: List.generate(
-          _numbers.length,
-          (index) => _numberButton(
-            _numbers[index],
-          ),
+          _numbers.length + 2,
+          (index) {
+            if (index == _numbers.length + 1 || index == _numbers.length - 1) {
+              return _emptyButton();
+            } else if (index > 9) {
+              return _numberButton(
+                _numbers[index - 1],
+              );
+            }
+
+            return _numberButton(
+              _numbers[index],
+            );
+          },
         ),
       ),
     );
   }
+
+  _emptyButton() => Container(
+        alignment: Alignment.center,
+        child: Text(
+          '',
+          style: TextStyle(
+            color: CustomColors.aWhite,
+            fontSize: 25,
+          ),
+        ),
+      );
 
   _numberButton(String number) => InkWell(
         onTap: () async {
