@@ -307,7 +307,7 @@ class _CartPageState extends State<CartPage>
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-                bottomLeft: title == '등록' ? Radius.zero : Radius.circular(8),
+                bottomLeft: title == '등록' ? Radius.circular(8) : Radius.zero,
                 bottomRight: title == '취소' ? Radius.circular(8) : Radius.zero),
             color: title == '등록'
                 ? CustomColors.selectedButton
