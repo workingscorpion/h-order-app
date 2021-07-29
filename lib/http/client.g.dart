@@ -304,7 +304,7 @@ class _Client implements Client {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(pinModel?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request('/v1/device/device/paymentpin',
+    final _result = await _dio.request('/v1/device/device/register',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'PUT',
@@ -323,7 +323,7 @@ class _Client implements Client {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(pinModel?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request('/v1/device/device/pincheck',
+    final _result = await _dio.request('/v1/device/device/pin',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -332,6 +332,24 @@ class _Client implements Client {
             baseUrl: baseUrl),
         data: _data);
     final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<PaymentPinModel> pinExist() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/v1/device/device/pin',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = PaymentPinModel.fromJson(_result.data);
     return value;
   }
 }

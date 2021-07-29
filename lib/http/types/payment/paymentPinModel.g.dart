@@ -9,10 +9,12 @@ part of 'paymentPinModel.dart';
 PaymentPinModel _$PaymentPinModelFromJson(Map<String, dynamic> json) {
   return PaymentPinModel(
     pinNumber: json['pinNumber'] as String,
+    pinExist: json['pinExist'] as bool,
   );
 }
 
 Map<String, dynamic> _$PaymentPinModelToJson(PaymentPinModel instance) =>
     <String, dynamic>{
       'pinNumber': instance.pinNumber,
+      'pinExist': instance.pinExist,
     };

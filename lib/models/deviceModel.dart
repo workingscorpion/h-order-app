@@ -10,6 +10,7 @@ class DeviceModel {
   final String boundaryName;
   final bool terms;
   final String pinNumber;
+  final bool pinExist;
 
   // final String phone;
   // final String cellPhone;
@@ -33,6 +34,7 @@ class DeviceModel {
     this.boundaryName,
     this.terms,
     this.pinNumber,
+    this.pinExist,
 
     // this.address,
     // this.phone,

@@ -31,7 +31,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
 
   String titleText = '결제 비밀번호 6자리를 입력해주세요';
   String pinNumber = '';
-  String pinInput = '';
+  String firstPin = '';
   bool isSecond = false;
 
   @override
@@ -57,16 +57,16 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
         child: Container(
           child: Column(
             children: [
-              title(),
-              password(),
+              _title(),
+              _password(),
               _numberButtons(),
-              actions(),
+              _actions(),
             ],
           ),
         ),
       );
 
-  title() => Container(
+  _title() => Container(
         margin: EdgeInsets.only(
           top: 50,
         ),
@@ -79,7 +79,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
         ),
       );
 
-  password() => Container(
+  _password() => Container(
         margin: EdgeInsets.only(top: 40),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -90,64 +90,61 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
         ),
       );
 
-  _blankContainer(index) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      padding: EdgeInsets.only(
-        bottom: 3,
-        left: 5,
-        right: 5,
-      ),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: CustomColors.aWhite,
-            width: 1.0,
+  _blankContainer(index) => Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        padding: EdgeInsets.only(
+          bottom: 3,
+          left: 5,
+          right: 5,
+        ),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: CustomColors.aWhite,
+              width: 1.0,
+            ),
           ),
         ),
-      ),
-      child: Text(
-        5 - pinNumber.split('').length < index ? '*' : ' ',
-        style: TextStyle(
-          color: CustomColors.aWhite,
-          fontSize: 30,
-          letterSpacing: 15,
+        child: Text(
+          5 - pinNumber.split('').length < index ? '*' : ' ',
+          style: TextStyle(
+            color: CustomColors.aWhite,
+            fontSize: 30,
+            letterSpacing: 15,
+          ),
         ),
-      ),
-    );
-  }
+      );
 
-  Widget _numberButtons() {
-    return Container(
-      height: 600,
-      child: GridView.count(
-        padding: EdgeInsets.only(
-          top: 60,
-        ),
-        physics: NeverScrollableScrollPhysics(),
-        crossAxisCount: 3,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        childAspectRatio: 4 / 2,
-        children: List.generate(
-          _numbers.length + 2,
-          (index) {
-            if (index == _numbers.length + 1 || index == _numbers.length - 1) {
-              return _emptyButton();
-            } else if (index > 9) {
+  Widget _numberButtons() => Container(
+        height: 600,
+        child: GridView.count(
+          padding: EdgeInsets.only(
+            top: 60,
+          ),
+          physics: NeverScrollableScrollPhysics(),
+          crossAxisCount: 3,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: 4 / 2,
+          children: List.generate(
+            _numbers.length + 2,
+            (index) {
+              if (index == _numbers.length + 1 ||
+                  index == _numbers.length - 1) {
+                return _emptyButton();
+              } else if (index > 9) {
+                return _numberButton(
+                  _numbers[index - 1],
+                );
+              }
+
               return _numberButton(
-                _numbers[index - 1],
+                _numbers[index],
               );
-            }
-
-            return _numberButton(
-              _numbers[index],
-            );
-          },
+            },
+          ),
         ),
-      ),
-    );
-  }
+      );
 
   _emptyButton() => Container(
         alignment: Alignment.center,
@@ -184,7 +181,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
     }
 
     if (pinNumber.length == 6 && !isSecond) {
-      pinInput = pinNumber;
+      firstPin = pinNumber;
       pinNumber = '';
       isSecond = true;
 
@@ -197,8 +194,8 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
     }
 
     if (pinNumber.length == 6 && isSecond) {
-      if (pinInput == pinNumber) {
-        final pin = PaymentPinModel(pinNumber: pinNumber);
+      if (firstPin == pinNumber) {
+        final pin = PaymentPinModel(pinNumber: pinNumber, pinExist: true);
         await Client.create().pinRegister(pin);
         Navigator.of(context).pop();
 
@@ -207,7 +204,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
         showToast('비밀번호가 일치하지 않습니다');
 
         pinNumber = '';
-        pinInput = '';
+        firstPin = '';
 
         setState(
           () {
@@ -241,7 +238,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
     }
   }
 
-  actions() => Row(
+  _actions() => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
@@ -268,7 +265,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
             ),
             alignment: Alignment.bottomRight,
             child: TextButton(
-              onPressed: () => delete(),
+              onPressed: () => _delete(),
               child: Text(
                 pinNumber.isEmpty ? '취소' : '삭제',
                 style: TextStyle(
@@ -292,7 +289,7 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
     );
   }
 
-  delete() {
+  _delete() {
     pinNumber = (pinNumber.split("")..removeLast()).join('');
     setState(() {});
   }

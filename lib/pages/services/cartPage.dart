@@ -19,7 +19,6 @@ import 'package:h_order/store/paymentStore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_order/components/paymentPinDialog.dart';
-import 'package:h_order/store/deviceStore.dart';
 
 class CartPage extends StatefulWidget {
   final String serviceObjectId;
@@ -45,8 +44,6 @@ class _CartPageState extends State<CartPage>
 
   ScrollController controller;
 
-  bool pinExist = false;
-
   List<PaymentMethodModel> get cards {
     return PaymentStore.instance.cards;
   }
@@ -69,13 +66,6 @@ class _CartPageState extends State<CartPage>
 
   load(serviceObjectId) async {
     await cartStore.load(serviceObjectId);
-    await DeviceStore.instance.getDevice();
-
-    if (DeviceStore.instance.device.pinNumber == null) {
-      return;
-    } else {
-      pinExist = true;
-    }
   }
 
   _initOptionsQuantity({
@@ -210,25 +200,26 @@ class _CartPageState extends State<CartPage>
   _payButton() => Material(
       color: Theme.of(context).accentColor,
       child: InkWell(
-        onTap: pinExist
-            ? () async {
-                bool result = await showDialog(
-                  context: context,
-                  builder: (BuildContext context) => PaymentPinDialog(
-                    routeFrom: false,
-                  ),
-                );
+        onTap: () async {
+          final res = await Client.create().pinExist();
+          if (res.pinExist) {
+            bool result = await showDialog(
+              context: context,
+              builder: (BuildContext context) => PaymentPinDialog(
+                routeFrom: false,
+              ),
+            );
 
-                if (result) {
-                  _save();
-                }
-              }
-            : () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _popUp(context),
-                );
-              },
+            if (result) {
+              _save();
+            }
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => _popUp(context),
+            );
+          }
+        },
         child: Container(
           height: 80,
           child: Row(
@@ -277,16 +268,14 @@ class _CartPageState extends State<CartPage>
                 padding: EdgeInsets.all(40),
                 child: Text(
                   '등록된 결제비밀번호가 없습니다.\n 결제비밀번호를 등록하시겠습니까?',
-                  style: TextStyle(
-                    fontSize: 23,
-                  ),
+                  style: TextStyle(fontSize: 23),
                   textAlign: TextAlign.center,
                 ),
               ),
               Row(
                 children: [
-                  _button('등록'),
-                  _button('취소'),
+                  _button(true),
+                  _button(false),
                 ],
               ),
             ],
@@ -296,27 +285,25 @@ class _CartPageState extends State<CartPage>
     );
   }
 
-  Widget _button(String title) {
+  Widget _button(bool isOk) {
     return Expanded(
       child: InkWell(
         onTap: () {
-          _pinRegister(title);
+          _pinRegister(isOk);
         },
         child: Container(
           height: 60,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-                bottomLeft: title == '등록' ? Radius.circular(8) : Radius.zero,
-                bottomRight: title == '취소' ? Radius.circular(8) : Radius.zero),
-            color: title == '등록'
-                ? CustomColors.selectedButton
-                : CustomColors.dialogBg,
+                bottomLeft: isOk ? Radius.circular(8) : Radius.zero,
+                bottomRight: !isOk ? Radius.circular(8) : Radius.zero),
+            color: isOk ? CustomColors.selectedButton : CustomColors.dialogBg,
           ),
           child: Text(
-            title,
+            isOk ? '등록' : '취소',
             style: TextStyle(
-              color: title == '등록' ? Colors.white : Colors.black,
+              color: isOk ? Colors.white : Colors.black,
               fontSize: 20,
             ),
           ),
@@ -325,8 +312,8 @@ class _CartPageState extends State<CartPage>
     );
   }
 
-  _pinRegister(title) async {
-    if (title == '등록') {
+  _pinRegister(isOk) async {
+    if (isOk) {
       Navigator.of(context).pop();
 
       await showDialog(
@@ -335,8 +322,6 @@ class _CartPageState extends State<CartPage>
           routeFrom: true,
         ),
       );
-
-      pinExist = true;
 
       setState(() {});
     } else {

@@ -106,13 +106,16 @@ abstract class Client {
     @Body() RequestTermsModel device,
   );
 
-  @PUT("/v1/device/device/paymentpin")
+  @PUT("/v1/device/device/register")
   Future pinRegister(
     @Body() PaymentPinModel pinModel,
   );
 
-  @POST("/v1/device/device/pincheck")
+  @POST("/v1/device/device/pin")
   Future pinCheck(
     @Body() PaymentPinModel pinModel,
   );
+
+  @GET("/v1/device/device/pin")
+  Future<PaymentPinModel> pinExist();
 }
