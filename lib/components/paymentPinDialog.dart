@@ -195,7 +195,10 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
 
     if (pinNumber.length == 6 && isSecond) {
       if (firstPin == pinNumber) {
-        final pin = PaymentPinModel(pinNumber: pinNumber, pinExist: true);
+        final pin = PaymentPinModel(
+          pinNumber: pinNumber,
+          pinExist: true,
+        );
         await Client.create().pinRegister(pin);
         Navigator.of(context).pop();
 
@@ -225,7 +228,10 @@ class _PaymentPinDialogState extends State<PaymentPinDialog> {
       }
 
       if (pinNumber.length == 6) {
-        final pin = PaymentPinModel(pinNumber: pinNumber);
+        final pin = PaymentPinModel(
+          pinNumber: pinNumber,
+          pinExist: true,
+        );
         await Client.create().pinCheck(pin);
 
         Navigator.of(context).pop(true);
