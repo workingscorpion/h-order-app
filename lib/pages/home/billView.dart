@@ -54,25 +54,38 @@ class _BillViewState extends State<BillView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              'assets/icons/commontown.svg',
-              height: 50,
-            ),
             Container(
-              margin: EdgeInsets.only(top: 70, bottom: 50),
+              child: SvgPicture.asset(
+                'assets/icons/logo_full_text.svg',
+                height: 100,
+              ),
+            ),
+            Container(height: 20),
+            Container(
               child: Text(
-                '커먼타운 앱에서 확인해주세요.',
-                style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
+                '준비중입니다',
+                style: TextStyle(
+                  color: CustomColors.addtionalInformationColor,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
-            Text(
-              "커먼타운 앱 내 'MY' >> '계약/결제' >> '월별 청구서 조회'",
-              style: TextStyle(
-                fontSize: 23,
-                color: CustomColors.addtionalInformationColor,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.only(top: 70, bottom: 50),
+            //   child: Text(
+            //     '커먼타운 앱에서 확인해주세요.',
+            //     style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
+            //   ),
+            // ),
+            // Text(
+            //   "커먼타운 앱 내 'MY' >> '계약/결제' >> '월별 청구서 조회'",
+            //   style: TextStyle(
+            //     fontSize: 23,
+            //     color: CustomColors.addtionalInformationColor,
+            //     fontWeight: FontWeight.w500,
+            //   ),
+            // ),
           ],
         ),
         // child: Column(
