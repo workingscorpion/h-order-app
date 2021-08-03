@@ -41,7 +41,8 @@ class _MyViewState extends State<MyView> {
                 _item(
                   title: '내 정보',
                   onTap: () {
-                    AppRouter.toInfoPage();
+                    // AppRouter.toInfoPage();
+                    showToast();
                   },
                 ),
                 _item(
